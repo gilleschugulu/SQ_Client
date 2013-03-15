@@ -1,0 +1,52 @@
+<!-- HEADER BLOCK BEGIN -->
+<div class="header-container">
+  <a href="#home" class="home-btn"></a>
+  <div class="title"></div>
+  <div class="cash-container">
+    <div class="token"></div>
+    <p>Solde <span class="cash-value">{{credits}}</span></p>
+    <div class="clearfix"></div>
+  </div>
+  <div class="clearfix"></div>
+</div>
+<!-- CONTENT BLOCK BEGIN -->
+<div class="content-container">
+  <div class="left-block">
+    <div class="fb-head-container {{gender}}">
+      <img src="{{#if avatar}}{{avatar}}{{else}}images/avatar/{{gender}}.jpg{{/if}}" alt="" class="fb-head">
+    </div>
+  </div>
+  <div class="center-block">
+    <div class="nickname box-align">{{nickname}}</div>
+    <div class="current-cash">{{jackpot}}</div>
+    <a class="rankings"></a>
+  </div>
+  <div class="right-block">
+    <a id="link-fb" class="link-fb"></a>
+    <a class="current-level">{{rank}}</a>
+  </div>
+</div>
+<div class="clearfix"></div>
+<!-- FOOTER BLOCK BEGIN -->
+<div class="footer-container box-align">
+  <div class="block played">
+    <div class="score-container box-align"></div>
+    <div class="text box-align">Parties jouées</div>
+  </div>
+  <div class="block won">
+    <div class="score-container box-align"></div>
+    <div class="text box-align">Parties gagnées</div>
+  </div>
+  <div class="block best-score">
+    <div class="score-container box-align"></div>
+    <div class="text box-align">Meilleur niveau</div>
+  </div>
+  <div class="block best-cash">
+    <div class="score-container box-align"></div>
+    <div class="text box-align">Meilleure cagnotte</div>
+  </div>
+  <div class="block stars">
+    <div class="score-container box-align"></div>
+    <div class="text box-align">Etoiles Mystérieuses</div>
+  </div>
+</div>

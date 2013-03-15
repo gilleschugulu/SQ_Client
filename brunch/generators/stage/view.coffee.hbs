@@ -1,0 +1,12 @@
+View = require 'views/base/view'
+template = require 'views/templates/ingame/stages/{{name}}-stage'
+i18n     = require 'lib/i18n'
+
+module.exports = class {{#camelize}}{{name}}{{/camelize}}View extends View
+  template: template
+  autoRender: yes
+  className : '{{name}}-stage'
+  container : '#page-container'
+
+  getTemplateData: ->
+    @options

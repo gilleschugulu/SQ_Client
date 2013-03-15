@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cordova>
+	<preference name="AllowInlineMediaPlayback" value="true"/>
+	<preference name="AutoHideSplashScreen" value="false"/>
+	<preference name="EnableLocation" value="false"/>
+	<preference name="EnableViewportScale" value="false"/>
+	<preference name="KeyboardDisplayRequiresUserAction" value="false"/>
+	<preference name="MediaPlaybackRequiresUserAction" value="false"/>
+	<preference name="OpenAllWhitelistURLsInWebView" value="false"/>
+	<preference name="ShowSplashScreenSpinner" value="true"/>
+	<preference name="SuppressesIncrementalRendering" value="true"/>
+	<preference name="TopActivityIndicator" value="gray"/>
+	<preference name="UIWebViewBounce" value="false"/>
+    <preference name="BackupWebStorage" value="cloud"/>
+	<plugins>
+		<plugin name="AppStoreRating" value="AppStoreRatingPlugin"/>
+		<plugin name="Debug Console" value="CDVDebugConsole"/>
+		<plugin name="Device" value="CDVDevice"/>
+		<plugin name="Echo" value="CDVEcho"/>
+		<plugin name="GameCenter" value="GameCenterPlugin"/>
+		<plugin name="GoogleAnalytics" value="GoogleAnalyticsPlugin"/>
+		<plugin name="InterstitialAd" value="InterstitialAdPlugin"/>
+		<plugin name="MKStore" value="MKStorePlugin"/>
+		<plugin name="Message" value="MessagePlugin"/>
+		<plugin name="NetworkStatus" value="CDVConnection"/>
+		<plugin name="PushNotifications" value="PushNotificationsPlugin"/>
+		<plugin name="Social" value="SocialPlugin"/>
+		<plugin name="SplashScreen" value="CDVSplashScreen"/>
+		<plugin name="TapjoyConnect" value="TapjoyConnectPlugin"/>
+        <plugin name="AdColony" value="AdColonyPlugin"/>
+        <plugin name="ChartBoost" value="ChartBoostPlugin"/>
+		<plugin name="XitiAnalytics" value="XitiAnalyticsPlugin"/>
+        <plugin name="PermaKeyboard" value="PermaKeyboardPlugin"/>
+        <plugin name="InAppBrowser" value="CDVInAppBrowser"/>
+		<plugin name="org.apache.cordova.facebook.Connect" value="FacebookConnectPlugin"/>
+	</plugins>
+	<access origin="*"/>
+</cordova>

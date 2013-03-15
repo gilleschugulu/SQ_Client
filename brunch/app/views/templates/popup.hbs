@@ -1,0 +1,19 @@
+<div id="popup" class="popup {{className}}" style="z-index:100{{level}}" data-key="{{key}}">
+  <h1>{{title}}</h1>
+  <p>
+    <ul class="messages">
+      {{#each message}}
+        <li>{{this}}</li>
+      {{/each}}
+    </ul>
+  </p>
+  <div class="btn-container">
+    {{#if info}}
+      <div class="ok btn remove">ok</div>
+    {{/if}}
+    {{#if confirmation}}
+      <div class="no btn remove">no</div>
+      <div class="yes btn remove">yes</div>
+    {{/if}}
+  </div>
+</div>

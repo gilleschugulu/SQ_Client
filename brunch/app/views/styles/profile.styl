@@ -1,0 +1,172 @@
+@import 'nib'
+@import 'mixins'
+
+.profile-page
+  width: 100%
+  height: 100%
+  background-repeat: no-repeat
+  background-image: url("../images/common/background.jpg")
+  background-size: 100% 100%
+  position: relative
+  .header-container
+    width: 100%
+    height: 20%
+    position: relative
+    .title
+      width: 32.3%
+      height: 66%
+      absolute: top 0 left 34%
+      display: inline-block
+      background-repeat: no-repeat
+      background-size: 100% 100%
+      background-image: url("../images/profile/title.png")
+    .home-btn
+      width: 7.4%
+      height: 55%
+      display: inline-block
+      background-image: url('../images/common/home.png')
+      background-repeat: no-repeat
+      background-size: contain
+      absolute: top 4% left 0.7%
+      z-index: 99
+    .cash-container
+      margin-top: 2%
+      margin-right: 2%
+      float: right
+      width: 30%
+      height: 100%
+      p
+        float: right
+        font: 1.4em grilled
+        margin: 0
+        padding: 0
+        color: #fff
+        stroke(#5E3FAC)
+        .cash-value
+          color: #E5A42C
+      .token
+        float: right
+        background-repeat: no-repeat
+        background-size: contain
+        background-image: url("../images/profile/jeton.png")
+        width: 11%
+        height: 24%
+        display: inline-block
+        margin-left: 5%
+        margin-top: -1%
+  .content-container
+    width: 95%
+    height: 50%
+    .left-block
+      width: 23.7%
+      height: 82%
+      float: left
+      background-image: url("../images/profile/framephoto.png")
+      background-size: contain
+      background-repeat: no-repeat
+      position: relative
+      margin-left: 6%
+      .fb-head-container
+        width: 90%
+        height: 87.5%
+        background-size: 100% 100%
+        background-repeat: no-repeat
+        &.male
+          background-image: url("../images/profile/photo_m.png")
+          absolute: bottom 5.2% left 4%
+        &.female
+          background-image: url("../images/profile/photo_w.png")
+          absolute: bottom 5.2% left 6.3%
+          .fb-head
+            absolute: top 3.2% left 15.2%
+        .fb-head
+          width: 68%
+          height: 58%
+          absolute: top 1.8% left 18.8%
+          border-radius: 2.5%
+    .center-block
+      float: left
+      width: 29.4%
+      height: 100%
+      margin-left: 4%
+      margin-top: 1%
+      .nickname, .current-cash, .rankings
+        width: 100%
+        height: 18.1%
+        display: block
+        margin-bottom: 6%
+        background-size: contain
+        background-repeat: no-repeat
+        text-align: center
+      .nickname
+        background-image: url("../images/profile/pseudo.png")
+        color: #4418A4
+        font-weight: bold
+      .current-cash
+        background-image: url("../images/profile/cagnottecourante.png")
+        width: 102%
+        height: 24.3%
+        padding-top: 15%
+        color: #F8F568
+      .rankings
+        background-image: url("../images/profile/classement.png")
+        width: 102%
+        height: 24.3%
+        cursor: pointer
+    .right-block
+      float: right
+      width: 35.2%
+      height: 90%
+      position: relative
+      .link-fb, .current-level
+        cursor: pointer
+        width: 100%
+        height: 27.4%
+        display: block
+        background-size: contain
+        background-repeat: no-repeat
+      .link-fb
+        background-image: url("../images/profile/liaison_fb.png")
+        width: 87.5%
+        height: 25%
+        margin-left: 9%
+        margin-bottom: 3.5%
+      .current-level
+        background-image: url("../images/profile/niveaucourant.png")
+        width: 100%
+        height: 27.4%
+        color: #F8F568
+        padding-left: 85%
+        padding-top: 8%
+        font: 1.4em dax
+  .footer-container
+    width: 96%
+    height: 31.8%
+    relative: bottom 6% left 2%
+    background-image: url("../images/profile/bloc_infos.png")
+    background-size: contain
+    background-repeat: no-repeat
+    position: relative
+    .block
+      background-image: url("../images/profile/box_info.png")
+      background-size: contain
+      background-repeat: no-repeat
+      width: 17.1%
+      height: 62%
+      margin-right: 2%
+      margin-top: -2%
+      position: relative
+      .score-container
+        absolute: top 12% left 12%
+        width: 75%
+        height: 29%
+        color: #fff
+        text-align: center
+        stroke(#5C00AE)
+      .text
+        width: 87%
+        height 54%
+        absolute: bottom 4% left 7%
+        text-align: center
+        color: #3E0A87
+        stroke(#fff)

@@ -1,0 +1,6 @@
+bin
+node_modules
+build/*
+vendor/scripts/build_version.js
+npm-debug.log
+app/config/environment-config.coffee

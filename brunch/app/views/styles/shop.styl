@@ -1,0 +1,127 @@
+@import 'nib'
+@import 'mixins'
+
+.shop
+  width: 100%
+  height: 100%
+  background-repeat: no-repeat
+  background-image: url("../images/shop/background.jpg")
+  background-size: contain
+  position: relative
+  .header-container
+    width: 100%
+    height: 14.0625%
+    .home-btn
+      width: 7.395833333333333%
+      height: 77.77777777777778%
+      display: block
+      background-repeat: no-repeat
+      background-image: url("../images/shop/home.png")
+      background-size: contain
+      margin: .6% 0  0 1%
+      float:left
+      z-index: 99
+    .title
+      width: 46.458333333333335%
+      height: 100%
+      margin-left: 18.75%
+      background-repeat: no-repeat
+      background-image: url("../images/shop/title.png")
+      background-size: contain
+      float: left
+    .cash-container
+      width: 9.166666666666666%
+      height: 41.11111111111111%
+      margin: 1.1% 0 0 16.1%
+      background-repeat: no-repeat
+      background-image: url("../images/shop/jeton.png")
+      background-position: right
+      background-size: contain
+      float: left
+      .cash-value
+        font-size: 1.85em
+        font-weight: bold
+        margin-top: -5%
+        color: #ffae22
+        stroke: #633fbd
+        width: 57.9545455%
+  .content-container
+    width: 100%
+    height: 85.9375%
+    .paid-offers, .free-offers
+      margin-left: 3.36%
+    .paid-offers
+      width: 92.39583333333333%
+      height: 43.272727272727274%
+      margin-top: 1.7%
+      a
+        display: block
+        width: 49.492671927846676%
+        height: 50.84033613445378%
+      .unavailable
+        opacity : 0.6
+      .first-offer, .second-offer, .third-offer, .fourth-offer
+        background-repeat: no-repeat
+        background-size: contain
+      .first-offer, .third-offer
+        float: left
+      .second-offer, .fourth-offer
+        float: right
+        margin-right: -1.1%
+      .third-offer, .fourth-offer
+        margin-top: .5%
+      // .first-offer
+      //   background-image: url("../images/shop/pack_minipack.png")
+      // .second-offer
+      //   background-image: url("../images/shop/pack_lepluspopulaire.png")
+      // .third-offer
+      //   background-image: url("../images/shop/pack_mediumpack.png")
+      // .fourth-offer
+      //   background-image: url("../images/shop/pack_lameilleureoffre.png")
+    .free-offers
+      width: 92.39583333333333%
+      height: 53.45454545454545%
+      .title
+        width: 29.76324689966178%
+        height: 14.965986394557823%
+        background-repeat: no-repeat
+        background-size: contain
+        background-image: url("../images/shop/jetonsofferts.png")
+        margin-left: 1.4%
+        margin-top: .2%
+      a
+        display: block
+      .free-pack
+        background-repeat: no-repeat
+        background-size: contain
+        float: left
+      .first-offer, .second-offer, .fourth-offer
+        width: 49.492671927846676%
+        height: 39.1156462585034%
+        margin-top:  .8%
+      .fourth-offer, .fifth-offer
+        margin-top:  .8%
+        width: 30%
+      .first-offer
+        background-image: url("../images/shop/regardervideo.png")
+      .second-offer
+        background-image: url("../images/shop/completeoffre.png")
+        margin-right: -1.1%
+      .third-offer
+        width: 35%
+        height: 33.6734693877551%
+        background-image: url("../images/shop/inviter.png")
+        margin-top: .7%
+      .fourth-offer
+        background-image: url("../images/shop/aimenous.png")
+        span
+          opacity: 0
+          margin-top: .7%
+          width: 100% !important
+          height: 100% !important
+          iframe
+            width: 100% !important
+            height: 100% !important
+      .fifth-offer
+        height: 33.6734693877551%
+        background-image: url("../images/shop/notelejeu.png")

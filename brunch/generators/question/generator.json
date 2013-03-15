@@ -1,0 +1,9 @@
+{
+  "files": [
+    {
+      "from": "question.coffee.hbs",
+      "to": "app/models/ingame/questions/{{name}}-question-model.coffee"
+    }
+  ],
+  "dependencies": []
+}

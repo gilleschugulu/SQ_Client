@@ -1,0 +1,25 @@
+{
+  "files": [
+    {
+      "from": "stage-config.coffee.hbs",
+      "to": "app/config/stages/{{name}}-stage-config.coffee"
+    },
+    {
+      "from": "view.coffee.hbs",
+      "to": "app/views/ingame/stages/{{name}}-stage-view.coffee"
+    },
+    {
+      "from": "template.hbs.hbs",
+      "to": "app/views/templates/ingame/stages/{{name}}-stage.hbs"
+    },
+    {
+      "from": "controller.coffee.hbs",
+      "to": "app/controllers/ingame/stages/{{name}}-stage-controller.coffee"
+    },
+    {
+      "from": "model.coffee.hbs",
+      "to": "app/models/ingame/stages/{{name}}-stage-model.coffee"
+    }
+  ],
+  "dependencies": []
+}

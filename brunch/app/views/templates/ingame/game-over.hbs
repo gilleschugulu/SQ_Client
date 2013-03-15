@@ -1,0 +1,25 @@
+<div class="header-container">
+  <a href="#home" class="home-btn"></a>
+</div>
+<div class="content-container{{#if success}} sucess{{else}} lost{{/if}}">
+  <h1 class="title box-align">
+    {{#if success}}
+      Pour te récompense voici <span class="jetons">{{params.reward}}</span> offerts!
+    {{else}}
+      Ne baisse pas les bras.<br>
+      Tu feras mieux la prochaine fois!
+    {{/if}}
+  </h1>
+  <div class="blocks-container">
+    <div class="block jackpot">
+      <span class="value">{{niceNumber params.jackpot}}</span>
+    </div>
+    <div class="block rank">
+      <img src="{{getRankImage params.rank}}" class='rank-image'>
+      <div class="rank-text box-align">
+        <span class="resizeOnce">{{getRankName params.rank}}</span>
+      </div>
+    </div>
+  </div>
+  <a href="#game" class="replay-btn"></a>
+</div>

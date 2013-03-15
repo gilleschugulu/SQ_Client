@@ -1,0 +1,62 @@
+@import 'nib'
+
+.home-page
+  width: 100%
+  height: 100%
+  background-image: url("../images/home/background.png")
+  background-size: 100% 100%
+  position: relative
+  .game-link
+    display: block
+    width: 24%
+    height: 23%
+    absolute: top 55% left 71%
+    cursor: pointer
+  .more-games-link
+    background-image: url("../images/home/moregames.png")
+    background-size: 100% 100%
+    background-repeat: no-repeat
+    absolute: top 0 right 0
+    width: 8.2%
+    height: 12.9%
+  .footer-links-container
+    width: 100%
+    height: 22.2%
+    absolute: bottom 0 left 0
+    text-align: center
+    a
+      display: block
+      background-repeat: no-repeat
+      background-size: contain
+      margin-top: 2%
+      height: 86%
+      width: 10.4%
+      float: left
+      margin-right: 5%
+    .profile-link
+      margin-left: 12.5%
+      background-image: url("../images/home/profil.png")
+      &:active
+        background-image: url("../images/home/profil_a.png")
+    .masters-link
+      background-image: url("../images/home/lesmaitres.png")
+      margin-right: 2.5%
+      &:active
+        background-image: url("../images/home/lesmaitres_a.png")
+    .shop-link
+      background-image: url("../images/home/jetons.png")
+      margin-top: -1%
+      margin-right: 2.5%
+      width: 20%
+      height: 104%
+      &:active
+        background-image: url("../images/home/jetons_a.png")
+    .invite-link
+      background-image: url("../images/home/invitations.png")
+      &:active
+        background-image: url("../images/home/invitations_a.png")
+    .options-link
+      background-image: url("../images/home/option.png")
+      margin-right: 0
+      &:active
+        background-image: url("../images/home/option_a.png")

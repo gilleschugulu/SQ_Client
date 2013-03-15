@@ -1,0 +1,160 @@
+@import 'mixins'
+@import 'nib'
+
+.hall-of-fame
+  font: 1em grilled
+  width: 100%
+  height: 100%
+  background-image: url('../images/hall-of-fame/background.jpg')
+  background-repeat: no-repeat
+  background-size: 100% 100%
+  .home-btn, .cash-container
+    position: absolute
+    top: 2.8%
+  .home-btn
+    width: 7.4%
+    height: 55%
+    display: inline-block
+    background-image: url('../images/common/home.png')
+    background-repeat: no-repeat
+    background-size: contain
+    absolute: top 1% left 0.7%
+  .title
+    width: 31%
+    height: 11%
+    margin: 0 auto
+    background-image: url('../images/hall-of-fame/title.png')
+    background-repeat: no-repeat
+    background-size: contain
+  .cash-container
+    color: #FBA633
+    stroke: #5E3FAC
+    right: 1%
+    font-size: 2em
+    width: 12%
+    height: 10%
+    #cash-icon
+      display:inline-block
+      width: 33%
+      height 56%
+      background-image: url('../images/hall-of-fame/jeton.png')
+      background-repeat: no-repeat
+      background-size: contain
+  .content-container
+    width: 68%
+    height: 93%
+    margin: 0 auto
+    position: relative
+    top: -5%
+    background-image: url('../images/hall-of-fame/fond_classement.png')
+    background-repeat: no-repeat
+    background-size: contain
+    #rank
+      text-align: center
+      stroke: #491FA1
+      color: white
+      margin-left: 74%
+      padding-top: 0.1em
+      font-size: 1.2em
+    .ranking-container
+      overflow: scroll
+      -webkit-overflow-scrolling: touch
+      width: 96%
+      height: 82%
+      margin: 2% auto 0.5% auto
+      table.weekly-ranking
+        width: 100%
+        border-collapse:collapse
+        tr.row-ranking
+          width: 100%
+          height: 2.5em
+          &.opponent
+            background-color: rowcol = #F6DDF4
+            .rank
+              background-color: (rowcol - #222222)
+            &:nth-child(odd)
+              background-color: rowcol = #D2C8ED
+              .rank
+                background-color: (rowcol - #222222)
+          &.friend
+            background-color: rowcol1 = #87CEFA
+            .rank
+              background-color: (rowcol1 - #222222)
+            &:nth-child(odd)
+              background-color: rowcol1 = (rowcol1 - #222222)
+              .rank
+                background-color: (rowcol1 - #222222)
+          &.podium_1
+            background-color: rowcol3 = #E1C24E !important
+            .rank
+              background-color: (rowcol3 - #222222) !important
+          &.podium_2
+            background-color: rowcol4 = #ABB7C3 !important
+            .rank
+              background-color: (rowcol4 - #222222) !important
+          &.podium_3
+            background-color: rowcol5 = #DE9D63 !important
+            .rank
+              background-color: (rowcol5 - #222222) !important
+          &.self
+            background-color: rowcol2 = #66C802 !important
+            .rank
+              background-color: (rowcol2 - #222222) !important
+          td
+            vertical-align: middle
+          .rank
+            border-top-left-radius: 0.2em
+            border-bottom-left-radius: 0.2em
+            color: white
+            width: 9%
+            text-align: center
+          .profilepic
+            text-align: center
+            padding-top: 1%
+            width: 11%
+            img
+              padding: 6%
+              background: #fff
+              border-radius: 5%
+              width: 2.5em
+              height: 2.5em
+          .nickname
+            width: 30%
+            color: #6d45d2
+            stroke: white
+          .money
+            text-align: right
+            color: yellow
+            width: 52%
+            border-top-right-radius: 0.2em
+            border-bottom-right-radius: 0.2em
+            .star
+              display:inline-block
+              width: 10%
+              height: 50%
+              background-image: url('../images/hall-of-fame/etoile.png')
+              background-size: contain
+              background-repeat: no-repeat
+    .btns-container
+      width: 98%
+      margin: 0 auto
+      height: 10%
+      text-align: center
+      .footer-btn
+        height: 100%
+        display: inline-block
+        background-repeat: no-repeat
+        background-size: contain
+      #btn-game-center
+        width: 38%
+        background-image: url('../images/hall-of-fame/gamecenter.png')
+      #btn-friends
+        width: 18%
+        background-image: url('../images/hall-of-fame/amis_deactive.png')
+        &:hover,&.active
+          background-image: url('../images/hall-of-fame/amis.png')
+      #btn-opponents
+        width: 29%
+        background-image: url('../images/hall-of-fame/adversaires_deactive.png')
+        &:hover,&.active
+          background-image: url('../images/hall-of-fame/adversaire.png')

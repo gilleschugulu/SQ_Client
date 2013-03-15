@@ -1,0 +1,28 @@
+<!-- HEADER BLOCK BEGIN -->
+<div class="header-container">
+  <a href="#home" class="home-btn"></a>
+  <div class="title"></div>
+  <div class="cash-container">
+    <div class="cash-value">{{credits}}</div>
+  </div>
+  <div class="clearfix"></div>
+</div>
+<!-- CONTENT BLOCK BEGIN -->
+<div class="content-container">
+  <div class="paid-offers">
+    {{#each packs.credit_packs}}
+      <a class="paid-pack first-offer" data-id="{{id}}" style="background-image:url({{image}})"></a>
+    {{/each}}
+  </div>
+  <div class="clearfix"></div>
+  <div class="free-offers">
+    <div class="title"></div>
+    {{#if packs.free_packs.adcolony}}<a class="free-pack first-offer" id="adcolony"></a>{{/if}}
+    {{#if packs.free_packs.tapjoy}}<a class="free-pack second-offer" id="tapjoy"></a>{{/if}}
+    {{#if packs.free_packs.app_store_rating}}<a class="free-pack fifth-offer" id="app_store_rating"></a>{{/if}}
+    {{#if packs.free_packs.invite_friends}}<a class="free-pack third-offer" id="facebook_invitation"></a>{{/if}}
+    {{#if packs.free_packs.facebook_like}}<a target="_blank" href="{{../like_page_url}}" class="free-pack fourth-offer" id="facebook_like"></a>{{/if}}
+    {{#if packs.free_packs.twitter}}<a class="free-pack first-offer" id="twitter">FOLLOW US</a>{{/if}}
+  </div>
+  <div class="clearfix"></div>
+</div>

@@ -1,0 +1,16 @@
+<div class="btn-menu">MENNU</div>
+{{{#each players}}
+  <div class="timer" data-cid="{{cid}}"></div>
+  <div class="player-container{{#if eliminated}} eliminated{{/if}}" data-cid="{{cid}}">
+    <div class="player-skin skin-{{skin}} {{gender}}">
+      <img src="https://fbcdn-profile-a.akamaihd.net/hprofile-ak-ash4/c42.42.528.528/s160x160/317914_10200283607882068_451168186_n.jpg" alt="" class="profile-pic">
+    </div>
+    <div class="desk-container">
+      <div class="desk-color animated status_2"></div>
+      <div class="desk-star{{#if master}} active{{/if}}"></div>
+      <span class="nickname box-align">{{nickname}}</span>
+      <span class="jackpot box-align">{{jackpot}}</span>
+      <div class="star box-align"></div>
+    </div>
+  </div>
+{{/each}}}

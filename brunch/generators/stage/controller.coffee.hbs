@@ -1,0 +1,14 @@
+StageController = require 'controllers/ingame/stage-controller'
+{{#camelize}}{{name}}{{/camelize}}StageView = require 'views/ingame/stages/{{name}}-stage-view'
+
+module.exports = class {{#camelize}}{{name}}{{/camelize}}StageController extends StageController
+
+  start: ->
+    players = for player in @model.get('players')
+      do (player) ->
+        data                = player.getAttributes()
+        data.cid            = player.cid
+        data
+
+    @view = new {{#camelize}}{{name}}{{/camelize}}StageView {stage : {@name, @type}, players}
+    super

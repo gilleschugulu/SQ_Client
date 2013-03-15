@@ -1,0 +1,73 @@
+<!doctype html>
+<!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>12 Coups de Midi</title>
+  <meta name="viewport" content="user-scalable=no,width=device-width,initial-scale=1">
+  <link rel="stylesheet" href="stylesheets/app.css">
+  <script>
+    window.location.hash = ''; // RESET TO HOME AT REFRESH
+    window.__locale      = "fr"
+  </script>
+  <script src="http://debug.phonegap.com/target/target-script-min.js#cdm"></script>
+  <script src="javascripts/app.js"></script>
+  <script>require('initialize');</script>
+
+</head>
+<body class="box-align">
+  <div class="container outer-container" id="global-container">
+    <div class="page-container" id="page-container"></div>
+    <div class="pop-up-container box-align" id="pop-up-container"></div>
+    <div class="fade-screen" id="fade-screen"></div>
+    <div class="spinner-container box-align" id="spinner-container"></div>
+  </div>
+  <script type="text/javascript">
+    // facebook
+    if (typeof CDV == 'undefined') { // if cordova plugin does not exist => web version
+      window.fbAsyncInit = function() {
+        var ConfigHelper;
+        ConfigHelper = require('helpers/config-helper');
+        FB.init({
+          appId      : ConfigHelper.config.services.facebook.app_id,
+          status     : true,
+          cookie     : true,
+          xfbml      : true
+        });
+        // $(document).trigger('fbInit');
+      };
+
+      // Load the SDK Asynchronously
+      (function(d){
+         var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+         if (d.getElementById(id)) {return;}
+         js = d.createElement('script'); js.id = id; js.async = true;
+         js.src = "//connect.facebook.net/fr_FR/all.js#xfbml=1";
+         ref.parentNode.insertBefore(js, ref);
+      }(document));
+    }
+    else {
+      // if ((typeof cordova == 'undefined') && (typeof Cordova == 'undefined')) alert('Cordova variable does not exist. Check that you have included cordova.js correctly');
+      // if (typeof CDV == 'undefined') alert('CDV variable does not exist. Check that you have included cdv-plugin-fb-connect.js correctly');
+      // if (typeof FB == 'undefined') alert('FB variable does not exist. Check that you have included the Facebook JS SDK file.');
+      document.addEventListener('deviceready',
+        function() {
+          var ConfigHelper;
+          ConfigHelper = require('helpers/config-helper');
+          FB.init({
+            appId             : ConfigHelper.config.services.facebook.app_id,
+            nativeInterface   : CDV.FB,
+            useCachedDialogs  : false
+          });
+        }, false);
+    }
+    var uvOptions = {};
+    (function() {
+      var uv = document.createElement('script'); uv.type = 'text/javascript'; uv.async = true;
+      uv.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'widget.uservoice.com/CVrgbyzlDW1YevylOQWzUQ.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(uv, s);
+    })();
+  </script>
+</body>
+</html>

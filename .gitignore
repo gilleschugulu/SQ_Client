@@ -1,0 +1,5 @@
+*~
+*#
+.DS_Store
+brunch/app/config/environment-config.coffee
+deployment
