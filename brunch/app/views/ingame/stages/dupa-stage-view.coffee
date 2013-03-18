@@ -11,7 +11,6 @@ module.exports = class DupaView extends View
   thresholds       : null
 
   getTemplateData: ->
-    console.log @options
     @options
 
   welcome: (callback) ->
@@ -78,8 +77,11 @@ module.exports = class DupaView extends View
         callback?()
     , 2000
 
-  updateJackpot: (jackpot, currentThresholdIndex) ->
-    $('.jackpot-container').html('Jackpot : ' + jackpot + '<br/> Threshold : ' + @options.thresholds[currentThresholdIndex])
+  updateJackpot: (jackpot, currentThresholdValue) ->
+    el = $('.jackpot-container', @$el)
+    $('#total-jackpot', el).text jackpot
+    $(".threshold", el).removeClass('highlighted')
+    $(".threshold[data-value='#{currentThresholdValue}']", el).addClass('highlighted')
 
   updateBonus: (targetElement, quantity, callback) ->
     targetElement = $(targetElement, @$el)

@@ -14,4 +14,9 @@
     </div>
   {{/each}}
 </div>
-<div class='jackpot-container'></div>
+<div class='jackpot-container'>
+  <div id="total-jackpot">0</div>
+  {{#each thresholds}}
+    <div class='threshold' data-value="{{this}}">{{this}}</div>
+  {{/each}}
+</div>

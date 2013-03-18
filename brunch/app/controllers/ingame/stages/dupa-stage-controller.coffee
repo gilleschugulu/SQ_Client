@@ -7,7 +7,8 @@ module.exports = class DupaStageController extends StageController
   timer: null
 
   start: ->
-    @view = new DupaStageView {stage : {@name, @type}, thresholds: @model.getConfigValue('thresholds'), bonus: @model.get('player').getBonuses()}
+    t = @model.getConfigValue('thresholds').slice(0).reverse()
+    @view = new DupaStageView {stage : {@name, @type}, thresholds: t, bonus: @model.get('player').getBonuses()}
     @timer = new Timer((duration) => @view.updateTimer(duration))
     super
     @view.unDim =>
@@ -16,7 +17,7 @@ module.exports = class DupaStageController extends StageController
         setTimeout =>
           @finishStage()
         , 200
-      @view.updateJackpot(0, 0)
+      @view.updateJackpot(0, @model.getCurrentThreshold())
       @view.welcome @askNextQuestion
 
       @view.delegate 'click', '.bonus', (event) =>
@@ -49,7 +50,7 @@ module.exports = class DupaStageController extends StageController
 
   playerDidAnswer: (player, question, result) =>
     if result then @model.playerMadeSuccess(player) else @model.playerMadeError(player)
-    @view.updateJackpot player.get('jackpot'), @model.currentThresholdIndex
+    @view.updateJackpot player.get('jackpot'), @model.getCurrentThreshold()
     @askNextQuestion()
 
   beforeFinishStage: (player) ->
