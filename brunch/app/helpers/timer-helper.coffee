@@ -56,7 +56,9 @@ module.exports = class TimerHelper
       @duration = 0 # timer will stop on the next tick()
 
   adjustDuration: (offset) =>
+    @remaining += offset
     @setDuration(@duration + offset)
+    @onTick?((@duration / @durationPrecisionCoef).toFixed(@precision))
 
   stop: =>
     @remaining = @duration

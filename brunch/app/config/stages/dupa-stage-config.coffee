@@ -1,6 +1,7 @@
 module.exports =
   stage:
-    answerTime: 400
+    answerTime: 20
     thresholds: [100, 200, 300, 400, 500, 1000, 2000, 3000, 4000, 5000]
-    bonus: ['fifty-fity', 'double', 'freeze', 'skip', 'mass']
+    timeBonus: 10
+    time_bonus_threshold: 10000
   player: {}

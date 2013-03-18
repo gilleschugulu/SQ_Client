@@ -25,23 +25,13 @@ module.exports = class Stage extends Model
     @set 'players', players
     @
 
-  getAllUnusedQuestions: ->
-    all_questions = []
-    for question in @get('questions')
-      all_questions.push question unless question.get('found')
-    return all_questions
-
   getCurrentQuestion: ->
-    all_questions = @getAllUnusedQuestions()
-    return null if @questionIndex >= all_questions.length
-    all_questions[@questionIndex]
+    @get('questions')[@questionIndex % @get('questions').length]
 
   getNextQuestion: (reset = no) ->
     @questionIndex = -1 if reset
-    all_questions = @getAllUnusedQuestions()
     ++@questionIndex
-    # return null if ++@questionIndex >= all_questions.length
-    all_questions[@questionIndex % all_questions.length]
+    @get('questions')[@questionIndex % @get('questions').length]
 
   getHumanPlayer: ->
     @get('players')[0]
