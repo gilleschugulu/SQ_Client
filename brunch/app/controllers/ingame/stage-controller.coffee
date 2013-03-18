@@ -23,10 +23,7 @@ module.exports = class StageController extends Controller
     super
 
   finishStage: =>
-    if @model.getHumanPlayer()?.isEliminated()
-      @publishEvent 'game:finish'
-    else
-      @publishEvent 'stage:finish'
+    @publishEvent 'game:finish'
 
   setStageModel: (@model) ->
     @

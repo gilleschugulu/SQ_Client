@@ -1,10 +1,8 @@
 utils   = require 'lib/utils'
 Model   = require 'models/base/model'
-Bot     = require 'models/ingame/bot-model'
 Factory = require 'helpers/factory-helper'
 
 module.exports = class Stage extends Model
-  playerIndex: -1
   questionIndex: -1
   failedQuestions: []
   defaults:
@@ -23,7 +21,7 @@ module.exports = class Stage extends Model
 
   setPlayers: (players) ->
     throw "stage config should be set" unless @get 'config'
-    players = (player.configure(@get('config').player) for player in players when not player.isEliminated())
+    players = (player.configure(@get('config').player) for player in players)
     @set 'players', players
     @
 
@@ -41,36 +39,12 @@ module.exports = class Stage extends Model
   getNextQuestion: (reset = no) ->
     @questionIndex = -1 if reset
     all_questions = @getAllUnusedQuestions()
-    return null if ++@questionIndex >= all_questions.length
-    all_questions[@questionIndex]
+    ++@questionIndex
+    # return null if ++@questionIndex >= all_questions.length
+    all_questions[@questionIndex % all_questions.length]
 
   getHumanPlayer: ->
-    (player for player in @get('players') when !(player instanceof Bot))?[0]
-
-  getPlayerWithCid: (cid) ->
-    (player for player in @get('players') when player.cid is cid)?[0]
-
-  getOtherPlayers: (player) ->
-    (otherPlayer for otherPlayer in @get('players') when otherPlayer.cid isnt player.cid and not otherPlayer.isEliminated())
-
-  getNextPlayerName: ->
-    players = @get 'players'
-    players[(@playerIndex + 1) % players.length].get('nickname')
-
-  getCurrentPlayer: ->
-    players = @get 'players'
-    player = players[@playerIndex]
-
-  getNextPlayer: ->
-    players = @get 'players'
-    @playerIndex = (@playerIndex + 1) % players.length
-    player = players[@playerIndex]
-    player
-
-  decreaseBotsSkill: ->
-    decrease = @getConfigValue 'botsSkillDecrease'
-    if decrease? and @get('roundCount') >= decrease.threshold
-      player.decreaseSkill(decrease.value) for player in @get('players') when player instanceof Bot and not player.isEliminated()
+    @get('players')[0]
 
   getConfigValue: (key) ->
     @get('config').stage[key]

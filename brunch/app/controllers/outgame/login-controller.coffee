@@ -21,23 +21,23 @@ module.exports = class LoginController extends Controller
     # # If already registered login the user
     if LocalStorageHelper.exists 'uuid'
       # Call server to get the player
-      ApiCallHelper.fetch.player LocalStorageHelper.get('uuid')
-        , (response) =>
-          # Success Callback
-          @bindPlayer response.player
-      # response =
-      #   player:
-      #     uuid: 'e999f160-42dc-0130-e782-38ac6f13ffa4'
-      #     credits: 50
-      #     email: "pierre@chugulu.com"
-      #     gender: "male"
-      #     nickname: "pierre"
-      #     notifications:
-      #       decrease_rank: false
-      #       info: false
-      #       ranking: false
+      # ApiCallHelper.fetch.player LocalStorageHelper.get('uuid')
+      #   , (response) =>
+      #     # Success Callback
+      #     @bindPlayer response.player
+      response =
+        player:
+          uuid: 'e999f160-42dc-0130-e782-38ac6f13ffa4'
+          credits: 50
+          email: "pierre@chugulu.com"
+          gender: "male"
+          nickname: "pierre"
+          notifications:
+            decrease_rank: false
+            info: false
+            ranking: false
 
-      # @bindPlayer response.player
+      @bindPlayer response.player
 
     # Else show the login View
     else
