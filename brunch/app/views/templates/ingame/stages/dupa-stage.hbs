@@ -1,7 +1,9 @@
 <div class="btn-menu">MENNU</div>
 <div class='chrono-container'>
-  <div id="time">{{time}}</div>
-  <div id="progress"></div>
+  <div class='chrono-time'></div>
+  <div class='chrono-filler-container'>
+    <div class='chrono-filler'></div>
+  </div>
 </div>
 <div class='question-container'>
   <div class='question-photo'></div>
@@ -12,7 +14,7 @@
 </div>
 <div class='bonus-container'>
   {{#each bonus}}
-    <div class='bonus' id='{{name}}'>
+    <div class='bonus' id='{{name}}' style='background-image: url("../images/ingame/{{name}}.png")'>
       <div class='quantity'>{{quantity}}</div>
     </div>
   {{/each}}

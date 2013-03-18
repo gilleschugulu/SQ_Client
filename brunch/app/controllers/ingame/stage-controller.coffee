@@ -59,6 +59,7 @@ module.exports = class StageController extends Controller
   # / iOS interruptions
 
   dispose: ->
+    @timer?.destroy()
     document.removeEventListener 'pause', @onResignActive, false
     # document.removeEventListener 'resume', @onBecomeActive, false
     super
