@@ -18,10 +18,14 @@ module.exports = class DupaView extends View
     callback?()
 
   updateTimer: (duration) ->
-    $('.chrono-container', @$el).html duration - 1
+    $('.chrono-container #time', @$el).text duration - 1
+    progress = duration / @options.time * 100
+    if progress > 100
+      progress = 100
+    progressEl = $('.chrono-container #progress', @$el).css('height', progress + '%')
 
   clearTimer: ->
-    $('.chrono-container', @$el).empty()
+    $('.chrono-container #time', @$el).empty()
 
   removeQuestion: (callback) ->
     $('#text-block', @$el).removeClass('active')#.one 'webkitTransitionEnd', =>
