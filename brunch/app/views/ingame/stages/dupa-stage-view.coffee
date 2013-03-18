@@ -18,11 +18,11 @@ module.exports = class DupaView extends View
     callback?()
 
   updateTimer: (duration) ->
-    $('.chrono-container #time', @$el).text duration - 1
+    $('.chrono-container #time', @$el).text (duration - 1) + 's'
     progress = duration / @options.time * 100
     if progress > 100
       progress = 100
-    progressEl = $('.chrono-container #progress', @$el).css('height', progress + '%')
+    progressEl = $('.chrono-container .chrono-filler', @$el).css('height', progress + '%')
 
   clearTimer: ->
     $('.chrono-container #time', @$el).empty()
@@ -40,6 +40,7 @@ module.exports = class DupaView extends View
       for proposition in question.getPropositions()
         propositionsEl.prepend "<div class='proposition box-align' data-id='#{proposition.id}'>
             <span class='resize'>#{if proposition.masked then '?' else proposition.text}</span>
+            <div class='massOpinion'></div>
           </div>"
       @autoSizeText()
       $('.question-content').text question.get('text')
@@ -90,6 +91,16 @@ module.exports = class DupaView extends View
   updateBonus: (targetElement, quantity, callback) ->
     targetElement = $(targetElement, @$el)
     $('.quantity', targetElement).html(quantity)
+    callback?()
+
+  hideSomeAnswers: (propositions, callback) ->
+    for proposition in propositions
+      $(".proposition[data-id='#{proposition.id}']").css('visibility', 'hidden')
+    callback?()
+
+  displayMass: (propositions, callback) ->
+    for proposition in propositions
+      $(".proposition[data-id='#{proposition.id}'] .massOpinion").html(proposition.massOpinion + '%')
     callback?()
 
   finishMessage: (textKey, params, callback) ->

@@ -6,9 +6,9 @@ module.exports = class Player extends Model
     bonus:
       fifty_fifty: 4
       double: 1
-      freeze: 20
+      add_time: 20
       skip: 12
-      mass: 0
+      mass: 10
 
   addJackpot: (someJackpot) ->
     amount = @get('jackpot') + someJackpot
