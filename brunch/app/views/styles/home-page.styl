@@ -332,6 +332,7 @@
         width: 50%
         height: 62%
         #leaderboard
+          border-collapse:collapse
           width: 100%
           height: 100%
           .participant
@@ -339,6 +340,8 @@
             border: 0.2em solid #dddddd
             &:nth-child(odd)
               background-color: #dddddd
+            &.self
+              background-color: #ff787d
             .rank
               color: black
               font-size: 0.7em
