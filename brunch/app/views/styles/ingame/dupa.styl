@@ -5,8 +5,8 @@
   position: relative
   width: 100%
   height: 100%
-  background: white
-
+  background-image: url('../images/common/background.png')
+  color: white
 
   .home-btn
     absolute: top 1% left 0.7%
@@ -26,7 +26,7 @@
     background-size: contain
     .chrono-time
       absolute: top 13% left 12%
-      color: white
+      z-index: 3
     .chrono-filler-container
       absolute: bottom 1% left 8%
       width: 68%
@@ -57,57 +57,85 @@
       background-repeat: no-repeat
       background-size: contain
       .quantity
-        background: red
-        relative: top -10% left 87%
-        height: 28%
-        width: 20%
-        font-size: .8em
+        relative: top -10% left 76%
+        width: 35%
+        height: 47%
+        border-radius: 400%
+        line-height: 145%
         text-align: center
+        background: #c50000
 
   .jackpot-container
-    absolute: top 1% left 83%
+    absolute: top 2% left 81%
     width: 15%
     height: 96%
-    background: purple
-    .threshold
+    background-image: url("../images/ingame/score.png")
+    background-repeat: no-repeat
+    background-size: contain
+    #total-jackpot
+      relative: top .8% left 2%
       width: 95%
-      background: white
+      height: 8%
+      text-align: center
+      padding: 7% 0
+    .threshold
+      relative: top 1% left 26.5%
+      width: 45.3%
+      height: 9.01%
+      color: #75634e
+      text-align: center
+      padding: 10% 0
       &.highlighted
-        background: red
+        background-image: url("../images/ingame/timer_in.png")
+        background-repeat: no-repeat
+        background-size: contain
+        color: #f9e4f3
+    #jackpot-marker
+      absolute: top 1% left 68%
+      width: 45%
+      height: 7%      
+      background-image: url("../images/ingame/repere.png")
+      background-repeat: no-repeat
+      background-size: contain
+
 
   .question-container
-    absolute: top 4% left 13%
+    absolute: top 7% left 13%
     width: 68%
     height: 71%
-    background: blue
 
     .question-photo
-      relative: top 8% left 3%
-      width: 40%
-      height: 84%
+      relative: top 5% left 1%
+      width: 45%
+      height: 93%
       float: left
-      background: purple
+      background-image: url("../images/ingame/photo.png")
+      background-repeat: no-repeat
+      background-size: contain
 
     .question-theme
-      relative: top 4% left 6%
-      width: 21%
+      relative: top 4% left 3%
+      width: 30%
       height: 8%
       float: left
-      background: green
+      background-image: url("../images/ingame/title.png")
+      background-repeat: no-repeat
+      background-size: contain
 
     .question-content
-      relative: top 4% left 6%
+      relative: top 3.7% left 3%
       width: 50%
       height: 30%
       float: left
-      background: green
+      background-image: url("../images/ingame/box_question.png")
+      background-repeat: no-repeat
+      background-size: contain
 
     .question-propositions-container
-      relative: top 10% left 6%
-      width: 50%
-      height: 44%
+      relative: top 7% left 2%
+      width: 54%
+      height: 60%
       float: left
-      background: red
 
       .proposition
         relative: top 5% left 0%
@@ -116,5 +144,12 @@
         margin: 3%
         float: left
         cursor: pointer
+        background-image: url("../images/ingame/answer.png")
+        background-repeat: no-repeat
+        background-size: 100% 100%
+
+        .resize
+          overflow: hidden !important
+
         .massOpinion
           absolute: top -16% right -13%
