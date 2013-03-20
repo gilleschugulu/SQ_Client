@@ -8,17 +8,18 @@
   background-image: url('../images/common/background.png')
   color: white
 
-  .home-btn
-    absolute: top 1% left 0.7%
-    width: 7.4%
-    height: 55%
+  .btn-menu
+    absolute: top 1% left 6%
+    width: 8%
+    height: 11%
     display: inline-block
-    background-image: url('../images/common/home.png')
+    background-image: url('../images/ingame/bt_home.png')
     background-repeat: no-repeat
     background-size: contain
+    cursor: pointer
 
   .chrono-container
-    absolute: top 9% left 2%
+    absolute: top 14% left 7%
     width: 6%
     height: 83%
     background-image: url("../images/ingame/timer.png")
@@ -40,67 +41,8 @@
         background-repeat: no-repeat
         background-size: 100% 100%
 
-  .bonus-container
-    absolute: top 83% left 6%
-    width: 75%
-    height: 17%
-    background-image: url("../images/ingame/box_bonus.png")
-    background-repeat: no-repeat
-    background-size: contain
-    .bonus
-      relative: top 17% left 6%
-      float: left
-      height: 61%
-      width: 13.6%
-      margin: 1% 2%
-      cursor: pointer
-      background-repeat: no-repeat
-      background-size: contain
-      .quantity
-        relative: top -10% left 76%
-        width: 35%
-        height: 47%
-        border-radius: 400%
-        line-height: 145%
-        text-align: center
-        background: #c50000
-
-  .jackpot-container
-    absolute: top 2% left 81%
-    width: 15%
-    height: 96%
-    background-image: url("../images/ingame/score.png")
-    background-repeat: no-repeat
-    background-size: contain
-    #total-jackpot
-      relative: top .8% left 2%
-      width: 95%
-      height: 8%
-      text-align: center
-      padding: 7% 0
-    .threshold
-      relative: top 1% left 26.5%
-      width: 45.3%
-      height: 9.01%
-      color: #75634e
-      text-align: center
-      padding: 10% 0
-      &.highlighted
-        background-image: url("../images/ingame/timer_in.png")
-        background-repeat: no-repeat
-        background-size: contain
-        color: #f9e4f3
-    #jackpot-marker
-      absolute: top 1% left 68%
-      width: 45%
-      height: 7%      
-      background-image: url("../images/ingame/repere.png")
-      background-repeat: no-repeat
-      background-size: contain
-
-
   .question-container
-    absolute: top 7% left 13%
+    absolute: top 7% left 16%
     width: 68%
     height: 71%
 
@@ -147,9 +89,78 @@
         background-image: url("../images/ingame/answer.png")
         background-repeat: no-repeat
         background-size: 100% 100%
+        &.success
+          background-image: url("../images/ingame/answer_good.png")
+        &.error
+          background-image: url("../images/ingame/answer_bad.png")
 
         .resize
           overflow: hidden !important
-
         .massOpinion
           absolute: top -16% right -13%
+          width: 35%
+          height: 37%
+          border-radius: 20%
+          line-height: 145%
+          text-align: center
+          background: #c50000
+          display: none
+
+
+  .bonus-container
+    absolute: top 83% left 13%
+    width: 75%
+    height: 17%
+    background-image: url("../images/ingame/box_bonus.png")
+    background-repeat: no-repeat
+    background-size: contain
+    .bonus
+      relative: top 17% left 6%
+      float: left
+      height: 61%
+      width: 13.6%
+      margin: 1% 2%
+      cursor: pointer
+      background-repeat: no-repeat
+      background-size: contain
+      .quantity
+        relative: top -10% left 76%
+        width: 35%
+        height: 47%
+        border-radius: 400%
+        line-height: 145%
+        text-align: center
+        background: #c50000
+
+  .jackpot-container
+    absolute: top 2% left 83%
+    width: 15%
+    height: 96%
+    background-image: url("../images/ingame/score.png")
+    background-repeat: no-repeat
+    background-size: contain
+    #total-jackpot
+      relative: top .8% left 2%
+      width: 95%
+      height: 8%
+      text-align: center
+      padding: 7% 0
+    .threshold
+      relative: top 1% left 26.5%
+      width: 45.3%
+      height: 9.01%
+      color: #75634e
+      text-align: center
+      padding: 10% 0
+      &.highlighted
+        background-image: url("../images/ingame/timer_in.png")
+        background-repeat: no-repeat
+        background-size: contain
+        color: #f9e4f3
+    #jackpot-marker
+      absolute: top 91% left 68%
+      width: 45%
+      height: 7%   
+      background-image: url("../images/ingame/repere.png")
+      background-repeat: no-repeat
+      background-size: contain

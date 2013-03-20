@@ -18,7 +18,7 @@ var AssetsList = {
   assets: #{filesList},
   keys: {
     profile: ['profile', 'common'],
-    home: ['home'],
+    home: ['home/1ami', 'home/2amis/', 'home/common/', 'home/pasamis/', 'home/+2amis'],
     invitation: ['invitation', 'common'],
     options: ['options'],
     'more-games': ['more-games', 'common'],
