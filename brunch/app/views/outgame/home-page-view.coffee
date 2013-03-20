@@ -10,15 +10,9 @@ module.exports = class HomePageView extends View
   getTemplateData: ->
     @options
 
-  updateCountDown: (days, hours, minutes) ->
-    $('#days', @$el).text (if days < 10 then '0' + days else days)
-    $('#hours', @$el).text (if hours < 10 then '0' + hours else hours)
-    $('#minutes', @$el).text (if minutes < 10 then '0' + minutes else minutes)
-
   toggleJournal: ->
-    journalEl = $('.journal-container', @$el)
-    journalEl.toggleClass('hiddened').toggleClass('shown')
-    # if journalEl.hasClass('hidden')
-      # animate pull out
-    # else
-      # animate pull out
+    @subview('journal').toggle()
+
+  addJournalView: (journalView) ->
+    @subview 'journal', journalView
+    @subview('journal').render()

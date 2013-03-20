@@ -1,0 +1,21 @@
+<div id='equipe-btn'></div>
+<div id='date'>EDITION DU {{date}}</div>
+<div id='title'>{{name}} seulement <span class='rank'>{{rank}}</span>eme parmi ses amis !</div>
+<div id='leaderboard-container'>
+  <table id='leaderboard'>
+    {{#each participants}}
+    <tr class='participant'>
+      <td class='rank'>{{rank}}</td>
+      <td class='photo'>
+        <div style='background-image:url({{picture}}?width=90&height=90)'></div>
+      </td>
+      <td class='blaze'>{{name}}</td>
+      <td class='score'>{{score}}</td>
+    </tr>
+    {{/each}}
+  </table>
+</div>
+<div id='buttons'>
+  <a id='invite-btn'></a>
+  <a id='ranking-btn' href='#hall-of-fame'></a>
+</div>
