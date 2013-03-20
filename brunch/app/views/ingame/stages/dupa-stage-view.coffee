@@ -18,7 +18,7 @@ module.exports = class DupaView extends View
     callback?()
 
   updateTimer: (duration) ->
-    $('.chrono-container #time', @$el).text (duration - 1) + 's'
+    $('.chrono-time', @$el).text (duration - 1) + 's'
     progress = duration / @options.time * 100
     if progress > 100
       progress = 100
@@ -43,6 +43,7 @@ module.exports = class DupaView extends View
             <div class='massOpinion'></div>
           </div>"
       @autoSizeText()
+      $('.question-theme').text question.get('theme')
       $('.question-content').text question.get('text')
       callback()
     , 0
@@ -87,6 +88,15 @@ module.exports = class DupaView extends View
     $('#total-jackpot', el).text jackpot
     $(".threshold", el).removeClass('highlighted')
     $(".threshold[data-value='#{currentThresholdValue}']", el).addClass('highlighted')
+    @updateJackpotMarker(currentThresholdValue)
+
+  updateJackpotMarker: (currentThresholdValue) ->
+    el = $('.jackpot-container', @$el)
+
+    currentThresholdIndex = @options.thresholds.indexOf(currentThresholdValue)
+    # Position go for 91 to 10. May need some... adaptation
+    height = (currentThresholdIndex + 1) * 9 + 1
+    $('#jackpot-marker', el).css('top', height + '%')
 
   updateBonus: (targetElement, quantity, callback) ->
     targetElement = $(targetElement, @$el)

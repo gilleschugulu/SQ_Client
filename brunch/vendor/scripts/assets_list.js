@@ -1,5 +1,5 @@
 var AssetsList = {
-  assets: { 'common/': ["images/common/background-zoom.png", "images/common/background.jpg", "images/common/home.png", "images/common/timer.png"],
+  assets: { 'common/': ["images/common/background.png", "images/common/home.png", "images/common/timer.png"],
 'game-over/': ["images/game-over/popup.png", "images/game-over/popup_victoire.png", "images/game-over/rejouer.png", "images/game-over/rejouer_a.png"],
 'hall-of-fame/': ["images/hall-of-fame/adversaire.png", "images/hall-of-fame/adversaires_deactive.png", "images/hall-of-fame/amis.png", "images/hall-of-fame/amis_deactive.png", "images/hall-of-fame/background.jpg", "images/hall-of-fame/fond_classement.png", "images/hall-of-fame/gamecenter.png", "images/hall-of-fame/jeton.png", "images/hall-of-fame/precedent.png", "images/hall-of-fame/rank1.png", "images/hall-of-fame/rank2.png", "images/hall-of-fame/rank3.png", "images/hall-of-fame/rankadversaire.png", "images/hall-of-fame/title.png"],
 'home/': ["images/home/background.png", "images/home/invitations.png", "images/home/invitations_a.png", "images/home/jetons.png", "images/home/jetons_a.png", "images/home/lesmaitres.png", "images/home/lesmaitres_a.png", "images/home/moregames.png", "images/home/option.png", "images/home/option_a.png", "images/home/profil.png", "images/home/profil_a.png"],
