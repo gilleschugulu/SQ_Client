@@ -92,8 +92,8 @@ module.exports = class DupaView extends View
 
   updateJackpotMarker: (currentThresholdValue) ->
     el = $('.jackpot-container', @$el)
-
     currentThresholdIndex = @options.thresholds.indexOf(currentThresholdValue)
+
     # Position go for 91 to 10. May need some... adaptation
     height = (currentThresholdIndex + 1) * 9 + 1
     $('#jackpot-marker', el).css('top', height + '%')
@@ -110,7 +110,7 @@ module.exports = class DupaView extends View
 
   displayMass: (propositions, callback) ->
     for proposition in propositions
-      $(".proposition[data-id='#{proposition.id}'] .massOpinion").html(proposition.massOpinion + '%')
+      $(".proposition[data-id='#{proposition.id}'] .massOpinion").html(proposition.massOpinion + '%').show()
     callback?()
 
   finishMessage: (textKey, params, callback) ->
