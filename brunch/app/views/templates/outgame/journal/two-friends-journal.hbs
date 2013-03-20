@@ -3,8 +3,9 @@
 <div id='title'>{{master}} maitrise ses amis</div>
 <div id='podium'>
   {{#each participants}}
-  <div class='participant' id='{{rank}}'>
+  <div class='participant' id='{{medal}}'>
     <div class='photo' style='background-image:url({{picture}}?width=90&height=90)'></div>
+    <div class='rank'>{{rank}}</div>
     <div class='blaze'>{{name}}</div>
     <div class='score'>{{score}}</div>
   </div>

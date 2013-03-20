@@ -88,23 +88,20 @@ module.exports = class HomeController extends Controller
     options =
       master : 'gilles b.'
       participants : [
-          rank : 'gold'
           name : 'Gilles B.'
           picture : 'https://graph.facebook.com/pierre.chugulu/picture'
           score : '22 999'
         ,
-          rank : 'silver'
           name : 'Jide'
           picture : 'https://graph.facebook.com/francois.chugulu/picture'
           score : '2 999'
         ,
-          rank : 'bronze'
           name : 'Vincent'
           picture : 'https://graph.facebook.com/vincent.chugulu/picture'
           score : '999'
       ]
 
-    # new TwoFriendsJournalView options
+    return new TwoFriendsJournalView options
 
     options =
       name : 'Gilles B.'
@@ -145,4 +142,4 @@ module.exports = class HomeController extends Controller
           name : 'Jean D.'
           score : '456'
       ]
-    new TwoplusFriendsJournalView options
+    # new TwoplusFriendsJournalView options

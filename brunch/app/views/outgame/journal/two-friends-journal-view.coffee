@@ -7,3 +7,11 @@ module.exports = class TwoFriendsJournalView extends JournalView
   constructor: (options) ->
     @className += ' two-friends'
     super
+
+  getTemplateData: ->
+    data = super
+    medals = ['gold', 'silver', 'bronze']
+    for participant, i in data.participants
+      data.participants[i].rank  = i + 1
+      data.participants[i].medal = medals[i]
+    data
