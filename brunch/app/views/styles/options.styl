@@ -3,7 +3,7 @@
 .options-container
   width: 100%
   height: 100%
-  background-image: url("../images/options/background.jpg")
+  background-image: url("../images/options/background.png")
   background-size: 100% 100%
   position: relative
   .home-btn
@@ -15,6 +15,7 @@
     background-size: contain
     absolute: top 1% left 0.7%
   .title
+    relative: top 5% left 3%
     width: 31%
     height: 11%
     margin: 0 auto
@@ -24,15 +25,14 @@
   .content-container
     width: 100%
     height: 100%
-    position: relative
-    left: 8%
-    top: 11%
+    relative: left 6% top 11%
     .button
+      cursor: pointer
       display: block
       float: left
-      width: 40%
+      width: 38%
       height: 15%
-      margin: 0 4% 0 0
+      margin: 0 3% 2% 3%
       background-repeat: no-repeat
       background-size: contain
       &#option-music
@@ -45,22 +45,13 @@
           background-image: url('../images/options/effet_deactive.png')
       &#option-credits
         background-image: url('../images/options/credits.png')
-      &#option-cgu
-        background-image: url('../images/options/cgu.png')
+        width: 82.3%
       &#option-help
         background-image: url('../images/options/aide.png')
       &#option-tutorial
         background-image: url('../images/options/tutoriel.png')
       &#option-facebook-connect
         background-image: url('../images/options/liaison_fb.png')
-      &#option-level-notif
-        background-image: url('../images/options/niveaux.png')
-        &.off
-          background-image: url('../images/options/niveaux_deactive.png')
-      &#option-ranking-notif
-        background-image: url('../images/options/classements.png')
-        &.off
-          background-image: url('../images/options/classements_deactive.png')
       &#option-info-notif
         background-image: url('../images/options/infos.png')
         &.off
