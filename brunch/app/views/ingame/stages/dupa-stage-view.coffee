@@ -71,7 +71,7 @@ module.exports = class DupaView extends View
     klass = if status then 'success' else 'error'
     setTimeout =>
       propositionEl.addClass('animated fadeOut').one 'webkitAnimationEnd', =>
-        propositionEl.removeClass('fadeOut').addClass(klass+' fadeIn').one 'webkitAnimationEnd', ->
+        propositionEl.removeClass('fadeOut').addClass(klass + ' fadeIn').one 'webkitAnimationEnd', ->
           callback()
     , 500
 
