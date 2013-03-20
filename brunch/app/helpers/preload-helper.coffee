@@ -32,7 +32,6 @@ module.exports = class PreloadHelper
   # loaded_callback   : function : (optionnal) called on finish
   # progress_callback : function : (optionnal) called after each image
   @preloadAssets: (key, loaded_callback, progress_callback) ->
-    console.log "PRELOADING ", key
     return loaded_callback?() unless key and (AssetsList.keys[key])? and AssetsList.keys[key] instanceof Array and AssetsList.keys[key].length > 0
     loader = new PxLoader()
     @images[key] = []
@@ -40,8 +39,9 @@ module.exports = class PreloadHelper
     tags = AssetsList.keys[key]
     for group in tags
       s = group + '/'
-      for file in AssetsList.assets[s]
-        imgArray.push(loader.addImage(file, tags))
+      if AssetsList.assets[s]
+        for file in AssetsList.assets[s]
+          imgArray.push(loader.addImage(file, tags))
       for assetFolder, a of AssetsList.assets
         if s isnt assetFolder and assetFolder.indexOf(s) isnt -1
           for i in AssetsList.assets[assetFolder]
