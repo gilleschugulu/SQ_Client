@@ -3,6 +3,7 @@ JournalView = require 'views/outgame/journal/journal-view'
 
 module.exports = class NoFriendsJournalView extends JournalView
   template: template
+  interval: null
 
   constructor: (options) ->
     @className += ' no-friends'
@@ -10,7 +11,7 @@ module.exports = class NoFriendsJournalView extends JournalView
 
   initialize: ->
     s = super
-    setInterval =>
+    @interval = setInterval =>
       cd = @calculateDateCount()
       @setCountDown cd.days, cd.hours, cd.minutes
     , 1000
@@ -39,3 +40,7 @@ module.exports = class NoFriendsJournalView extends JournalView
       hours  : hrsLeft
       minutes: minsLeft
     }
+
+  dispose: ->
+    clearInterval @interval if @interval?
+    super
