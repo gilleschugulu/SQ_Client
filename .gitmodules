@@ -3,4 +3,4 @@
   url = https://github.com/ChuguluGames/MKStoreKit.git
 [submodule "ios/TriviaContainer/TriviaContainer/libs/MKStoreKit"]
 	path = ios/TriviaContainer/TriviaContainer/libs/MKStoreKit
-	url = git://github.com/ChuguluGames/MKStoreKit.git
+	url = git@github.com:ChuguluGames/MKStoreKit.git
