@@ -17,7 +17,7 @@ module.exports = class HallOfFameView extends View
     '<tr class="row-ranking'+klass+'">
       <td class="rank">'+rank+'</td>
       <td class="profilepic"><img src="'+pic+'" /></td>
-      <td class="nickname">'+player.nickname+'</td>
+      <td class="username">'+player.username+'</td>
       <td class="money">'+player.jackpot+' <span class="star"></span></td>
     </tr>'
 

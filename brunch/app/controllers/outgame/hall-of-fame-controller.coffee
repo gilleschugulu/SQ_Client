@@ -22,7 +22,7 @@ module.exports = class HallOfFameController extends Controller
         if withFriends
           t = if Math.random() > 0.49 then 'friend' else 'opponent'
       @collection[i] =
-        nickname  : "#{t}_#{i}"
+        username  : "#{t}_#{i}"
         jackpot   : Math.ceil(Math.random() * 50000)
         profilepic: if Math.random() > 0.49 then 'https://graph.facebook.com/sergio.chugulu/picture' else null
         type      : t
