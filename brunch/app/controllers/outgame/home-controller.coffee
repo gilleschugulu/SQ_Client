@@ -16,7 +16,8 @@ module.exports = class HomeController extends Controller
     PushNotifications?.unblock() # display any queued notifications
     @loadView 'home'
     , =>
-      new HomePageView {hearts:42, credits: 1337}
+      user = Parse.User.current()
+      new HomePageView {hearts: user.get('health'), credits: user.get('credits')}
     , (view) =>
       if mediator.justLaunched and ChartBoost?
         setTimeout =>
@@ -47,8 +48,8 @@ module.exports = class HomeController extends Controller
 
   getJournalView: ->
     today = new Date()
-    targetDate = new Date()
-    targetDate.setDate(today.getDate()+7)
+    targetDate = new Date(today.getDate() - today.getDay() + 7)
+    # targetDate.setDate(today.getDate()+7)
     options =
       targetDate : targetDate
       name : 'forever a.'

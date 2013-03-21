@@ -1,26 +1,17 @@
 Model = require 'models/base/model'
 
-module.exports = class User extends Model
+module.exports = class User extends Parse.User
   defaults:
-    uuid:         null
-    nickname:     'NewPlayer01'
-    avatar:       null
-    gender:       'male'
-    credits:      0
-    rank:         8
-    notifications:
-      ranking: off
-      info: off
-      decrease_rank: off
+    uuid:           null
+    username:       'NewPlayer01'
+    avatar:         null
+    credits:        0
+    rank:           6
+    health:         25
+    notifications:  true
     providers:
       facebook: null
-      twitter: null
+      equipe:   null
 
-    # stats:
-    #   cash:
-    #     current:    0
-    #     best:       0
-    #   games:
-    #     played:     0
-    #     won:        0
-    #   bestLevel:    0
+  stuff: ->
+    console.log('coucou')
