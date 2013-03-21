@@ -101,7 +101,7 @@
         case FBSessionStateClosedLoginFailed:
             [FBSession.activeSession closeAndClearTokenInformation];
             // Clear out the Facebook instance
-            self.facebook = nil;
+//            self.facebook = nil;
             self.userid = @"";
             [self sendSuccessResult:nil toCallback:self.loginCallbackId];
             break;
