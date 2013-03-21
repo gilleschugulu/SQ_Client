@@ -13,7 +13,7 @@ class PreprodConfig extends Parent
     tapjoy:
       currency : 'f03160d9-d7b5-4ab3-91c7-b165d92ab81f'
     facebook:
-      app_id : '471676116208363'
+      app_id : '321070437995692'
       like_page_url: 'http://www.facebook.com/'
       createAnyway: false
     adcolony:

@@ -11,7 +11,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>fr_FR</string>
 	<key>CFBundleDisplayName</key>
-	<string>12 Coups</string>
+	<string>Sport Quiz 2</string>
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
 	<key>CFBundleIconFile</key>
@@ -39,7 +39,7 @@
 		</dict>
 	</dict>
 	<key>CFBundleIdentifier</key>
-	<string>com.chugulu.cdm</string>
+	<string>com.lequipe.game.squiz</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
@@ -57,14 +57,14 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>fb471676116208363</string>
+				<string>fb321070437995692</string>
 			</array>
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>3</string>
+	<string>1</string>
 	<key>FacebookAppID</key>
-	<string>471676116208363</string>
+	<string>321070437995692</string>
 	<key>LSApplicationCategoryType</key>
 	<string>public.app-category.trivia-games</string>
 	<key>LSRequiresIPhoneOS</key>
