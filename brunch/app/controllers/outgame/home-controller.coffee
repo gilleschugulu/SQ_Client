@@ -47,9 +47,11 @@ module.exports = class HomeController extends Controller
     console.log "FACEBOOK INVITE"
 
   getJournalView: ->
-    today = new Date()
-    targetDate = new Date(today.getDate() - today.getDay() + 7)
-    # targetDate.setDate(today.getDate()+7)
+    targetDate = new Date()
+    targetDate.setHours(0)
+    targetDate.setMinutes(0)
+    targetDate.setSeconds(0)
+    targetDate.setDate(targetDate.getDate() - targetDate.getDay() + 7)
     options =
       targetDate : targetDate
       name : 'forever a.'
@@ -69,7 +71,7 @@ module.exports = class HomeController extends Controller
         picture : 'https://graph.facebook.com/vincent.chugulu/picture'
         score : '999'
         rank : 1000
-    # new NoFriendsJournalView options
+    return new NoFriendsJournalView options
 
     options =
       winner : 'jide'
