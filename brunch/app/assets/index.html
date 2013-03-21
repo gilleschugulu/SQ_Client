@@ -11,7 +11,6 @@
     window.location.hash = ''; // RESET TO HOME AT REFRESH
     window.__locale      = "fr"
   </script>
-  <script src="http://debug.phonegap.com/target/target-script-min.js#cdm"></script>
   <script src="javascripts/app.js"></script>
   <script>require('initialize');</script>
 
@@ -29,13 +28,12 @@
       window.fbAsyncInit = function() {
         var ConfigHelper;
         ConfigHelper = require('helpers/config-helper');
-        FB.init({
+        Parse.FacebookUtils.init({
           appId      : ConfigHelper.config.services.facebook.app_id,
           status     : true,
           cookie     : true,
           xfbml      : true
         });
-        // $(document).trigger('fbInit');
       };
 
       // Load the SDK Asynchronously
@@ -55,7 +53,7 @@
         function() {
           var ConfigHelper;
           ConfigHelper = require('helpers/config-helper');
-          FB.init({
+          Parse.FacebookUtils.init({
             appId             : ConfigHelper.config.services.facebook.app_id,
             nativeInterface   : CDV.FB,
             useCachedDialogs  : false
@@ -68,6 +66,11 @@
       uv.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'widget.uservoice.com/CVrgbyzlDW1YevylOQWzUQ.js';
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(uv, s);
     })();
+
+
+    Parse.initialize("ixxjIFjdYTjOeKSZycsaPw8DHndujhvHFX2rNW10", "XQMt26dlAXV32EmVVEQYwhSK2yYuvD6qDA3HaFqS");
+
   </script>
+
 </body>
 </html>

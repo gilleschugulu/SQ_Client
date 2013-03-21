@@ -15,6 +15,7 @@ class PreprodConfig extends Parent
     facebook:
       app_id : '471676116208363'
       like_page_url: 'http://www.facebook.com/'
+      createAnyway: false
     adcolony:
       zones:
         SHOP : "vz316622b002ac48da9149a2"

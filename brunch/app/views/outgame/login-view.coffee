@@ -18,10 +18,3 @@ module.exports = class LoginView extends View
     #   $('.fb-reward, .facebook-login').addClass('animated tada').one 'webkitAnimationEnd', ->
     #     $(this).removeClass('animated tada')
     # , 2500
-
-  showMailLoginView: (callback) ->
-    clearInterval @animInterval
-    $('.btn-container, .fb-reward, .or', @$el).addClass('animated fadeOut')
-    $('.btn-container', @$el).one 'webkitAnimationEnd', =>
-      $('.btn-container', @$el).remove()
-      $('form#login', @$el).addClass 'animated flipInX'
