@@ -1,4 +1,5 @@
 module.exports = class LequipeSSOHelper
+  @error = {}
   # params : hash
   #   username : string
   #   password : string
@@ -14,6 +15,9 @@ module.exports = class LequipeSSOHelper
       user = @remap user, mapping
       success?(user)
     @request 'plac_login', params, yes, order, callback, error
+  @error.login =
+    INCORRECT_MAIL    : 404
+    INCORRECT_PASSWORD: 403
 
   # params : hash
   #   username : string
@@ -29,6 +33,10 @@ module.exports = class LequipeSSOHelper
     callback = (response) ->
       success?(user)
     @request 'plac_register', params, yes, order, callback, error
+
+  @error.register =
+    INVALID_PARAMETERS: 400
+    NOT_AVAILABLE     : 409
 
   # params : hash
   #   username : string
@@ -47,6 +55,10 @@ module.exports = class LequipeSSOHelper
       user = @remap user, mapping
       success?(user)
     @request 'plac_already_used', params, no, order, callback, error
+  @error.alreadyUsed =
+    MISSING_PARAMETERS  : 400
+    USER_NOT_FOUND      : 404
+    USED_BY_ANOTHER_USER: 409
 
   @calculateChecksum : (params, order) ->
     values = ''
@@ -69,8 +81,10 @@ module.exports = class LequipeSSOHelper
         response = if /<\?xml/.test xhr.responseText then @xmlResponse2JSON(xhr.responseText) else xhr.responseText
         error(xhr.status, response)
 
-  # utility methods
+  # Utility methods
   # ---------------
+
+  # renames object properties
   @remap: (object, mapping) ->
     remaped = {}
     for k,v of object

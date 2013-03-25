@@ -58,6 +58,9 @@ module.exports = class LoginController extends Controller
 
   loginWithSSO: =>
     console.log "LOGIN YO"
+    unless @validateForm('#sso-login-form')
+      return no
+    console.log fields
     form = $('#sso-login-form', @view.$el).serializeArray()
     params = {}
     params[f.name] = f.value for f in form
@@ -71,6 +74,8 @@ module.exports = class LoginController extends Controller
 
   registerWithSSO: =>
     console.log "REGISTER YO"
+    unless @validateForm('#sso-register-form')
+      return no
     form = $('#sso-register-form', @view.$el).serializeArray()
     params = {}
     params[f.name] = f.value for f in form
@@ -82,6 +87,48 @@ module.exports = class LoginController extends Controller
       console.log "LOGIN ERROR", status, error
     no
 
+  # check to see if email/username are available
+  checkAvailabilityWithSSO: =>
+    console.log "CHECING AVAILABILITY YO"
+    form = $('#sso-register-form', @view.$el).serializeArray()
+    params = {}
+    params[f.name] = f.value for f in form
+    LequipeSSOHelper.alreadyUsed params, (user) =>
+      # alert('email/username sont pas dispo')
+      $("#sso-register-form input[name=email]", @view.$el).addClass 'invalid'
+      $("#sso-register-form input[name=username]", @view.$el).addClass 'invalid'
+      console.error 'email/username sont pas dispo'
+    , (code, error) =>
+      if code is LequipeSSOHelper.error.alreadyUsed.USER_NOT_FOUND
+        # dispo
+        $("#sso-register-form input[name=email]", @view.$el).removeClass 'invalid'
+        $("#sso-register-form input[name=username]", @view.$el).removeClass 'invalid'
+      else if code is LequipeSSOHelper.error.alreadyUsed.USED_BY_ANOTHER_USER
+        # alert('email/username sont pas dispo')
+        $("#sso-register-form input[name=email]", @view.$el).addClass 'invalid'
+        $("#sso-register-form input[name=username]", @view.$el).addClass 'invalid'
+        console.error 'email/username sont pas dispo'
+
+  validateForm: (formId) =>
+    validationRules =
+      email   : /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$/
+      username: /^[a-zA-Z0-9_\-\.àáâãäçèéêëìíîïñòóõöûüúù@?£%€\(\)°\[\]\}\{\*~\\'"]{6,}$/
+    form = $(formId, @view.$el).serializeArray()
+    invalidFields = []
+    for f in form
+      if validationRules[f.name]?
+        if not validationRules[f.name].test f.value
+          invalidFields.push f.name
+          $("#{formId} input[name=#{f.name}]", @view.$el).addClass 'invalid'
+        else
+          $("#{formId} input[name=#{f.name}]", @view.$el).removeClass 'invalid'
+    console.log "INVALID", invalidFields
+    if invalidFields.length > 0
+      console.error invalidFields.join(',') + ' pas bon'
+      # alert(invalidFields.join(',') + ' pas bon')
+      return no
+    yes
+
   # Show the login view
   # -------------------
   showLoginView: =>
@@ -92,6 +139,8 @@ module.exports = class LoginController extends Controller
       navigator.splashscreen.hide() if navigator?.splashscreen?.hide?
       view.delegate 'click', '#register-btn', @registerWithSSO
       view.delegate 'click', '#login-btn', @loginWithSSO
+      view.delegate 'keyup', '#sso-register-form input[name=email]', @checkAvailabilityWithSSO
+      view.delegate 'keyup', '#sso-register-form input[name=username]', @checkAvailabilityWithSSO
       view.delegate "click", "#facebook-login", =>
         AnalyticsHelper.trackEvent 'Login', 'Login with facebook'
 
