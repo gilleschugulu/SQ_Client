@@ -5,8 +5,14 @@ module.exports = class LequipeSSOHelper
   # no checsum decode + params encode
   @login: (params, success, error) ->
     order = ['username', 'password']
-    callback = (response) ->
-      success?($.parseJSON($('description', response).text()))
+    callback = (response) =>
+      mapping =
+        nom   : 'last_name'
+        prenom: 'first_name'
+      response = @xmlResponse2JSON response
+      user = $.parseJSON(response.description)
+      user = @remap user, mapping
+      success?(user)
     @request 'plac_login', params, yes, order, callback, error
 
   # params : hash
@@ -16,6 +22,8 @@ module.exports = class LequipeSSOHelper
   # no checsum decode + params encode
   @register: (params, success, error) ->
     order = ['email', 'username', 'password', 'gender', 'first_name', 'last_name', 'dateofbirth', 'opt_in_1', 'opt_in_2']
+    params['opt_in_1'] ?= 0
+    params['opt_in_2'] ?= 0
     user = {}
     user[k] = v for k,v of params
     callback = (response) ->
@@ -29,19 +37,15 @@ module.exports = class LequipeSSOHelper
   @alreadyUsed: (params, success, error) ->
     order = ['email', 'username']
     callback = (response) =>
-      object = {}
-      map =
+      mapping =
         email   : 'email'
         pseudo  : 'username'
         civilite: 'gender'
         nom     : 'last_name'
         prenom  : 'first_name'
-      $('response', response).children().each (index, item) =>
-        el = $(item)
-        tag = el.prop('tagName').toLowerCase()
-        if map[tag]?
-          object[map[tag]] = @utf8_decode el.text()
-      success?(params)
+      user = @xmlResponse2JSON response
+      user = @remap user, mapping
+      success?(user)
     @request 'plac_already_used', params, no, order, callback, error
 
   @calculateChecksum : (params, order) ->
@@ -56,13 +60,38 @@ module.exports = class LequipeSSOHelper
       params[k] = @utf8_encode(v) for k,v of params
     url = "http://api.lequipe.fr/Compte/appels_tiers.php?F=#{fn}"
     $.ajax
-      type      : 'POST'
-      url       : url
-      data      : params
-      dataType  : 'xml'
-      success   : success
-      error     : (xhr, errorType, err) ->
-        console.log 'error', arguments
+      type    : 'POST'
+      url     : url
+      data    : params
+      dataType: 'xml'
+      success : success
+      error   : (xhr, errorType, err) =>
+        response = if /<\?xml/.test xhr.responseText then @xmlResponse2JSON(xhr.responseText) else xhr.responseText
+        error(xhr.status, response)
+
+  # utility methods
+  # ---------------
+  @remap: (object, mapping) ->
+    remaped = {}
+    for k,v of object
+      if mapping?[k]?
+        remaped[mapping[k]] = v
+      else
+        remaped[k] = v
+    remaped
+
+  @xmlResponse2JSON: (xml) =>
+    object = {}
+    unless xml instanceof Document
+      responseEl = $(xml.replace(/\s*<\?[^\?]+\?>\s*/, ''))
+    else
+      responseEl = $('response', xml)
+    responseEl.children().each (index, item) =>
+      el    = $(item)
+      tag   = el.prop('tagName').toLowerCase()
+      value = @utf8_decode el.text()
+      object[tag] = value
+    object
 
   @utf8_encode: (str_data) ->
     unescape(encodeURIComponent(str_data))

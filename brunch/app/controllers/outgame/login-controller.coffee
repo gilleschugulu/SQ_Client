@@ -10,6 +10,7 @@ User                = require 'models/outgame/user-model'
 i18n                = require 'lib/i18n'
 AnalyticsHelper     = require 'helpers/analytics-helper'
 config              = require 'config/environment-config'
+LequipeSSOHelper    = require 'helpers/lequipe-sso-helper'
 
 module.exports = class LoginController extends Controller
   historyURL: ''
@@ -26,6 +27,61 @@ module.exports = class LoginController extends Controller
     # Suscribe to Events
     @subscribeEvent 'login:gotPlayer', @bindPlayer
 
+  loginToParse: (user, params) =>
+    manageError = (child, error, opts) ->
+      # manage parse error here
+      # at this point user exists in SSO, so we can show "try again[ later]"
+      console.log "PARSE ERROR"
+      console.log error
+    Parse.User.logIn params.username, params.password, {
+      success: =>
+        console.log "PARSE LOGIN SUCCESS", arguments
+        @bindPlayer()
+      error: (child, error, opts) =>
+        console.log "PARSE LOGIN ERROR", arguments
+        # signUp if user does not exists
+        if error.code is Parse.Error.OBJECT_NOT_FOUND
+          delete user.id
+          u = new User user
+          console.log "USER", u
+          options =
+            success: =>
+              console.log "SUCCESS SIGN UP", arguments
+              @bindPlayer()
+            error: =>
+              console.log "ERROR SIGN UP", arguments
+              manageError.apply null, arguments
+          Parse.User.signUp params.username, params.password, u.attributes, options
+        else
+          manageError.apply null, arguments
+    }
+
+  loginWithSSO: =>
+    console.log "LOGIN YO"
+    form = $('#sso-login-form', @view.$el).serializeArray()
+    params = {}
+    params[f.name] = f.value for f in form
+    console.log params
+    LequipeSSOHelper.login params, (user) =>
+      console.log "GOT USER", user
+      @loginToParse user, params
+    , (status, error) ->
+      console.log "LOGIN ERROR", status, error
+    no
+
+  registerWithSSO: =>
+    console.log "REGISTER YO"
+    form = $('#sso-register-form', @view.$el).serializeArray()
+    params = {}
+    params[f.name] = f.value for f in form
+    console.log params
+    LequipeSSOHelper.register params, (user) =>
+      console.log "GOT USER", user
+      @loginToParse user, params
+    , (status, error) ->
+      console.log "LOGIN ERROR", status, error
+    no
+
   # Show the login view
   # -------------------
   showLoginView: =>
@@ -34,11 +90,13 @@ module.exports = class LoginController extends Controller
     , (view) =>
       view.animateFacebook()
       navigator.splashscreen.hide() if navigator?.splashscreen?.hide?
+      view.delegate 'click', '#register-btn', @registerWithSSO
+      view.delegate 'click', '#login-btn', @loginWithSSO
       view.delegate "click", "#facebook-login", =>
         AnalyticsHelper.trackEvent 'Login', 'Login with facebook'
 
         # Note : logIn automatically creates a Parse.User in case of success \o/
-        Parse.FacebookUtils.logIn('email, user_location, user_birthday, publish_stream', 
+        Parse.FacebookUtils.logIn('email, user_location, user_birthday, publish_stream',
           success: =>
             console.log 'Player will be logged in thanks to Facebook'
             @bindPlayer()
@@ -46,7 +104,7 @@ module.exports = class LoginController extends Controller
             if config.services.facebook.createAnyway
               console.log 'Forced creation of player even if Facebook fail (local)'
               # We don't have a nickname to use (must be uniq), so we must generate one
-              Parse.User.signUp(Math.random() * 56056105 + '', 'password', (new User).attributes, 
+              Parse.User.signUp(Math.random() * 56056105 + '', 'password', (new User).attributes,
                 success: =>
                   user = Parse.User.current()
                   console.log(user, user?.get('username'))
