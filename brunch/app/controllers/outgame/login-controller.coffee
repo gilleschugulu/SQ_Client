@@ -60,7 +60,6 @@ module.exports = class LoginController extends Controller
     console.log "LOGIN YO"
     unless @validateForm('#sso-login-form')
       return no
-    console.log fields
     form = $('#sso-login-form', @view.$el).serializeArray()
     params = {}
     params[f.name] = f.value for f in form
