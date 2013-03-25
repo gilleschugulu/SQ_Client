@@ -1,0 +1,45 @@
+@import 'nib'
+@import 'mixins'
+
+.tutorial
+  width: 100%
+  height: 100%
+  background: white
+  .screen
+    width: 100%
+    height: 100%
+    background-size: 100% 100%
+    background-repeat: no-repeat
+  #close-btn
+    width: 7.8%
+    height: 11.7%
+    absolute: top 1% left 0.7%
+    background-image: url(../images/tutorial/close.png)
+    background-size: contain
+    background-repeat: no-repeat
+    &:active
+      background-image: url(../images/tutorial/close_a.png)
+  #next-btn
+    width: 11.6%
+    height: 16.7%
+    absolute: bottom 0 right 0
+    background-image: url(../images/tutorial/next.png)
+    background-size: 100% 100%
+    background-repeat: no-repeat
+
+  ul#pagination
+    width: 100%
+    height: 4.7%
+    absolute: bottom 3%
+    list-style-type: none
+    padding: 0
+    text-align:center
+    li
+      display: inline-block
+      height: 100%
+      width: 1.5em
+      background-image: url(../images/tutorial/pagination_grey.png)
+      background-size: contain
+      background-repeat: no-repeat
+      &.current
+        background-image: url(../images/tutorial/pagination_red.png)

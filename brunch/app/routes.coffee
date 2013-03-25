@@ -8,6 +8,7 @@ routeList = {
     ['invite', 'invitation#index']
     ['options', 'options#index']
     ['shop', 'shop#index']
+    ['tutorial', 'tutorial#index']
   ]
   ingame: [
     ['game', 'game#index']
