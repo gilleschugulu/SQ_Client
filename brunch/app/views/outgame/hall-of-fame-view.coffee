@@ -17,25 +17,31 @@ module.exports = class HallOfFameView extends View
     @options
 
   newPlayerHTML: (player, picSize, players) ->
-    sep = ''
+    #separators
+    separator = ''
     if @i > 0
       if players[@i-1].rank+1 != player.rank
-        sep = '<div class="separator"></div>'
+        separator = '<div class="separator"></div>'
+    #friend request button
     friend = if player.friend then '<div class="ask-friend"></div>' else ''
-    @i++
+    #pyjama
     if @color is 'pink'
-     @color = 'white'
+      @color = 'white'
     else
       @color = 'pink'
+    #medialles
+    rank = '<span class="rank">'+player.rank+'</span>'
+    if player.rank == 1
+      rank = '<div class="rank first"></div>'
+    else if player.rank == 2
+      rank = '<div class="rank second"></div>'
+    else if player.rank == 3
+      rank = '<div class="rank third"></div>'
+    @i++
     pic = if player.profilepic then player.profilepic else 'http://profile.ak.fbcdn.net/static-ak/rsrc.php/v2/yo/r/UlIqmHJn-SK.gif'
-    sep+
-    '<div class="div-ranking'+' '+@color+'">
-      <span class="rank">'+player.rank+'</span>
-      <div class="profilepic"><img src="'+pic+'" width="'+picSize+'" height="'+picSize+'"/></div>
-      <span class="username">'+player.username+'</span>
-      <span class="money">'+player.jackpot+'</span>
-    '+friend+'
-    </div>'
+    separator+
+    '<div class="div-ranking '+@color+'">'+rank+'<div class="profilepic"><img src="'+pic+'" width="'+picSize+'" height="'+picSize+'"/></div><span class="username">'+player.username+'</span><span class="money">'+player.jackpot+'</span>'+friend+'</div>'
+
 
   updateRankingList: (players) ->
     @i = 0
