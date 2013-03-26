@@ -67,7 +67,7 @@ module.exports = class PurchaseHelper
           successCallback?(user.get('credits'))
 
   @initTapPoints: ->
-    TapjoyConnect.setUserID Parse.User.current().id
+    TapjoyConnect?.setUserID Parse.User.current().id
     TapjoyConnect?.getTapPoints (@tapPoints) =>
 
   @purchaseAdcolony: (pack, zone, successCallback) ->
