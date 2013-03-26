@@ -2,10 +2,9 @@
 @import 'nib'
 
 .hall-of-fame
-  font: 1em grilled
   width: 100%
   height: 100%
-  background-image: url('../images/hall-of-fame/background.jpg')
+  background-image: url('../images/hall-of-fame/background.png')
   background-repeat: no-repeat
   background-size: 100% 100%
   .home-btn, .cash-container
@@ -13,42 +12,133 @@
     top: 2.8%
   .home-btn
     width: 7.4%
-    height: 55%
+    height: 12%
     display: inline-block
     background-image: url('../images/common/home.png')
     background-repeat: no-repeat
     background-size: contain
     absolute: top 1% left 0.7%
-  .title
-    width: 31%
-    height: 11%
-    margin: 0 auto
-    background-image: url('../images/hall-of-fame/title.png')
-    background-repeat: no-repeat
-    background-size: contain
   .cash-container
-    color: #FBA633
-    stroke: #5E3FAC
-    right: 1%
-    font-size: 2em
-    width: 12%
-    height: 10%
+    width: 100%;
+    height: 6%;
+    text-align: right;
+    position: absolute
+    top: 0%
+    .life-value
+      display: inline-block;
+      color: #252525;
+      font-size: 1.5em;
+      font-weight: bold;
+      text-align: right;
+    #life-icon
+      display: inline-block;
+      width: 5%;
+      height: 80%;
+      position: relative;
+      bottom: -12%;
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-image: url('../images/home/common/heart.png')
+    .cash-value
+      display: inline-block
+      color: #252525
+      font-size: 1.5em
+      font-weight: bold
+      text-align: right
     #cash-icon
+      display: inline-block
+      width: 5%
+      height: 80%
+      position: relative
+      bottom: -12%
+      background-size: contain
+      background-repeat: no-repeat
+      background-image: url('../images/home/common/credit.png')
+  .content-container
+    width: 75%
+    height: 90%
+    margin: 0 auto
+    absolute: left 5% top 3%
+    .tournament
+      width: 55%
+      height: 9%
       display:inline-block
-      width: 33%
-      height 56%
-      background-image: url('../images/hall-of-fame/jeton.png')
+      absolute: left 28% top 8.5%
+      background-repeat: no-repeat
+      background-size: 100%
+      background-image: url('../images/hall-of-fame/tournoi.png')
+    .level
+      width: 10%
+      height: 8%
+      display:inline-block
+      absolute: right 6% top 9%
+      font-size: 2em
+      color: #252525
+      font-weight: bold
+      text-align: right
+    #btn_HoF
+      margin-left: 6%
+      height: 20%
+      width: 20%
+      margin-top: 13%
+      .category
+        margin-left: 3%
+        height: 50%
+        width: 100%
+        background-size:contain
+        background-repeat: no-repeat
+      .friends
+        background-image: url('../images/hall-of-fame/amis_inactive.png')
+        &.active
+          background-image: url('../images/hall-of-fame/amis.png')
+      .global
+        background-image: url('../images/hall-of-fame/global_inactive.png')
+        &.active
+          background-image: url('../images/hall-of-fame/global.png')
+    .ranking-container
+      overflow-y: scroll
+      -webkit-overflow-scrolling: touch
+      width: 75%
+      height: 84%
+      absolute: right 0% bottom 0%
       background-repeat: no-repeat
       background-size: contain
-  .content-container
-    width: 68%
-    height: 93%
-    margin: 0 auto
-    position: relative
-    top: -5%
-    background-image: url('../images/hall-of-fame/fond_classement.png')
-    background-repeat: no-repeat
-    background-size: contain
+      background-image: url('../images/hall-of-fame/box_classements.png')
+      padding-top: 1%
+      .div-ranking
+        margin-left: 1%
+        width: 98%
+        height: 10%
+        font-size: 0.5em
+        color: #252525
+        font-weight: bold
+        &.pink
+          background-color: pink
+        &.white
+          background-color: white
+        .rank
+          display: inline-block
+          absolute: left 2%
+          margin-top: 3%
+        .profilepic
+          display: inline-block
+          absolute: left 10%
+          margin-top: 1%
+        .username
+          display:inline-block
+          absolute: left 40%
+          margin-top: 3%
+          font-size: 1.5em
+        .money
+          absolute: right 20%
+          margin-top: 3%
+          font-size: 1.5em
+
+
+
+/*
+
+
     #rank
       text-align: center
       stroke: #491FA1
@@ -56,12 +146,7 @@
       margin-left: 74%
       padding-top: 0.1em
       font-size: 1.2em
-    .ranking-container
-      overflow: scroll
-      -webkit-overflow-scrolling: touch
-      width: 96%
-      height: 82%
-      margin: 2% auto 0.5% auto
+
       table.weekly-ranking
         width: 100%
         border-collapse:collapse
@@ -157,4 +242,4 @@
         width: 29%
         background-image: url('../images/hall-of-fame/adversaires_deactive.png')
         &:hover,&.active
-          background-image: url('../images/hall-of-fame/adversaire.png')
+          background-image: url('../images/hall-of-fame/adversaire.png')*/

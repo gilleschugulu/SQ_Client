@@ -42,40 +42,27 @@ module.exports = class HallOfFameController extends Controller
       params =
         rank   : mediator.user.get('rank')
         credits: mediator.user.get('credits')
+        health : mediator.user.get('health')
       new HallOfFameView params
     , (view) =>
-      view.delegate 'click', '#btn-game-center', @onClickGameCenter
       view.delegate 'click', '#btn-friends', @onClickFriends
-      view.delegate 'click', '#btn-opponents', @onClickOpponents
+      view.delegate 'click', '#btn-global', @onClickGlobal
       @updateRanking() if @collection
     , {viewTransition: yes, music: 'outgame'}
 
   updateRanking: =>
     @view?.updateRankingList @collection
 
-  onClickGameCenter: =>
-    # Track Event
-    AnalyticsHelper.trackEvent 'HallOfFame', 'Affichage de Game Center'
-
-    console.log "GC"
-    lb = ConfigHelper.config.gamecenter.leaderboard
-    if lb
-      GameCenter?.showLeaderboard lb
-    else
-      alert('pas de leaderboard')
-
   onClickFriends: (e) =>
     # Track Event
     AnalyticsHelper.trackEvent 'HallOfFame', 'Affichage des amis'
 
-    console.log "FRIENDS"
     @fetchPlayers yes
     @view.chooseList e.target
 
-  onClickOpponents: (e) =>
+  onClickGlobal: (e) =>
     # Track Event
     AnalyticsHelper.trackEvent 'HallOfFame', 'Affichage adversaires'
 
-    console.log "OPPONENTS"
     @fetchPlayers no
     @view.chooseList e.target

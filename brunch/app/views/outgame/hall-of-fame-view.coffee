@@ -11,20 +11,24 @@ module.exports = class HallOfFameView extends View
     @options
 
   newPlayerHTML: (rank, player, picSize) ->
-    klass = ' '+player.type
-    klass += " podium_#{rank}" if rank < 4
-    pic = if player.profilepic then player.profilepic+'?width='+picSize+'&height='+picSize else 'http://profile.ak.fbcdn.net/static-ak/rsrc.php/v2/yo/r/UlIqmHJn-SK.gif'
-    '<tr class="row-ranking'+klass+'">
-      <td class="rank">'+rank+'</td>
-      <td class="profilepic"><img src="'+pic+'" /></td>
-      <td class="username">'+player.username+'</td>
-      <td class="money">'+player.jackpot+' <span class="star"></span></td>
-    </tr>'
+    if @i is 'pink'
+     @i = 'white'
+    else
+      @i = 'pink'
+    color = ' '+@i
+    pic = if player.profilepic then player.profilepic else 'http://profile.ak.fbcdn.net/static-ak/rsrc.php/v2/yo/r/UlIqmHJn-SK.gif'
+    '<div class="div-ranking'+color+'">
+      <span class="rank">'+rank+'</span>
+      <div class="profilepic"><img src="'+pic+'" width="'+picSize+'" height="'+picSize+'"/></div>
+      <span class="username">'+player.username+'</span>
+      <span class="money">'+player.jackpot+'</span>
+    </div>'
 
   updateRankingList: (players) ->
-    el = $('.weekly-ranking', @$el).empty()
-    el.append @newPlayerHTML(rank, player, 53) for rank,player of players
+    @i= 'pink'
+    el = $('.ranking-container', @$el).empty()
+    el.append @newPlayerHTML(rank, player, 40) for rank,player of players
 
   chooseList: (eventTargetEl) ->
-    $('.footer-btn', @$el).removeClass('active')
-    $(eventTargetEl, @$el).addClass('active')
+    $('div' ,'#btn_HoF').removeClass('active')
+    $(eventTargetEl).addClass('active')

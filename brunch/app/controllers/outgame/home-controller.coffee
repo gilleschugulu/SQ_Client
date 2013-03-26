@@ -41,6 +41,9 @@ module.exports = class HomeController extends Controller
     @view.delegate 'click', '#equipe-btn', =>
       @view.toggleJournal()
 
+    @view.delegate 'click', '#hall-of-fame', =>
+      @view.dim => @redirectTo 'hall-of-fame'
+
     @view.delegate 'click', '#invite-btn', @onClickFacebook
 
   onClickFacebook: =>
