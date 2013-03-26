@@ -40,12 +40,14 @@ for i in 2..data.last_row
     for j in 1..4
       answer = extract_answer(j)
       propositions.push({
+        id: j,
         text: answer,
         is_valid: j == good_answer_index
       })
     end
 
     question = {
+      id: i,
       text: extract_answer(0),
       category: extract_answer(6),
       difficulty: @row[7].to_i,
@@ -56,13 +58,14 @@ for i in 2..data.last_row
 
     questions << question
   rescue
-    puts "Row #{@row.inspect} failed."
+    puts "Row failed : #{@row.inspect}"
   end
 end
 
-json = JSON::generate(questions)
+json = "module.exports =\n  "
+json += JSON::generate(questions)
 
-File.open('generated.json', 'w') do |file|
+File.open('generated.coffee', 'w') do |file|
   file.write(json)
 end
 
