@@ -4,7 +4,7 @@ View = require 'views/base/view'
 
 module.exports = class ShopView extends View
   autoRender: yes
-  className: 'shop'
+  className: 'shop-page'
   container: '#page-container'
   template: template
 
@@ -15,8 +15,9 @@ module.exports = class ShopView extends View
     # pack helper here
     super
 
-  updateWallet: (credits) ->
-    $('.cash-value', @$el).text credits
+  updateWallet: (credits, health) ->
+    $('#numbers #credits', @$el).text credits
+    $('#numbers #hearts',  @$el).text health
 
   chooseApplePack: (targetElement) ->
     $(targetElement, @$el).data('id')
@@ -24,9 +25,20 @@ module.exports = class ShopView extends View
   chooseFreePack: (targetElement) ->
     $(targetElement, @$el).attr('id')
 
+  chooseLifePackIndex: (targetElement) ->
+    $(targetElement, @$el).data('position')
+
+  chooseBonusPackIndex: (targetElement) ->
+    $(targetElement, @$el).data('position')
+
   disableUnavailablePacks: (packIds) ->
     for packId in packIds
       $('.paid-pack[data-id="' + packId + '"]', @$el).addClass 'unavailable'
 
   removeFreePack: (elemId) ->
     $('.free-pack#'+elemId, @$el).remove()
+
+  toggleTabs: ->
+    $('.tab', @$el).toggleClass('inactive')
+    $('.tab', @$el).toggleClass('active')
+    $('.content-container', @$el).toggle()

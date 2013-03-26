@@ -7,6 +7,9 @@ module.exports =
         unavailable_pack:
           title: 'erreur'
           message: 'pack indisponible'
+        not_enough_credits:
+          title: 'erreur'
+          message: 'pas assez de crédits'
     helper:
       app_store_link: "http://itunes.apple.com/app/les-12-coups-de-midi/id584885677?mt=8"
       game_icon: "https://midi-preproduction.chugulu.com/assets/Icon-72@2x.png"

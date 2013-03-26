@@ -123,6 +123,24 @@ module.exports = class PurchaseHelper
             key    : 'adcolony-fail'
         PopUpHelper.initialize popupStuff
 
+  @purchaseLife: (pack, successCallback) ->
+    user = Parse.User.current()
+
+    user.increment('health', pack.value).increment('credits', -pack.price).save()
+    successCallback?(user.get('credits'), user.get('health'))
+
+  @purchaseBonus: (pack, successCallback) ->
+    user = Parse.User.current()
+    bonus_added = pack.value
+    bonuses = {}
+
+    for name, value of user.get('bonus')
+      bonuses[name] = value + bonus_added
+
+    user.set('bonus', bonuses).increment('credits', -pack.price).save()
+
+    successCallback?(user.get('credits'))
+
   @purchaseApple: (pack, successCallback) ->
     if pack.product_id and MKStore? and MKStore.gotProducts
       # AnalyticsHelper.item('Pack de crédits In App', 'click', pack.name, pack.price)
@@ -166,7 +184,7 @@ module.exports = class PurchaseHelper
     else
       console.error "Trying to by pack without product_id OR did not getProducts()"
 
-  @fecthAppleProducts: (packs, callback) ->
+  @fetchAppleProducts: (packs, callback) ->
     return callback?({}) unless MKStore?
     SpinnerHelper.start()
 
@@ -175,7 +193,7 @@ module.exports = class PurchaseHelper
       nonConsumables: {}
       subscriptions : {}
 
-    products.consumables[pack.product_id] = pack for pack in packs when pack.provider is 'apple' and pack.product_id
+    products.consumables[pack.product_id] = pack for pack in packs when pack.product_id
 
     MKStore.getProducts products, (availableProducts) =>
       SpinnerHelper.stop()
