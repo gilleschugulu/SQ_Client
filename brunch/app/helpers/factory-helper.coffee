@@ -2,7 +2,7 @@ utils = require 'lib/utils'
 
 module.exports = class Factory
   @questionModel: (data) ->
-    type = utils.dasherize data.type
+    type = 'photo-mcq'
     try
       model = require "models/ingame/questions/#{type}-question-model"
     catch e
