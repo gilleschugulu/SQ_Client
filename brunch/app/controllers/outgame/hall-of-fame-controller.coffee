@@ -12,16 +12,18 @@ module.exports = class HallOfFameController extends Controller
   request : null
 
   fetchPlayers: (withFriends) =>
+    @friend = if withFriends then true else false
     @collection = {}
+    allRanks = [1,2,3,25,26,32,45,48,49,82,100,112,113,125,265,258,359,2000,9030,9031,10620]
     self_index = parseInt(Math.random() * 21)
-    for i in [1..21]
+    for i in [0..20]
       if i is self_index
         t = 'self'
       else
-        t = 'opponent'
-        if withFriends
-          t = if Math.random() > 0.49 then 'friend' else 'opponent'
+        t = if withFriends then 'friends' else 'opponent'
       @collection[i] =
+        friend    : @friend
+        rank      : allRanks[i]
         username  : "#{t}_#{i}"
         jackpot   : Math.ceil(Math.random() * 50000)
         profilepic: if Math.random() > 0.49 then 'https://graph.facebook.com/sergio.chugulu/picture' else null
@@ -36,10 +38,11 @@ module.exports = class HallOfFameController extends Controller
 
   index: ->
     @fetchPlayers yes
-
+    @targetDate = @getDate()
     @loadView null
     , =>
       params =
+        targetDate : @targetDate
         rank   : mediator.user.get('rank')
         credits: mediator.user.get('credits')
         health : mediator.user.get('health')
@@ -47,6 +50,7 @@ module.exports = class HallOfFameController extends Controller
     , (view) =>
       view.delegate 'click', '#btn-friends', @onClickFriends
       view.delegate 'click', '#btn-global', @onClickGlobal
+      view.delegate 'click', '.ask-friend', @askFriend
       @updateRanking() if @collection
     , {viewTransition: yes, music: 'outgame'}
 
@@ -54,15 +58,27 @@ module.exports = class HallOfFameController extends Controller
     @view?.updateRankingList @collection
 
   onClickFriends: (e) =>
-    # Track Event
-    AnalyticsHelper.trackEvent 'HallOfFame', 'Affichage des amis'
-
-    @fetchPlayers yes
-    @view.chooseList e.target
+    if !$(e.target).hasClass('active')
+      # Track Event
+      AnalyticsHelper.trackEvent 'HallOfFame', 'Affichage des amis'
+      @fetchPlayers yes
+      @view.chooseList e.target
 
   onClickGlobal: (e) =>
-    # Track Event
-    AnalyticsHelper.trackEvent 'HallOfFame', 'Affichage adversaires'
+    if !$(e.target).hasClass('active')
+      # Track Event
+      AnalyticsHelper.trackEvent 'HallOfFame', 'Affichage adversaires'
+      @fetchPlayers no
+      @view.chooseList e.target
 
-    @fetchPlayers no
-    @view.chooseList e.target
+  getDate: =>
+    targetDate = new Date()
+    targetDate.setHours(0)
+    targetDate.setMinutes(0)
+    targetDate.setSeconds(0)
+    targetDate.setDate(targetDate.getDate() - targetDate.getDay() + 7)
+    return targetDate
+
+  askFriend: (e) =>
+    if !$(e.target).hasClass('asked')
+      @view.askFriend e.target

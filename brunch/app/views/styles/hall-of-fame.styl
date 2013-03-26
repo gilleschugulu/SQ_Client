@@ -67,6 +67,16 @@
       background-repeat: no-repeat
       background-size: 100%
       background-image: url('../images/hall-of-fame/tournoi.png')
+      color: #f00;
+      font-weight: bold;
+      letter-spacing: 0.3em;
+      font-size: 21px;
+      #HoF-days
+        absolute: left 45.5% top 33%
+      #HoF-hours
+        absolute: left 60% top 33%
+      #HoF-min
+        absolute: left 74.5% top 33%
     .level
       width: 10%
       height: 8%
@@ -87,14 +97,17 @@
         width: 100%
         background-size:contain
         background-repeat: no-repeat
+        cursor: pointer
       .friends
         background-image: url('../images/hall-of-fame/amis_inactive.png')
         &.active
           background-image: url('../images/hall-of-fame/amis.png')
+          cursor: default
       .global
         background-image: url('../images/hall-of-fame/global_inactive.png')
         &.active
           background-image: url('../images/hall-of-fame/global.png')
+          cursor: default
     .ranking-container
       overflow-y: scroll
       -webkit-overflow-scrolling: touch
@@ -105,6 +118,12 @@
       background-size: contain
       background-image: url('../images/hall-of-fame/box_classements.png')
       padding-top: 1%
+      .separator
+        width: 98%
+        height: 2%
+        margin-left: 1%
+        background-image: url('../images/hall-of-fame/line.png')
+        background-size: 100%
       .div-ranking
         margin-left: 1%
         width: 98%
@@ -133,7 +152,17 @@
           absolute: right 20%
           margin-top: 3%
           font-size: 1.5em
-
+        .ask-friend
+          cursor: pointer
+          margin-top: 1%
+          absolute: right 1%
+          width: 9%
+          height: 9%
+          background-image: url('../images/hall-of-fame/vie_toask.png')
+          background-size: contain
+          background-repeat: no-repeat
+          &.asked
+            background-image: url('../images/hall-of-fame/vie_asked.png')
 
 
 /*
