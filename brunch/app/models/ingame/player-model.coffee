@@ -3,12 +3,6 @@ Model = require 'models/base/model'
 module.exports = class Player extends Model
   defaults:
     jackpot: 0
-    bonus:
-      fifty_fifty: 4
-      double: 1
-      add_time: 20
-      skip: 12
-      mass: 10
 
   addJackpot: (someJackpot) ->
     amount = @get('jackpot') + someJackpot

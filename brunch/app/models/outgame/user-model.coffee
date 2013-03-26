@@ -12,6 +12,9 @@ module.exports = class User extends Parse.User
     providers:
       facebook: null
       equipe:   null
-
-  stuff: ->
-    console.log('coucou')
+    bonus:
+      fifty_fifty: 0
+      double: 0
+      add_time: 0
+      skip: 0
+      mass: 0
