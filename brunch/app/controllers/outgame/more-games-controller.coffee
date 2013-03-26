@@ -1,7 +1,6 @@
 Controller    = require 'controllers/base/controller'
 MoreGamesView = require 'views/outgame/more-games-view'
 ConfigHelper  = require 'helpers/config-helper'
-ApiCallHelper = require 'helpers/api-call-helper'
 
 module.exports = class MoreGamesController extends Controller
   historyURL: 'more-games'

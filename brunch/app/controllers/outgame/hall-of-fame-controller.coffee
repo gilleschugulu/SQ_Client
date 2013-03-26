@@ -1,6 +1,5 @@
 Controller      = require 'controllers/base/controller'
 HallOfFameView  = require 'views/outgame/hall-of-fame-view'
-ApiCallHelper   = require 'helpers/api-call-helper'
 mediator        = require 'mediator'
 ConfigHelper    = require 'helpers/config-helper'
 AnalyticsHelper = require 'helpers/analytics-helper'

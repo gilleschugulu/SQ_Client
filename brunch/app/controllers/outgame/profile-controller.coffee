@@ -4,7 +4,6 @@ ProfileView     = require 'views/outgame/profile-view'
 mediator        = require 'mediator'
 FacebookHelper  = require 'helpers/facebook-helper'
 ConfigHelper    = require 'helpers/config-helper'
-ApiCallHelper   = require 'helpers/api-call-helper'
 
 module.exports = class ProfilesController extends Controller
   title     : 'Profile'

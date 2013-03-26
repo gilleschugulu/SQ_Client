@@ -1,6 +1,5 @@
 mediator      = require 'mediator'
 utils         = require 'lib/utils'
-ApiCallHelper = require 'helpers/api-call-helper'
 PopUpHelper   = require 'helpers/pop-up-helper'
 i18n          = require 'lib/i18n'
 spinner       = require 'helpers/spinner-helper'

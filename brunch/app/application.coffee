@@ -3,7 +3,6 @@ Layout        = require 'views/layout'
 mediator      = require 'mediator'
 routes        = require 'routes'
 config        = require 'config/environment-config'
-ApiCallHelper = require 'helpers/api-call-helper'
 
 # The application object
 module.exports = class Application extends Chaplin.Application
