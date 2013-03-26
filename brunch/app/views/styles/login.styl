@@ -6,40 +6,49 @@
   height: 100%
   text-align: center
   background-repeat: no-repeat
-  background-image: url("../images/login/background.png")
+  background-image: url("../images/login/bg_login.png")
   background-size: contain
   position: relative
-  .fb-reward
-    background-image: url('../images/login/150j.png')
-    background-size: contain
-    background-repeat: no-repeat
-    width: 80.3%
-    height: 13.9%
-    absolute: top 27% left 14%
-  .or
-    background-image: url('../images/login/ou.png')
-    background-repeat: no-repeat
-    background-size: contain
-    width: 79.2%
-    height: 3%
-    absolute: top 65% left 11%
-  .invalid
-    color: red
-    border: 1px solid red
   .btn-container
-    width: 57.5%
+    width: 57.189%
     height: 40%
-    relative: top 27%
+    relative: top 41%
     margin: 0 auto
-    .facebook-login, .email-login
+    .facebook-login, .equipe-login
       display: block
       height: 100%
       background-repeat: no-repeat
-      background-size: 100% 100%
+      background-size: contain
+      margin: 0 auto
     .facebook-login
       width: 100%
       height: 32.8%
-      background-image: url("../images/login/facebook_login.png")
-      // margin-bottom: 34%
+      background-image: url("../images/login/connexionfb.png")
+    .equipe-login
+      width: 83.425%
+      height: 32.8%
+      margin-top: 9%
+      background-image: url("../images/login/compteequipe.png")
+
+  #equipe-forms
+    display: none
+    width: 100%
+    height: 70%
+    absolute: top 5%
+    background: white
+    &.shown
+      display: block
+    #close-btn
+      cursor: pointer
+      width: 4.7%
+      height: 10%
+      absolute: top 2% left 0.7%
+      display: block
+      background-repeat: no-repeat
+      background-size: contain
+      background-image: url(../images/common/close.png)
       &:active
-        background-image: url("../images/login/facebook_login_a.png")
+        background-image: url(../images/common/close_a.png)
+    .invalid
+      color: red
+      border: 1px solid red
