@@ -6,7 +6,7 @@
     #import <UIKit/UIKit.h>
 #endif
 
-#define iTunesAppID         @"584885677"
+#define iTunesAppID         @"619795233"
 
 /* ChartBoost */
 #define ChartBoostAppID         @"5151bde417ba472944000023"
