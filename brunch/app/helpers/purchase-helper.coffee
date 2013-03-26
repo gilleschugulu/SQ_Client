@@ -139,8 +139,6 @@ module.exports = class PurchaseHelper
 
     user.set('bonus', bonuses).increment('credits', -pack.price).save()
 
-    console.log 'Now : ', user.get('bonus')
-
     successCallback?(user.get('credits'))
 
   @purchaseApple: (pack, successCallback) ->

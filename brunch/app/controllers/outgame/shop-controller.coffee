@@ -39,7 +39,7 @@ module.exports = class ShopController extends Controller
         view.disableUnavailablePacks (pack.id for pack in @packs.credit_packs when !@availableProducts[pack.product_id])
 
       # test faster, harder, stronger :D
-      @onToggleTab()
+      # @onToggleTab()
 
     , {viewTransition: yes, music: 'outgame'}
 
@@ -61,7 +61,7 @@ module.exports = class ShopController extends Controller
   # ----------
   onClickFreePack: (e) =>
     provider   = @view.chooseFreePack e.target
-    methodName = $.zepto.camelize 'on-click-' + provider.replace(/_/g, '-')
+    methodName = $.camelCase 'on-click-' + provider.replace(/_/g, '-')
     if @[methodName]
       @[methodName]()
     else
@@ -73,13 +73,19 @@ module.exports = class ShopController extends Controller
 
     PurchaseHelper.purchaseAdcolony ConfigHelper.config.services.adcolony.zones.SHOP, @onSuccessfulTransaction
 
+  onClickTwitter: =>
+    # Track event
+    AnalyticsHelper.trackEvent 'Boutique', 'Suis Nous sur Twitter'
+
+    PurchaseHelper.purchaseTwitter ConfigHelper.config.services.twitter, @onSuccessfulTransaction
+
   onClickTapjoy: =>
     # Track event
     AnalyticsHelper.trackEvent 'Boutique', 'Achat du pack Tapjoy'
 
     PurchaseHelper.purchaseTapjoy ConfigHelper.config.services.tapjoy.currency, @onSuccessfulTransaction
 
-  onClickFacebookInvitation: =>
+  onClickInviteFriends: =>
     # Track event
     AnalyticsHelper.trackEvent 'Boutique', 'Achat du pack FaceBookInvitation'
 
