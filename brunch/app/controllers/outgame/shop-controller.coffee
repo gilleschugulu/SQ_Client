@@ -22,7 +22,7 @@ module.exports = class ShopController extends Controller
     @packs.free_packs = (if DeviceHelper.isIOS() then @packs.free_packs.ios else @packs.free_packs.web )
     @bonuses = BonusPacks
     user = Parse.User.current()
-
+    PurchaseHelper.initTapPoints()
 
     @loadView 'shop'
     , =>
@@ -48,8 +48,8 @@ module.exports = class ShopController extends Controller
     @view.updateWallet credits, life
 
   onClickApplePack: (e) =>
-    packId = parseInt @view.chooseApplePack(e.target)
-    pack = (p for p in @packs.credit_packs when parseInt(p.id) is packId)?[0]
+    packId = @view.chooseApplePack(e.currentTarget)
+    pack = (p for p in @packs.credit_packs when p.product_id is packId)?[0]
     if @availableProducts[pack.product_id]?
       PurchaseHelper.purchaseApple pack, @onSuccessfulTransaction
     else
@@ -80,7 +80,9 @@ module.exports = class ShopController extends Controller
     # Track event
     AnalyticsHelper.trackEvent 'Boutique', 'Suis Nous sur Twitter'
 
-    PurchaseHelper.purchaseTwitter pack, ConfigHelper.config.services.twitter, @onSuccessfulTransaction
+    PurchaseHelper.purchaseTwitter pack, ConfigHelper.config.services.twitter, (credits) =>
+      @onSuccessfulTransaction credits
+      @disableFreePack 'twitter'
 
   onClickTapjoy: (pack) =>
     # Track event
@@ -123,7 +125,7 @@ module.exports = class ShopController extends Controller
 
 
   onClickLifePack: (e) =>
-    pack = BonusPacks.life_packs[@view.chooseLifePackIndex e.target]
+    pack = BonusPacks.life_packs[@view.chooseLifePackIndex e.currentTarget]
     return unless pack
 
     if Parse.User.current().get('credits') >= pack.price
@@ -135,7 +137,7 @@ module.exports = class ShopController extends Controller
         key    : 'pack-error'
 
   onClickBonusPack: (e) =>
-    pack = BonusPacks.bonus_packs[@view.chooseBonusPackIndex e.target]
+    pack = BonusPacks.bonus_packs[@view.chooseBonusPackIndex e.currentTarget]
     return unless pack
 
     if Parse.User.current().get('credits') >= pack.price

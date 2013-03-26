@@ -201,7 +201,7 @@
 	NSString *stringToReturn = [NSString stringWithFormat:@"Tap Points: %d", [tapPoints intValue]];
 
 	CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK
-                                                      messageAsString:stringToReturn];
+                                                         messageAsInt:[tapPoints intValue]];
 
 	NSLog(@"tap points callback ID: %@", self.tapPointsCallbackID);
 
@@ -231,7 +231,7 @@
 	NSString *stringToReturn = [NSString stringWithFormat:@"Tap Points: %d", [tapPoints intValue]];
 
 	CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK
-                                                      messageAsString:stringToReturn];
+                                                         messageAsInt:[tapPoints intValue]];
 
 	[self writeJavascript:[pluginResult toSuccessCallbackString:self.spendTapPointsCallbackID]];
 }
@@ -259,7 +259,7 @@
 	NSString *stringToReturn = [NSString stringWithFormat:@"Tap Points: %d", [tapPoints intValue]];
 
 	CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK
-                                                      messageAsString:stringToReturn];
+                                                         messageAsInt:[tapPoints intValue]];
 
 	[self writeJavascript:[pluginResult toSuccessCallbackString:self.awardTapPointsCallbackID]];
 }

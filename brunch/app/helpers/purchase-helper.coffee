@@ -7,6 +7,7 @@ i18n            = require 'lib/i18n'
 AnalyticsHelper = require 'helpers/analytics-helper'
 
 module.exports = class PurchaseHelper
+  @tapPoints : 0
 
   @purchaseAppstoreRating: (pack, successCallback) ->
     user = Parse.User.current()
@@ -16,10 +17,12 @@ module.exports = class PurchaseHelper
       successCallback?(user.get('credits'))
 
   @purchaseTwitter: (pack, twitterConfig, successCallback) ->
+    window.open('http://twitter.com', '_blank')
     successCallback?(Parse.User.current().get('credits'))
 
 
   @purchaseFacebookLike: (pack, successCallback) ->
+    window.open('http://facebook.com', '_blank')
     user = Parse.User.current()
     user.increment('credits', pack.value).save()
     successCallback?(user.get('credits'))
@@ -52,12 +55,20 @@ module.exports = class PurchaseHelper
     user = Parse.User.current()
 
     if TapjoyConnect?
-      TapjoyConnect.setUserID Parse.User.current().get 'objectId'
+      TapjoyConnect.setUserID Parse.User.current().id
       TapjoyConnect.showOffersWithCurrencyID currency, no, =>
+        TapjoyConnect.getTapPoints (points) =>
+          console.log "TAPJOY POINTS"
+          console.log @tapPoints
+          console.log points
+          console.log points - @tapPoints
+          user.increment('credits', points - @tapPoints).save()
+          @tapPoints = points
+          successCallback?(user.get('credits'))
 
-        # TODO : Pack doesn't have a constant value
-        user.increment('credits', pack.value).save()
-        successCallback?(user.get('credits'))
+  @initTapPoints: ->
+    TapjoyConnect.setUserID Parse.User.current().id
+    TapjoyConnect?.getTapPoints (@tapPoints) =>
 
   @purchaseAdcolony: (pack, zone, successCallback) ->
     user = Parse.User.current()
@@ -65,7 +76,7 @@ module.exports = class PurchaseHelper
     if AdColony?
       options =
         zone     : zone
-        custom   : Parse.User.current().get 'objectId'
+        custom   : Parse.User.current().id
         # prepopup : yes
         # postpopup: yes
       AdColony.playVideo options, (amount) =>
@@ -150,7 +161,7 @@ module.exports = class PurchaseHelper
         SpinnerHelper.stop()
       , {
           postData :
-            objectId   : Parse.User.current().get 'objectId'
+            objectId   : Parse.User.current().id
             sandbox: (if yes then 'true' else 'false')
           remoteProductServer : ConfigHelper.config.urls.base
       }
