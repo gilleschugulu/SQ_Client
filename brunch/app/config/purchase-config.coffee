@@ -21,22 +21,33 @@ module.exports =
     image: "../images/shop/Jetons/pack_4.png"
   ]
 
-  free_packs: [
-    name: 'twitter'
-    value: 5
-  ,
-    name: 'facebook_like'
-    value: 5
-  ,
-    name: 'app_store_rating'
-    value: 5
-  ,
-    name: 'adcolony'
-    value: 5
-  ,
-    name: 'tapjoy'
-    value: 5
-  ,
-    name: 'invite_friends'
-    value: 5
-  ]
+  free_packs: 
+    web: [
+      name: 'twitter'
+      value: 5
+    ,
+      name: 'facebook_like'
+      value: 5
+    ,
+      name: 'invite_friends'
+      value: 5
+    ]
+    ios: [
+      name: 'twitter'
+      value: 5
+    ,
+      name: 'facebook_like'
+      value: 5
+    ,
+      name: 'app_store_rating'
+      value: 5
+    ,
+      name: 'adcolony'
+      value: 5
+    ,
+      name: 'tapjoy'
+      value: 5
+    ,
+      name: 'invite_friends'
+      value: 5
+    ]

@@ -1,7 +1,7 @@
 Controller         = require 'controllers/base/controller'
 ShopView           = require 'views/outgame/shop-view'
-ApiCallHelper      = require 'helpers/api-call-helper'
 PurchaseHelper     = require 'helpers/purchase-helper'
+DeviceHelper       = require 'helpers/device-helper'
 ConfigHelper       = require 'helpers/config-helper'
 mediator           = require 'mediator'
 i18n               = require 'lib/i18n'
@@ -19,6 +19,7 @@ module.exports = class ShopController extends Controller
 
   index: =>
     @packs = PurchasePacks
+    @packs.free_packs = (if DeviceHelper.isIOS() then @packs.free_packs.ios else @packs.free_packs.web )
     @bonuses = BonusPacks
     user = Parse.User.current()
 
@@ -60,52 +61,54 @@ module.exports = class ShopController extends Controller
   # Free packs
   # ----------
   onClickFreePack: (e) =>
-    provider   = @view.chooseFreePack e.target
+    provider   = @view.chooseFreePack e.currentTarget
     methodName = $.camelCase 'on-click-' + provider.replace(/_/g, '-')
+    pack = (pack for pack in @packs.free_packs when pack.name == provider)[0]
+
     if @[methodName]
-      @[methodName]()
+      @[methodName](pack)
     else
       console.error 'Unknown provider ' + provider + ' (' + methodName + ')'
 
-  onClickAdcolony: =>
+  onClickAdcolony: (pack) =>
     # Track event
     AnalyticsHelper.trackEvent 'Boutique', 'Achat du pack AdColony'
 
-    PurchaseHelper.purchaseAdcolony ConfigHelper.config.services.adcolony.zones.SHOP, @onSuccessfulTransaction
+    PurchaseHelper.purchaseAdcolony pack, ConfigHelper.config.services.adcolony.zones.SHOP, @onSuccessfulTransaction
 
-  onClickTwitter: =>
+  onClickTwitter: (pack) =>
     # Track event
     AnalyticsHelper.trackEvent 'Boutique', 'Suis Nous sur Twitter'
 
-    PurchaseHelper.purchaseTwitter ConfigHelper.config.services.twitter, @onSuccessfulTransaction
+    PurchaseHelper.purchaseTwitter pack, ConfigHelper.config.services.twitter, @onSuccessfulTransaction
 
-  onClickTapjoy: =>
+  onClickTapjoy: (pack) =>
     # Track event
     AnalyticsHelper.trackEvent 'Boutique', 'Achat du pack Tapjoy'
 
-    PurchaseHelper.purchaseTapjoy ConfigHelper.config.services.tapjoy.currency, @onSuccessfulTransaction
+    PurchaseHelper.purchaseTapjoy pack, ConfigHelper.config.services.tapjoy.currency, @onSuccessfulTransaction
 
-  onClickInviteFriends: =>
+  onClickInviteFriends: (pack) =>
     # Track event
     AnalyticsHelper.trackEvent 'Boutique', 'Achat du pack FaceBookInvitation'
 
     console.log "facebook invitation"
-    PurchaseHelper.purchaseFacebookInvitation @onSuccessfulTransaction
+    PurchaseHelper.purchaseFacebookInvitation pack, @onSuccessfulTransaction
 
-  onClickAppStoreRating: =>
+  onClickAppStoreRating: (pack) =>
     # Track event
     AnalyticsHelper.trackEvent 'Boutique', 'Achat du pack AppStoreRating'
 
-    PurchaseHelper.purchaseAppstoreRating (credits) =>
+    PurchaseHelper.purchaseAppstoreRating pack, (credits) =>
       @onSuccessfulTransaction credits
       @disableFreePack 'app_store_rating'
 
-  onClickFacebookLike: =>
+  onClickFacebookLike: (pack) =>
     # Track event
     AnalyticsHelper.trackEvent 'Boutique', 'Achat du pack FacebookLike'
 
     console.log "facebook like"
-    PurchaseHelper.purchaseFacebookLike (credits) =>
+    PurchaseHelper.purchaseFacebookLike pack, (credits) =>
       @onSuccessfulTransaction credits
       @disableFreePack 'facebook_like'
 

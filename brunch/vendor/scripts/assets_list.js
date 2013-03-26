@@ -1,5 +1,5 @@
 var AssetsList = {
-  assets: { 'common/': ["images/common/background.png", "images/common/home.png", "images/common/timer.png"],
+  assets: { 'common/': ["images/common/background.png", "images/common/close.png", "images/common/close_a.png", "images/common/home.png"],
 'game-over/': ["images/game-over/popup.png", "images/game-over/popup_victoire.png", "images/game-over/rejouer.png", "images/game-over/rejouer_a.png"],
 'hall-of-fame/': ["images/hall-of-fame/adversaire.png", "images/hall-of-fame/adversaires_deactive.png", "images/hall-of-fame/amis.png", "images/hall-of-fame/amis_deactive.png", "images/hall-of-fame/background.jpg", "images/hall-of-fame/fond_classement.png", "images/hall-of-fame/gamecenter.png", "images/hall-of-fame/jeton.png", "images/hall-of-fame/precedent.png", "images/hall-of-fame/rank1.png", "images/hall-of-fame/rank2.png", "images/hall-of-fame/rank3.png", "images/hall-of-fame/rankadversaire.png", "images/hall-of-fame/title.png"],
 'home/+2amis/': ["images/home/+2amis/inviter.png", "images/home/+2amis/inviter_a.png", "images/home/+2amis/ranking.png", "images/home/+2amis/ranking_a.png", "images/home/+2amis/title.png"],
@@ -18,7 +18,7 @@ var AssetsList = {
 'shop/Jetons/': ["images/shop/Jetons/invite.png", "images/shop/Jetons/like.png", "images/shop/Jetons/note.png", "images/shop/Jetons/offre.png", "images/shop/Jetons/pack_1.png", "images/shop/Jetons/pack_2.png", "images/shop/Jetons/pack_3.png", "images/shop/Jetons/pack_4.png", "images/shop/Jetons/twitter.png", "images/shop/Jetons/video.png"],
 'shop/life_and_bonus/': ["images/shop/life_and_bonus/1000.png", "images/shop/life_and_bonus/300.png", "images/shop/life_and_bonus/50.png"],
 'shop/life_and_bonus/Vies/': ["images/shop/life_and_bonus/Vies/10.png", "images/shop/life_and_bonus/Vies/100.png", "images/shop/life_and_bonus/Vies/150.png", "images/shop/life_and_bonus/Vies/5.png", "images/shop/life_and_bonus/Vies/50.png"],
-'tutorial/': ["images/tutorial/close.png", "images/tutorial/close_a.png", "images/tutorial/next.png", "images/tutorial/pagination_grey.png", "images/tutorial/pagination_red.png", "images/tutorial/tutoriel_1.jpg", "images/tutorial/tutoriel_2.jpg", "images/tutorial/tutoriel_3.jpg"] },
+'tutorial/': ["images/tutorial/next.png", "images/tutorial/pagination_grey.png", "images/tutorial/pagination_red.png", "images/tutorial/tutoriel_1.jpg", "images/tutorial/tutoriel_2.jpg", "images/tutorial/tutoriel_3.jpg"] },
   keys: {
     profile: ['profile', 'common'],
     home: ['home/1ami', 'home/2amis/', 'home/common/', 'home/pasamis/', 'home/+2amis'],

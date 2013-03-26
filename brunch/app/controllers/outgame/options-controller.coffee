@@ -1,7 +1,6 @@
 Controller         = require 'controllers/base/controller'
 OptionsView        = require 'views/outgame/options-view'
 LocalStorageHelper = require 'helpers/local-storage-helper'
-ApiCallHelper      = require 'helpers/api-call-helper'
 SoundHelper        = require 'helpers/sound-helper'
 AnalyticsHelper    = require 'helpers/analytics-helper'
 mediator           = require 'mediator'
