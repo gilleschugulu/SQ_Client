@@ -14,7 +14,13 @@ module.exports = class LoginView extends View
       $('.facebook-login').addClass('animated tada').one 'webkitAnimationEnd', ->
         $(this).removeClass('animated tada')
     , 2500
-    # @animInterval2 = setInterval =>
-    #   $('.fb-reward, .facebook-login').addClass('animated tada').one 'webkitAnimationEnd', ->
-    #     $(this).removeClass('animated tada')
-    # , 2500
+    @animInterval2 = setInterval =>
+      $('.equipe-login').addClass('animated tada').one 'webkitAnimationEnd', ->
+        $(this).removeClass('animated tada')
+    , 3000
+
+  openForms: ->
+    $('#equipe-forms', @$el).addClass 'shown'
+
+  closeForms: ->
+    $('#equipe-forms', @$el).removeClass 'shown'

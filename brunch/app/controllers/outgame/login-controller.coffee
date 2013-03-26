@@ -140,6 +140,10 @@ module.exports = class LoginController extends Controller
       view.delegate 'click', '#login-btn', @loginWithSSO
       view.delegate 'keyup', '#sso-register-form input[name=email]', @checkAvailabilityWithSSO
       view.delegate 'keyup', '#sso-register-form input[name=username]', @checkAvailabilityWithSSO
+      view.delegate 'click', '#close-btn', ->
+        view.closeForms()
+      view.delegate 'click', '#equipe-login', ->
+        view.openForms()
       view.delegate "click", "#facebook-login", =>
         AnalyticsHelper.trackEvent 'Login', 'Login with facebook'
 
