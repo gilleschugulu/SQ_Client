@@ -129,7 +129,7 @@ module.exports = class PurchaseHelper
     if pack.product_id and MKStore? and MKStore.gotProducts
       # AnalyticsHelper.item('Pack de crédits In App', 'click', pack.name, pack.price)
       SpinnerHelper.start()
-
+      console.log pack.product_id
       # alert 'wait for it...'
       MKStore.buyFeature pack.product_id, (response) =>
         # Used by Google to track pack bought
@@ -159,12 +159,7 @@ module.exports = class PurchaseHelper
           key    : 'purchase-fail'
         console.log "canceled"
         SpinnerHelper.stop()
-      , {
-          postData :
-            objectId   : Parse.User.current().id
-            sandbox: (if yes then 'true' else 'false')
-          remoteProductServer : ConfigHelper.config.urls.base
-      }
+      , null
     else
       console.error "Trying to by pack without product_id OR did not getProducts()"
 
