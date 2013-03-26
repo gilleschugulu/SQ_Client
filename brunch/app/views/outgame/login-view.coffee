@@ -20,7 +20,9 @@ module.exports = class LoginView extends View
     , 3000
 
   openForms: ->
-    $('#equipe-forms', @$el).addClass 'shown'
+    # $('#equipe-forms', @$el).addClass 'shown'
+    $('#flipper', @$el).addClass 'flipped'
 
   closeForms: ->
-    $('#equipe-forms', @$el).removeClass 'shown'
+    # $('#equipe-forms', @$el).removeClass 'shown'
+    $('#flipper', @$el).removeClass 'flipped'
