@@ -12,4 +12,4 @@ module.exports = class TutorialView extends View
 
   changeScreen: (screenNumber) ->
     $('#pagination li').removeClass('current').eq(screenNumber - 1).addClass('current')
-    $('.screen', @$el).css('background-image', "url(../images/tutorial/tutoriel_#{screenNumber}.jpg)")
+    $('.screen', @$el).css('background-image', "url(images/tutorial/tutoriel_#{screenNumber}.jpg)")
