@@ -21,7 +21,7 @@ module.exports =
     image: "../images/shop/Jetons/pack_4.png"
   ]
 
-  free_packs: 
+  free_packs:
     web: [
       name: 'twitter'
       value: 5
