@@ -51,7 +51,9 @@ module.exports =
             title: 'Erreur'
             message: "Une erreur est survenue. Veuillez réessayer plus tard."
         facebook:
-          invitation_text: 'accepte'
+          invitation:
+            text: 'accepte'
+            reward : "Youpi ! tu as des credits en plus...ou pas"
     view:
       outgame:
         login:

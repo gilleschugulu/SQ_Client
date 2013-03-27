@@ -164,8 +164,6 @@ module.exports = class LoginController extends Controller
             else
               PopUpHelper.initialize {message: 'Erreur avec Facebook', title: 400, key: 'api-error'}
         )
-
-        # FacebookHelper.getLoginStatus()
     , {viewTransition: yes}
 
 

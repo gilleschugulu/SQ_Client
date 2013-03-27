@@ -31,7 +31,7 @@ module.exports = class PurchaseHelper
   @purchaseFacebookInvitation: (pack, successCallback) ->
     user = Parse.User.current()
 
-    FacebookHelper.friendRequest i18n.t('helper.purchase.facebook.invitation_text'), (response) =>
+    FacebookHelper.friendRequest i18n.t('helper.purchase.facebook.invitation.text'), (response) =>
       # We don't need this shhh*t
       delete response.request
 
@@ -48,7 +48,7 @@ module.exports = class PurchaseHelper
 
       PopUpHelper.initialize
         title  : 'info'
-        message: response.info.messages
+        message: i18n.t('helper.purchase.facebook.invitation.reward')
         key    : 'fb-reward'
 
   @purchaseTapjoy: (pack, currency, successCallback) ->
