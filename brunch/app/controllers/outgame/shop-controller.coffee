@@ -21,6 +21,9 @@ module.exports = class ShopController extends Controller
     @packs = PurchasePacks
     if fp = (if DeviceHelper.isIOS() then @packs.free_packs.ios else @packs.free_packs.web)
       @packs.free_packs = fp
+      for p,index in @packs.free_packs
+        @packs.free_packs[index].disabled = LocalStorageHelper.exists "store_pack_#{p.name}"
+      console.log @packs
     @bonuses = BonusPacks
     user = Parse.User.current()
     PurchaseHelper.initTapPoints()

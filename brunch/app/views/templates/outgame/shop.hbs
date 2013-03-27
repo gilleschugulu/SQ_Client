@@ -21,9 +21,11 @@
   <div class="content-container" id='credits'>
     <div class="free-offers">
       {{#each packs.free_packs}}
-        <a class="free-pack" id="{{name}}">
-          <span>+ {{value}}</span>
-        </a>
+        {{#unless disabled}}
+          <a class="free-pack" id="{{name}}">
+            <span>+ {{value}}</span>
+          </a>
+        {{/unless}}
       {{/each}}
     </div>
     <div class="clearfix"></div>
