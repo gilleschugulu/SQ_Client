@@ -20,7 +20,7 @@ module.exports = class HallOfFameController extends Controller
       if i is self_index
         t = 'self'
       else
-        t = if withFriends then 'friends' else 'opponent'
+        t = if withFriends then 'Friends' else 'Opponent'
       @collection[i] =
         friend    : @friend
         rank      : allRanks[i]
