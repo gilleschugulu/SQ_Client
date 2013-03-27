@@ -15,7 +15,7 @@ module.exports = class Application extends Chaplin.Application
     # Initialize core components
     @initDispatcher controllerSuffix: '-controller'
     @initLayout()
-    Parse.initialize(config.services.parse.app_id, config.services.parse.js_key)
+
     # Application-specific scaffold
     window.app = {}
     @initHelpers()
