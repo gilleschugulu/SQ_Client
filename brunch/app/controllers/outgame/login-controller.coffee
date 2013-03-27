@@ -1,15 +1,16 @@
-Controller          = require 'controllers/base/controller'
-utils               = require 'lib/utils'
-LocalStorageHelper  = require 'helpers/local-storage-helper'
-LoginView           = require 'views/outgame/login-view'
-mediator            = require 'mediator'
-PopUpHelper         = require 'helpers/pop-up-helper'
-FacebookHelper      = require 'helpers/facebook-helper'
-User                = require 'models/outgame/user-model'
-i18n                = require 'lib/i18n'
-AnalyticsHelper     = require 'helpers/analytics-helper'
-config              = require 'config/environment-config'
-LequipeSSOHelper    = require 'helpers/lequipe-sso-helper'
+Controller         = require 'controllers/base/controller'
+utils              = require 'lib/utils'
+LocalStorageHelper = require 'helpers/local-storage-helper'
+LoginView          = require 'views/outgame/login-view'
+mediator           = require 'mediator'
+PopUpHelper        = require 'helpers/pop-up-helper'
+FacebookHelper     = require 'helpers/facebook-helper'
+User               = require 'models/outgame/user-model'
+i18n               = require 'lib/i18n'
+AnalyticsHelper    = require 'helpers/analytics-helper'
+config             = require 'config/environment-config'
+LequipeSSOHelper   = require 'helpers/lequipe-sso-helper'
+ConfigHelper       = require 'helpers/config-helper'
 
 module.exports = class LoginController extends Controller
   historyURL: ''
@@ -193,8 +194,27 @@ module.exports = class LoginController extends Controller
       PushNotifications.configure
         buttonCancel: i18n.t('helper.push.how_about_no')
         buttonOK    : i18n.t('helper.push.kthx')
-      # PushNotifications.register (pushData) ->
-      #   console.log "GOT TOKEN"
-      #   pushData.uuid = mediator.user.get('uuid')
-      #   console.log pushData
-      #   ApiCallHelper.send.registerPushToken pushData
+      PushNotifications.register (pushData) ->
+        console.log "GOT TOKEN"
+        console.log pushData
+        data =
+          deviceToken: pushData.token.replace(/\s+/g, '')
+          deviceType : 'ios'
+        console.log "PUSH DATA"
+        console.log data
+        $.ajax
+            url        : 'https://api.parse.com/1/installations'
+            dataType   : 'json'
+            contentType: 'application/json'
+            data       : JSON.stringify data
+            type       : 'POST'
+            success    : (response) ->
+              console.log "PARSE SUCCESS"
+              console.log response
+            error      : ->
+              console.log "PARSE ERROR"
+              console.log arguments
+            headers    : ConfigHelper.config.services.parse.headers
+        # pushData.uuid = mediator.user.get('uuid')
+        # ApiCallHelper.send.registerPushToken pushData
+

@@ -15,6 +15,12 @@ class ProdConfig
     google : ['']
 
   @services:
+    parse:
+      app_id : 'ixxjIFjdYTjOeKSZycsaPw8DHndujhvHFX2rNW10'
+      js_key : 'XQMt26dlAXV32EmVVEQYwhSK2yYuvD6qDA3HaFqS'
+      headers:
+        "X-Parse-Application-Id": "ixxjIFjdYTjOeKSZycsaPw8DHndujhvHFX2rNW10"
+        "X-Parse-REST-API-Key"  : "gkhPen92iMBY4ZAkjZDtR5lRDmZZ3mM04hjHp3Bg"
     tapjoy:
       currency : '2948f4c1-5a8d-4090-beb1-725c617477c8'
     facebook:
