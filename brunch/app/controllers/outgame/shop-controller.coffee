@@ -19,7 +19,8 @@ module.exports = class ShopController extends Controller
 
   index: =>
     @packs = PurchasePacks
-    @packs.free_packs = (if DeviceHelper.isIOS() then @packs.free_packs.ios else @packs.free_packs.web )
+    if fp = (if DeviceHelper.isIOS() then @packs.free_packs.ios else @packs.free_packs.web)
+      @packs.free_packs = fp
     @bonuses = BonusPacks
     user = Parse.User.current()
     PurchaseHelper.initTapPoints()

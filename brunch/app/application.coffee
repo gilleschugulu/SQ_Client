@@ -102,7 +102,7 @@ module.exports = class Application extends Chaplin.Application
     Message?.checkCanSendMail()
     Message?.checkCanSendText()
     AdColony?.init config.services.adcolony.zones
-    TapjoyConnect?.requestTapjoyConnect ->
+    TapjoyConnect?.requestTapjoyConnect null, null, ->
       TapjoyConnect.initVideoAd()
     GameCenter?.authenticateLocalUser()
     ChartBoost?.cacheInterstitial()
