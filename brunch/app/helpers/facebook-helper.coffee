@@ -36,10 +36,13 @@ module.exports = class FacebookHelper
         # if we have a callback for this method, then use it (for exemple avoid rewarding?)
         if response and callback
           callback(response)
-    if Parse.FacebookUtils.isLinked(Parse.User.current())
+    unless @isLinked()
       @linkPlayer doRequest
     else
       doRequest()
+
+  @isLinked: ->
+    Parse.FacebookUtils.isLinked(Parse.User.current())
 
   # Link player from profile page
   # -----------------------------
