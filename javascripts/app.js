@@ -61655,8 +61655,8 @@ window.require.define({"controllers/outgame/login-controller": function(exports,
           AnalyticsHelper.trackEvent('Login', 'Login with facebook');
           return Parse.FacebookUtils.logIn('email, user_location, user_birthday, publish_stream', {
             success: function() {
-              console.log('Player will be logged in thanks to Facebook');
-              Parse.User.current().set(u.attributes).save();
+              console.log('SUCCESS : ', arguments);
+              Parse.User.current().set().save();
               return _this.bindPlayer();
             },
             error: function(response) {
@@ -64744,7 +64744,7 @@ window.require.define({"models/outgame/user-model": function(exports, require, m
       uuid: null,
       username: 'NewPlayer01',
       avatar: null,
-      credits: 0,
+      credits: 50,
       rank: 6,
       health: 25,
       notifications: true,
