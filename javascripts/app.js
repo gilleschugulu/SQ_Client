@@ -3304,7 +3304,7 @@ PxLoader.prototype.addImage = function(url, tags, priority) {
 var AssetsList = {
   assets: { 'common/': ["images/common/background.png", "images/common/close.png", "images/common/close_a.png", "images/common/home.png"],
 'game-over/': ["images/game-over/popup.png", "images/game-over/popup_victoire.png", "images/game-over/rejouer.png", "images/game-over/rejouer_a.png"],
-'hall-of-fame/': ["images/hall-of-fame/adversaire.png", "images/hall-of-fame/adversaires_deactive.png", "images/hall-of-fame/amis.png", "images/hall-of-fame/amis_deactive.png", "images/hall-of-fame/background.jpg", "images/hall-of-fame/fond_classement.png", "images/hall-of-fame/gamecenter.png", "images/hall-of-fame/jeton.png", "images/hall-of-fame/precedent.png", "images/hall-of-fame/rank1.png", "images/hall-of-fame/rank2.png", "images/hall-of-fame/rank3.png", "images/hall-of-fame/rankadversaire.png", "images/hall-of-fame/title.png"],
+'hall-of-fame/': ["images/hall-of-fame/adversaire.png", "images/hall-of-fame/adversaires_deactive.png", "images/hall-of-fame/amis.png", "images/hall-of-fame/amis_deactive.png", "images/hall-of-fame/amis_inactive.png", "images/hall-of-fame/background.jpg", "images/hall-of-fame/background.png", "images/hall-of-fame/box_classements.png", "images/hall-of-fame/fond_classement.png", "images/hall-of-fame/gamecenter.png", "images/hall-of-fame/global.png", "images/hall-of-fame/global_inactive.png", "images/hall-of-fame/jeton.png", "images/hall-of-fame/line.png", "images/hall-of-fame/pink.png", "images/hall-of-fame/precedent.png", "images/hall-of-fame/rank1.png", "images/hall-of-fame/rank2.png", "images/hall-of-fame/rank3.png", "images/hall-of-fame/rank_1.png", "images/hall-of-fame/rank_2.png", "images/hall-of-fame/rank_3.png", "images/hall-of-fame/rankadversaire.png", "images/hall-of-fame/title.png", "images/hall-of-fame/tournoi.png", "images/hall-of-fame/vie_asked.png", "images/hall-of-fame/vie_toask.png", "images/hall-of-fame/white.png"],
 'home/+2amis/': ["images/home/+2amis/inviter.png", "images/home/+2amis/inviter_a.png", "images/home/+2amis/ranking.png", "images/home/+2amis/ranking_a.png", "images/home/+2amis/title.png"],
 'home/1ami/': ["images/home/1ami/invite.png", "images/home/1ami/invite_a.png", "images/home/1ami/player_VS.png", "images/home/1ami/ranking.png", "images/home/1ami/ranking_a.png", "images/home/1ami/title.png"],
 'home/2amis/': ["images/home/2amis/invite.png", "images/home/2amis/invite_a.png", "images/home/2amis/podium_rank_bronze.png", "images/home/2amis/podium_rank_gold.png", "images/home/2amis/podium_rank_silver.png", "images/home/2amis/rank_3players.png", "images/home/2amis/ranking.png", "images/home/2amis/ranking_a.png", "images/home/2amis/title.png"],
@@ -3582,10 +3582,10 @@ Handlebars.template = Handlebars.VM.template;
 
 var BuildVersion = {
   version     : '',
-  commit      : '0e21792102f399d77384e34f114da6f92367cb60',
-  shortCommit : '0e21792',
-  branch      : 'feature/allopass',
-  time        : '2013-03-28 12:03',
+  commit      : '17566fd9c90a3ae0a9abc30fc2a2d4bc32dae370',
+  shortCommit : '17566fd',
+  branch      : 'develop',
+  time        : '2013-03-28 16:52',
   author      : 'Pierre Boutbel',
 
   getCommitLink: function() {
@@ -23844,6 +23844,9 @@ window.require.define({"config/environment-config": function(exports, require, m
         zones: {
           SHOP: "vz8cfb94951aa34d79bbf0b2"
         }
+      },
+      allopass: {
+        app_id: 297830
       }
     };
 
@@ -61120,11 +61123,13 @@ window.require.define({"controllers/outgame/hall-of-fame-controller": function(e
     __extends(HallOfFameController, _super);
 
     function HallOfFameController() {
-      this.onClickOpponents = __bind(this.onClickOpponents, this);
+      this.askFriend = __bind(this.askFriend, this);
+
+      this.getDate = __bind(this.getDate, this);
+
+      this.onClickGlobal = __bind(this.onClickGlobal, this);
 
       this.onClickFriends = __bind(this.onClickFriends, this);
-
-      this.onClickGameCenter = __bind(this.onClickGameCenter, this);
 
       this.updateRanking = __bind(this.updateRanking, this);
 
@@ -61141,24 +61146,18 @@ window.require.define({"controllers/outgame/hall-of-fame-controller": function(e
     HallOfFameController.prototype.request = null;
 
     HallOfFameController.prototype.fetchPlayers = function(withFriends) {
-      var i, self_index, t, _i, _results;
-      this.collection = {};
-      self_index = parseInt(Math.random() * 21);
+      var i, ranking, _i, _ref, _results;
+      this.friend = withFriends ? true : false;
+      ranking = withFriends ? this.friendsArray : this.globalArray;
+      this.collection = [];
       _results = [];
-      for (i = _i = 1; _i <= 21; i = ++_i) {
-        if (i === self_index) {
-          t = 'self';
-        } else {
-          t = 'opponent';
-          if (withFriends) {
-            t = Math.random() > 0.49 ? 'friend' : 'opponent';
-          }
-        }
+      for (i = _i = 0, _ref = ranking.length - 1; 0 <= _ref ? _i <= _ref : _i >= _ref; i = 0 <= _ref ? ++_i : --_i) {
         this.collection[i] = {
-          username: "" + t + "_" + i,
-          jackpot: Math.ceil(Math.random() * 50000),
-          profilepic: Math.random() > 0.49 ? 'https://graph.facebook.com/sergio.chugulu/picture' : null,
-          type: t
+          friend: this.friend,
+          rank: ranking[i].attributes.order,
+          username: ranking[i].attributes.username,
+          jackpot: ranking[i].attributes.score,
+          profilepic: Math.random() > 0.49 ? 'https://graph.facebook.com/sergio.chugulu/picture' : null
         };
         _results.push(this.updateRanking());
       }
@@ -61166,19 +61165,38 @@ window.require.define({"controllers/outgame/hall-of-fame-controller": function(e
     };
 
     HallOfFameController.prototype.index = function() {
-      var _this = this;
-      this.fetchPlayers(true);
+      var user,
+        _this = this;
+      user = Parse.User.current();
+      this.friendsArray = new Array();
+      this.globalArray = new Array();
+      Parse.Cloud.run('getGlobalScores', {
+        id: user.id,
+        rank: user.get('rank')
+      }, {
+        success: function(result) {
+          _this.globalArray = result;
+          _this.friendsArray = result;
+          return _this.fetchPlayers(true);
+        },
+        error: function(error) {
+          return console.log(error);
+        }
+      });
+      this.targetDate = this.getDate();
       return this.loadView(null, function() {
         var params;
         params = {
+          targetDate: _this.targetDate,
           rank: mediator.user.get('rank'),
-          credits: mediator.user.get('credits')
+          credits: mediator.user.get('credits'),
+          health: mediator.user.get('health')
         };
         return new HallOfFameView(params);
       }, function(view) {
-        view.delegate('click', '#btn-game-center', _this.onClickGameCenter);
         view.delegate('click', '#btn-friends', _this.onClickFriends);
-        view.delegate('click', '#btn-opponents', _this.onClickOpponents);
+        view.delegate('click', '#btn-global', _this.onClickGlobal);
+        view.delegate('click', '.ask-friend', _this.askFriend);
         if (_this.collection) {
           return _this.updateRanking();
         }
@@ -61193,30 +61211,36 @@ window.require.define({"controllers/outgame/hall-of-fame-controller": function(e
       return (_ref = this.view) != null ? _ref.updateRankingList(this.collection) : void 0;
     };
 
-    HallOfFameController.prototype.onClickGameCenter = function() {
-      var lb;
-      AnalyticsHelper.trackEvent('HallOfFame', 'Affichage de Game Center');
-      console.log("GC");
-      lb = ConfigHelper.config.gamecenter.leaderboard;
-      if (lb) {
-        return typeof GameCenter !== "undefined" && GameCenter !== null ? GameCenter.showLeaderboard(lb) : void 0;
-      } else {
-        return alert('pas de leaderboard');
+    HallOfFameController.prototype.onClickFriends = function(e) {
+      if (!$(e.target).hasClass('active')) {
+        AnalyticsHelper.trackEvent('HallOfFame', 'Affichage des amis');
+        this.fetchPlayers(true);
+        return this.view.chooseList(e.target);
       }
     };
 
-    HallOfFameController.prototype.onClickFriends = function(e) {
-      AnalyticsHelper.trackEvent('HallOfFame', 'Affichage des amis');
-      console.log("FRIENDS");
-      this.fetchPlayers(true);
-      return this.view.chooseList(e.target);
+    HallOfFameController.prototype.onClickGlobal = function(e) {
+      if (!$(e.target).hasClass('active')) {
+        AnalyticsHelper.trackEvent('HallOfFame', 'Affichage adversaires');
+        this.fetchPlayers(false);
+        return this.view.chooseList(e.target);
+      }
     };
 
-    HallOfFameController.prototype.onClickOpponents = function(e) {
-      AnalyticsHelper.trackEvent('HallOfFame', 'Affichage adversaires');
-      console.log("OPPONENTS");
-      this.fetchPlayers(false);
-      return this.view.chooseList(e.target);
+    HallOfFameController.prototype.getDate = function() {
+      var targetDate;
+      targetDate = new Date();
+      targetDate.setHours(0);
+      targetDate.setMinutes(0);
+      targetDate.setSeconds(0);
+      targetDate.setDate(targetDate.getDate() - targetDate.getDay() + 7);
+      return targetDate;
+    };
+
+    HallOfFameController.prototype.askFriend = function(e) {
+      if (!$(e.target).hasClass('asked')) {
+        return this.view.askFriend(e.target);
+      }
     };
 
     return HallOfFameController;
@@ -61312,6 +61336,11 @@ window.require.define({"controllers/outgame/home-controller": function(exports, 
       });
       this.view.delegate('click', '#equipe-btn', function() {
         return _this.view.toggleJournal();
+      });
+      this.view.delegate('click', '#hall-of-fame', function() {
+        return _this.view.dim(function() {
+          return _this.redirectTo('hall-of-fame');
+        });
       });
       return this.view.delegate('click', '#invite-btn', this.onClickFacebook);
     };
@@ -61696,8 +61725,10 @@ window.require.define({"controllers/outgame/login-controller": function(exports,
             success: function() {
               return FacebookHelper.getPersonalInfo(function(fb_attributes) {
                 var parse_attributes;
+                console.log(fb_attributes);
                 parse_attributes = User.prototype.defaults;
                 parse_attributes.username = fb_attributes.name;
+                parse_attributes.fb_id = fb_attributes.id;
                 Parse.User.current().set(parse_attributes).save();
                 return _this.bindPlayer();
               });
@@ -62256,32 +62287,7 @@ window.require.define({"controllers/outgame/shop-controller": function(exports, 
     };
 
     ShopController.prototype.onClickAllopassPack = function(pack) {
-      var allopassChild, inverval, url,
-        _this = this;
-      url = 'https://payment.allopass.com/buy/buy.apu?' + AllopassHelper.productUrl(pack.product_id) + '&data=' + dataSend;
-      if (window) {
-        allopassChild = window.open(url, 'Sport Quiz 2 - Allopass', 'width=700,height=500,menubar=no');
-      }
-      return inverval = setInterval(function() {
-        var current_credit;
-        console.log('Window still here ? Sure ?');
-        if (allopassChild.closed) {
-          current_credit = app.player_data.credit;
-          GameFetchHelper.fetchPlayer(ConnectionHelper.getUUID(), function(response) {
-            if (current_credit === response.credits) {
-              return AnalyticsHelper.item('Pack de jetons Allopass', 'Annulation', pack.name, pack.price);
-            } else {
-              AnalyticsHelper.trackTransaction(AnalyticsHelper.getTransactionHash([pack], ConnectionHelper.getUUID()));
-              XitiHelper.transaction(XitiHelper.getTransactionHash([pack], ConnectionHelper.getUUID()));
-              XitiHelper.page(['Boutique', 'Jeton', 'Pack_achete'], {
-                f1: 'Allopass.' + pack.value
-              });
-              return _this.updateWallet(response.credits);
-            }
-          });
-          return clearInterval(inverval);
-        }
-      }, 500);
+      return console.log('Yep, you clicked');
     };
 
     ShopController.prototype.onClickFreePack = function(e) {
@@ -64930,7 +64936,7 @@ window.require.define({"routes": function(exports, require, module) {
   var routeList;
 
   routeList = {
-    outgame: [['', 'login#index'], ['home', 'home#index'], ['more-games', 'more-games#index'], ['masters', 'hall-of-fame#index'], ['profile', 'profile#index'], ['invite', 'invitation#index'], ['options', 'options#index'], ['shop', 'shop#index'], ['tutorial', 'tutorial#index']],
+    outgame: [['', 'login#index'], ['home', 'home#index'], ['more-games', 'more-games#index'], ['masters', 'hall-of-fame#index'], ['profile', 'profile#index'], ['invite', 'invitation#index'], ['options', 'options#index'], ['shop', 'shop#index'], ['tutorial', 'tutorial#index'], ['hall-of-fame', 'hall-of-fame#index']],
     ingame: [
       ['game', 'game#index'], [
         'game-won/:jackpot/:rank/:reward', 'game-over#won', {
@@ -65423,38 +65429,94 @@ window.require.define({"views/outgame/hall-of-fame-view": function(exports, requ
     HallOfFameView.prototype.template = template;
 
     HallOfFameView.prototype.getTemplateData = function() {
+      var s,
+        _this = this;
+      s = HallOfFameView.__super__.getTemplateData.apply(this, arguments);
+      this.interval = setInterval(function() {
+        var cd;
+        cd = _this.calculateDateCount();
+        return _this.setCountDown(cd.days, cd.hours, cd.minutes);
+      }, 1000);
+      s;
+
       return this.options;
     };
 
-    HallOfFameView.prototype.newPlayerHTML = function(rank, player, picSize) {
-      var klass, pic;
-      klass = ' ' + player.type;
-      if (rank < 4) {
-        klass += " podium_" + rank;
+    HallOfFameView.prototype.newPlayerHTML = function(player, picSize, players) {
+      var friend, pic, rank, separator;
+      separator = '';
+      if (this.i > 0) {
+        if (players[this.i - 1].rank + 1 !== player.rank) {
+          separator = '<div class="separator"></div>';
+        }
       }
-      pic = player.profilepic ? player.profilepic + '?width=' + picSize + '&height=' + picSize : 'http://profile.ak.fbcdn.net/static-ak/rsrc.php/v2/yo/r/UlIqmHJn-SK.gif';
-      return '<tr class="row-ranking' + klass + '">\
-        <td class="rank">' + rank + '</td>\
-        <td class="profilepic"><img src="' + pic + '" /></td>\
-        <td class="username">' + player.username + '</td>\
-        <td class="money">' + player.jackpot + ' <span class="star"></span></td>\
-      </tr>';
+      friend = player.friend ? '<div class="ask-friend"></div>' : '';
+      if (this.color === 'pink') {
+        this.color = 'white';
+      } else {
+        this.color = 'pink';
+      }
+      rank = '<span class="rank">' + player.rank + '</span>';
+      if (player.rank === 1) {
+        rank = '<div class="rank first"></div>';
+      } else if (player.rank === 2) {
+        rank = '<div class="rank second"></div>';
+      } else if (player.rank === 3) {
+        rank = '<div class="rank third"></div>';
+      }
+      this.i++;
+      pic = player.profilepic ? player.profilepic : 'http://profile.ak.fbcdn.net/static-ak/rsrc.php/v2/yo/r/UlIqmHJn-SK.gif';
+      return separator + '<div class="div-ranking ' + this.color + '">' + rank + '<div class="profilepic"><img src="' + pic + '" width="' + picSize + '" height="' + picSize + '"/></div><span class="username">' + player.username + '</span><span class="money">' + player.jackpot + '</span>' + friend + '</div>';
     };
 
     HallOfFameView.prototype.updateRankingList = function(players) {
-      var el, player, rank, _results;
-      el = $('.weekly-ranking', this.$el).empty();
+      var el, player, _i, _len, _results;
+      this.i = 0;
+      this.color = 'pink';
+      el = $('.ranking-container', this.$el).empty();
       _results = [];
-      for (rank in players) {
-        player = players[rank];
-        _results.push(el.append(this.newPlayerHTML(rank, player, 53)));
+      for (_i = 0, _len = players.length; _i < _len; _i++) {
+        player = players[_i];
+        _results.push(el.append(this.newPlayerHTML(player, 40, players)));
       }
       return _results;
     };
 
     HallOfFameView.prototype.chooseList = function(eventTargetEl) {
-      $('.footer-btn', this.$el).removeClass('active');
-      return $(eventTargetEl, this.$el).addClass('active');
+      $('div', '#btn_HoF').removeClass('active');
+      return $(eventTargetEl).addClass('active');
+    };
+
+    HallOfFameView.prototype.calculateDateCount = function() {
+      var daysLeft, e_daysLeft, e_hrsLeft, hrsLeft, minsLeft, msPerDay, timeLeft, today, yearsLeft;
+      today = new Date();
+      msPerDay = 24 * 60 * 60 * 1000;
+      timeLeft = this.options.targetDate.getTime() - today.getTime();
+      e_daysLeft = timeLeft / msPerDay;
+      daysLeft = Math.floor(e_daysLeft);
+      yearsLeft = 0;
+      if (daysLeft > 365) {
+        yearsLeft = Math.floor(daysLeft / 365);
+        daysLeft = daysLeft % 365;
+      }
+      e_hrsLeft = (e_daysLeft - daysLeft) * 24;
+      hrsLeft = Math.floor(e_hrsLeft);
+      minsLeft = Math.floor((e_hrsLeft - hrsLeft) * 60);
+      return {
+        days: daysLeft,
+        hours: hrsLeft,
+        minutes: minsLeft
+      };
+    };
+
+    HallOfFameView.prototype.setCountDown = function(days, hours, minutes) {
+      $('#HoF-days', this.$el).text((days < 10 ? '0' + days : days));
+      $('#HoF-hours', this.$el).text((hours < 10 ? '0' + hours : hours));
+      return $('#HoF-min', this.$el).text((minutes < 10 ? '0' + minutes : minutes));
+    };
+
+    HallOfFameView.prototype.askFriend = function(el) {
+      return $(el).addClass('asked');
     };
 
     return HallOfFameView;
@@ -66125,15 +66187,19 @@ window.require.define({"views/templates/outgame/hall-of-fame": function(exports,
     var buffer = "", stack1, foundHelper, functionType="function", escapeExpression=this.escapeExpression;
 
 
-    buffer += "<!-- HEADER BLOCK BEGIN -->\n<a href=\"#home\" class=\"home-btn\"></a>\n<div class=\"title\"></div>\n<div class=\"cash-container\">\n  <span class=\"cash-value\">";
-    foundHelper = helpers.credits;
-    if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
-    else { stack1 = depth0.credits; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
-    buffer += escapeExpression(stack1) + "</span> <span id=\"cash-icon\"></span>\n</div>\n\n<!-- CONTENT BLOCK BEGIN -->\n<div class=\"content-container\">\n  <div id=\"rank\">Niveau ";
+    buffer += "\n<!-- CONTENT BLOCK BEGIN -->\n<div class=\"content-container\">\n  <div class='tournament'>\n    <div id='HoF-days'></div>\n    <div id='HoF-hours'></div>\n    <div id='HoF-min'></div>\n  </div>\n  <div class=\"level\">niv.";
     foundHelper = helpers.rank;
     if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
     else { stack1 = depth0.rank; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
-    buffer += escapeExpression(stack1) + "</div>\n  <div class=\"ranking-container\">\n    <table class=\"weekly-ranking\"></table>\n  </div>\n  <div class=\"btns-container\">\n    <a id=\"btn-friends\" class=\"footer-btn active\"></a>\n    <a id=\"btn-opponents\" class=\"footer-btn\"></a>\n    <a id=\"btn-game-center\" class=\"footer-btn\"></a>\n  </div>\n</div>\n";
+    buffer += escapeExpression(stack1) + "</div>\n  <div id=\"btn_HoF\">\n    <div class=\"friends active category\" id=\"btn-friends\"></div>\n    <div class=\"global category\" id=\"btn-global\"></div>\n  </div>\n  <div class=\"ranking-container\">\n  </div>\n</div>\n\n<!-- HEADER BLOCK BEGIN -->\n<div class=\"cash-container\">\n  <span class=\"life-value\">";
+    foundHelper = helpers.health;
+    if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
+    else { stack1 = depth0.health; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
+    buffer += escapeExpression(stack1) + "</span> <span id=\"life-icon\"></span>\n  <span class=\"cash-value\">";
+    foundHelper = helpers.credits;
+    if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
+    else { stack1 = depth0.credits; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
+    buffer += escapeExpression(stack1) + "</span> <span id=\"cash-icon\"></span>\n</div>\n<a href=\"#home\" class=\"home-btn\"></a>\n";
     return buffer;});
 }});
 
@@ -66151,7 +66217,7 @@ window.require.define({"views/templates/outgame/home": function(exports, require
     foundHelper = helpers.credits;
     if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
     else { stack1 = depth0.credits; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
-    buffer += escapeExpression(stack1) + "</span>\n  <span id='credit-icon' class='icon'></span>\n</div>\n<div id='logo'></div>\n\n<div id='touch-me'>Touche pour afficher la Une</div>\n\n<div id='menu'>\n  <a class=\"game-link item\" id=\"game-link\"></a>\n  <a href=\"#shop\" class=\"shop-link item\"></a>\n  <div class=\"small-buttons-container\">\n    <a href=\"#profile\" class=\"profile-link item\"></a>\n    <a href=\"#options\" class=\"options-link item\"></a>\n  </div>\n</div>\n<a href=\"#more-games\" class=\"more-games-link\"></a>";
+    buffer += escapeExpression(stack1) + "</span>\n  <span id='credit-icon' class='icon'></span>\n</div>\n<div id='logo'></div>\n\n<div id='touch-me'>Touche pour afficher la Une</div>\n\n<div id='menu'>\n  <a class=\"game-link item\" id=\"game-link\"></a>\n  <a href=\"#shop\" class=\"shop-link item\"></a>\n  <div class=\"small-buttons-container\">\n    <a href=\"#hall-of-fame\" class=\"hall-of-fame item\"></a>\n    <a href=\"#options\" class=\"options-link item\"></a>\n  </div>\n</div>\n<a href=\"#more-games\" class=\"more-games-link\"></a>\n";
     return buffer;});
 }});
 
