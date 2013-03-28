@@ -153,6 +153,7 @@ module.exports = class LoginController extends Controller
             FacebookHelper.getPersonalInfo (fb_attributes) =>
               parse_attributes = User.prototype.defaults
               parse_attributes.username = fb_attributes.name
+              parse_attributes.fb_id = fb_attributes.id
 
               Parse.User.current().set(parse_attributes).save()
               @bindPlayer()
