@@ -61654,6 +61654,7 @@ window.require.define({"controllers/outgame/login-controller": function(exports,
           return Parse.FacebookUtils.logIn('email, user_location, user_birthday, publish_stream', {
             success: function() {
               console.log('Player will be logged in thanks to Facebook');
+              Parse.User.current();
               return _this.bindPlayer();
             },
             error: function(response) {
