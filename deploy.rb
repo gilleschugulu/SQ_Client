@@ -6,10 +6,10 @@ TEMP_DIR = "deployment"
 BUILD_DATA = "brunch/build/web"
 TARGETS = %w{preprod}
 GIT_URLS = {
-  "preprod" => "git@github.com:ChuguluGames/12-coups-midi-client.git"
+  "preprod" => "git@github.com:ChuguluGames/sports_quiz_client.git"
 }
 CNAME_URLS = {
-  "preprod" => "play-midi-preprod.chugulu.com"
+  "preprod" => "play-sport-quiz-preprod.chugulu.com"
 }
 GIT_BRANCH = "gh-pages"
 
