@@ -1,6 +1,7 @@
 Controller    = require 'controllers/base/controller'
 MoreGamesView = require 'views/outgame/more-games-view'
 ConfigHelper  = require 'helpers/config-helper'
+SpinnerHelper = require 'helpers/spinner-helper'
 
 module.exports = class MoreGamesController extends Controller
   historyURL: 'more-games'
@@ -21,5 +22,11 @@ module.exports = class MoreGamesController extends Controller
       , {viewTransition: yes}
 
   loadContent: =>
-    ApiCallHelper.fetch.moreGames (@content) =>
-      @view?.setContent @content
+    SpinnerHelper.start()
+    $.ajax
+      url     : 'http://www.google.com'
+      dataType: 'html'
+      success : (@content) =>
+        @view?.setContent @content
+      complete: ->
+        SpinnerHelper.stop()
