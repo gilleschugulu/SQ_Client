@@ -150,9 +150,13 @@ module.exports = class LoginController extends Controller
         # Note : logIn automatically creates a Parse.User in case of success \o/
         Parse.FacebookUtils.logIn('email, user_location, user_birthday, publish_stream',
           success: =>
-            console.log 'Player will be logged in thanks to Facebook'
-            Parse.User.current().set(u.attributes).save()
-            @bindPlayer()
+            FacebookHelper.getPersonalInfo (fb_attributes) =>
+              parse_attributes = User.prototype.defaults
+              parse_attributes.username = fb_attributes.name
+
+              Parse.User.current().set(parse_attributes).save()
+              @bindPlayer()
+
           , error: (response) =>
             if config.services.facebook.createAnyway
               console.log 'Forced creation of player even if Facebook fail (local)'

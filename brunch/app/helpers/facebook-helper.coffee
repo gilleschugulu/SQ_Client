@@ -73,6 +73,12 @@ module.exports = class FacebookHelper
     FB.api '/me/scores', 'post', {score: score}, (response) ->
       console.log 'Score was posted to facebook', {score}
 
+  # Get personal info
+  # -----------------
+  @getPersonalInfo: (callback) ->
+    FB.api '/me', callback
+
+
   # # Like the appli
   # # HAHA, like an Open Graph object. Not usable now, maybe later
   # # -------------------------------------------------
