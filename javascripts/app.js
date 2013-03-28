@@ -3582,10 +3582,10 @@ Handlebars.template = Handlebars.VM.template;
 
 var BuildVersion = {
   version     : '',
-  commit      : '50be06de4fe1ee11463f3292332369ddb71692d5',
-  shortCommit : '50be06d',
-  branch      : 'develop',
-  time        : '2013-03-28 10:22',
+  commit      : '0e21792102f399d77384e34f114da6f92367cb60',
+  shortCommit : '0e21792',
+  branch      : 'feature/allopass',
+  time        : '2013-03-28 12:03',
   author      : 'Pierre Boutbel',
 
   getCommitLink: function() {
@@ -23805,45 +23805,53 @@ window.require.define({"config/bonus-config": function(exports, require, module)
 }});
 
 window.require.define({"config/environment-config": function(exports, require, module) {
-  var LocalConfig, Parent,
+  var Parent, PreprodConfig,
     __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-  Parent = require('config/preprod-config');
+  Parent = require('config/prod-config');
 
-  LocalConfig = (function(_super) {
+  PreprodConfig = (function(_super) {
 
-    __extends(LocalConfig, _super);
+    __extends(PreprodConfig, _super);
 
-    function LocalConfig() {
-      return LocalConfig.__super__.constructor.apply(this, arguments);
+    function PreprodConfig() {
+      return PreprodConfig.__super__.constructor.apply(this, arguments);
     }
 
-    LocalConfig.analytics = {
-      enabled: false
-    };
+    PreprodConfig.log = true;
 
-    LocalConfig.services = {
+    PreprodConfig.long_version_format = true;
+
+    PreprodConfig.services = {
+      parse: {
+        app_id: 'ixxjIFjdYTjOeKSZycsaPw8DHndujhvHFX2rNW10',
+        js_key: 'XQMt26dlAXV32EmVVEQYwhSK2yYuvD6qDA3HaFqS',
+        headers: {
+          "X-Parse-Application-Id": "ixxjIFjdYTjOeKSZycsaPw8DHndujhvHFX2rNW10",
+          "X-Parse-REST-API-Key": "gkhPen92iMBY4ZAkjZDtR5lRDmZZ3mM04hjHp3Bg"
+        }
+      },
       tapjoy: {
-        currency: 'f03160d9-d7b5-4ab3-91c7-b165d92ab81f'
+        currency: '2948f4c1-5a8d-4090-beb1-725c617477c8'
       },
       facebook: {
-        app_id: '471676116208363',
+        app_id: '321070437995692',
         like_page_url: 'http://www.facebook.com/',
-        createAnyway: true
+        createAnyway: false
       },
       adcolony: {
         zones: {
-          SHOP: "vz316622b002ac48da9149a2"
+          SHOP: "vz8cfb94951aa34d79bbf0b2"
         }
       }
     };
 
-    return LocalConfig;
+    return PreprodConfig;
 
   })(Parent);
 
-  module.exports = LocalConfig;
+  module.exports = PreprodConfig;
   
 }});
 
