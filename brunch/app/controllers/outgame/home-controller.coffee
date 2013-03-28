@@ -34,7 +34,8 @@ module.exports = class HomeController extends Controller
 
   viewLoaded: (view) =>
     navigator.splashscreen.hide() if navigator?.splashscreen?.hide?
-    view.addJournalView @getJournalView()
+
+    FacebookHelper.getFriends (friends) => view.addJournalView @getJournalView(friends)
 
     @view.delegate 'click', '#game-link', =>
       @view.dim => @redirectTo 'game'
@@ -47,12 +48,21 @@ module.exports = class HomeController extends Controller
   onClickFacebook: =>
     FacebookHelper.friendRequest i18n.t('controller.home.facebook_invite_message')
 
-  getJournalView: ->
+  getJournalView: (friends) ->
+    console.log 'getJournalView', friends, friends.length
+    switch friends.length
+      when 0 then @getNoFriendsJournalView()
+      when 1 then @getOneFriendJournalView()
+      when 2 then @getTwoFriendsJournalView()
+      else @getTwoplusFriendsJournalView()
+
+  getNoFriendsJournalView: ->
     targetDate = new Date()
     targetDate.setHours(0)
     targetDate.setMinutes(0)
     targetDate.setSeconds(0)
     targetDate.setDate(targetDate.getDate() - targetDate.getDay() + 7)
+
     options =
       targetDate : targetDate
       name : 'forever a.'
@@ -74,6 +84,7 @@ module.exports = class HomeController extends Controller
         rank : 1000
     return new NoFriendsJournalView options
 
+  getOneFriendJournalView: (friends) ->
     options =
       winner : 'jide'
       loser : 'gilles b.'
@@ -87,8 +98,9 @@ module.exports = class HomeController extends Controller
           score : '2 999'
       ]
 
-    # new OneFriendJournalView options
+    new OneFriendJournalView options
 
+  getTwoFriendsJournalView: (friends) ->
     options =
       master : 'gilles b.'
       participants : [
@@ -107,6 +119,7 @@ module.exports = class HomeController extends Controller
 
     return new TwoFriendsJournalView options
 
+  getTwoplusFriendsJournalView: (friends) ->
     options =
       name : 'Gilles B.'
       rank : 4
@@ -146,4 +159,4 @@ module.exports = class HomeController extends Controller
           name : 'Jean D.'
           score : '456'
       ]
-    # new TwoplusFriendsJournalView options
+    new TwoplusFriendsJournalView options
