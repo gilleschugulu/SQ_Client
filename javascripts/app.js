@@ -61662,7 +61662,7 @@ window.require.define({"controllers/outgame/login-controller": function(exports,
                 parse_attributes = User.prototype.defaults;
                 parse_attributes.username = fb_attributes.name;
                 Parse.User.current().set(parse_attributes).save();
-                return this.bindPlayer();
+                return _this.bindPlayer();
               });
             },
             error: function(response) {
