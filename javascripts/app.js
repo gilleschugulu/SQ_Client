@@ -62751,6 +62751,10 @@ window.require.define({"helpers/facebook-helper": function(exports, require, mod
       });
     };
 
+    FacebookHelper.getPersonalInfo = function(callback) {
+      return FB.api('/me', callback);
+    };
+
     return FacebookHelper;
 
   })();
