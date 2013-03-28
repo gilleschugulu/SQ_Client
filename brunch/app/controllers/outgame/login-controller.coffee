@@ -151,6 +151,7 @@ module.exports = class LoginController extends Controller
         Parse.FacebookUtils.logIn('email, user_location, user_birthday, publish_stream',
           success: =>
             console.log 'Player will be logged in thanks to Facebook'
+            Parse.User.current().set(u.attributes).save()
             @bindPlayer()
           , error: (response) =>
             if config.services.facebook.createAnyway

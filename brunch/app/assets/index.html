@@ -28,7 +28,6 @@
     // facebook
     if (typeof CDV == 'undefined') { // if cordova plugin does not exist => web version
       window.fbAsyncInit = function() {
-        var ConfigHelper;
         Parse.FacebookUtils.init({
           appId      : ConfigHelper.config.services.facebook.app_id,
           status     : true,
