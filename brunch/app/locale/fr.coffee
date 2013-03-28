@@ -1,7 +1,7 @@
 module.exports =
   fr:
     controller:
-      invite:
+      home:
         facebook_invite_message: 'Vasy rejoins ce jeu il déchire'
       shop:
         unavailable_pack:
