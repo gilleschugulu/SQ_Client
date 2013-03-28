@@ -1,19 +1,23 @@
-<!-- HEADER BLOCK BEGIN -->
-<a href="#home" class="home-btn"></a>
-<div class="title"></div>
-<div class="cash-container">
-  <span class="cash-value">{{credits}}</span> <span id="cash-icon"></span>
-</div>
 
 <!-- CONTENT BLOCK BEGIN -->
 <div class="content-container">
-  <div id="rank">Niveau {{rank}}</div>
-  <div class="ranking-container">
-    <table class="weekly-ranking"></table>
+  <div class='tournament'>
+    <div id='HoF-days'></div>
+    <div id='HoF-hours'></div>
+    <div id='HoF-min'></div>
   </div>
-  <div class="btns-container">
-    <a id="btn-friends" class="footer-btn active"></a>
-    <a id="btn-opponents" class="footer-btn"></a>
-    <a id="btn-game-center" class="footer-btn"></a>
+  <div class="level">niv.{{rank}}</div>
+  <div id="btn_HoF">
+    <div class="friends active category" id="btn-friends"></div>
+    <div class="global category" id="btn-global"></div>
+  </div>
+  <div class="ranking-container">
   </div>
 </div>
+
+<!-- HEADER BLOCK BEGIN -->
+<div class="cash-container">
+  <span class="life-value">{{health}}</span> <span id="life-icon"></span>
+  <span class="cash-value">{{credits}}</span> <span id="cash-icon"></span>
+</div>
+<a href="#home" class="home-btn"></a>

@@ -11,20 +11,16 @@ module.exports = class HallOfFameController extends Controller
   request : null
 
   fetchPlayers: (withFriends) =>
-    @collection = {}
-    self_index = parseInt(Math.random() * 21)
-    for i in [1..21]
-      if i is self_index
-        t = 'self'
-      else
-        t = 'opponent'
-        if withFriends
-          t = if Math.random() > 0.49 then 'friend' else 'opponent'
+    @friend = if withFriends then true else false
+    ranking = if withFriends then @friendsArray else @globalArray
+    @collection = []
+    for i in [0..ranking.length-1]
       @collection[i] =
-        username  : "#{t}_#{i}"
-        jackpot   : Math.ceil(Math.random() * 50000)
-        profilepic: if Math.random() > 0.49 then 'https://graph.facebook.com/sergio.chugulu/picture' else null
-        type      : t
+        friend     : @friend
+        rank       : ranking[i].attributes.order
+        username   : ranking[i].attributes.username
+        jackpot    : ranking[i].attributes.score
+        profilepic : if Math.random() > 0.49 then 'https://graph.facebook.com/sergio.chugulu/picture' else null
     # params =
     #   uuid   : mediator.user.get('uuid')
     #   friends: withFriends
@@ -34,47 +30,61 @@ module.exports = class HallOfFameController extends Controller
       @updateRanking()
 
   index: ->
-    @fetchPlayers yes
+    user = Parse.User.current()
+    @friendsArray = new Array();
+    @globalArray = new Array();
+    Parse.Cloud.run('getGlobalScores', {id : user.id , rank : user.get('rank')}, {
+      success: (result) =>
+        @globalArray = result
+        @friendsArray = result
+        @fetchPlayers yes
+      error: (error) =>
+        console.log error
+    });
 
+
+
+    @targetDate = @getDate()
     @loadView null
     , =>
       params =
+        targetDate : @targetDate
         rank   : mediator.user.get('rank')
         credits: mediator.user.get('credits')
+        health : mediator.user.get('health')
       new HallOfFameView params
     , (view) =>
-      view.delegate 'click', '#btn-game-center', @onClickGameCenter
       view.delegate 'click', '#btn-friends', @onClickFriends
-      view.delegate 'click', '#btn-opponents', @onClickOpponents
+      view.delegate 'click', '#btn-global', @onClickGlobal
+      view.delegate 'click', '.ask-friend', @askFriend
       @updateRanking() if @collection
     , {viewTransition: yes, music: 'outgame'}
 
   updateRanking: =>
     @view?.updateRankingList @collection
 
-  onClickGameCenter: =>
-    # Track Event
-    AnalyticsHelper.trackEvent 'HallOfFame', 'Affichage de Game Center'
-
-    console.log "GC"
-    lb = ConfigHelper.config.gamecenter.leaderboard
-    if lb
-      GameCenter?.showLeaderboard lb
-    else
-      alert('pas de leaderboard')
-
   onClickFriends: (e) =>
-    # Track Event
-    AnalyticsHelper.trackEvent 'HallOfFame', 'Affichage des amis'
+    if !$(e.target).hasClass('active')
+      # Track Event
+      AnalyticsHelper.trackEvent 'HallOfFame', 'Affichage des amis'
+      @fetchPlayers yes
+      @view.chooseList e.target
 
-    console.log "FRIENDS"
-    @fetchPlayers yes
-    @view.chooseList e.target
+  onClickGlobal: (e) =>
+    if !$(e.target).hasClass('active')
+      # Track Event
+      AnalyticsHelper.trackEvent 'HallOfFame', 'Affichage adversaires'
+      @fetchPlayers no
+      @view.chooseList e.target
 
-  onClickOpponents: (e) =>
-    # Track Event
-    AnalyticsHelper.trackEvent 'HallOfFame', 'Affichage adversaires'
+  getDate: =>
+    targetDate = new Date()
+    targetDate.setHours(0)
+    targetDate.setMinutes(0)
+    targetDate.setSeconds(0)
+    targetDate.setDate(targetDate.getDate() - targetDate.getDay() + 7)
+    return targetDate
 
-    console.log "OPPONENTS"
-    @fetchPlayers no
-    @view.chooseList e.target
+  askFriend: (e) =>
+    if !$(e.target).hasClass('asked')
+      @view.askFriend e.target

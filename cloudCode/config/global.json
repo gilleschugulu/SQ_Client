@@ -1,0 +1,14 @@
+{
+    "applications": {
+        "Sport Quiz 2": {
+            "applicationId": "ixxjIFjdYTjOeKSZycsaPw8DHndujhvHFX2rNW10", 
+            "masterKey": "wTWcMQbccry99NC5M2t5aVauccn77cAvoIqDpNv8"
+        }, 
+        "_default": {
+            "link": "Sport Quiz 2"
+        }
+    }, 
+    "global": {
+        "parseVersion": "1.2.2"
+    }
+}
