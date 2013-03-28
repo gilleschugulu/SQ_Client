@@ -61217,7 +61217,7 @@ window.require.define({"controllers/outgame/hall-of-fame-controller": function(e
 }});
 
 window.require.define({"controllers/outgame/home-controller": function(exports, require, module) {
-  var AnalyticsHelper, Controller, FacebookHelper, HomeController, HomePageView, NoFriendsJournalView, OneFriendJournalView, TwoFriendsJournalView, TwoplusFriendsJournalView, mediator,
+  var AnalyticsHelper, Controller, FacebookHelper, HomeController, HomePageView, NoFriendsJournalView, OneFriendJournalView, TwoFriendsJournalView, TwoplusFriendsJournalView, i18n, mediator,
     __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
     __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
@@ -61227,6 +61227,8 @@ window.require.define({"controllers/outgame/home-controller": function(exports, 
   HomePageView = require('views/outgame/home-page-view');
 
   mediator = require('mediator');
+
+  i18n = require('lib/i18n');
 
   FacebookHelper = require('helpers/facebook-helper');
 
@@ -61304,7 +61306,7 @@ window.require.define({"controllers/outgame/home-controller": function(exports, 
     };
 
     HomeController.prototype.onClickFacebook = function() {
-      return console.log("FACEBOOK INVITE");
+      return FacebookHelper.friendRequest(i18n.t('controller.home.facebook_invite_message'));
     };
 
     HomeController.prototype.getJournalView = function() {
@@ -61654,7 +61656,7 @@ window.require.define({"controllers/outgame/login-controller": function(exports,
           return Parse.FacebookUtils.logIn('email, user_location, user_birthday, publish_stream', {
             success: function() {
               console.log('Player will be logged in thanks to Facebook');
-              Parse.User.current();
+              Parse.User.current().set(u.attributes).save();
               return _this.bindPlayer();
             },
             error: function(response) {
@@ -64178,7 +64180,7 @@ window.require.define({"locale/fr": function(exports, require, module) {
   module.exports = {
     fr: {
       controller: {
-        invite: {
+        home: {
           facebook_invite_message: 'Vasy rejoins ce jeu il déchire'
         },
         shop: {
