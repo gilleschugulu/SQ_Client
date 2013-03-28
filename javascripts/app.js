@@ -61725,7 +61725,6 @@ window.require.define({"controllers/outgame/login-controller": function(exports,
             success: function() {
               return FacebookHelper.getPersonalInfo(function(fb_attributes) {
                 var parse_attributes;
-                console.log(fb_attributes);
                 parse_attributes = User.prototype.defaults;
                 parse_attributes.username = fb_attributes.name;
                 parse_attributes.fb_id = fb_attributes.id;
