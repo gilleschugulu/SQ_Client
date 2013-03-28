@@ -1,6 +1,7 @@
 Controller                = require 'controllers/base/controller'
 HomePageView              = require 'views/outgame/home-page-view'
 mediator                  = require 'mediator'
+i18n                      = require 'lib/i18n'
 FacebookHelper            = require 'helpers/facebook-helper'
 AnalyticsHelper           = require 'helpers/analytics-helper'
 NoFriendsJournalView      = require 'views/outgame/journal/no-friends-journal-view'
@@ -44,7 +45,7 @@ module.exports = class HomeController extends Controller
     @view.delegate 'click', '#invite-btn', @onClickFacebook
 
   onClickFacebook: =>
-    console.log "FACEBOOK INVITE"
+    FacebookHelper.friendRequest i18n.t('controller.home.facebook_invite_message')
 
   getJournalView: ->
     targetDate = new Date()
