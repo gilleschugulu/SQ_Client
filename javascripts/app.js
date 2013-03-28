@@ -23895,6 +23895,9 @@ window.require.define({"config/local-config": function(exports, require, module)
         zones: {
           SHOP: "vz8cfb94951aa34d79bbf0b2"
         }
+      },
+      allopass: {
+        app_id: 297830
       }
     };
 
@@ -23946,6 +23949,9 @@ window.require.define({"config/preprod-config": function(exports, require, modul
         zones: {
           SHOP: "vz8cfb94951aa34d79bbf0b2"
         }
+      },
+      allopass: {
+        app_id: 297830
       }
     };
 
@@ -23996,6 +24002,9 @@ window.require.define({"config/prod-config": function(exports, require, module) 
         zones: {
           SHOP: "vz8cfb94951aa34d79bbf0b2"
         }
+      },
+      allopass: {
+        app_id: 297830
       }
     };
 
@@ -61293,7 +61302,9 @@ window.require.define({"controllers/outgame/home-controller": function(exports, 
       if ((typeof navigator !== "undefined" && navigator !== null ? (_ref = navigator.splashscreen) != null ? _ref.hide : void 0 : void 0) != null) {
         navigator.splashscreen.hide();
       }
-      view.addJournalView(this.getJournalView());
+      FacebookHelper.getFriends(function(friends) {
+        return view.addJournalView(_this.getJournalView(friends));
+      });
       this.view.delegate('click', '#game-link', function() {
         return _this.view.dim(function() {
           return _this.redirectTo('game');
@@ -61309,7 +61320,20 @@ window.require.define({"controllers/outgame/home-controller": function(exports, 
       return FacebookHelper.friendRequest(i18n.t('controller.home.facebook_invite_message'));
     };
 
-    HomeController.prototype.getJournalView = function() {
+    HomeController.prototype.getJournalView = function(friends) {
+      switch (friends.data.length) {
+        case 0:
+          return this.getNoFriendsJournalView();
+        case 1:
+          return this.getOneFriendJournalView();
+        case 2:
+          return this.getTwoFriendsJournalView();
+        default:
+          return this.getTwoplusFriendsJournalView();
+      }
+    };
+
+    HomeController.prototype.getNoFriendsJournalView = function() {
       var options, targetDate;
       targetDate = new Date();
       targetDate.setHours(0);
@@ -61340,6 +61364,10 @@ window.require.define({"controllers/outgame/home-controller": function(exports, 
         }
       };
       return new NoFriendsJournalView(options);
+    };
+
+    HomeController.prototype.getOneFriendJournalView = function(friends) {
+      var options;
       options = {
         winner: 'jide',
         loser: 'gilles b.',
@@ -61355,6 +61383,11 @@ window.require.define({"controllers/outgame/home-controller": function(exports, 
           }
         ]
       };
+      return new OneFriendJournalView(options);
+    };
+
+    HomeController.prototype.getTwoFriendsJournalView = function(friends) {
+      var options;
       options = {
         master: 'gilles b.',
         participants: [
@@ -61374,7 +61407,11 @@ window.require.define({"controllers/outgame/home-controller": function(exports, 
         ]
       };
       return new TwoFriendsJournalView(options);
-      return options = {
+    };
+
+    HomeController.prototype.getTwoplusFriendsJournalView = function(friends) {
+      var options;
+      options = {
         name: 'Gilles B.',
         rank: 4,
         participants: [
@@ -61416,6 +61453,7 @@ window.require.define({"controllers/outgame/home-controller": function(exports, 
           }
         ]
       };
+      return new TwoplusFriendsJournalView(options);
     };
 
     return HomeController;
@@ -61655,10 +61693,8 @@ window.require.define({"controllers/outgame/login-controller": function(exports,
           AnalyticsHelper.trackEvent('Login', 'Login with facebook');
           return Parse.FacebookUtils.logIn('email, user_location, user_birthday, publish_stream', {
             success: function() {
-              console.log('Login succeeded, will get personal infos');
               return FacebookHelper.getPersonalInfo(function(fb_attributes) {
                 var parse_attributes;
-                console.log('Got personal info, will update user');
                 parse_attributes = User.prototype.defaults;
                 parse_attributes.username = fb_attributes.name;
                 Parse.User.current().set(parse_attributes).save();
@@ -62137,20 +62173,20 @@ window.require.define({"controllers/outgame/shop-controller": function(exports, 
       var fp, index, p, user, _i, _len, _ref,
         _this = this;
       this.packs = PurchasePacks;
-      if (fp = (DeviceHelper.isIOS() ? this.packs.free_packs.ios : this.packs.free_packs.web)) {
+      this.packs.type = (DeviceHelper.isIOS() ? 'ios' : 'web');
+      if (fp = this.packs.free_packs[this.packs.type]) {
         this.packs.free_packs = fp;
         _ref = this.packs.free_packs;
         for (index = _i = 0, _len = _ref.length; _i < _len; index = ++_i) {
           p = _ref[index];
           this.packs.free_packs[index].disabled = LocalStorageHelper.exists("store_pack_" + p.name);
         }
-        console.log(this.packs);
       }
       this.bonuses = BonusPacks;
       user = Parse.User.current();
       PurchaseHelper.initTapPoints();
       return this.loadView('shop', function() {
-        console.log(ConfigHelper.config.services.facebook);
+        console.log(_this.packs);
         return new ShopView({
           packs: _this.packs,
           bonuses: _this.bonuses,
@@ -62161,7 +62197,8 @@ window.require.define({"controllers/outgame/shop-controller": function(exports, 
       }, function(view) {
         view.delegate('click', '#bonuses.inactive', _this.onToggleTab);
         view.delegate('click', '#credits.inactive', _this.onToggleTab);
-        view.delegate('click', '.paid-pack', _this.onClickApplePack);
+        view.delegate('click', '.paid-pack.ios', _this.onClickApplePack);
+        view.delegate('click', '.paid-pack.web', _this.onClickAllopassPack);
         view.delegate('click', '.free-pack', _this.onClickFreePack);
         view.delegate('click', '.life-pack', _this.onClickLifePack);
         view.delegate('click', '.bonus-pack', _this.onClickBonusPack);
@@ -62215,6 +62252,35 @@ window.require.define({"controllers/outgame/shop-controller": function(exports, 
           key: 'pack-error'
         });
       }
+    };
+
+    ShopController.prototype.onClickAllopassPack = function(pack) {
+      var allopassChild, inverval, url,
+        _this = this;
+      url = 'https://payment.allopass.com/buy/buy.apu?' + AllopassHelper.productUrl(pack.product_id) + '&data=' + dataSend;
+      if (window) {
+        allopassChild = window.open(url, 'Sport Quiz 2 - Allopass', 'width=700,height=500,menubar=no');
+      }
+      return inverval = setInterval(function() {
+        var current_credit;
+        console.log('Window still here ? Sure ?');
+        if (allopassChild.closed) {
+          current_credit = app.player_data.credit;
+          GameFetchHelper.fetchPlayer(ConnectionHelper.getUUID(), function(response) {
+            if (current_credit === response.credits) {
+              return AnalyticsHelper.item('Pack de jetons Allopass', 'Annulation', pack.name, pack.price);
+            } else {
+              AnalyticsHelper.trackTransaction(AnalyticsHelper.getTransactionHash([pack], ConnectionHelper.getUUID()));
+              XitiHelper.transaction(XitiHelper.getTransactionHash([pack], ConnectionHelper.getUUID()));
+              XitiHelper.page(['Boutique', 'Jeton', 'Pack_achete'], {
+                f1: 'Allopass.' + pack.value
+              });
+              return _this.updateWallet(response.credits);
+            }
+          });
+          return clearInterval(inverval);
+        }
+      }, 500);
     };
 
     ShopController.prototype.onClickFreePack = function(e) {
@@ -62386,6 +62452,83 @@ window.require.define({"controllers/outgame/tutorial-controller": function(expor
     return TutorialController;
 
   })(Controller);
+  
+}});
+
+window.require.define({"helpers/allopass_helper": function(exports, require, module) {
+  var ConfigHelper;
+
+  ConfigHelper = require('helpers/config-helper');
+
+  exports.AllopassHelper = (function() {
+
+    function AllopassHelper() {}
+
+    AllopassHelper.generateData = function(packId, uuid, packName, packPrice) {
+      return [packId, uuid, encodeURIComponent(packName), encodeURIComponent(packPrice), 'allopass'].join('_');
+    };
+
+    AllopassHelper.decodeData = function(data) {
+      return {
+        packId: data[0],
+        packName: decodeURIComponent(data[2]),
+        packPrice: decodeURIComponent(data[3])
+      };
+    };
+
+    AllopassHelper.sendTransactionToServer = function(transactionId, allopassParams) {
+      var pack_data, serializedData, transaction_data, _ref,
+        _this = this;
+      if (transactionId) {
+        serializedData = allopassParams['data'].split('_');
+        pack_data = this.decodeData(serializedData);
+        transaction_data = {
+          uuid: serializedData[1],
+          pack_id: pack_data.packId,
+          transaction_id: transactionId,
+          code: (_ref = allopassParams['RECALL']) != null ? _ref : allopassParams['code']
+        };
+        return GameSendHelper.buyAllopassPack(transaction_data, function() {
+          return _this._handleSuccess();
+        }, function() {
+          AnalyticsHelper.item('Pack de crédits Allopass', 'Erreur', pack_data.packName, pack_data.packPrice);
+          return _this._handleError();
+        });
+      } else {
+        return this._handleError();
+      }
+    };
+
+    AllopassHelper.productUrl = function(pack) {
+      return 'ids=' + ConfigHelper.config.services.allopass.app_id + '&idd=' + pack.productId;
+    };
+
+    AllopassHelper._handleSuccess = function() {
+      this._handleAll();
+      return PopUpManager.info("L'achat de votre pack a été confirmé. ", 0, function() {
+        window.close();
+        window.open('', '_self', '');
+        return window.close();
+      });
+    };
+
+    AllopassHelper._handleError = function() {
+      this._handleAll();
+      return PopUpManager.error("Il y a eu un problème lors de l'achat de votre pack. ", 0, function() {
+        window.close();
+        window.open('', '_self', '');
+        return window.close();
+      });
+    };
+
+    AllopassHelper._handleAll = function() {
+      window.resizeTo(480, 320);
+      return $('#global-container').css('background', 'no-repeat url(../images/pause/background.jpg)');
+    };
+
+    return AllopassHelper;
+
+  })();
   
 }});
 
@@ -62667,24 +62810,6 @@ window.require.define({"helpers/facebook-helper": function(exports, require, mod
 
     self = FacebookHelper;
 
-    FacebookHelper.params = {
-      url: {
-        provider: {
-          first_name: null,
-          last_name: null,
-          identifier: null,
-          token: null
-        },
-        player: {
-          email: null,
-          gender: null
-        }
-      },
-      to_change: {
-        provider_name: 'facebook'
-      }
-    };
-
     FacebookHelper.friendRequest = function(message, callback) {
       var doRequest;
       if (callback == null) {
@@ -62753,6 +62878,16 @@ window.require.define({"helpers/facebook-helper": function(exports, require, mod
 
     FacebookHelper.getPersonalInfo = function(callback) {
       return FB.api('/me', callback);
+    };
+
+    FacebookHelper.getFriends = function(callback) {
+      if (this.isLinked()) {
+        return FB.api('/me/friends?fields=installed', callback);
+      } else {
+        return callback({
+          data: []
+        });
+      }
     };
 
     return FacebookHelper;
@@ -66333,10 +66468,14 @@ window.require.define({"views/templates/outgame/shop": function(exports, require
     buffer += escapeExpression(stack1) + "</span>\n          </a>\n        ";
     return buffer;}
 
-  function program4(depth0,data) {
+  function program4(depth0,data,depth1) {
     
     var buffer = "", stack1, foundHelper;
-    buffer += "\n        <a class=\"paid-pack first-offer\" data-id=\"";
+    buffer += "\n        <a class=\"paid-pack first-offer ";
+    stack1 = depth1.packs;
+    stack1 = stack1 == null || stack1 === false ? stack1 : stack1.type;
+    stack1 = typeof stack1 === functionType ? stack1() : stack1;
+    buffer += escapeExpression(stack1) + "\" data-id=\"";
     foundHelper = helpers.product_id;
     if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{},data:data}); }
     else { stack1 = depth0.product_id; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
@@ -66380,7 +66519,7 @@ window.require.define({"views/templates/outgame/shop": function(exports, require
     buffer += "\n    </div>\n    <div class=\"clearfix\"></div>\n    <div class=\"paid-offers\">\n      ";
     stack1 = depth0.packs;
     stack1 = stack1 == null || stack1 === false ? stack1 : stack1.credit_packs;
-    stack1 = helpers.each.call(depth0, stack1, {hash:{},inverse:self.noop,fn:self.program(4, program4, data),data:data});
+    stack1 = helpers.each.call(depth0, stack1, {hash:{},inverse:self.noop,fn:self.programWithDepth(program4, data, depth0),data:data});
     if(stack1 || stack1 === 0) { buffer += stack1; }
     buffer += "\n    </div>\n    <div class=\"clearfix\"></div>\n  </div>\n\n\n  <!-- BONUSES CONTENT BLOCK BEGIN -->\n  <div class=\"content-container\" id='bonus' style='display: none'>\n    <div class='life-container'>\n      ";
     stack1 = depth0.bonuses;
