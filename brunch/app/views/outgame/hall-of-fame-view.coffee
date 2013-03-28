@@ -47,7 +47,7 @@ module.exports = class HallOfFameView extends View
     @i = 0
     @color= 'pink'
     el = $('.ranking-container', @$el).empty()
-    el.append @newPlayerHTML(player, 40, players) for nmb, player of players
+    el.append @newPlayerHTML(player, 40, players) for player in players
 
   chooseList: (eventTargetEl) ->
     $('div' ,'#btn_HoF').removeClass('active')

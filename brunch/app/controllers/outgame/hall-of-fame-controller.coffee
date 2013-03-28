@@ -13,21 +13,15 @@ module.exports = class HallOfFameController extends Controller
 
   fetchPlayers: (withFriends) =>
     @friend = if withFriends then true else false
-    @collection = {}
-    allRanks = [1,2,3,25,26,32,45,48,49,82,100,112,113,125,265,258,359,2000,9030,9031,10620]
-    self_index = parseInt(Math.random() * 21)
-    for i in [0..20]
-      if i is self_index
-        t = 'self'
-      else
-        t = if withFriends then 'Friends' else 'Opponent'
+    ranking = if withFriends then @friendsArray else @globalArray
+    @collection = []
+    for i in [0..ranking.length-1]
       @collection[i] =
-        friend    : @friend
-        rank      : allRanks[i]
-        username  : "#{t}_#{i}"
-        jackpot   : Math.ceil(Math.random() * 50000)
-        profilepic: if Math.random() > 0.49 then 'https://graph.facebook.com/sergio.chugulu/picture' else null
-        type      : t
+        friend     : @friend
+        rank       : ranking[i].attributes.order
+        username   : ranking[i].attributes.username
+        jackpot    : ranking[i].attributes.score
+        profilepic : if Math.random() > 0.49 then 'https://graph.facebook.com/sergio.chugulu/picture' else null
     # params =
     #   uuid   : mediator.user.get('uuid')
     #   friends: withFriends
@@ -37,7 +31,20 @@ module.exports = class HallOfFameController extends Controller
       @updateRanking()
 
   index: ->
-    @fetchPlayers yes
+    user = Parse.User.current()
+    @friendsArray = new Array();
+    @globalArray = new Array();
+    Parse.Cloud.run('getGlobalScores', {id : user.id , rank : user.get('rank')}, {
+      success: (result) =>
+        @globalArray = result
+        @friendsArray = result
+        @fetchPlayers yes
+      error: (error) =>
+        console.log error
+    });
+
+
+
     @targetDate = @getDate()
     @loadView null
     , =>
