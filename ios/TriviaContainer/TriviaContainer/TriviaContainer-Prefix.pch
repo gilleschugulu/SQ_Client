@@ -32,7 +32,7 @@
 #define MKSK_REMOTE_PRODUCT_MODEL                   NO
 #define MKSK_PRODUCT_VERIFY_RECEIPT_PATH            @"purchases/verify_receipt"
 
-#define TestFlightTeamToken @"dcb5995c6575d8c307c409c8c9010430_NTQxOTcyMDEyLTAxLTE2IDExOjIxOjI2LjA3MzEyMw"
+#define TestFlightTeamToken @"ff3e918d-cde3-407d-9975-cfb7552f41bb"
 
 // app rating
 #define APP_RATING_COUNTER_MODULO 2
