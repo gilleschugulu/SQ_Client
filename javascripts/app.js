@@ -61321,7 +61321,8 @@ window.require.define({"controllers/outgame/home-controller": function(exports, 
     };
 
     HomeController.prototype.getJournalView = function(friends) {
-      switch (friends.data.length) {
+      console.log('getJournalView', friends, friends.length);
+      switch (friends.length) {
         case 0:
           return this.getNoFriendsJournalView();
         case 1:
@@ -62881,12 +62882,28 @@ window.require.define({"helpers/facebook-helper": function(exports, require, mod
     };
 
     FacebookHelper.getFriends = function(callback) {
+      var _this = this;
       if (this.isLinked()) {
-        return FB.api('/me/friends?fields=installed', callback);
-      } else {
-        return callback({
-          data: []
+        return FB.api('/me/friends?fields=installed', function(response) {
+          var friend, friends;
+          console.log(response);
+          friends = (function() {
+            var _i, _len, _ref, _results;
+            _ref = response.data;
+            _results = [];
+            for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+              friend = _ref[_i];
+              if (friend.installed) {
+                _results.push(friend);
+              }
+            }
+            return _results;
+          })();
+          console.log(friends);
+          return callback(friends);
         });
+      } else {
+        return callback([]);
       }
     };
 
