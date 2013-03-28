@@ -60471,7 +60471,7 @@ window.require.define({"config/stages/dupa-stage-config": function(exports, requ
   
   module.exports = {
     stage: {
-      answerTime: 20,
+      answerTime: 60,
       thresholds: [100, 200, 300, 400, 500, 1000, 2000, 3000, 4000, 5000],
       timeBonus: 10,
       time_bonus_threshold: 10000
@@ -61655,9 +61655,15 @@ window.require.define({"controllers/outgame/login-controller": function(exports,
           AnalyticsHelper.trackEvent('Login', 'Login with facebook');
           return Parse.FacebookUtils.logIn('email, user_location, user_birthday, publish_stream', {
             success: function() {
-              console.log('SUCCESS : ', arguments);
-              Parse.User.current().set().save();
-              return _this.bindPlayer();
+              console.log('Login succeeded, will get personal infos');
+              return FacebookHelper.getPersonalInfo(function(fb_attributes) {
+                var parse_attributes;
+                console.log('Got personal info, will update user');
+                parse_attributes = User.prototype.defaults;
+                parse_attributes.username = fb_attributes.name;
+                Parse.User.current().set(parse_attributes).save();
+                return this.bindPlayer();
+              });
             },
             error: function(response) {
               if (config.services.facebook.createAnyway) {
@@ -64726,11 +64732,9 @@ window.require.define({"models/ingame/stages/dupa-stage-model": function(exports
 }});
 
 window.require.define({"models/outgame/user-model": function(exports, require, module) {
-  var Model, User,
+  var User,
     __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
-
-  Model = require('models/base/model');
 
   module.exports = User = (function(_super) {
 
@@ -64742,7 +64746,6 @@ window.require.define({"models/outgame/user-model": function(exports, require, m
 
     User.prototype.defaults = {
       uuid: null,
-      username: 'NewPlayer01',
       avatar: null,
       credits: 50,
       rank: 6,
