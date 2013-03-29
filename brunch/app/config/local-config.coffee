@@ -25,5 +25,7 @@ class LocalConfig extends Parent
     adcolony:
       zones:
         SHOP : "vz8cfb94951aa34d79bbf0b2"
+    allopass:
+      app_id: 297830
 
 module.exports = LocalConfig

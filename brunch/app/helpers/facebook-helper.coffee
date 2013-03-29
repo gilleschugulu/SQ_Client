@@ -6,18 +6,6 @@ spinner       = require 'helpers/spinner-helper'
 
 module.exports = class FacebookHelper
   self = @
-  @params =
-    url:
-      provider:
-        first_name: null
-        last_name : null
-        identifier: null
-        token     : null
-      player:
-        email : null
-        gender: null
-    to_change:
-        provider_name: 'facebook'
 
   # Friends invite request
   # ----------------------
@@ -72,6 +60,24 @@ module.exports = class FacebookHelper
   @postScore: (score) ->
     FB.api '/me/scores', 'post', {score: score}, (response) ->
       console.log 'Score was posted to facebook', {score}
+
+  # Get personal info
+  # -----------------
+  @getPersonalInfo: (callback) ->
+    FB.api '/me', callback
+
+  # Get friends
+  # -----------------
+  @getFriends: (callback) ->
+    if @isLinked()
+      FB.api '/me/friends?fields=installed', (response) => 
+        console.log response
+        friends = (friend for friend in response.data when friend.installed)
+        console.log friends
+        callback(friends)
+    else
+      callback([])
+
 
   # # Like the appli
   # # HAHA, like an Open Graph object. Not usable now, maybe later

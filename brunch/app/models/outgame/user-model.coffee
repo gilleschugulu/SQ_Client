@@ -1,11 +1,10 @@
-Model = require 'models/base/model'
+# Model = require 'models/base/model'
 
 module.exports = class User extends Parse.User
   defaults:
     uuid:           null
-    username:       'NewPlayer01'
     avatar:         null
-    credits:        0
+    credits:        50
     rank:           6
     health:         25
     notifications:  true

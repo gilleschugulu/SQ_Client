@@ -19,24 +19,25 @@ module.exports = class ShopController extends Controller
 
   index: =>
     @packs = PurchasePacks
-    if fp = (if DeviceHelper.isIOS() then @packs.free_packs.ios else @packs.free_packs.web)
+    @packs.type = (if DeviceHelper.isIOS() then 'ios' else 'web')
+    if fp = @packs.free_packs[@packs.type]
       @packs.free_packs = fp
       for p,index in @packs.free_packs
         @packs.free_packs[index].disabled = LocalStorageHelper.exists "store_pack_#{p.name}"
-      console.log @packs
     @bonuses = BonusPacks
     user = Parse.User.current()
     PurchaseHelper.initTapPoints()
 
     @loadView 'shop'
     , =>
-      console.log ConfigHelper.config.services.facebook
+      console.log @packs
       new ShopView {@packs, @bonuses, health: user.get('health'), credits: user.get('credits'), like_page_url: ConfigHelper.config.services.facebook.like_page_url}
     , (view) =>
       view.delegate 'click', '#bonuses.inactive', @onToggleTab
       view.delegate 'click', '#credits.inactive', @onToggleTab
 
-      view.delegate 'click', '.paid-pack', @onClickApplePack
+      view.delegate 'click', '.paid-pack.ios', @onClickApplePack
+      view.delegate 'click', '.paid-pack.web', @onClickAllopassPack
       view.delegate 'click', '.free-pack', @onClickFreePack
       view.delegate 'click', '.life-pack', @onClickLifePack
       view.delegate 'click', '.bonus-pack', @onClickBonusPack
@@ -61,6 +62,27 @@ module.exports = class ShopController extends Controller
         title  : i18n.t 'controller.shop.unavailable_pack.title'
         message: i18n.t 'controller.shop.unavailable_pack.message'
         key    : 'pack-error'
+
+  onClickAllopassPack: (pack) ->
+    return console.log('Yep, you clicked')
+    # dataSend = AllopassHelper.generateData(pack.id, ConnectionHelper.getUUID(), pack.name, pack.price)
+    # url = 'https://payment.allopass.com/buy/buy.apu?' + AllopassHelper.productUrl(pack.product_id) + '&data=' + dataSend
+    # allopassChild = window.open(url, 'Sport Quiz 2 - Allopass', 'width=700,height=500,menubar=no') if window
+
+    # inverval = setInterval =>
+    #   console.log 'Window still here ? Sure ?'
+    #   if allopassChild.closed
+    #     current_credit = app.player_data.credit
+    #     GameFetchHelper.fetchPlayer ConnectionHelper.getUUID(), (response) =>
+    #       if current_credit == response.credits
+    #         AnalyticsHelper.item('Pack de jetons Allopass', 'Annulation', pack.name, pack.price)
+    #       else
+    #         AnalyticsHelper.trackTransaction AnalyticsHelper.getTransactionHash([pack], ConnectionHelper.getUUID())
+    #         XitiHelper.transaction XitiHelper.getTransactionHash([pack], ConnectionHelper.getUUID())
+    #         XitiHelper.page(['Boutique', 'Jeton', 'Pack_achete'], {f1: 'Allopass.' + pack.value} )
+    #         @updateWallet(response.credits)
+    #     clearInterval(inverval)
+    # , 500
 
   # Free packs
   # ----------
