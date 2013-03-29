@@ -112,9 +112,14 @@ module.exports = class HomeController extends Controller
     return new TwoFriendsJournalView options
 
   getTwoplusFriendsJournalView: (players) ->
+    rank = _.indexOf(players, Parse.User.current().attributes) + 1
+    name = Parse.User.current().get('username')
+    if rank < 4
+      title = i18n.t "controller.home.journal.twoplus.rank_#{rank}", name
+    else
+      title = i18n.t "controller.home.journal.twoplus.rank_n", name, rank, null
     options =
-      name: Parse.User.current().get('username')
-      rank: _.indexOf(players, Parse.User.current().attributes) + 1
+      title       : title
       participants: players
 
     new TwoplusFriendsJournalView options

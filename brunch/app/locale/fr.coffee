@@ -3,6 +3,12 @@ module.exports =
     controller:
       home:
         facebook_invite_message: 'Vasy rejoins ce jeu il déchire'
+        journal:
+          twoplus:
+            rank_1 : '{0} est numero uno'
+            rank_2 : '{0} y est presque'
+            rank_3 : '{0} dernier du podium'
+            rank_n : '{0} n\'est qu\'a la position {1}'
       shop:
         unavailable_pack:
           title: 'erreur'
