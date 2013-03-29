@@ -35,29 +35,28 @@ module.exports = class HomeController extends Controller
   viewLoaded: (view) =>
     navigator.splashscreen.hide() if navigator?.splashscreen?.hide?
 
-    FacebookHelper.getFriends (friends) => view.addJournalView @getJournalView(friends)
+    FacebookHelper.getFriends (friends) =>
+      @getJournalView(friends)
 
-    @view.delegate 'click', '#game-link', =>
-      @view.dim => @redirectTo 'game'
+      # All these links are present on the journal
+      @view.delegate 'click', '#equipe-btn', =>
+        @view.toggleJournal()
+      @view.delegate 'click', '#invite-btn', @onClickFacebook
+      @view.delegate 'click', '#hall-of-fame', =>
+        @view.dim => @redirectTo 'hall-of-fame'
 
-    @view.delegate 'click', '#equipe-btn', =>
-      @view.toggleJournal()
-
-    @view.delegate 'click', '#hall-of-fame', =>
-      @view.dim => @redirectTo 'hall-of-fame'
-
-    @view.delegate 'click', '#invite-btn', @onClickFacebook
+      @view.delegate 'click', '#game-link', =>
+        @view.dim => @redirectTo 'game'
 
   onClickFacebook: =>
     FacebookHelper.friendRequest i18n.t('controller.home.facebook_invite_message')
 
   getJournalView: (friends) ->
-    console.log 'getJournalView', friends, friends.length
     switch friends.length
-      when 0 then @getNoFriendsJournalView()
-      when 1 then @getOneFriendJournalView()
-      when 2 then @getTwoFriendsJournalView()
-      else @getTwoplusFriendsJournalView()
+      when 0 then @view.addJournalView @getNoFriendsJournalView()
+      when 1 then @getFriendsScore friends, @getOneFriendJournalView
+      when 2 then @getFriendsScore friends, @getTwoFriendsJournalView
+      else @getFriendsScore friends, @getTwoplusFriendsJournalView
 
   getNoFriendsJournalView: ->
     targetDate = new Date()
@@ -87,79 +86,39 @@ module.exports = class HomeController extends Controller
         rank : 1000
     return new NoFriendsJournalView options
 
-  getOneFriendJournalView: (friends) ->
-    options =
-      winner : 'jide'
-      loser : 'gilles b.'
-      participants : [
-          name : 'Jide'
-          picture : 'https://graph.facebook.com/pierre.chugulu/picture'
-          score : '22 999'
-        ,
-          name : 'Gilles B.'
-          picture : 'https://graph.facebook.com/francois.chugulu/picture'
-          score : '2 999'
-      ]
+
+  getFriendsScore: (friends, callback) ->
+    friendsId = _.pluck(friends, 'id')
+
+    Parse.Cloud.run 'getFriendsScore', { friendsId: friendsId },
+      success: (players) =>
+        players.push Parse.User.current().attributes
+        players = players.sort (f1, f2) ->
+          f2.score - f1.score
+        @view.addJournalView callback(players)
+        # callback(friends)
+      error: (error) ->
+        console.log 'ERROR : ', error
+
+  getOneFriendJournalView: (players) ->
+    options = 
+      winner: players[0].username
+      loser: players[1].username
+      participants: players
 
     new OneFriendJournalView options
 
-  getTwoFriendsJournalView: (friends) ->
-    options =
-      master : 'gilles b.'
-      participants : [
-          name : 'Gilles B.'
-          picture : 'https://graph.facebook.com/pierre.chugulu/picture'
-          score : '22 999'
-        ,
-          name : 'Jide'
-          picture : 'https://graph.facebook.com/francois.chugulu/picture'
-          score : '2 999'
-        ,
-          name : 'Vincent'
-          picture : 'https://graph.facebook.com/vincent.chugulu/picture'
-          score : '999'
-      ]
+  getTwoFriendsJournalView: (players) ->
+    options = 
+      master: players[0].username
+      participants: players
 
     return new TwoFriendsJournalView options
 
-  getTwoplusFriendsJournalView: (friends) ->
-    options =
-      name : 'Gilles B.'
-      rank : 4
-      participants : [
-          rank : 1
-          picture : 'https://graph.facebook.com/francois.chugulu/picture'
-          name : 'Ferdi'
-          score : '43 456'
-        ,
-          rank : 2
-          picture : 'https://graph.facebook.com/francois.chugulu/picture'
-          name : 'Jide'
-          score : '33 456'
-        ,
-          rank : 3
-          picture : 'https://graph.facebook.com/francois.chugulu/picture'
-          name : 'Eunk.Y'
-          score : '23 456'
-        ,
-          rank : 4
-          picture : 'https://graph.facebook.com/francois.chugulu/picture'
-          name : 'Gilles B.'
-          score : '13 456'
-        ,
-          rank : 5
-          picture : 'https://graph.facebook.com/francois.chugulu/picture'
-          name : 'Matteo B.'
-          score : '3 456'
-        ,
-          rank : 6
-          picture : 'https://graph.facebook.com/francois.chugulu/picture'
-          name : 'Toto U.'
-          score : '1 456'
-        ,
-          rank : 7
-          picture : 'https://graph.facebook.com/francois.chugulu/picture'
-          name : 'Jean D.'
-          score : '456'
-      ]
+  getTwoplusFriendsJournalView: (players) ->
+    options = 
+      name: Parse.User.current().get('username')
+      rank: _.indexOf(players, Parse.User.current().attributes) + 1
+      participants: players
+
     new TwoplusFriendsJournalView options

@@ -4,8 +4,8 @@
 <div id='vs'>
   {{#each participants}}
   <div class='participant'>
-    <div class='photo' style='background-image:url({{picture}}?width=90&height=90)'></div>
-    <div class='blaze'>{{name}}</div>
+    <div class='photo' style='background-image:url(https://graph.facebook.com/{{fb_id}}/picture?width=90&height=90)'></div>
+    <div class='blaze'>{{username}}</div>
     <div class='score'>{{score}}</div>
   </div>
   {{/each}}
