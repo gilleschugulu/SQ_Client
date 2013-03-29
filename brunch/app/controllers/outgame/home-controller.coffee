@@ -88,7 +88,7 @@ module.exports = class HomeController extends Controller
         console.log 'ERROR : ', error
 
   getSmallLeaderboard: (callback) ->
-    Parse.Cloud.run 'smallLeaderboard', null,
+    Parse.Cloud.run 'smallLeaderboard', {size : 3},
       success: (players) =>
         players = players.sort (f1, f2) ->
           f2.score - f1.score

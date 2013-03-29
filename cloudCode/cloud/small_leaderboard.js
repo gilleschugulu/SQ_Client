@@ -2,7 +2,7 @@
 
 exports.task = function(request, response) {
   var fetchUser, players, taskDone, tasks;
-  tasks = 3;
+  tasks = request.params.size;
   players = [];
   taskDone = function(max) {
     var player;
@@ -26,7 +26,7 @@ exports.task = function(request, response) {
     }
   };
   fetchUser = function(offset, max) {
-    return (new Parse.Query('User')).descending('score').notEqualTo('score', 0).skip(offset).first({
+    return (new Parse.Query('User')).descending('score').greaterThan('score', 0).skip(offset).first({
       success: function(user) {
         if (user) {
           user.position = offset + 1;
@@ -39,19 +39,29 @@ exports.task = function(request, response) {
       }
     });
   };
-  return (new Parse.Query('User')).notEqualTo('score', 0).count({
+  return (new Parse.Query('User')).greaterThan('score', 0).count({
     success: function(number) {
-      var offset, _i, _len, _ref, _results;
-      _ref = [0, Math.floor(number / 2), number - 1];
+      var count, i, offset, offsets, step, _i, _j, _len, _ref, _results;
+      count = request.params.size;
+      offsets = [0];
+      if (count > 1) {
+        if (count > 2) {
+          step = Math.floor(number / (count - 1));
+          for (i = _i = 0, _ref = count - 2; 0 <= _ref ? _i <= _ref : _i >= _ref; i = 0 <= _ref ? ++_i : --_i) {
+            offsets.push((i + 1) * step);
+          }
+        }
+        offsets.push(number - 1);
+      }
       _results = [];
-      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-        offset = _ref[_i];
+      for (_j = 0, _len = offsets.length; _j < _len; _j++) {
+        offset = offsets[_j];
         _results.push(fetchUser(offset, number));
       }
       return _results;
     },
     error: function(obj, error) {
-      return response.error(obj, error);
+      return response.error(error, "could not count");
     }
   });
 };

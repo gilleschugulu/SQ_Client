@@ -1,5 +1,5 @@
 exports.task = (request, response) ->
-  tasks   = 3
+  tasks   = request.params.size
   players = []
 
   taskDone = (max) ->
@@ -17,7 +17,7 @@ exports.task = (request, response) ->
         })
 
   fetchUser = (offset, max) ->
-    (new Parse.Query('User')).descending('score').notEqualTo('score', 0).skip(offset).first
+    (new Parse.Query('User')).descending('score').greaterThan('score', 0).skip(offset).first
       success: (user) ->
         if user
           user.position = offset + 1
@@ -27,8 +27,15 @@ exports.task = (request, response) ->
         taskDone max
 
 
-  (new Parse.Query('User')).notEqualTo('score', 0).count
+  (new Parse.Query('User')).greaterThan('score', 0).count
     success: (number) ->
-      fetchUser(offset, number) for offset in [0, Math.floor(number / 2), number - 1]
+      count = request.params.size
+      offsets = [0]
+      if count > 1
+        if count > 2
+          step = Math.floor(number / (count - 1))
+          offsets.push((i + 1) * step) for i in [0..(count - 2)]
+        offsets.push(number - 1)
+      fetchUser(offset, number) for offset in offsets
     error : (obj, error) ->
       response.error error, "could not count"
