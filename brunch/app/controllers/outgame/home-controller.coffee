@@ -53,12 +53,12 @@ module.exports = class HomeController extends Controller
 
   getJournalView: (friends) ->
     switch friends.length
-      when 0 then @view.addJournalView @getNoFriendsJournalView()
+      when 0 then @getSmallLeaderboard @getNoFriendsJournalView
       when 1 then @getFriendsScore friends, @getOneFriendJournalView
       when 2 then @getFriendsScore friends, @getTwoFriendsJournalView
       else @getFriendsScore friends, @getTwoplusFriendsJournalView
 
-  getNoFriendsJournalView: ->
+  getNoFriendsJournalView: (people) ->
     targetDate = new Date()
     targetDate.setHours(0)
     targetDate.setMinutes(0)
@@ -66,24 +66,11 @@ module.exports = class HomeController extends Controller
     targetDate.setDate(targetDate.getDate() - targetDate.getDay() + 7)
 
     options =
-      targetDate : targetDate
-      name : 'forever a.'
-      picture : 'http://media.comicvine.com/uploads/7/77914/2109064-4char_forever_alone_guy_high_resolution_icon.png'
-      p1 :
-        name : 'Toto T.'
-        picture : 'https://graph.facebook.com/pierre.chugulu/picture'
-        score : '22 999'
-        rank : 1
-      p2 :
-        name : 'Tata T.'
-        picture : 'https://graph.facebook.com/francois.chugulu/picture'
-        score : '2 999'
-        rank : 100
-      p3 :
-        name : 'Tutu T.'
-        picture : 'https://graph.facebook.com/vincent.chugulu/picture'
-        score : '999'
-        rank : 1000
+      targetDate  : targetDate
+      username    : Parse.User.current().get('username')
+      fb_id       : Parse.User.current().get('fb_id')
+      participants: people
+    console.log people
     return new NoFriendsJournalView options
 
 
@@ -100,8 +87,17 @@ module.exports = class HomeController extends Controller
       error: (error) ->
         console.log 'ERROR : ', error
 
+  getSmallLeaderboard: (callback) ->
+    Parse.Cloud.run 'smallLeaderboard', null,
+      success: (players) =>
+        players = players.sort (f1, f2) ->
+          f2.score - f1.score
+        @view.addJournalView callback(players)
+      error: (error) ->
+        console.log 'ERROR : ', error
+
   getOneFriendJournalView: (players) ->
-    options = 
+    options =
       winner: players[0].username
       loser: players[1].username
       participants: players
@@ -109,14 +105,14 @@ module.exports = class HomeController extends Controller
     new OneFriendJournalView options
 
   getTwoFriendsJournalView: (players) ->
-    options = 
+    options =
       master: players[0].username
       participants: players
 
     return new TwoFriendsJournalView options
 
   getTwoplusFriendsJournalView: (players) ->
-    options = 
+    options =
       name: Parse.User.current().get('username')
       rank: _.indexOf(players, Parse.User.current().attributes) + 1
       participants: players
