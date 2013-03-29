@@ -4,12 +4,10 @@ exports.task = function(request, response) {
   var fetchUser, players, taskDone, tasks;
   tasks = 3;
   players = [];
-  taskDone = function() {
+  taskDone = function(max) {
     var player;
     if (--tasks < 1) {
-      players.slice(0, 3);
-      console.log('players?');
-      console.log(players);
+      players.slice(0, max);
       return response.success((function() {
         var _i, _len, _results;
         _results = [];
@@ -27,17 +25,17 @@ exports.task = function(request, response) {
       })());
     }
   };
-  fetchUser = function(offset) {
+  fetchUser = function(offset, max) {
     return (new Parse.Query('User')).descending('score').notEqualTo('score', 0).skip(offset).first({
       success: function(user) {
         if (user) {
           user.position = offset + 1;
           players.push(user);
         }
-        return taskDone();
+        return taskDone(max);
       },
       error: function() {
-        return taskDone();
+        return taskDone(max);
       }
     });
   };
@@ -48,9 +46,12 @@ exports.task = function(request, response) {
       _results = [];
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         offset = _ref[_i];
-        _results.push(fetchUser(offset));
+        _results.push(fetchUser(offset, number));
       }
       return _results;
+    },
+    error: function(obj, error) {
+      return response.error(obj, error);
     }
   });
 };
