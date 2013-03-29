@@ -1,10 +1,7 @@
 exports.task = (request, response) ->
-  friendsId = request.params.friendsId
-
   players = []
-  # playersId = []
 
-  (new Parse.Query('User')).count
+  (new Parse.Query('User')).notEqualTo('score', 0).count
     success: (number) ->
       console.log number
 
@@ -14,12 +11,12 @@ exports.task = (request, response) ->
           if best_user
             best_user.position = 1
             players.push best_user
-          offset = Math.ceil(number / 2)
+          offset = Math.floor(number / 2)
           (new Parse.Query('User')).descending('score').notEqualTo('score', 0).skip(offset).first
             success: (mid_user) ->
               console.log mid_user
               if mid_user
-                mid_user.position = offset
+                mid_user.position = offset + 1
                 players.push mid_user
 
               (new Parse.Query('User')).descending('score').notEqualTo('score', 0).skip(number - 1).first
