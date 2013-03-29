@@ -12,6 +12,6 @@ exports.task = (request, response) ->
           fb_id: user.get('fb_id')
           username: user.get('username')
           object_id: user.id
-          score: user.get('score')
+          score: user.get('score') | 0
         }
       )
