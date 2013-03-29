@@ -2,6 +2,9 @@ exports.task = (request, response) ->
   tasks   = request.params.size
   players = []
 
+  getQuery = ->
+    (new Parse.Query('User')).greaterThan('score', 0)
+
   taskDone = (max) ->
     if --tasks < 1
       # Sort of uniqueness
@@ -17,7 +20,7 @@ exports.task = (request, response) ->
         })
 
   fetchUser = (offset, max) ->
-    (new Parse.Query('User')).descending('score').greaterThan('score', 0).skip(offset).first
+    getQuery().descending('score').skip(offset).first
       success: (user) ->
         if user
           user.position = offset + 1
@@ -27,7 +30,7 @@ exports.task = (request, response) ->
         taskDone max
 
 
-  (new Parse.Query('User')).greaterThan('score', 0).count
+  getQuery().count
     success: (number) ->
       count = request.params.size
       offsets = [0]
