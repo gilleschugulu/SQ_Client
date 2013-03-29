@@ -5,21 +5,21 @@ mediator        = require 'mediator'
 FacebookHelper  = require 'helpers/facebook-helper'
 ConfigHelper    = require 'helpers/config-helper'
 ApiCallHelper   = require 'helpers/api-call-helper'
-
 module.exports = class ProfilesController extends Controller
   title     : 'Profile'
   historyURL: 'profile'
   stats : null
 
   index: =>
-    @loadStats()
+    @user = Parse.User.current()
+    @user.set('score', 234234).save()
+    console.log @user
     @loadView 'profile'
       , =>
-        new ProfileView()
+        new ProfileView({user : @user.attributes})
       , (view) =>
-        view.delegate 'click', '#link-fb', @linkFacebook
-        view.delegate 'click', '.rankings', @onClickGameCenter
-        view.updateStats @stats if @stats
+        view.delegate 'click', '.facebook-link', @linkFacebook
+        view.delegate 'click', '.game-center', @onClickGameCenter
       , {viewTransition: yes, music: 'outgame'}
 
   linkFacebook: ->
@@ -33,14 +33,9 @@ module.exports = class ProfilesController extends Controller
     # Track Event
     AnalyticsHelper.trackEvent 'Profil', 'Affichage de Game Center'
 
-    console.log "GC"
     lb = ConfigHelper.config.gamecenter.leaderboard
     if lb
       GameCenter?.showLeaderboard lb
     else
       alert('pas de leaderboard')
 
-  loadStats: =>
-    ApiCallHelper.fetch.playerStats mediator.user.get('uuid'), (stats) =>
-      @stats = stats.player
-      @view?.updateStats @stats

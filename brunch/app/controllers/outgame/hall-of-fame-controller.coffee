@@ -28,7 +28,7 @@ module.exports = class HallOfFameController extends Controller
     # @request?.abort()
     # @request = ApiCallHelper.fetch.getLeaderboards params, (@collection) =>
     #   @request = null
-      @updateRanking()
+    @updateRanking()
 
   index: ->
     user = Parse.User.current()
@@ -42,6 +42,7 @@ module.exports = class HallOfFameController extends Controller
       error: (error) =>
         console.log error
     });
+    @fetchPlayers yes
 
 
 
