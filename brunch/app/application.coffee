@@ -11,30 +11,35 @@ module.exports = class Application extends Chaplin.Application
   title: config.app_name
 
   initialize: ->
-    super
-    # Initialize core components
-    @initDispatcher controllerSuffix: '-controller'
-    @initLayout()
+    @extractParams (params) =>
+      if params and params['data'] and params['data'].match(/allopass/) # Slow down boy, this is an Allopass callback
+        console.log "Will contact server? "
+        AllopassHelper.sendTransactionToServer(params['transaction_id'], params)
+      else
+        super
+        # Initialize core components
+        @initDispatcher controllerSuffix: '-controller'
+        @initLayout()
 
-    # Application-specific scaffold
-    window.app = {}
-    @initHelpers()
-    @initMediator()
-    @initControllers()
-    @onDeviceReady()
+        # Application-specific scaffold
+        window.app = {}
+        @initHelpers()
+        @initMediator()
+        @initControllers()
+        @onDeviceReady()
 
-    # Register all routes and start routing
-    @initRouter routes, pushState: false
-    # You might pass Router/History options as the second parameter.
-    # Chaplin enables pushState per default and Backbone uses / as
-    # the root per default. You might change that in the options
-    # if necessary:
-    # @initRouter routes, pushState: false, root: '/subdir/'
-    unless config.log
-      console.log = ->
+        # Register all routes and start routing
+        @initRouter routes, pushState: false
+        # You might pass Router/History options as the second parameter.
+        # Chaplin enables pushState per default and Backbone uses / as
+        # the root per default. You might change that in the options
+        # if necessary:
+        # @initRouter routes, pushState: false, root: '/subdir/'
+        unless config.log
+          console.log = ->
 
-    # Freeze the application instance to prevent further changes
-    Object.freeze? this
+        # Freeze the application instance to prevent further changes
+        Object.freeze? this
 
   onDeviceReady: ->
     console.log "on device ready"

@@ -31,7 +31,7 @@
     <div class="clearfix"></div>
     <div class="paid-offers">
       {{#each packs.credit_packs}}
-        <a class="paid-pack first-offer" data-id="{{product_id}}" style="background-image:url({{image}})">
+        <a class="paid-pack first-offer {{../packs.type}}" data-id="{{product_id}}" data-position='{{@index}}' style="background-image:url({{image}})">
           <span class='marker'>+</span>
           <span class='value'>{{value}}</span>
           <span class='credit-icon'></span>

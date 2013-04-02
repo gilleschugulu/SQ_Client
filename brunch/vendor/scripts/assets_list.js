@@ -1,5 +1,5 @@
 var AssetsList = {
-  assets: { 'common/': ["images/common/background.png", "images/common/close.png", "images/common/close_a.png", "images/common/home.png"],
+  assets: { 'common/': ["images/common/background.png", "images/common/close.png", "images/common/close_a.png", "images/common/facebook-default.jpg", "images/common/home.png"],
 'game-over/': ["images/game-over/popup.png", "images/game-over/popup_victoire.png", "images/game-over/rejouer.png", "images/game-over/rejouer_a.png"],
 'hall-of-fame/': ["images/hall-of-fame/adversaire.png", "images/hall-of-fame/adversaires_deactive.png", "images/hall-of-fame/amis.png", "images/hall-of-fame/amis_deactive.png", "images/hall-of-fame/background.jpg", "images/hall-of-fame/fond_classement.png", "images/hall-of-fame/gamecenter.png", "images/hall-of-fame/jeton.png", "images/hall-of-fame/precedent.png", "images/hall-of-fame/rank1.png", "images/hall-of-fame/rank2.png", "images/hall-of-fame/rank3.png", "images/hall-of-fame/rankadversaire.png", "images/hall-of-fame/title.png"],
 'home/+2amis/': ["images/home/+2amis/inviter.png", "images/home/+2amis/inviter_a.png", "images/home/+2amis/ranking.png", "images/home/+2amis/ranking_a.png", "images/home/+2amis/title.png"],

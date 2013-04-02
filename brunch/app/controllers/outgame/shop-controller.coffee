@@ -8,6 +8,7 @@ i18n               = require 'lib/i18n'
 LocalStorageHelper = require 'helpers/local-storage-helper'
 PopUpHelper        = require 'helpers/pop-up-helper'
 AnalyticsHelper    = require 'helpers/analytics-helper'
+AllopassHelper     = require 'helpers/allopass-helper'
 PurchasePacks      = require 'config/purchase-config'
 BonusPacks         = require 'config/bonus-config'
 
@@ -18,13 +19,16 @@ module.exports = class ShopController extends Controller
   availableProducts: {}
 
   index: =>
-    @packs = PurchasePacks
-    if fp = (if DeviceHelper.isIOS() then @packs.free_packs.ios else @packs.free_packs.web)
+    type = (if DeviceHelper.isIOS() then 'ios' else 'web')
+
+    @bonuses = BonusPacks
+    @packs = PurchasePacks[type]
+    @packs.type = type
+    if fp = @packs.free_packs
       @packs.free_packs = fp
       for p,index in @packs.free_packs
         @packs.free_packs[index].disabled = LocalStorageHelper.exists "store_pack_#{p.name}"
-      console.log @packs
-    @bonuses = BonusPacks
+
     user = Parse.User.current()
     PurchaseHelper.initTapPoints()
 
@@ -61,6 +65,30 @@ module.exports = class ShopController extends Controller
         title  : i18n.t 'controller.shop.unavailable_pack.title'
         message: i18n.t 'controller.shop.unavailable_pack.message'
         key    : 'pack-error'
+
+  onClickAllopassPack: (e) =>
+    console.log('Yep, you clicked')
+    pack = @packs.credit_packs[@view.choosePackIndex e.currentTarget]
+    url = AllopassHelper.productUrl(pack)
+    allopassChild = window?.open(url, 'Sport Quiz 2 - Allopass', 'width=700,height=500,menubar=no')
+
+    inverval = setInterval =>
+      console.log 'Window still here ? Sure ?'
+      if allopassChild.closed
+        AllopassHelper.onTransactionDone()
+        # current_credit = app.player_data.credit
+        # GameFetchHelper.fetchPlayer ConnectionHelper.getUUID(), (response) =>
+        #   if current_credit == response.credits
+        #     AnalyticsHelper.item('Pack de jetons Allopass', 'Annulation', pack.name, pack.price)
+        #   else
+        #     AnalyticsHelper.trackTransaction AnalyticsHelper.getTransactionHash([pack], ConnectionHelper.getUUID())
+        #     XitiHelper.transaction XitiHelper.getTransactionHash([pack], ConnectionHelper.getUUID())
+        #     XitiHelper.page(['Boutique', 'Jeton', 'Pack_achete'], {f1: 'Allopass.' + pack.value} )
+        #     @updateWallet(response.credits)
+        clearInterval(inverval)
+    , 500
+
+    return
 
   # Free packs
   # ----------
@@ -129,7 +157,7 @@ module.exports = class ShopController extends Controller
 
 
   onClickLifePack: (e) =>
-    pack = BonusPacks.life_packs[@view.chooseLifePackIndex e.currentTarget]
+    pack = BonusPacks.life_packs[@view.choosePackIndex e.currentTarget]
     return unless pack
 
     if Parse.User.current().get('credits') >= pack.price
@@ -141,7 +169,7 @@ module.exports = class ShopController extends Controller
         key    : 'pack-error'
 
   onClickBonusPack: (e) =>
-    pack = BonusPacks.bonus_packs[@view.chooseBonusPackIndex e.currentTarget]
+    pack = BonusPacks.bonus_packs[@view.choosePackIndex e.currentTarget]
     return unless pack
 
     if Parse.User.current().get('credits') >= pack.price

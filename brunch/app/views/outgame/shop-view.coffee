@@ -25,10 +25,7 @@ module.exports = class ShopView extends View
   chooseFreePack: (targetElement) ->
     $(targetElement, @$el).attr('id')
 
-  chooseLifePackIndex: (targetElement) ->
-    $(targetElement, @$el).data('position')
-
-  chooseBonusPackIndex: (targetElement) ->
+  choosePackIndex: (targetElement) ->
     $(targetElement, @$el).data('position')
 
   disableUnavailablePacks: (packIds) ->
