@@ -14,6 +14,8 @@ class ProdConfig
     enabled: no
     google : ['']
 
+  @pay_game: true
+
   @services:
     parse:
       app_id : 'ixxjIFjdYTjOeKSZycsaPw8DHndujhvHFX2rNW10'

@@ -9,6 +9,8 @@ class LocalConfig extends Parent
   @analytics:
     enabled: no
 
+  @pay_game: false
+
   @services:
     parse:
       app_id : 'ixxjIFjdYTjOeKSZycsaPw8DHndujhvHFX2rNW10'

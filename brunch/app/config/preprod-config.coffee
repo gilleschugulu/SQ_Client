@@ -9,6 +9,8 @@ class PreprodConfig extends Parent
   @log:                  true
   @long_version_format:  true
 
+  @pay_game: false
+
   @services:
     parse:
       app_id : 'ixxjIFjdYTjOeKSZycsaPw8DHndujhvHFX2rNW10'

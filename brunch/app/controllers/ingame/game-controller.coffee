@@ -3,6 +3,7 @@ mediator             = require 'mediator'
 Player               = require 'models/ingame/player-model'
 Factory              = require 'helpers/factory-helper'
 ConfigHelper         = require 'helpers/config-helper'
+config               = require 'config/environment-config'
 AnalyticsHelper      = require 'helpers/analytics-helper'
 FacebookHelper       = require 'helpers/facebook-helper'
 PopUpHelper          = require 'helpers/pop-up-helper'
@@ -41,8 +42,9 @@ module.exports = class GameController extends Controller
         @loadNextStage()
 
   payGame: ->
-    user = Parse.User.current()
+    return true unless config.pay_game
 
+    user = Parse.User.current()
     return false if user.get('health') <= 0
     # This will save the new health locally and at distance
     user.set('health', user.get('health') - 1).save()
@@ -72,16 +74,14 @@ module.exports = class GameController extends Controller
       #     key    : 'api-error'
 
   finishGame: =>
-    console.log 'Game finish'
     human = @players[0]
-    console.log human, @players
 
     # Track endgames
     AnalyticsHelper.trackPageView "EndGame - #{@i18nStageName}"
 
     data =
-      jackpot    : human.get('jackpot')
-      uuid       : mediator.user.get('uuid')
+      jackpot : human.get('jackpot')
+      uuid    : mediator.user.get('uuid')
 
     @redirectToRoute "game-lost", {jackpot: human.get('jackpot'), reward: 10, rank: human.get('rank')}
 
