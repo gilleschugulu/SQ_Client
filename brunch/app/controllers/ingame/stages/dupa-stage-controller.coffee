@@ -31,6 +31,7 @@ module.exports = class DupaStageController extends StageController
             @executeBonus(bonusName)
 
   askNextQuestion: =>
+    @timer.start()
     @bonusFiftyFiftyUsed = no
     @bonusMassUsed = no
     player = @model.getHumanPlayer()
@@ -53,7 +54,7 @@ module.exports = class DupaStageController extends StageController
 
   playerDidAnswer: (player, question, result) =>
     if result then @model.playerMadeSuccess(player) else @model.playerMadeError(player)
-    @view.updateJackpot player.get('jackpot'), @model.getCurrentThreshold()
+    @view.updateJackpot player.get('jackpot'), @model.getCurrentThreshold(), result
     @askNextQuestion()
 
   beforeFinishStage: (player) ->

@@ -97,20 +97,33 @@ module.exports = class DupaView extends View
         callback?()
     , 2000
 
-  updateJackpot: (jackpot, currentThresholdValue) ->
+  updateJackpot: (jackpot, currentThresholdValue, result) ->
     el = $('.jackpot-container', @$el)
     $('#total-jackpot', el).text jackpot
-    $(".threshold", el).removeClass('highlighted')
-    $(".threshold[data-value='#{currentThresholdValue}']", el).addClass('highlighted')
-    @updateJackpotMarker(currentThresholdValue)
+    
+    $(".threshold .highlighted", el).addClass('animated fadeOut').one 'webkitAnimationEnd', ->
+      $(@).remove()
 
-  updateJackpotMarker: (currentThresholdValue) ->
+    blockEl = $(".threshold[data-value='#{currentThresholdValue}']", el)
+
+    blockEl.append("<div class='highlighted'>#{currentThresholdValue}</div>")
+    $('.highlighted', blockEl).addClass('animated fadeIn')
+
+
+    @updateJackpotMarker(currentThresholdValue, result)
+
+  updateJackpotMarker: (currentThresholdValue, result) ->
     el = $('.jackpot-container', @$el)
     currentThresholdIndex = @options.thresholds.indexOf(currentThresholdValue)
 
     # Position go for 91 to 10. May need some... adaptation
     height = (currentThresholdIndex + 1) * 9 + 1
-    $('#jackpot-marker', el).css('top', height + '%')
+
+    klass = if result then 'bounce' else 'inverseBounce'
+    $('#jackpot-marker', el).css('top', height + '%').one 'webkitTransitionEnd', ->
+      $(@).addClass(klass + ' animated').one 'webkitAnimationEnd', ->
+        $(@).removeClass(klass + ' animated')
+
 
   updateBonus: (targetElement, quantity, callback) ->
     targetElement = $(targetElement, @$el)
