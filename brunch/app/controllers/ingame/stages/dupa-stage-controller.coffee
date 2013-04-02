@@ -12,11 +12,12 @@ module.exports = class DupaStageController extends StageController
   start: ->
     t = @model.getConfigValue('thresholds').slice(0).reverse()
     @view = new DupaStageView {stage : {@name, @type}, thresholds: t, bonus: @model.get('player').getBonuses(), time : @model.getConfigValue('answerTime')}
-    @timer = new Timer((duration) => @view.updateTimer(duration))
+    @timer = new Timer((duration) =>
+      @view.updateTimer(duration)
+    )
     super
     @view.unDim =>
       @timer.schedule @model.getConfigValue('answerTime'), 0, =>
-        @view.updateTimer(1)
         setTimeout =>
           @finishStage()
         , 200
@@ -72,7 +73,6 @@ module.exports = class DupaStageController extends StageController
     true
 
   executeBonus: (bonusName) ->
-    console.log 'Execute bonus : ', bonusName
     @[$.zepto.camelize('executeBonus-' + utils.dasherize(bonusName))]?()
     @timer.start()
 

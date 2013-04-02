@@ -18,11 +18,14 @@ module.exports = class DupaView extends View
     callback?()
 
   updateTimer: (duration) ->
+    duration = parseInt(duration)
+    duration = @options.time if duration > @options.time
+    duration = 0 if duration <= 0
+
     $('.chrono-time', @$el).text duration + 's'
-    progress = duration / @options.time * 100
-    console.log 'updateTimer with', duration, 'for', @options.time, 'now at ' + progress + '%'
-    if progress > 100
-      progress = 100
+
+    progress = duration / (@options.time) * 100
+    progress = 100 if progress > 100
     progressEl = $('.chrono-container .chrono-filler', @$el).css('height', progress + '%')
 
   clearTimer: ->

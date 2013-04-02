@@ -50,10 +50,7 @@ module.exports = class TimerHelper
     @onTick?((@duration / @durationPrecisionCoef).toFixed(@precision))
 
   setDuration: (duration) =>
-    if duration > 0
-      @duration = duration
-    else
-      @duration = 0 # timer will stop on the next tick()
+    @duration = duration
 
   adjustDuration: (offset) =>
     @remaining += offset
@@ -69,9 +66,9 @@ module.exports = class TimerHelper
   tick: =>
     offset = (Math.round(@startTime.getTime() - (new Date()).getTime()) / (1000 / @durationPrecisionCoef))
     @setDuration (@remaining + offset)
+    
     @onTick?((@duration / @durationPrecisionCoef).toFixed(@precision))
-    if @duration < 1
-      @setDuration 0
+    if Math.round(@duration) < 0
       @stop()
       @onTimeout?()
 
