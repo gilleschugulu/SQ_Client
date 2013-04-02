@@ -45,7 +45,6 @@ module.exports = class TimerHelper
     @duration = duration * @durationPrecisionCoef
     @totalDuration = @duration
     @remaining = @duration
-    console.log "schedule", @duration
     @stop()
     @onTick?((@duration / @durationPrecisionCoef).toFixed(@precision))
 
@@ -77,7 +76,6 @@ module.exports = class TimerHelper
 
   start: ->
     @startTime = new Date()
-    console.log "start", @duration
     @interval = setInterval @tick, Math.pow(10, 3 - @precision)
 
   resume: -> @start()
