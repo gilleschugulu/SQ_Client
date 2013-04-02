@@ -25,6 +25,7 @@
     background-image: url("../images/ingame/timer.png")
     background-repeat: no-repeat
     background-size: 100% 100%
+    font-family: grilled
     .chrono-chrono
       absolute: top -5.5% left 9%
       width: 82%
@@ -48,6 +49,7 @@
         background-image: url("../images/ingame/timer_in.png")
         background-repeat: no-repeat
         background-size: 100% 100%
+        transition: height linear 1s
 
   .question-container
     absolute: top 7% left 16%
@@ -63,7 +65,7 @@
       background-repeat: no-repeat
       background-size: contain
 
-    .question-theme
+    .question-theme-container
       relative: top 4% left 3%
       width: 30%
       height: 8%
@@ -71,8 +73,13 @@
       background-image: url("../images/ingame/title.png")
       background-repeat: no-repeat
       background-size: contain
+      .question-theme
+        relative: top 3% left 3%
+        width: 75%          // The background is not a rectangle, but an half-arrow
+        height: 94%
+        font-family: speedregular
 
-    .question-content
+    .question-content-container
       relative: top 3.7% left 3%
       width: 50%
       height: 30%
@@ -80,6 +87,11 @@
       background-image: url("../images/ingame/box_question.png")
       background-repeat: no-repeat
       background-size: contain
+      .question-content
+        relative: top 3% left 3%
+        width: 94%
+        height: 94%
+        font-family: ramblabold
 
     .question-propositions-container
       relative: top 7% left 2%
@@ -87,7 +99,7 @@
       height: 60%
       float: left
 
-      .proposition
+      .proposition-container
         relative: top 5% left 0%
         width: 43%
         height: 36%
@@ -101,9 +113,12 @@
           background-image: url("../images/ingame/answer_good.png")
         &.error
           background-image: url("../images/ingame/answer_bad.png")
+        .proposition
+          relative: top -4% left -1%
+          width: 90%
+          height: 85%
+          font-family: ramblabold
 
-        .resize
-          overflow: hidden !important
         .massOpinion
           absolute: top -16% right -13%
           width: 35%
@@ -136,9 +151,10 @@
         width: 35%
         height: 47%
         border-radius: 400%
-        line-height: 145%
+        line-height: 170%
         text-align: center
         background: #c50000
+        font-family: grilled
 
   .jackpot-container
     absolute: top 2% left 83%
@@ -147,6 +163,7 @@
     background-image: url("../images/ingame/score.png")
     background-repeat: no-repeat
     background-size: contain
+    font-family: grilled
     #total-jackpot
       relative: top .8% left 2%
       width: 95%

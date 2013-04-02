@@ -18,8 +18,9 @@ module.exports = class DupaView extends View
     callback?()
 
   updateTimer: (duration) ->
-    $('.chrono-time', @$el).text (duration - 1) + 's'
+    $('.chrono-time', @$el).text duration + 's'
     progress = duration / @options.time * 100
+    console.log 'updateTimer with', duration, 'for', @options.time, 'now at ' + progress + '%'
     if progress > 100
       progress = 100
     progressEl = $('.chrono-container .chrono-filler', @$el).css('height', progress + '%')
@@ -38,13 +39,15 @@ module.exports = class DupaView extends View
       propositionsEl = $('.question-propositions-container', @$el)
       $('.proposition', propositionsEl).remove()
       for proposition in question.getPropositions()
-        propositionsEl.prepend "<div class='proposition box-align' data-id='#{proposition.id}'>
-            <span class='resize'>#{if proposition.masked then '?' else proposition.text}</span>
+        propositionsEl.prepend "<div class='proposition-container box-align' data-id='#{proposition.id}'>
+            <span class='proposition resize'>#{proposition.text}</span>
             <div class='massOpinion'></div>
           </div>"
-      @autoSizeText()
-      $('.question-theme').text question.get('theme')
+      theme = question.get('theme')
+      theme = 'Question' unless theme
+      $('.question-theme').text(theme)
       $('.question-content').text question.get('text')
+      @autoSizeText()
       callback()
     , 0
 
