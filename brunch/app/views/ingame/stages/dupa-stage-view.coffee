@@ -40,12 +40,16 @@ module.exports = class DupaView extends View
   showQuestion: (question, callback) ->
     setTimeout => # http://i.imgur.com/xVyoSl.jpg
       propositionsEl = $('.question-propositions-container', @$el)
-      $('.proposition', propositionsEl).remove()
+      $('.proposition-container', propositionsEl).remove()
       for proposition in question.getPropositions()
-        propositionsEl.prepend "<div class='proposition-container box-align' data-id='#{proposition.id}'>
-            <span class='proposition resize'>#{proposition.text}</span>
+        propositionsEl.prepend "<div class='proposition-container box-align'>
+            <span class='proposition resize' data-id='#{proposition.id}'>#{proposition.text}</span>
             <div class='massOpinion'></div>
           </div>"
+
+      $('.proposition-container', @$el).addClass('animated pulse').one 'webkitAnimationEnd', ->
+        $(@).removeClass('animated pulse')
+
       theme = question.get('theme')
       theme = 'Question' unless theme
       $('.question-theme').text(theme)
@@ -70,15 +74,19 @@ module.exports = class DupaView extends View
 
   updateAnswerButton: (propositionId, status, callback, question) ->
     @updatePropositionsText question
+    klass = if status then 'success' else 'error'
+
     if propositionId
       propositionEl = $('.proposition[data-id="'+propositionId+'"]', @$el)
+      propositionEl.parent().addClass(klass)
     else
       propositionEl = $('.proposition', @$el)
-    klass = if status then 'success' else 'error'
+
     setTimeout =>
-      propositionEl.addClass('animated fadeOut').one 'webkitAnimationEnd', =>
-        propositionEl.removeClass('fadeOut').addClass(klass + ' fadeIn').one 'webkitAnimationEnd', ->
-          callback()
+      propositionEl.removeClass('animated').addClass('animated fadeOut').one 'webkitAnimationEnd', =>
+        # propositionEl.parent().removeClass(klass)
+        # propositionEl.removeClass('fadeOut').addClass('fadeIn').one 'webkitAnimationEnd', ->
+        callback()
     , 500
 
   beforeNextQuestionMessage: (textKey, jackpot, callback) ->

@@ -109,6 +109,8 @@
         background-image: url("../images/ingame/answer.png")
         background-repeat: no-repeat
         background-size: 100% 100%
+        &.animated
+          animation-duration: 250ms
         &.success
           background-image: url("../images/ingame/answer_good.png")
         &.error
@@ -118,6 +120,9 @@
           width: 90%
           height: 85%
           font-family: ramblabold
+          text-align: center
+          &.animated
+            animation-duration: 300ms
 
         .massOpinion
           absolute: top -16% right -13%
