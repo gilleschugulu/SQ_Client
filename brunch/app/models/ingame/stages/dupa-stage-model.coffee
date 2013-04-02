@@ -17,8 +17,11 @@ module.exports = class DupaStage extends Stage
 
   playerMadeSuccess: (player) ->
     player.addJackpot @getCurrentThreshold()
-    @currentThresholdIndex++ if @currentThresholdIndex < @getConfigValue('thresholds').length
+    @increaseThreshold()
     player
+
+  increaseThreshold: ->
+    @currentThresholdIndex++ if @currentThresholdIndex < @getConfigValue('thresholds').length - 1
 
   getCurrentThreshold: ->
     @getConfigValue('thresholds')[@currentThresholdIndex]
