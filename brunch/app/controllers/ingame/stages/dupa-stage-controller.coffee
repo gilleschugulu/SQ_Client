@@ -27,14 +27,12 @@ module.exports = class DupaStageController extends StageController
       @view.delegate 'click', '.bonus', (event) =>
         @view.chooseBonus event.currentTarget, (bonusName) =>
           if @canUseBonus(bonusName) and @model.get('player').consumeBonus(bonusName)
-            @timer.stop()
             @view.updateBonus event.currentTarget, @model.get('player').getBonusQuantity(bonusName)
             @executeBonus(bonusName)
 
   askNextQuestion: =>
     @bonusFiftyFiftyUsed = no
     @bonusMassUsed = no
-    @timer.start()
     player = @model.getHumanPlayer()
     question = @model.getNextQuestion()
 
@@ -47,7 +45,6 @@ module.exports = class DupaStageController extends StageController
       #   @playerDidAnswer player, question, no
 
       @view.delegateSingleOnce 'click', '.proposition', (event) =>
-        @timer.stop()
         @view.chooseProposition event.currentTarget, (propositionId) =>
           result = question.isCorrectAnswer propositionId
           @view.updateAnswerButton propositionId, result, =>
@@ -74,7 +71,6 @@ module.exports = class DupaStageController extends StageController
 
   executeBonus: (bonusName) ->
     @[$.zepto.camelize('executeBonus-' + utils.dasherize(bonusName))]?()
-    @timer.start()
 
   # Remove 2 answers
   executeBonusFiftyFifty: ->
