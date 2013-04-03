@@ -71,7 +71,7 @@ module.exports = class DupaStageController extends StageController
     true
 
   executeBonus: (bonusName) ->
-    @[$.zepto.camelize('executeBonus-' + utils.dasherize(bonusName))]?()
+    @[$.camelCase('executeBonus-' + utils.dasherize(bonusName))]?()
 
   # Remove 2 answers
   executeBonusFiftyFifty: ->

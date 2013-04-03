@@ -11,6 +11,7 @@ module.exports = class TimerHelper
   startTime            : null
   timerAlreadyStarted  : no
   remaining            : 0
+  running              : false
 
   interruptionDate : null
 
@@ -57,6 +58,9 @@ module.exports = class TimerHelper
     @onTick?((@duration / @durationPrecisionCoef).toFixed(@precision))
 
   stop: =>
+    return unless @running
+    @running = no
+
     @remaining = @duration
     return unless @interval
     clearInterval @interval
@@ -72,12 +76,19 @@ module.exports = class TimerHelper
       @onTimeout?()
 
   pause: ->
+    return unless @running
+    @running = no
     @stop()
 
   start: ->
+    return if @running
+    @running = yes
     @startTime = new Date()
     @interval = setInterval @tick, Math.pow(10, 3 - @precision)
 
   resume: -> @start()
+    # return if @running
+    # @running = yes
+
     # @schedule @duration, @precision, @onTimeout
     # @start()

@@ -42,7 +42,7 @@ module.exports = class DupaView extends View
       propositionsEl = $('.question-propositions-container', @$el)
       $('.proposition-container', propositionsEl).remove()
       for proposition in question.getPropositions()
-        propositionsEl.prepend "<div class='proposition-container box-align'>
+        propositionsEl.prepend "<div class='proposition-container box-align' data-id='#{proposition.id}'>
             <span class='proposition resize' data-id='#{proposition.id}'>#{proposition.text}</span>
             <div class='massOpinion'></div>
           </div>"
@@ -137,7 +137,7 @@ module.exports = class DupaView extends View
 
   displayMass: (propositions, callback) ->
     for proposition in propositions
-      $(".proposition[data-id='#{proposition.id}'] .massOpinion").html(proposition.massOpinion + '%').show()
+      $(".proposition-container[data-id='#{proposition.id}'] .massOpinion").html(proposition.massOpinion + '%').show()
     callback?()
 
   finishMessage: (textKey, params, callback) ->
