@@ -12,8 +12,8 @@ module.exports = class User extends Parse.User
       facebook: null
       equipe:   null
     bonus:
-      fifty_fifty: 0
-      double: 0
-      add_time: 0
-      skip: 0
-      mass: 0
+      fifty_fifty:  5
+      double:       5
+      add_time:     5
+      skip:         5
+      mass:         5
