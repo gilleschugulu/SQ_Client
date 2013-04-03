@@ -112,7 +112,7 @@ module.exports = class DupaView extends View
 
     @updateJackpotMarker(currentThresholdValue, result)
 
-  updateJackpotMarker: (currentThresholdValue, result) ->
+  updateJackpotMarker: (currentThresholdValue, result = true) ->
     el = $('.jackpot-container', @$el)
     currentThresholdIndex = @options.thresholds.indexOf(currentThresholdValue)
 
