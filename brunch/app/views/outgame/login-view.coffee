@@ -19,8 +19,17 @@ module.exports = class LoginView extends View
         $(this).removeClass('animated tada')
     , 3000
 
+  openTempForm: ->
+    $('#equipe-forms').hide()
+    $('#temp-form').show()
+
+    $('#flipper', @$el).addClass 'flipped'
+
   openForms: ->
     # $('#equipe-forms', @$el).addClass 'shown'
+    $('#equipe-forms').show()
+    $('#temp-form').hide()
+
     $('#flipper', @$el).addClass 'flipped'
 
   closeForms: ->

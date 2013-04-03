@@ -9,6 +9,7 @@ User               = require 'models/outgame/user-model'
 i18n               = require 'lib/i18n'
 AnalyticsHelper    = require 'helpers/analytics-helper'
 config             = require 'config/environment-config'
+SpinnerHelper      = require 'helpers/spinner-helper'
 LequipeSSOHelper   = require 'helpers/lequipe-sso-helper'
 ConfigHelper       = require 'helpers/config-helper'
 
@@ -35,26 +36,41 @@ module.exports = class LoginController extends Controller
       console.log error
     Parse.User.logIn params.username, params.password, {
       success: =>
-        console.log "PARSE LOGIN SUCCESS", arguments
         @bindPlayer()
       error: (child, error, opts) =>
-        console.log "PARSE LOGIN ERROR", arguments
         # signUp if user does not exists
         if error.code is Parse.Error.OBJECT_NOT_FOUND
           delete user.id
           u = new User user
-          console.log "USER", u
           options =
             success: =>
-              console.log "SUCCESS SIGN UP", arguments
               @bindPlayer()
             error: =>
-              console.log "ERROR SIGN UP", arguments
               manageError.apply null, arguments
           Parse.User.signUp params.username, params.password, u.attributes, options
         else
           manageError.apply null, arguments
     }
+
+  loginWithTemp: =>
+    username = $('#temp-login-form input[name=username]', @view.$el)[0].value
+    SpinnerHelper.start()
+    Parse.User.signUp username, '123456', (new User).attributes, {
+      success: =>
+        SpinnerHelper.stop()
+        @bindPlayer()
+      error: =>
+        SpinnerHelper.stop()
+        manageError.apply null, arguments
+    }
+    return no
+
+    # LequipeSSOHelper.login params, (user) =>
+    #   console.log "GOT USER", user
+    #   @loginToParse user, params
+    # , (status, error) ->
+    #   console.log "LOGIN ERROR", status, error
+    # no
 
   loginWithSSO: =>
     console.log "LOGIN YO"
@@ -138,12 +154,15 @@ module.exports = class LoginController extends Controller
       navigator.splashscreen.hide() if navigator?.splashscreen?.hide?
       view.delegate 'click', '#register-btn', @registerWithSSO
       view.delegate 'click', '#login-btn', @loginWithSSO
+      view.delegate 'click', '#temp-btn', @loginWithTemp
       view.delegate 'keyup', '#sso-register-form input[name=email]', @checkAvailabilityWithSSO
       view.delegate 'keyup', '#sso-register-form input[name=username]', @checkAvailabilityWithSSO
       view.delegate 'click', '#close-btn', ->
         view.closeForms()
       view.delegate 'click', '#equipe-login', ->
         view.openForms()
+      view.delegate 'click', '#temp-login', ->
+        view.openTempForm()
       view.delegate "click", "#facebook-login", =>
         AnalyticsHelper.trackEvent 'Login', 'Login with facebook'
 
