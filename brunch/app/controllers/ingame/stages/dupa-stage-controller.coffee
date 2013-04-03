@@ -8,6 +8,7 @@ module.exports = class DupaStageController extends StageController
   timer: null
   bonusFiftyFiftyUsed: false
   bonusMassUsed: false
+  bonusDoubleUsed: false
 
   start: ->
     t = @model.getConfigValue('thresholds').slice(0).reverse()
@@ -31,9 +32,12 @@ module.exports = class DupaStageController extends StageController
             @executeBonus(bonusName)
 
   askNextQuestion: =>
+    @view.doubleScoreDeactivated() if @bonusDoubleUsed
+
     @timer.start()
     @bonusFiftyFiftyUsed = no
     @bonusMassUsed = no
+    @bonusDoubleUsed = no
     player = @model.getHumanPlayer()
     question = @model.getNextQuestion()
 
@@ -53,7 +57,7 @@ module.exports = class DupaStageController extends StageController
           , question
 
   playerDidAnswer: (player, question, result) =>
-    if result then @model.playerMadeSuccess(player) else @model.playerMadeError(player)
+    if result then @model.playerMadeSuccess(player, @bonusDoubleUsed) else @model.playerMadeError(player)
     @view.updateJackpot player.get('jackpot'), @model.getCurrentThreshold(), result
     @askNextQuestion()
 
@@ -61,12 +65,12 @@ module.exports = class DupaStageController extends StageController
     textKey = if player.get('hp') is 5 then 'master_piece' else 'not_master_piece'
     @view.finishMessage textKey, [null, player.get('jackpot') + '', player.get('hp') + ''], @finishStage
 
-
   ### Bonus handling ###
 
   canUseBonus: (bonusName) ->
     return no if bonusName == 'mass' and @bonusMassUsed
     return no if bonusName == 'fifty_fifty' and @bonusFiftyFiftyUsed
+    return no if bonusName == 'double' and @bonusDoubleUsed
     return no if bonusName == 'add_time' and @timer.duration >= @model.getConfigValue('time_bonus_threshold')
     true
 
@@ -85,6 +89,8 @@ module.exports = class DupaStageController extends StageController
 
   # Skip a threshold ? 
   executeBonusDouble: ->
+    @view.doubleScoreActivated()
+    @bonusDoubleUsed = yes
 
   # Add x time
   executeBonusAddTime: ->

@@ -109,7 +109,6 @@ module.exports = class DupaView extends View
     blockEl.append("<div class='highlighted'>#{currentThresholdValue}</div>")
     $('.highlighted', blockEl).addClass('animated fadeIn')
 
-
     @updateJackpotMarker(currentThresholdValue, result)
 
   updateJackpotMarker: (currentThresholdValue, result = true) ->
@@ -139,6 +138,13 @@ module.exports = class DupaView extends View
     for proposition in propositions
       $(".proposition-container[data-id='#{proposition.id}'] .massOpinion").html(proposition.massOpinion + '%').show()
     callback?()
+
+  doubleScoreActivated: ->
+    $('.highlighted').addClass('gold')
+    $('#jackpot-marker').addClass('gold')
+
+  doubleScoreDeactivated: ->
+    $('#jackpot-marker').removeClass('gold')
 
   finishMessage: (textKey, params, callback) ->
     @displayMessage textKey, params
