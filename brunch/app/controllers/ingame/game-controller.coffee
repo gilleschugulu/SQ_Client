@@ -83,7 +83,7 @@ module.exports = class GameController extends Controller
       jackpot : human.get('jackpot')
       uuid    : mediator.user.get('uuid')
 
-    @redirectToRoute "game-lost", {jackpot: human.get('jackpot'), reward: 10, rank: human.get('rank')}
+    @redirectToRoute "game-won", {jackpot: human.get('jackpot'), reward: 10, rank: human.get('rank')}
 
     # TODO : Check 'dat : Contact Parse
     # ApiCallHelper.send.gameFinish data

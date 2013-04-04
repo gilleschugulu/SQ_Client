@@ -16,6 +16,12 @@ module.exports =
         not_enough_credits:
           title: 'erreur'
           message: 'pas assez de crédits'
+      game_over:
+        stats:
+          nb_questions: 'Nombre de questions'
+          good_answers: 'Bonnes réponses'
+          wrong_answers: 'Mauvaises réponses'
+          best_row: 'Plus longue série'
     helper:
       app_store_link: "http://itunes.apple.com/app/les-12-coups-de-midi/id584885677?mt=8"
       game_icon: "https://midi-preproduction.chugulu.com/assets/Icon-72@2x.png"
