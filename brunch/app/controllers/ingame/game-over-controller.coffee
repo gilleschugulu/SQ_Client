@@ -20,7 +20,7 @@ module.exports = class GameOverController extends Controller
         number: val
         text: I18n.t('controller.game_over.stats.' + key)
 
-      new GameOverView {success, params, player: {health: user.health, credits: user.credits}}
+      new GameOverView {success, params, player: {health: user.get('health'), credits: user.get('credits')}}
     , (view) =>
       view.delegate 'click', '#replay', => @redirectTo 'game'
     , {viewTransition: yes, music: 'game-over'}
