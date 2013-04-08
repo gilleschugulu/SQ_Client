@@ -5,6 +5,9 @@ module.exports = class PhotoMcqQuestion extends Question
   getWrongAnwers: (limit) ->
     (proposition for proposition in @get('propositions') when !proposition.is_valid).shuffle().slice(0, limit)
 
+  getGoodAnwer: ->
+    (proposition for proposition in @get('propositions') when proposition.is_valid)[0].text
+
   getPonderatedAnwers: ->
     total = 100
     offset = @get('difficulty') * 3
