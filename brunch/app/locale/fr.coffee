@@ -22,6 +22,16 @@ module.exports =
           good_answers: 'Bonnes réponses'
           wrong_answers: 'Mauvaises réponses'
           best_row: 'Plus longue série'
+      profile:
+        stats:
+          best_score: 'Meilleur score'
+          avg_score: 'Score moyen'
+          percent_answer: 'Bonne réponse'
+          average_time: 'Réponse moyenne'
+          games_played_count: 'Nombres partie'
+          best_row: 'Combo réponse'
+          best_sport: 'Sport favori'
+
     helper:
       app_store_link: "http://itunes.apple.com/app/les-12-coups-de-midi/id584885677?mt=8"
       game_icon: "https://midi-preproduction.chugulu.com/assets/Icon-72@2x.png"

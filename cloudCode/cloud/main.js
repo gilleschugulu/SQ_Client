@@ -9,4 +9,3 @@ Parse.Cloud.define('sortLeaderboard', function(request, response) {
 
 Parse.Cloud.define('smallLeaderboard', function(request, response) {
   return require('cloud/small_leaderboard.js').task(request, response);
-});

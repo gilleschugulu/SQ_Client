@@ -4,6 +4,8 @@ ProfileView     = require 'views/outgame/profile-view'
 mediator        = require 'mediator'
 FacebookHelper  = require 'helpers/facebook-helper'
 ConfigHelper    = require 'helpers/config-helper'
+GameStatHelper  = require 'helpers/game-stat-helper'
+I18n            = require 'lib/i18n'
 
 module.exports = class ProfilesController extends Controller
   title     : 'Profile'
@@ -11,14 +13,26 @@ module.exports = class ProfilesController extends Controller
   stats : null
 
   index: =>
-    @loadStats()
+    @user = Parse.User.current()
+    @user.set('score', 234234).save()
+    console.log @user
     @loadView 'profile'
       , =>
-        new ProfileView()
+        stats = GameStatHelper.getProfileStat()
+        stats_stats = _.map _.omit(stats, 'all_sports'), (val, key) ->
+          name: key
+          number: val
+          text: I18n.t('controller.profile.stats.' + key)
+        stats_sports = _.map stats.all_sports, (val, key) ->
+          number: val.percent
+          text: val.name
+          name: key
+
+        new ProfileView({ user : @user.attributes, stats: stats_stats, sports: stats_sports })
+
       , (view) =>
-        view.delegate 'click', '#link-fb', @linkFacebook
-        view.delegate 'click', '.rankings', @onClickGameCenter
-        view.updateStats @stats if @stats
+        view.delegate 'click', '.facebook-link', @linkFacebook
+        view.delegate 'click', '.game-center', @onClickGameCenter
       , {viewTransition: yes, music: 'outgame'}
 
   linkFacebook: ->
@@ -32,14 +46,9 @@ module.exports = class ProfilesController extends Controller
     # Track Event
     AnalyticsHelper.trackEvent 'Profil', 'Affichage de Game Center'
 
-    console.log "GC"
     lb = ConfigHelper.config.gamecenter.leaderboard
     if lb
       GameCenter?.showLeaderboard lb
     else
       alert('pas de leaderboard')
 
-  loadStats: =>
-    ApiCallHelper.fetch.playerStats mediator.user.get('uuid'), (stats) =>
-      @stats = stats.player
-      @view?.updateStats @stats

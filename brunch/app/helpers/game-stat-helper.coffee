@@ -40,7 +40,7 @@ module.exports = class GameStatHelper
 
     # stats.sports[sport].total will never be 0, since += 1
     percent = (stats.sports[sport].good / stats.sports[sport].total) * 100
-    stats.sports[sport].percent = percent.toFixed(2)
+    stats.sports[sport].percent = parseFloat(percent.toFixed(2))
 
     user.set('stats', stats).save()
     @
@@ -58,13 +58,14 @@ module.exports = class GameStatHelper
     }
 
   @getProfileStat: ->
+    @_stats = Parse.User.current().get('stats')
     answers_count = (@_getStat('wrong_answers_count') + @_getStat('good_answers_count')) | 1
 
     {
       best_score: @_getStat('best_score')
-      avg_score: (@_getStat('sum_score') / (@_getStat('games_played_count') | 1)).toFixed(2)
-      percent_answer: ((@_getStat('good_answers_count') / (@_getStat('wrong_answers_count') + @_getStat('good_answers_count'))) * 100).toFixed(2)
-      average_time: parseInt(@_getStat('sum_time_question') / answers_count)
+      avg_score: parseFloat((@_getStat('sum_score') / (@_getStat('games_played_count') | 1)).toFixed(2))
+      percent_answer: parseFloat(((@_getStat('good_answers_count') / (@_getStat('wrong_answers_count') + @_getStat('good_answers_count'))) * 100).toFixed(2)) + '%'
+      average_time: parseInt(@_getStat('sum_time_question') / answers_count, 10) + ' ms'
       games_played_count: @_getStat('games_played_count')
       best_row: @_getStat('best_row')
       best_sport: @getBestSport()
@@ -73,11 +74,12 @@ module.exports = class GameStatHelper
 
 
   @getBestSport: ->
-    _.max @_getStat('sports'), (sport) -> 
+    best_sport = _.max @getAllSports(), (sport) -> 
       sport.percent
+    best_sport.name
 
   @getAllSports: ->
-    @_getStat('sports')
+    @getStats().sports
 
 
   @reset: ->
