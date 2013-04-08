@@ -3,12 +3,15 @@ DupaStageView   = require 'views/ingame/stages/dupa-stage-view'
 Timer           = require 'helpers/timer-helper'
 i18n            = require 'lib/i18n'
 utils           = require 'lib/utils'
+GameStatHelper  = require 'helpers/game-stat-helper'
 
 module.exports = class DupaStageController extends StageController
   timer: null
   bonusFiftyFiftyUsed: false
   bonusMassUsed: false
   bonusDoubleUsed: false
+  row: 0
+  startTime: null
 
   start: ->
     t = @model.getConfigValue('thresholds').slice(0).reverse()
@@ -16,6 +19,7 @@ module.exports = class DupaStageController extends StageController
     @timer = new Timer((duration) =>
       @view.updateTimer(duration)
     )
+    GameStatHelper.incrementGamesPlayedCount()
     super
     @view.unDim =>
       @timer.schedule @model.getConfigValue('answerTime'), 0, =>
@@ -32,6 +36,7 @@ module.exports = class DupaStageController extends StageController
             @executeBonus(bonusName)
 
   askNextQuestion: =>
+    @startTime = new Date().getTime()
     @view.doubleScoreDeactivated() if @bonusDoubleUsed
 
     @timer.start()
@@ -43,12 +48,6 @@ module.exports = class DupaStageController extends StageController
 
     @view.showQuestion question, =>
       @view.undelegateSingle 'click', '.proposition'
-
-      # if @paused
-      #   @onResume = => @playerDidAnswer player, question, no
-      # else
-      #   @playerDidAnswer player, question, no
-
       @view.delegateSingleOnce 'click', '.proposition', (event) =>
         @view.chooseProposition event.currentTarget, (propositionId) =>
           result = question.isCorrectAnswer propositionId
@@ -57,12 +56,23 @@ module.exports = class DupaStageController extends StageController
           , question
 
   playerDidAnswer: (player, question, result) =>
-    if result then @model.playerMadeSuccess(player, @bonusDoubleUsed) else @model.playerMadeError(player)
+    if result
+      @model.playerMadeSuccess(player, @bonusDoubleUsed)
+      @row++
+    else
+      @model.playerMadeError(player)
+      GameStatHelper.setBestRow(@row) if @row > 0
+      @row = 0
+
+    GameStatHelper.incrementAnswersCount(result, question.get('category'))
+    GameStatHelper.incrementSumTimeQuestion((new Date().getTime()) - @startTime)
+
     @view.updateJackpot player.get('jackpot'), @model.getCurrentThreshold(), result
     @askNextQuestion()
 
   beforeFinishStage: (player) ->
-    textKey = if player.get('hp') is 5 then 'master_piece' else 'not_master_piece'
+    GameStatHelper.setBestRow(@row) if @row > 0
+
     @view.finishMessage textKey, [null, player.get('jackpot') + '', player.get('hp') + ''], @finishStage
 
   ### Bonus handling ###
