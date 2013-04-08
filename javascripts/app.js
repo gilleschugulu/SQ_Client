@@ -3302,20 +3302,21 @@ PxLoader.prototype.addImage = function(url, tags, priority) {
 };;
 
 var AssetsList = {
-  assets: { 'common/': ["images/common/background.png", "images/common/close.png", "images/common/close_a.png", "images/common/home.png"],
-'game-over/': ["images/game-over/popup.png", "images/game-over/popup_victoire.png", "images/game-over/rejouer.png", "images/game-over/rejouer_a.png"],
+  assets: { 'common/': ["images/common/background.png", "images/common/close.png", "images/common/close_a.png", "images/common/facebook-default.jpg", "images/common/home.png"],
+'game-over/': ["images/game-over/replay.png", "images/game-over/score.png", "images/game-over/small-background.png", "images/game-over/title.png"],
 'hall-of-fame/': ["images/hall-of-fame/adversaire.png", "images/hall-of-fame/adversaires_deactive.png", "images/hall-of-fame/amis.png", "images/hall-of-fame/amis_deactive.png", "images/hall-of-fame/amis_inactive.png", "images/hall-of-fame/background.jpg", "images/hall-of-fame/background.png", "images/hall-of-fame/box_classements.png", "images/hall-of-fame/fond_classement.png", "images/hall-of-fame/gamecenter.png", "images/hall-of-fame/global.png", "images/hall-of-fame/global_inactive.png", "images/hall-of-fame/jeton.png", "images/hall-of-fame/line.png", "images/hall-of-fame/pink.png", "images/hall-of-fame/precedent.png", "images/hall-of-fame/rank1.png", "images/hall-of-fame/rank2.png", "images/hall-of-fame/rank3.png", "images/hall-of-fame/rank_1.png", "images/hall-of-fame/rank_2.png", "images/hall-of-fame/rank_3.png", "images/hall-of-fame/rankadversaire.png", "images/hall-of-fame/title.png", "images/hall-of-fame/tournoi.png", "images/hall-of-fame/vie_asked.png", "images/hall-of-fame/vie_toask.png", "images/hall-of-fame/white.png"],
 'home/+2amis/': ["images/home/+2amis/inviter.png", "images/home/+2amis/inviter_a.png", "images/home/+2amis/ranking.png", "images/home/+2amis/ranking_a.png", "images/home/+2amis/title.png"],
 'home/1ami/': ["images/home/1ami/invite.png", "images/home/1ami/invite_a.png", "images/home/1ami/player_VS.png", "images/home/1ami/ranking.png", "images/home/1ami/ranking_a.png", "images/home/1ami/title.png"],
 'home/2amis/': ["images/home/2amis/invite.png", "images/home/2amis/invite_a.png", "images/home/2amis/podium_rank_bronze.png", "images/home/2amis/podium_rank_gold.png", "images/home/2amis/podium_rank_silver.png", "images/home/2amis/rank_3players.png", "images/home/2amis/ranking.png", "images/home/2amis/ranking_a.png", "images/home/2amis/title.png"],
 'home/common/': ["images/home/common/background.jpg", "images/home/common/credit.png", "images/home/common/heart.png", "images/home/common/journal.png", "images/home/common/logo.png", "images/home/common/moregame.png", "images/home/common/options.png", "images/home/common/options_a.png", "images/home/common/play.png", "images/home/common/play_a.png", "images/home/common/profile.png", "images/home/common/profile_a.png", "images/home/common/shop.png", "images/home/common/shop_a.png"],
 'home/pasamis/': ["images/home/pasamis/1.png", "images/home/pasamis/100.png", "images/home/pasamis/1000.png", "images/home/pasamis/exclusif.png", "images/home/pasamis/frame_rank.png", "images/home/pasamis/invite.png", "images/home/pasamis/invite_a.png", "images/home/pasamis/photo.png", "images/home/pasamis/rank.png", "images/home/pasamis/ranking_day.png", "images/home/pasamis/spacer.png"],
-'ingame/': ["images/ingame/add_time.png", "images/ingame/answer.png", "images/ingame/answer_bad.png", "images/ingame/answer_good.png", "images/ingame/box_bonus.png", "images/ingame/box_question.png", "images/ingame/bt_home.png", "images/ingame/double.png", "images/ingame/fifty_fifty.png", "images/ingame/mass.png", "images/ingame/photo.png", "images/ingame/repere.png", "images/ingame/score.png", "images/ingame/skip.png", "images/ingame/timer.png", "images/ingame/timer_chrono.png", "images/ingame/timer_in.png", "images/ingame/title.png", "images/ingame/title_left.png", "images/ingame/title_question.png"],
-'login/': ["images/login/bg_login.png", "images/login/compteequipe.png", "images/login/connexionfb.png"],
+'ingame/': ["images/ingame/add_time.png", "images/ingame/answer.png", "images/ingame/answer_bad.png", "images/ingame/answer_good.png", "images/ingame/box_bonus.png", "images/ingame/box_question.png", "images/ingame/bt_home.png", "images/ingame/double.png", "images/ingame/fifty_fifty.png", "images/ingame/gold_repere.png", "images/ingame/gold_timer_in.png", "images/ingame/mass.png", "images/ingame/photo.png", "images/ingame/repere.png", "images/ingame/score.png", "images/ingame/skip.png", "images/ingame/timer.png", "images/ingame/timer_chrono.png", "images/ingame/timer_in.png", "images/ingame/title.png", "images/ingame/title_left.png", "images/ingame/title_question.png"],
+'login/': ["images/login/bg_login.png", "images/login/compteequipe.png", "images/login/connexionfb.png", "images/login/tempbtn.png"],
 'more-games/': ["images/more-games/title.png"],
 'options/': ["images/options/aide.png", "images/options/aide_a.png", "images/options/credits.png", "images/options/credits_a.png", "images/options/effet.png", "images/options/effet_deactive.png", "images/options/infos.png", "images/options/infos_deactive.png", "images/options/liaison_fb.png", "images/options/liaison_fb_a.png", "images/options/musique.png", "images/options/musique_deactive.png", "images/options/title.png", "images/options/tutoriel.png", "images/options/tutoriel_a.png"],
 'pause/': ["images/pause/fx.png", "images/pause/fx_sans.png", "images/pause/musique.png", "images/pause/musique_sans.png", "images/pause/popup.png", "images/pause/quitter.png", "images/pause/quitter_a.png", "images/pause/reprendre.png", "images/pause/reprendre_a.png"],
-'profile/': ["images/profile/bloc_infos.png", "images/profile/box_info.png", "images/profile/bt_home.png", "images/profile/cagnottecourante.png", "images/profile/classement.png", "images/profile/eoile.png", "images/profile/etoile.png", "images/profile/framephoto.png", "images/profile/jeton.png", "images/profile/liaison_fb.png", "images/profile/niveaucourant.png", "images/profile/photo_m.png", "images/profile/photo_w.png", "images/profile/pseudo.png", "images/profile/title.png"],
+'profile/': ["images/profile/bg_profil.png", "images/profile/bloc_infos.png", "images/profile/box_info.png", "images/profile/bt_gamecenter.png", "images/profile/bt_home.png", "images/profile/bt_ranking.png", "images/profile/cagnottecourante.png", "images/profile/classement.png", "images/profile/eoile.png", "images/profile/etoile.png", "images/profile/framephoto.png", "images/profile/jeton.png", "images/profile/levelscore.png", "images/profile/liaison_fb.png", "images/profile/linkfb.png", "images/profile/linkfb_done.png", "images/profile/niveaucourant.png", "images/profile/photo_m.png", "images/profile/photo_pseudo.png", "images/profile/photo_w.png", "images/profile/pseudo.png", "images/profile/title.png"],
+'profile/bonus/': ["images/profile/bonus/50-50.png", "images/profile/bonus/credit.png", "images/profile/bonus/divide.png", "images/profile/bonus/freeze_10s.png", "images/profile/bonus/heart.png", "images/profile/bonus/pass.png", "images/profile/bonus/x2.png"],
 'profile/box/': ["images/profile/box/etoilemysterieure.png", "images/profile/box/meileurniveau.png", "images/profile/box/meilleurecagnotte.png", "images/profile/box/partiesgagnees.png", "images/profile/box/partiesjouees.png"],
 'shop/': ["images/shop/bonusvies.png", "images/shop/bonusvies_inactive.png", "images/shop/box.png", "images/shop/credit.png", "images/shop/jeton.png", "images/shop/jeton_inactive.png"],
 'shop/Jetons/': ["images/shop/Jetons/invite.png", "images/shop/Jetons/like.png", "images/shop/Jetons/note.png", "images/shop/Jetons/offre.png", "images/shop/Jetons/pack_1.png", "images/shop/Jetons/pack_2.png", "images/shop/Jetons/pack_3.png", "images/shop/Jetons/pack_4.png", "images/shop/Jetons/twitter.png", "images/shop/Jetons/video.png"],
@@ -3582,10 +3583,10 @@ Handlebars.template = Handlebars.VM.template;
 
 var BuildVersion = {
   version     : '',
-  commit      : '17566fd9c90a3ae0a9abc30fc2a2d4bc32dae370',
-  shortCommit : '17566fd',
+  commit      : '143c54547f966faecaca2872b831a2df6dec6933',
+  shortCommit : '143c545',
   branch      : 'develop',
-  time        : '2013-03-28 16:52',
+  time        : '2013-04-08 18:29',
   author      : 'Pierre Boutbel',
 
   getCommitLink: function() {
@@ -23823,6 +23824,8 @@ window.require.define({"config/environment-config": function(exports, require, m
 
     PreprodConfig.long_version_format = true;
 
+    PreprodConfig.pay_game = false;
+
     PreprodConfig.services = {
       parse: {
         app_id: 'ixxjIFjdYTjOeKSZycsaPw8DHndujhvHFX2rNW10',
@@ -23876,6 +23879,8 @@ window.require.define({"config/local-config": function(exports, require, module)
     LocalConfig.analytics = {
       enabled: false
     };
+
+    LocalConfig.pay_game = false;
 
     LocalConfig.services = {
       parse: {
@@ -23931,6 +23936,8 @@ window.require.define({"config/preprod-config": function(exports, require, modul
 
     PreprodConfig.long_version_format = true;
 
+    PreprodConfig.pay_game = false;
+
     PreprodConfig.services = {
       parse: {
         app_id: 'ixxjIFjdYTjOeKSZycsaPw8DHndujhvHFX2rNW10',
@@ -23983,6 +23990,8 @@ window.require.define({"config/prod-config": function(exports, require, module) 
       enabled: false,
       google: ['']
     };
+
+    ProdConfig.pay_game = true;
 
     ProdConfig.services = {
       parse: {
@@ -60582,7 +60591,7 @@ window.require.define({"controllers/base/controller": function(exports, require,
 }});
 
 window.require.define({"controllers/ingame/game-controller": function(exports, require, module) {
-  var AnalyticsHelper, ConfigHelper, Controller, FacebookHelper, Factory, GameController, Player, PopUpHelper, QuestionsList, i18n, mediator,
+  var AnalyticsHelper, ConfigHelper, Controller, FacebookHelper, Factory, GameController, GameStatHelper, Player, PopUpHelper, QuestionsList, config, i18n, mediator,
     __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
     __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
@@ -60597,6 +60606,8 @@ window.require.define({"controllers/ingame/game-controller": function(exports, r
 
   ConfigHelper = require('helpers/config-helper');
 
+  config = require('config/environment-config');
+
   AnalyticsHelper = require('helpers/analytics-helper');
 
   FacebookHelper = require('helpers/facebook-helper');
@@ -60606,6 +60617,8 @@ window.require.define({"controllers/ingame/game-controller": function(exports, r
   i18n = require('lib/i18n');
 
   QuestionsList = require('config/questions/questions');
+
+  GameStatHelper = require('helpers/game-stat-helper');
 
   module.exports = GameController = (function(_super) {
 
@@ -60664,6 +60677,9 @@ window.require.define({"controllers/ingame/game-controller": function(exports, r
 
     GameController.prototype.payGame = function() {
       var user;
+      if (!config.pay_game) {
+        return true;
+      }
       user = Parse.User.current();
       if (user.get('health') <= 0) {
         return false;
@@ -60676,6 +60692,7 @@ window.require.define({"controllers/ingame/game-controller": function(exports, r
       if (!this.payGame()) {
         return;
       }
+      GameStatHelper.reset();
       response = {
         stages: {
           dupa: {
@@ -60692,15 +60709,13 @@ window.require.define({"controllers/ingame/game-controller": function(exports, r
 
     GameController.prototype.finishGame = function() {
       var data, human;
-      console.log('Game finish');
       human = this.players[0];
-      console.log(human, this.players);
       AnalyticsHelper.trackPageView("EndGame - " + this.i18nStageName);
       data = {
         jackpot: human.get('jackpot'),
         uuid: mediator.user.get('uuid')
       };
-      return this.redirectToRoute("game-lost", {
+      return this.redirectToRoute("game-won", {
         jackpot: human.get('jackpot'),
         reward: 10,
         rank: human.get('rank')
@@ -60745,7 +60760,7 @@ window.require.define({"controllers/ingame/game-controller": function(exports, r
 }});
 
 window.require.define({"controllers/ingame/game-over-controller": function(exports, require, module) {
-  var Controller, GameOverController, GameOverView, PlayerModel, SoundHelper,
+  var Controller, GameOverController, GameOverView, GameStatHelper, I18n, PlayerModel, SoundHelper,
     __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
@@ -60756,6 +60771,10 @@ window.require.define({"controllers/ingame/game-over-controller": function(expor
   GameOverView = require('views/ingame/game-over-view');
 
   SoundHelper = require('helpers/sound-helper');
+
+  I18n = require('lib/i18n');
+
+  GameStatHelper = require('helpers/game-stat-helper');
 
   module.exports = GameOverController = (function(_super) {
 
@@ -60768,9 +60787,25 @@ window.require.define({"controllers/ingame/game-over-controller": function(expor
     GameOverController.prototype.index = function(success, params) {
       var _this = this;
       return this.loadView('game-over', function() {
+        var user;
+        GameStatHelper.setBestScore(params.jackpot);
+        GameStatHelper.incrementSumScore(params.jackpot);
+        GameStatHelper.saveStats();
+        user = Parse.User.current();
+        params.stats = _.map(GameStatHelper.getEndGameScoreStat(), function(val, key) {
+          return {
+            name: key,
+            number: val,
+            text: I18n.t('controller.game_over.stats.' + key)
+          };
+        });
         return new GameOverView({
           success: success,
-          params: params
+          params: params,
+          player: {
+            health: user.get('health'),
+            credits: user.get('credits')
+          }
         });
       }, function(view) {
         return view.delegate('click', '#replay', function() {
@@ -60941,7 +60976,7 @@ window.require.define({"controllers/ingame/stage-controller": function(exports, 
 }});
 
 window.require.define({"controllers/ingame/stages/dupa-stage-controller": function(exports, require, module) {
-  var DupaStageController, DupaStageView, StageController, Timer, i18n, utils,
+  var DupaStageController, DupaStageView, GameStatHelper, StageController, Timer, i18n, utils,
     __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
     __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
@@ -60955,6 +60990,8 @@ window.require.define({"controllers/ingame/stages/dupa-stage-controller": functi
   i18n = require('lib/i18n');
 
   utils = require('lib/utils');
+
+  GameStatHelper = require('helpers/game-stat-helper');
 
   module.exports = DupaStageController = (function(_super) {
 
@@ -60973,6 +61010,12 @@ window.require.define({"controllers/ingame/stages/dupa-stage-controller": functi
 
     DupaStageController.prototype.bonusMassUsed = false;
 
+    DupaStageController.prototype.bonusDoubleUsed = false;
+
+    DupaStageController.prototype.row = 0;
+
+    DupaStageController.prototype.startTime = null;
+
     DupaStageController.prototype.start = function() {
       var t,
         _this = this;
@@ -60989,10 +61032,10 @@ window.require.define({"controllers/ingame/stages/dupa-stage-controller": functi
       this.timer = new Timer(function(duration) {
         return _this.view.updateTimer(duration);
       });
+      GameStatHelper.incrementGamesPlayedCount();
       DupaStageController.__super__.start.apply(this, arguments);
       return this.view.unDim(function() {
         _this.timer.schedule(_this.model.getConfigValue('answerTime'), 0, function() {
-          _this.view.updateTimer(1);
           return setTimeout(function() {
             return _this.finishStage();
           }, 200);
@@ -61002,7 +61045,6 @@ window.require.define({"controllers/ingame/stages/dupa-stage-controller": functi
         return _this.view.delegate('click', '.bonus', function(event) {
           return _this.view.chooseBonus(event.currentTarget, function(bonusName) {
             if (_this.canUseBonus(bonusName) && _this.model.get('player').consumeBonus(bonusName)) {
-              _this.timer.stop();
               _this.view.updateBonus(event.currentTarget, _this.model.get('player').getBonusQuantity(bonusName));
               return _this.executeBonus(bonusName);
             }
@@ -61014,15 +61056,19 @@ window.require.define({"controllers/ingame/stages/dupa-stage-controller": functi
     DupaStageController.prototype.askNextQuestion = function() {
       var player, question,
         _this = this;
+      this.startTime = new Date().getTime();
+      if (this.bonusDoubleUsed) {
+        this.view.doubleScoreDeactivated();
+      }
+      this.timer.start();
       this.bonusFiftyFiftyUsed = false;
       this.bonusMassUsed = false;
-      this.timer.start();
+      this.bonusDoubleUsed = false;
       player = this.model.getHumanPlayer();
       question = this.model.getNextQuestion();
       return this.view.showQuestion(question, function() {
         _this.view.undelegateSingle('click', '.proposition');
         return _this.view.delegateSingleOnce('click', '.proposition', function(event) {
-          _this.timer.stop();
           return _this.view.chooseProposition(event.currentTarget, function(propositionId) {
             var result;
             result = question.isCorrectAnswer(propositionId);
@@ -61036,17 +61082,25 @@ window.require.define({"controllers/ingame/stages/dupa-stage-controller": functi
 
     DupaStageController.prototype.playerDidAnswer = function(player, question, result) {
       if (result) {
-        this.model.playerMadeSuccess(player);
+        this.model.playerMadeSuccess(player, this.bonusDoubleUsed);
+        this.row++;
       } else {
         this.model.playerMadeError(player);
+        if (this.row > 0) {
+          GameStatHelper.setBestRow(this.row);
+        }
+        this.row = 0;
       }
-      this.view.updateJackpot(player.get('jackpot'), this.model.getCurrentThreshold());
+      GameStatHelper.incrementAnswersCount(result, question.get('category'));
+      GameStatHelper.incrementSumTimeQuestion((new Date().getTime()) - this.startTime);
+      this.view.updateJackpot(player.get('jackpot'), this.model.getCurrentThreshold(), result);
       return this.askNextQuestion();
     };
 
     DupaStageController.prototype.beforeFinishStage = function(player) {
-      var textKey;
-      textKey = player.get('hp') === 5 ? 'master_piece' : 'not_master_piece';
+      if (this.row > 0) {
+        GameStatHelper.setBestRow(this.row);
+      }
       return this.view.finishMessage(textKey, [null, player.get('jackpot') + '', player.get('hp') + ''], this.finishStage);
     };
 
@@ -61061,6 +61115,9 @@ window.require.define({"controllers/ingame/stages/dupa-stage-controller": functi
       if (bonusName === 'fifty_fifty' && this.bonusFiftyFiftyUsed) {
         return false;
       }
+      if (bonusName === 'double' && this.bonusDoubleUsed) {
+        return false;
+      }
       if (bonusName === 'add_time' && this.timer.duration >= this.model.getConfigValue('time_bonus_threshold')) {
         return false;
       }
@@ -61069,11 +61126,7 @@ window.require.define({"controllers/ingame/stages/dupa-stage-controller": functi
 
     DupaStageController.prototype.executeBonus = function(bonusName) {
       var _name;
-      console.log('Execute bonus : ', bonusName);
-      if (typeof this[_name = $.zepto.camelize('executeBonus-' + utils.dasherize(bonusName))] === "function") {
-        this[_name]();
-      }
-      return this.timer.start();
+      return typeof this[_name = $.camelCase('executeBonus-' + utils.dasherize(bonusName))] === "function" ? this[_name]() : void 0;
     };
 
     DupaStageController.prototype.executeBonusFiftyFifty = function() {
@@ -61086,7 +61139,10 @@ window.require.define({"controllers/ingame/stages/dupa-stage-controller": functi
       return this.bonusMassUsed = true;
     };
 
-    DupaStageController.prototype.executeBonusDouble = function() {};
+    DupaStageController.prototype.executeBonusDouble = function() {
+      this.view.doubleScoreActivated();
+      return this.bonusDoubleUsed = true;
+    };
 
     DupaStageController.prototype.executeBonusAddTime = function() {
       return this.timer.adjustDuration(this.model.getConfigValue('timeBonus'));
@@ -61146,11 +61202,10 @@ window.require.define({"controllers/outgame/hall-of-fame-controller": function(e
     HallOfFameController.prototype.request = null;
 
     HallOfFameController.prototype.fetchPlayers = function(withFriends) {
-      var i, ranking, _i, _ref, _results;
+      var i, ranking, _i, _ref;
       this.friend = withFriends ? true : false;
       ranking = withFriends ? this.friendsArray : this.globalArray;
       this.collection = [];
-      _results = [];
       for (i = _i = 0, _ref = ranking.length - 1; 0 <= _ref ? _i <= _ref : _i >= _ref; i = 0 <= _ref ? ++_i : --_i) {
         this.collection[i] = {
           friend: this.friend,
@@ -61159,9 +61214,8 @@ window.require.define({"controllers/outgame/hall-of-fame-controller": function(e
           jackpot: ranking[i].attributes.score,
           profilepic: Math.random() > 0.49 ? 'https://graph.facebook.com/sergio.chugulu/picture' : null
         };
-        _results.push(this.updateRanking());
       }
-      return _results;
+      return this.updateRanking();
     };
 
     HallOfFameController.prototype.index = function() {
@@ -61183,6 +61237,7 @@ window.require.define({"controllers/outgame/hall-of-fame-controller": function(e
           return console.log(error);
         }
       });
+      this.fetchPlayers(true);
       this.targetDate = this.getDate();
       return this.loadView(null, function() {
         var params;
@@ -61326,23 +61381,23 @@ window.require.define({"controllers/outgame/home-controller": function(exports, 
       if ((typeof navigator !== "undefined" && navigator !== null ? (_ref = navigator.splashscreen) != null ? _ref.hide : void 0 : void 0) != null) {
         navigator.splashscreen.hide();
       }
-      FacebookHelper.getFriends(function(friends) {
-        return view.addJournalView(_this.getJournalView(friends));
-      });
-      this.view.delegate('click', '#game-link', function() {
-        return _this.view.dim(function() {
-          return _this.redirectTo('game');
+      return FacebookHelper.getFriends(function(friends) {
+        _this.getJournalView(friends);
+        _this.view.delegate('click', '#equipe-btn', function() {
+          return _this.view.toggleJournal();
+        });
+        _this.view.delegate('click', '#invite-btn', _this.onClickFacebook);
+        _this.view.delegate('click', '#hall-of-fame', function() {
+          return _this.view.dim(function() {
+            return _this.redirectTo('hall-of-fame');
+          });
+        });
+        return _this.view.delegate('click', '#game-link', function() {
+          return _this.view.dim(function() {
+            return _this.redirectTo('game');
+          });
         });
       });
-      this.view.delegate('click', '#equipe-btn', function() {
-        return _this.view.toggleJournal();
-      });
-      this.view.delegate('click', '#hall-of-fame', function() {
-        return _this.view.dim(function() {
-          return _this.redirectTo('hall-of-fame');
-        });
-      });
-      return this.view.delegate('click', '#invite-btn', this.onClickFacebook);
     };
 
     HomeController.prototype.onClickFacebook = function() {
@@ -61350,20 +61405,19 @@ window.require.define({"controllers/outgame/home-controller": function(exports, 
     };
 
     HomeController.prototype.getJournalView = function(friends) {
-      console.log('getJournalView', friends, friends.length);
       switch (friends.length) {
         case 0:
-          return this.getNoFriendsJournalView();
+          return this.getSmallLeaderboard(this.getNoFriendsJournalView);
         case 1:
-          return this.getOneFriendJournalView();
+          return this.getFriendsScore(friends, this.getOneFriendJournalView);
         case 2:
-          return this.getTwoFriendsJournalView();
+          return this.getFriendsScore(friends, this.getTwoFriendsJournalView);
         default:
-          return this.getTwoplusFriendsJournalView();
+          return this.getFriendsScore(friends, this.getTwoplusFriendsJournalView);
       }
     };
 
-    HomeController.prototype.getNoFriendsJournalView = function() {
+    HomeController.prototype.getNoFriendsJournalView = function(people) {
       var options, targetDate;
       targetDate = new Date();
       targetDate.setHours(0);
@@ -61372,116 +61426,82 @@ window.require.define({"controllers/outgame/home-controller": function(exports, 
       targetDate.setDate(targetDate.getDate() - targetDate.getDay() + 7);
       options = {
         targetDate: targetDate,
-        name: 'forever a.',
-        picture: 'http://media.comicvine.com/uploads/7/77914/2109064-4char_forever_alone_guy_high_resolution_icon.png',
-        p1: {
-          name: 'Toto T.',
-          picture: 'https://graph.facebook.com/pierre.chugulu/picture',
-          score: '22 999',
-          rank: 1
-        },
-        p2: {
-          name: 'Tata T.',
-          picture: 'https://graph.facebook.com/francois.chugulu/picture',
-          score: '2 999',
-          rank: 100
-        },
-        p3: {
-          name: 'Tutu T.',
-          picture: 'https://graph.facebook.com/vincent.chugulu/picture',
-          score: '999',
-          rank: 1000
-        }
+        username: Parse.User.current().get('username'),
+        fb_id: Parse.User.current().get('fb_id'),
+        participants: people
       };
+      console.log(people);
       return new NoFriendsJournalView(options);
     };
 
-    HomeController.prototype.getOneFriendJournalView = function(friends) {
+    HomeController.prototype.getFriendsScore = function(friends, callback) {
+      var friendsId,
+        _this = this;
+      friendsId = _.pluck(friends, 'id');
+      return Parse.Cloud.run('getFriendsScore', {
+        friendsId: friendsId
+      }, {
+        success: function(players) {
+          players.push(Parse.User.current().attributes);
+          players = players.sort(function(f1, f2) {
+            return f2.score - f1.score;
+          });
+          return _this.view.addJournalView(callback(players));
+        },
+        error: function(error) {
+          return console.log('ERROR : ', error);
+        }
+      });
+    };
+
+    HomeController.prototype.getSmallLeaderboard = function(callback) {
+      var _this = this;
+      return Parse.Cloud.run('smallLeaderboard', {
+        size: 3
+      }, {
+        success: function(players) {
+          players = players.sort(function(f1, f2) {
+            return f2.score - f1.score;
+          });
+          return _this.view.addJournalView(callback(players));
+        },
+        error: function(error) {
+          return console.log('ERROR : ', error);
+        }
+      });
+    };
+
+    HomeController.prototype.getOneFriendJournalView = function(players) {
       var options;
       options = {
-        winner: 'jide',
-        loser: 'gilles b.',
-        participants: [
-          {
-            name: 'Jide',
-            picture: 'https://graph.facebook.com/pierre.chugulu/picture',
-            score: '22 999'
-          }, {
-            name: 'Gilles B.',
-            picture: 'https://graph.facebook.com/francois.chugulu/picture',
-            score: '2 999'
-          }
-        ]
+        winner: players[0].username,
+        loser: players[1].username,
+        participants: players
       };
       return new OneFriendJournalView(options);
     };
 
-    HomeController.prototype.getTwoFriendsJournalView = function(friends) {
+    HomeController.prototype.getTwoFriendsJournalView = function(players) {
       var options;
       options = {
-        master: 'gilles b.',
-        participants: [
-          {
-            name: 'Gilles B.',
-            picture: 'https://graph.facebook.com/pierre.chugulu/picture',
-            score: '22 999'
-          }, {
-            name: 'Jide',
-            picture: 'https://graph.facebook.com/francois.chugulu/picture',
-            score: '2 999'
-          }, {
-            name: 'Vincent',
-            picture: 'https://graph.facebook.com/vincent.chugulu/picture',
-            score: '999'
-          }
-        ]
+        master: players[0].username,
+        participants: players
       };
       return new TwoFriendsJournalView(options);
     };
 
-    HomeController.prototype.getTwoplusFriendsJournalView = function(friends) {
-      var options;
+    HomeController.prototype.getTwoplusFriendsJournalView = function(players) {
+      var name, options, rank, title;
+      rank = _.indexOf(players, Parse.User.current().attributes) + 1;
+      name = Parse.User.current().get('username');
+      if (rank < 4) {
+        title = i18n.t("controller.home.journal.twoplus.rank_" + rank, name);
+      } else {
+        title = i18n.t("controller.home.journal.twoplus.rank_n", name, rank, null);
+      }
       options = {
-        name: 'Gilles B.',
-        rank: 4,
-        participants: [
-          {
-            rank: 1,
-            picture: 'https://graph.facebook.com/francois.chugulu/picture',
-            name: 'Ferdi',
-            score: '43 456'
-          }, {
-            rank: 2,
-            picture: 'https://graph.facebook.com/francois.chugulu/picture',
-            name: 'Jide',
-            score: '33 456'
-          }, {
-            rank: 3,
-            picture: 'https://graph.facebook.com/francois.chugulu/picture',
-            name: 'Eunk.Y',
-            score: '23 456'
-          }, {
-            rank: 4,
-            picture: 'https://graph.facebook.com/francois.chugulu/picture',
-            name: 'Gilles B.',
-            score: '13 456'
-          }, {
-            rank: 5,
-            picture: 'https://graph.facebook.com/francois.chugulu/picture',
-            name: 'Matteo B.',
-            score: '3 456'
-          }, {
-            rank: 6,
-            picture: 'https://graph.facebook.com/francois.chugulu/picture',
-            name: 'Toto U.',
-            score: '1 456'
-          }, {
-            rank: 7,
-            picture: 'https://graph.facebook.com/francois.chugulu/picture',
-            name: 'Jean D.',
-            score: '456'
-          }
-        ]
+        title: title,
+        participants: players
       };
       return new TwoplusFriendsJournalView(options);
     };
@@ -61493,7 +61513,7 @@ window.require.define({"controllers/outgame/home-controller": function(exports, 
 }});
 
 window.require.define({"controllers/outgame/login-controller": function(exports, require, module) {
-  var AnalyticsHelper, ConfigHelper, Controller, FacebookHelper, LequipeSSOHelper, LocalStorageHelper, LoginController, LoginView, PopUpHelper, User, config, i18n, mediator, utils,
+  var AnalyticsHelper, ConfigHelper, Controller, FacebookHelper, LequipeSSOHelper, LocalStorageHelper, LoginController, LoginView, PopUpHelper, SpinnerHelper, User, config, i18n, mediator, utils,
     __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
     __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
@@ -61520,6 +61540,8 @@ window.require.define({"controllers/outgame/login-controller": function(exports,
 
   config = require('config/environment-config');
 
+  SpinnerHelper = require('helpers/spinner-helper');
+
   LequipeSSOHelper = require('helpers/lequipe-sso-helper');
 
   ConfigHelper = require('helpers/config-helper');
@@ -61543,6 +61565,8 @@ window.require.define({"controllers/outgame/login-controller": function(exports,
       this.registerWithSSO = __bind(this.registerWithSSO, this);
 
       this.loginWithSSO = __bind(this.loginWithSSO, this);
+
+      this.loginWithTemp = __bind(this.loginWithTemp, this);
 
       this.loginToParse = __bind(this.loginToParse, this);
 
@@ -61572,23 +61596,18 @@ window.require.define({"controllers/outgame/login-controller": function(exports,
       };
       return Parse.User.logIn(params.username, params.password, {
         success: function() {
-          console.log("PARSE LOGIN SUCCESS", arguments);
           return _this.bindPlayer();
         },
         error: function(child, error, opts) {
           var options, u;
-          console.log("PARSE LOGIN ERROR", arguments);
           if (error.code === Parse.Error.OBJECT_NOT_FOUND) {
             delete user.id;
             u = new User(user);
-            console.log("USER", u);
             options = {
               success: function() {
-                console.log("SUCCESS SIGN UP", arguments);
                 return _this.bindPlayer();
               },
               error: function() {
-                console.log("ERROR SIGN UP", arguments);
                 return manageError.apply(null, arguments);
               }
             };
@@ -61598,6 +61617,24 @@ window.require.define({"controllers/outgame/login-controller": function(exports,
           }
         }
       });
+    };
+
+    LoginController.prototype.loginWithTemp = function() {
+      var username,
+        _this = this;
+      username = $('#temp-login-form input[name=username]', this.view.$el)[0].value;
+      SpinnerHelper.start();
+      Parse.User.signUp(username, '123456', (new User).attributes, {
+        success: function() {
+          SpinnerHelper.stop();
+          return _this.bindPlayer();
+        },
+        error: function() {
+          SpinnerHelper.stop();
+          return manageError.apply(null, arguments);
+        }
+      });
+      return false;
     };
 
     LoginController.prototype.loginWithSSO = function() {
@@ -61711,6 +61748,7 @@ window.require.define({"controllers/outgame/login-controller": function(exports,
         }
         view.delegate('click', '#register-btn', _this.registerWithSSO);
         view.delegate('click', '#login-btn', _this.loginWithSSO);
+        view.delegate('click', '#temp-btn', _this.loginWithTemp);
         view.delegate('keyup', '#sso-register-form input[name=email]', _this.checkAvailabilityWithSSO);
         view.delegate('keyup', '#sso-register-form input[name=username]', _this.checkAvailabilityWithSSO);
         view.delegate('click', '#close-btn', function() {
@@ -61718,6 +61756,9 @@ window.require.define({"controllers/outgame/login-controller": function(exports,
         });
         view.delegate('click', '#equipe-login', function() {
           return view.openForms();
+        });
+        view.delegate('click', '#temp-login', function() {
+          return view.openTempForm();
         });
         return view.delegate("click", "#facebook-login", function() {
           AnalyticsHelper.trackEvent('Login', 'Login with facebook');
@@ -62044,7 +62085,7 @@ window.require.define({"controllers/outgame/options-controller": function(export
 }});
 
 window.require.define({"controllers/outgame/profile-controller": function(exports, require, module) {
-  var AnalyticsHelper, ConfigHelper, Controller, FacebookHelper, ProfileView, ProfilesController, mediator,
+  var AnalyticsHelper, ConfigHelper, Controller, FacebookHelper, GameStatHelper, I18n, ProfileView, ProfilesController, mediator,
     __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
     __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
@@ -62061,13 +62102,15 @@ window.require.define({"controllers/outgame/profile-controller": function(export
 
   ConfigHelper = require('helpers/config-helper');
 
+  GameStatHelper = require('helpers/game-stat-helper');
+
+  I18n = require('lib/i18n');
+
   module.exports = ProfilesController = (function(_super) {
 
     __extends(ProfilesController, _super);
 
     function ProfilesController() {
-      this.loadStats = __bind(this.loadStats, this);
-
       this.onClickGameCenter = __bind(this.onClickGameCenter, this);
 
       this.index = __bind(this.index, this);
@@ -62082,15 +62125,34 @@ window.require.define({"controllers/outgame/profile-controller": function(export
 
     ProfilesController.prototype.index = function() {
       var _this = this;
-      this.loadStats();
+      this.user = Parse.User.current();
+      this.user.set('score', 234234).save();
+      console.log(this.user);
       return this.loadView('profile', function() {
-        return new ProfileView();
+        var stats, stats_sports, stats_stats;
+        stats = GameStatHelper.getProfileStat();
+        stats_stats = _.map(_.omit(stats, 'all_sports'), function(val, key) {
+          return {
+            name: key,
+            number: val,
+            text: I18n.t('controller.profile.stats.' + key)
+          };
+        });
+        stats_sports = _.map(stats.all_sports, function(val, key) {
+          return {
+            number: val.percent,
+            text: val.name,
+            name: key
+          };
+        });
+        return new ProfileView({
+          user: _this.user.attributes,
+          stats: stats_stats,
+          sports: stats_sports
+        });
       }, function(view) {
-        view.delegate('click', '#link-fb', _this.linkFacebook);
-        view.delegate('click', '.rankings', _this.onClickGameCenter);
-        if (_this.stats) {
-          return view.updateStats(_this.stats);
-        }
+        view.delegate('click', '.facebook-link', _this.linkFacebook);
+        return view.delegate('click', '.game-center', _this.onClickGameCenter);
       }, {
         viewTransition: true,
         music: 'outgame'
@@ -62105,22 +62167,12 @@ window.require.define({"controllers/outgame/profile-controller": function(export
     ProfilesController.prototype.onClickGameCenter = function() {
       var lb;
       AnalyticsHelper.trackEvent('Profil', 'Affichage de Game Center');
-      console.log("GC");
       lb = ConfigHelper.config.gamecenter.leaderboard;
       if (lb) {
         return typeof GameCenter !== "undefined" && GameCenter !== null ? GameCenter.showLeaderboard(lb) : void 0;
       } else {
         return alert('pas de leaderboard');
       }
-    };
-
-    ProfilesController.prototype.loadStats = function() {
-      var _this = this;
-      return ApiCallHelper.fetch.playerStats(mediator.user.get('uuid'), function(stats) {
-        var _ref;
-        _this.stats = stats.player;
-        return (_ref = _this.view) != null ? _ref.updateStats(_this.stats) : void 0;
-      });
     };
 
     return ProfilesController;
@@ -62458,83 +62510,6 @@ window.require.define({"controllers/outgame/tutorial-controller": function(expor
     return TutorialController;
 
   })(Controller);
-  
-}});
-
-window.require.define({"helpers/allopass_helper": function(exports, require, module) {
-  var ConfigHelper;
-
-  ConfigHelper = require('helpers/config-helper');
-
-  exports.AllopassHelper = (function() {
-
-    function AllopassHelper() {}
-
-    AllopassHelper.generateData = function(packId, uuid, packName, packPrice) {
-      return [packId, uuid, encodeURIComponent(packName), encodeURIComponent(packPrice), 'allopass'].join('_');
-    };
-
-    AllopassHelper.decodeData = function(data) {
-      return {
-        packId: data[0],
-        packName: decodeURIComponent(data[2]),
-        packPrice: decodeURIComponent(data[3])
-      };
-    };
-
-    AllopassHelper.sendTransactionToServer = function(transactionId, allopassParams) {
-      var pack_data, serializedData, transaction_data, _ref,
-        _this = this;
-      if (transactionId) {
-        serializedData = allopassParams['data'].split('_');
-        pack_data = this.decodeData(serializedData);
-        transaction_data = {
-          uuid: serializedData[1],
-          pack_id: pack_data.packId,
-          transaction_id: transactionId,
-          code: (_ref = allopassParams['RECALL']) != null ? _ref : allopassParams['code']
-        };
-        return GameSendHelper.buyAllopassPack(transaction_data, function() {
-          return _this._handleSuccess();
-        }, function() {
-          AnalyticsHelper.item('Pack de crédits Allopass', 'Erreur', pack_data.packName, pack_data.packPrice);
-          return _this._handleError();
-        });
-      } else {
-        return this._handleError();
-      }
-    };
-
-    AllopassHelper.productUrl = function(pack) {
-      return 'ids=' + ConfigHelper.config.services.allopass.app_id + '&idd=' + pack.productId;
-    };
-
-    AllopassHelper._handleSuccess = function() {
-      this._handleAll();
-      return PopUpManager.info("L'achat de votre pack a été confirmé. ", 0, function() {
-        window.close();
-        window.open('', '_self', '');
-        return window.close();
-      });
-    };
-
-    AllopassHelper._handleError = function() {
-      this._handleAll();
-      return PopUpManager.error("Il y a eu un problème lors de l'achat de votre pack. ", 0, function() {
-        window.close();
-        window.open('', '_self', '');
-        return window.close();
-      });
-    };
-
-    AllopassHelper._handleAll = function() {
-      window.resizeTo(480, 320);
-      return $('#global-container').css('background', 'no-repeat url(../images/pause/background.jpg)');
-    };
-
-    return AllopassHelper;
-
-  })();
   
 }});
 
@@ -62891,7 +62866,6 @@ window.require.define({"helpers/facebook-helper": function(exports, require, mod
       if (this.isLinked()) {
         return FB.api('/me/friends?fields=installed', function(response) {
           var friend, friends;
-          console.log(response);
           friends = (function() {
             var _i, _len, _ref, _results;
             _ref = response.data;
@@ -62904,7 +62878,6 @@ window.require.define({"helpers/facebook-helper": function(exports, require, mod
             }
             return _results;
           })();
-          console.log(friends);
           return callback(friends);
         });
       } else {
@@ -62973,6 +62946,168 @@ window.require.define({"helpers/factory-helper": function(exports, require, modu
     };
 
     return Factory;
+
+  })();
+  
+}});
+
+window.require.define({"helpers/game-stat-helper": function(exports, require, module) {
+  var GameStatHelper;
+
+  module.exports = GameStatHelper = (function() {
+
+    function GameStatHelper() {}
+
+    GameStatHelper._stats = {};
+
+    GameStatHelper.setBestScore = function(value) {
+      return this._setBest('best_score', value);
+    };
+
+    GameStatHelper.setBestRow = function(value) {
+      return this._setBest('game_best_row', value);
+    };
+
+    GameStatHelper.incrementGamesPlayedCount = function() {
+      return this._incrementStat('games_played_count');
+    };
+
+    GameStatHelper.incrementSumScore = function(value) {
+      this._incrementStat('sum_score', value);
+      return this;
+    };
+
+    GameStatHelper.incrementSumTimeQuestion = function(value) {
+      this._incrementStat('sum_time_question', value);
+      return this;
+    };
+
+    GameStatHelper.incrementAnswersCount = function(success, sport) {
+      var key;
+      if (sport == null) {
+        sport = null;
+      }
+      key = 'game_' + (success ? 'good' : 'wrong') + '_answers_count';
+      this._incrementStat(key);
+      if (sport) {
+        return this._incrementSportAnswersCount(success, sport);
+      }
+    };
+
+    GameStatHelper._incrementSportAnswersCount = function(success, sport) {
+      var percent, stats, user;
+      user = Parse.User.current();
+      stats = user.get('stats');
+      if (!stats.sports[sport]) {
+        stats.sports[sport] = {
+          percent: 0,
+          good: 0,
+          total: 0,
+          name: sport
+        };
+      }
+      if (success) {
+        stats.sports[sport].good += 1;
+      }
+      stats.sports[sport].total += 1;
+      percent = (stats.sports[sport].good / stats.sports[sport].total) * 100;
+      stats.sports[sport].percent = parseFloat(percent.toFixed(2));
+      user.set('stats', stats).save();
+      return this;
+    };
+
+    GameStatHelper.getStats = function() {
+      return this._stats;
+    };
+
+    GameStatHelper.getEndGameScoreStat = function() {
+      return {
+        nb_questions: this._getStat('game_wrong_answers_count') + this._getStat('game_good_answers_count'),
+        good_answers: this._getStat('game_good_answers_count'),
+        wrong_answers: this._getStat('game_wrong_answers_count'),
+        best_row: this._getStat('game_best_row')
+      };
+    };
+
+    GameStatHelper.getProfileStat = function() {
+      var answers_count;
+      this._stats = Parse.User.current().get('stats');
+      answers_count = (this._getStat('wrong_answers_count') + this._getStat('good_answers_count')) | 1;
+      return {
+        best_score: this._getStat('best_score'),
+        avg_score: parseFloat((this._getStat('sum_score') / (this._getStat('games_played_count') | 1)).toFixed(2)),
+        percent_answer: parseFloat(((this._getStat('good_answers_count') / (this._getStat('wrong_answers_count') + this._getStat('good_answers_count'))) * 100).toFixed(2)) + '%',
+        average_time: parseInt(this._getStat('sum_time_question') / answers_count, 10) + ' ms',
+        games_played_count: this._getStat('games_played_count'),
+        best_row: this._getStat('best_row'),
+        best_sport: this.getBestSport(),
+        all_sports: this.getAllSports()
+      };
+    };
+
+    GameStatHelper.getBestSport = function() {
+      var best_sport;
+      best_sport = _.max(this.getAllSports(), function(sport) {
+        return sport.percent;
+      });
+      return best_sport.name;
+    };
+
+    GameStatHelper.getAllSports = function() {
+      return this.getStats().sports;
+    };
+
+    GameStatHelper.reset = function() {
+      return this._stats = {
+        game_good_answers_count: 0,
+        game_wrong_answers_count: 0,
+        game_best_row: 0
+      };
+    };
+
+    GameStatHelper.saveStats = function() {
+      var real_stats, stat_name, stats, user, _i, _len, _ref;
+      user = Parse.User.current();
+      stats = $.extend(user.get('stats'), this._stats);
+      real_stats = {};
+      _ref = ['best_score', 'sum_score', 'games_played_count', 'wrong_answers_count', 'good_answers_count', 'sum_time_question', 'games_played_count', 'best_row', 'sports'];
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        stat_name = _ref[_i];
+        real_stats[stat_name] = stats[stat_name];
+      }
+      real_stats.good_answers_count += this._stats.game_good_answers_count;
+      real_stats.wrong_answers_count += this._stats.game_wrong_answers_count;
+      if (this._stats.game_best_row > real_stats.best_row) {
+        real_stats.best_row = this._stats.game_best_row;
+      }
+      return user.set('stats', real_stats).save();
+    };
+
+    GameStatHelper._incrementStat = function(key, value) {
+      if (value == null) {
+        value = 1;
+      }
+      value = parseInt(value);
+      return this._setStat(key, (this._getStat(key) | 0) + value);
+    };
+
+    GameStatHelper._setBest = function(key, value) {
+      value = parseInt(value);
+      if (value > this._getStat(key)) {
+        return this._setStat(key, value);
+      }
+    };
+
+    GameStatHelper._setStat = function(key, value) {
+      this._stats[key] = value;
+      return this._stats[key];
+    };
+
+    GameStatHelper._getStat = function(key) {
+      return this._stats[key] | 0;
+    };
+
+    return GameStatHelper;
 
   })();
   
@@ -63942,6 +64077,8 @@ window.require.define({"helpers/timer-helper": function(exports, require, module
 
     TimerHelper.prototype.remaining = 0;
 
+    TimerHelper.prototype.running = false;
+
     TimerHelper.prototype.interruptionDate = null;
 
     function TimerHelper(onTick) {
@@ -63993,17 +64130,12 @@ window.require.define({"helpers/timer-helper": function(exports, require, module
       this.duration = duration * this.durationPrecisionCoef;
       this.totalDuration = this.duration;
       this.remaining = this.duration;
-      console.log("schedule", this.duration);
       this.stop();
       return typeof this.onTick === "function" ? this.onTick((this.duration / this.durationPrecisionCoef).toFixed(this.precision)) : void 0;
     };
 
     TimerHelper.prototype.setDuration = function(duration) {
-      if (duration > 0) {
-        return this.duration = duration;
-      } else {
-        return this.duration = 0;
-      }
+      return this.duration = duration;
     };
 
     TimerHelper.prototype.adjustDuration = function(offset) {
@@ -64013,6 +64145,10 @@ window.require.define({"helpers/timer-helper": function(exports, require, module
     };
 
     TimerHelper.prototype.stop = function() {
+      if (!this.running) {
+        return;
+      }
+      this.running = false;
       this.remaining = this.duration;
       if (!this.interval) {
         return;
@@ -64028,20 +64164,26 @@ window.require.define({"helpers/timer-helper": function(exports, require, module
       if (typeof this.onTick === "function") {
         this.onTick((this.duration / this.durationPrecisionCoef).toFixed(this.precision));
       }
-      if (this.duration < 1) {
-        this.setDuration(0);
+      if (Math.round(this.duration) < 0) {
         this.stop();
         return typeof this.onTimeout === "function" ? this.onTimeout() : void 0;
       }
     };
 
     TimerHelper.prototype.pause = function() {
+      if (!this.running) {
+        return;
+      }
+      this.running = false;
       return this.stop();
     };
 
     TimerHelper.prototype.start = function() {
+      if (this.running) {
+        return;
+      }
+      this.running = true;
       this.startTime = new Date();
-      console.log("start", this.duration);
       return this.interval = setInterval(this.tick, Math.pow(10, 3 - this.precision));
     };
 
@@ -64348,7 +64490,15 @@ window.require.define({"locale/fr": function(exports, require, module) {
     fr: {
       controller: {
         home: {
-          facebook_invite_message: 'Vasy rejoins ce jeu il déchire'
+          facebook_invite_message: 'Vasy rejoins ce jeu il déchire',
+          journal: {
+            twoplus: {
+              rank_1: '{0} est numero uno',
+              rank_2: '{0} y est presque',
+              rank_3: '{0} dernier du podium',
+              rank_n: '{0} n\'est qu\'a la position {1}'
+            }
+          }
         },
         shop: {
           unavailable_pack: {
@@ -64358,6 +64508,25 @@ window.require.define({"locale/fr": function(exports, require, module) {
           not_enough_credits: {
             title: 'erreur',
             message: 'pas assez de crédits'
+          }
+        },
+        game_over: {
+          stats: {
+            nb_questions: 'Nombre de questions',
+            good_answers: 'Bonnes réponses',
+            wrong_answers: 'Mauvaises réponses',
+            best_row: 'Plus longue série'
+          }
+        },
+        profile: {
+          stats: {
+            best_score: 'Meilleur score',
+            avg_score: 'Score moyen',
+            percent_answer: 'Bonne réponse',
+            average_time: 'Réponse moyenne',
+            games_played_count: 'Nombres partie',
+            best_row: 'Combo réponse',
+            best_sport: 'Sport favori'
           }
         }
       },
@@ -64874,12 +65043,21 @@ window.require.define({"models/ingame/stages/dupa-stage-model": function(exports
       return player;
     };
 
-    DupaStage.prototype.playerMadeSuccess = function(player) {
-      player.addJackpot(this.getCurrentThreshold());
-      if (this.currentThresholdIndex < this.getConfigValue('thresholds').length) {
-        this.currentThresholdIndex++;
+    DupaStage.prototype.playerMadeSuccess = function(player, doubleScore) {
+      var jackpot;
+      jackpot = this.getCurrentThreshold();
+      if (doubleScore) {
+        jackpot *= 2;
       }
+      player.addJackpot(jackpot);
+      this.increaseThreshold();
       return player;
+    };
+
+    DupaStage.prototype.increaseThreshold = function() {
+      if (this.currentThresholdIndex < this.getConfigValue('thresholds').length - 1) {
+        return this.currentThresholdIndex++;
+      }
     };
 
     DupaStage.prototype.getCurrentThreshold = function() {
@@ -64910,6 +65088,7 @@ window.require.define({"models/outgame/user-model": function(exports, require, m
       avatar: null,
       credits: 50,
       rank: 6,
+      score: 0,
       health: 25,
       notifications: true,
       providers: {
@@ -64917,11 +65096,21 @@ window.require.define({"models/outgame/user-model": function(exports, require, m
         equipe: null
       },
       bonus: {
-        fifty_fifty: 0,
-        double: 0,
-        add_time: 0,
-        skip: 0,
-        mass: 0
+        fifty_fifty: 5,
+        double: 5,
+        add_time: 5,
+        skip: 5,
+        mass: 5
+      },
+      stats: {
+        best_score: 0,
+        best_row: 0,
+        games_played_count: 0,
+        sum_score: 0,
+        sum_time_question: 0,
+        good_answers_count: 0,
+        wrong_answers_count: 0,
+        sports: {}
       }
     };
 
@@ -65017,7 +65206,11 @@ window.require.define({"views/base/view": function(exports, require, module) {
     }
 
     View.prototype.getTemplateFunction = function() {
-      var template, templateFunc;
+      var template, templateFunc,
+        _this = this;
+      Handlebars.registerHelper('niceNumber', function(number, options) {
+        return _this.niceNumber(number);
+      });
       template = this.template;
       if (typeof template === 'string') {
         templateFunc = Handlebars.compile(template);
@@ -65227,7 +65420,14 @@ window.require.define({"views/ingame/stages/dupa-stage-view": function(exports, 
 
     DupaView.prototype.updateTimer = function(duration) {
       var progress, progressEl;
-      $('.chrono-time', this.$el).text((duration - 1) + 's');
+      duration = parseInt(duration);
+      if (duration > this.options.time) {
+        duration = this.options.time;
+      }
+      if (duration <= 0) {
+        duration = 0;
+      }
+      $('.chrono-time', this.$el).text(duration + 's');
       progress = duration / this.options.time * 100;
       if (progress > 100) {
         progress = 100;
@@ -65249,17 +65449,24 @@ window.require.define({"views/ingame/stages/dupa-stage-view": function(exports, 
     DupaView.prototype.showQuestion = function(question, callback) {
       var _this = this;
       return setTimeout(function() {
-        var proposition, propositionsEl, _i, _len, _ref;
+        var proposition, propositionsEl, theme, _i, _len, _ref;
         propositionsEl = $('.question-propositions-container', _this.$el);
-        $('.proposition', propositionsEl).remove();
+        $('.proposition-container', propositionsEl).remove();
         _ref = question.getPropositions();
         for (_i = 0, _len = _ref.length; _i < _len; _i++) {
           proposition = _ref[_i];
-          propositionsEl.prepend("<div class='proposition box-align' data-id='" + proposition.id + "'>            <span class='resize'>" + (proposition.masked ? '?' : proposition.text) + "</span>            <div class='massOpinion'></div>          </div>");
+          propositionsEl.prepend("<div class='proposition-container box-align' data-id='" + proposition.id + "'>            <span class='proposition resize' data-id='" + proposition.id + "'>" + proposition.text + "</span>            <div class='massOpinion'></div>          </div>");
         }
-        _this.autoSizeText();
-        $('.question-theme').text(question.get('theme'));
+        $('.proposition-container', _this.$el).addClass('animated pulse').one('webkitAnimationEnd', function() {
+          return $(this).removeClass('animated pulse');
+        });
+        theme = question.get('theme');
+        if (!theme) {
+          theme = 'Question';
+        }
+        $('.question-theme').text(theme);
         $('.question-content').text(question.get('text'));
+        _this.autoSizeText();
         return callback();
       }, 0);
     };
@@ -65291,17 +65498,16 @@ window.require.define({"views/ingame/stages/dupa-stage-view": function(exports, 
       var klass, propositionEl,
         _this = this;
       this.updatePropositionsText(question);
+      klass = status ? 'success' : 'error';
       if (propositionId) {
         propositionEl = $('.proposition[data-id="' + propositionId + '"]', this.$el);
+        propositionEl.parent().addClass(klass);
       } else {
         propositionEl = $('.proposition', this.$el);
       }
-      klass = status ? 'success' : 'error';
       return setTimeout(function() {
-        return propositionEl.addClass('animated fadeOut').one('webkitAnimationEnd', function() {
-          return propositionEl.removeClass('fadeOut').addClass(klass + ' fadeIn').one('webkitAnimationEnd', function() {
-            return callback();
-          });
+        return propositionEl.removeClass('animated').addClass('animated fadeOut').one('webkitAnimationEnd', function() {
+          return callback();
         });
       }, 500);
     };
@@ -65317,21 +65523,33 @@ window.require.define({"views/ingame/stages/dupa-stage-view": function(exports, 
       }, 2000);
     };
 
-    DupaView.prototype.updateJackpot = function(jackpot, currentThresholdValue) {
-      var el;
+    DupaView.prototype.updateJackpot = function(jackpot, currentThresholdValue, result) {
+      var blockEl, el;
       el = $('.jackpot-container', this.$el);
       $('#total-jackpot', el).text(jackpot);
-      $(".threshold", el).removeClass('highlighted');
-      $(".threshold[data-value='" + currentThresholdValue + "']", el).addClass('highlighted');
-      return this.updateJackpotMarker(currentThresholdValue);
+      $(".threshold .highlighted", el).addClass('animated fadeOut').one('webkitAnimationEnd', function() {
+        return $(this).remove();
+      });
+      blockEl = $(".threshold[data-value='" + currentThresholdValue + "']", el);
+      blockEl.append("<div class='highlighted'>" + currentThresholdValue + "</div>");
+      $('.highlighted', blockEl).addClass('animated fadeIn');
+      return this.updateJackpotMarker(currentThresholdValue, result);
     };
 
-    DupaView.prototype.updateJackpotMarker = function(currentThresholdValue) {
-      var currentThresholdIndex, el, height;
+    DupaView.prototype.updateJackpotMarker = function(currentThresholdValue, result) {
+      var currentThresholdIndex, el, height, klass;
+      if (result == null) {
+        result = true;
+      }
       el = $('.jackpot-container', this.$el);
       currentThresholdIndex = this.options.thresholds.indexOf(currentThresholdValue);
       height = (currentThresholdIndex + 1) * 9 + 1;
-      return $('#jackpot-marker', el).css('top', height + '%');
+      klass = result ? 'bounce' : 'inverseBounce';
+      return $('#jackpot-marker', el).css('top', height + '%').one('webkitTransitionEnd', function() {
+        return $(this).addClass(klass + ' animated').one('webkitAnimationEnd', function() {
+          return $(this).removeClass(klass + ' animated');
+        });
+      });
     };
 
     DupaView.prototype.updateBonus = function(targetElement, quantity, callback) {
@@ -65353,9 +65571,18 @@ window.require.define({"views/ingame/stages/dupa-stage-view": function(exports, 
       var proposition, _i, _len;
       for (_i = 0, _len = propositions.length; _i < _len; _i++) {
         proposition = propositions[_i];
-        $(".proposition[data-id='" + proposition.id + "'] .massOpinion").html(proposition.massOpinion + '%').show();
+        $(".proposition-container[data-id='" + proposition.id + "'] .massOpinion").html(proposition.massOpinion + '%').show();
       }
       return typeof callback === "function" ? callback() : void 0;
+    };
+
+    DupaView.prototype.doubleScoreActivated = function() {
+      $('.highlighted').addClass('gold');
+      return $('#jackpot-marker').addClass('gold');
+    };
+
+    DupaView.prototype.doubleScoreDeactivated = function() {
+      return $('#jackpot-marker').removeClass('gold');
     };
 
     DupaView.prototype.finishMessage = function(textKey, params, callback) {
@@ -65559,7 +65786,7 @@ window.require.define({"views/outgame/home-page-view": function(exports, require
 
     HomePageView.prototype.addJournalView = function(journalView) {
       this.subview('journal', journalView);
-      return this.subview('journal').render();
+      return this.subview('journal').render().toggle();
     };
 
     return HomePageView;
@@ -65823,7 +66050,15 @@ window.require.define({"views/outgame/login-view": function(exports, require, mo
       }, 3000);
     };
 
+    LoginView.prototype.openTempForm = function() {
+      $('#equipe-forms').hide();
+      $('#temp-form').show();
+      return $('#flipper', this.$el).addClass('flipped');
+    };
+
     LoginView.prototype.openForms = function() {
+      $('#equipe-forms').show();
+      $('#temp-form').hide();
       return $('#flipper', this.$el).addClass('flipped');
     };
 
@@ -65939,15 +66174,7 @@ window.require.define({"views/outgame/profile-view": function(exports, require, 
     ProfileView.prototype.autoRender = true;
 
     ProfileView.prototype.getTemplateData = function() {
-      return mediator.user.getAttributes();
-    };
-
-    ProfileView.prototype.updateStats = function(stats) {
-      $('.block.played .score-container', this.$el).text(stats.games_played);
-      $('.block.won .score-container', this.$el).text(stats.games_won);
-      $('.block.best-score .score-container', this.$el).text(stats.rank_max);
-      $('.block.best-cash .score-container', this.$el).text(this.niceNumber(stats.jackpot_max));
-      return $('.block.stars .score-container', this.$el).text(stats.mystery_star_done);
+      return this.options;
     };
 
     return ProfileView;
@@ -66081,57 +66308,45 @@ window.require.define({"views/outgame/tutorial-view": function(exports, require,
 window.require.define({"views/templates/ingame/game-over": function(exports, require, module) {
   module.exports = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
     helpers = helpers || Handlebars.helpers;
-    var buffer = "", stack1, foundHelper, functionType="function", escapeExpression=this.escapeExpression, self=this, helperMissing=helpers.helperMissing;
+    var buffer = "", stack1, foundHelper, functionType="function", escapeExpression=this.escapeExpression, helperMissing=helpers.helperMissing, self=this;
 
   function program1(depth0,data) {
     
-    
-    return " sucess";}
+    var buffer = "", stack1, foundHelper;
+    buffer += "\n        <tr>\n          <td class='name'>";
+    foundHelper = helpers.text;
+    if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
+    else { stack1 = depth0.text; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
+    buffer += escapeExpression(stack1) + "</td>\n          <td class='number'>";
+    foundHelper = helpers.number;
+    if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
+    else { stack1 = depth0.number; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
+    buffer += escapeExpression(stack1) + "</td>\n        </tr>\n        ";
+    return buffer;}
 
-  function program3(depth0,data) {
-    
-    
-    return " lost";}
-
-  function program5(depth0,data) {
-    
-    var buffer = "", stack1;
-    buffer += "\n      Pour te récompense voici <span class=\"jetons\">";
+    buffer += "<div class=\"header-container\">\n  <a href=\"#home\" class=\"home-btn\"></a>\n  <div id=\"title\" class=\"title\"></div>\n</div>\n\n<div id='numbers'>\n  <span id='hearts' class='number'>";
+    stack1 = depth0.player;
+    stack1 = stack1 == null || stack1 === false ? stack1 : stack1.health;
+    stack1 = typeof stack1 === functionType ? stack1() : stack1;
+    buffer += escapeExpression(stack1) + "</span>\n  <span id='heart-icon' class='icon'></span>\n  <span id='credits' class='number'>";
+    stack1 = depth0.player;
+    stack1 = stack1 == null || stack1 === false ? stack1 : stack1.credits;
+    stack1 = typeof stack1 === functionType ? stack1() : stack1;
+    buffer += escapeExpression(stack1) + "</span>\n  <span id='credit-icon' class='icon'></span>\n</div>\n\n\n<div class=\"content-container\">\n  <h1 class=\"title box-align\">\n    Bravo, tu as gagné <span class=\"jetons-number\">";
     stack1 = depth0.params;
     stack1 = stack1 == null || stack1 === false ? stack1 : stack1.reward;
     stack1 = typeof stack1 === functionType ? stack1() : stack1;
-    buffer += escapeExpression(stack1) + "</span> offerts!\n    ";
-    return buffer;}
-
-  function program7(depth0,data) {
-    
-    
-    return "\n      Ne baisse pas les bras.<br>\n      Tu feras mieux la prochaine fois!\n    ";}
-
-    buffer += "<div class=\"header-container\">\n  <a href=\"#home\" class=\"home-btn\"></a>\n</div>\n<div class=\"content-container";
-    stack1 = depth0.success;
-    stack1 = helpers['if'].call(depth0, stack1, {hash:{},inverse:self.program(3, program3, data),fn:self.program(1, program1, data)});
-    if(stack1 || stack1 === 0) { buffer += stack1; }
-    buffer += "\">\n  <h1 class=\"title box-align\">\n    ";
-    stack1 = depth0.success;
-    stack1 = helpers['if'].call(depth0, stack1, {hash:{},inverse:self.program(7, program7, data),fn:self.program(5, program5, data)});
-    if(stack1 || stack1 === 0) { buffer += stack1; }
-    buffer += "\n  </h1>\n  <div class=\"blocks-container\">\n    <div class=\"block jackpot\">\n      <span class=\"value\">";
+    buffer += escapeExpression(stack1) + "</span> <span class=\"jetons\"></span> !\n  </h1>\n\n  <div class=\"blocks-container\">\n    <div class=\"block jackpot\">\n      <div class=\"title\"></div>\n      <div class=\"value\">";
     stack1 = depth0.params;
     stack1 = stack1 == null || stack1 === false ? stack1 : stack1.jackpot;
     foundHelper = helpers.niceNumber;
     stack1 = foundHelper ? foundHelper.call(depth0, stack1, {hash:{}}) : helperMissing.call(depth0, "niceNumber", stack1, {hash:{}});
-    buffer += escapeExpression(stack1) + "</span>\n    </div>\n    <div class=\"block rank\">\n      <img src=\"";
+    buffer += escapeExpression(stack1) + "</div>\n    </div>\n\n    <div class='block stats'>\n\n\n      <table id='stats'>\n        ";
     stack1 = depth0.params;
-    stack1 = stack1 == null || stack1 === false ? stack1 : stack1.rank;
-    foundHelper = helpers.getRankImage;
-    stack1 = foundHelper ? foundHelper.call(depth0, stack1, {hash:{}}) : helperMissing.call(depth0, "getRankImage", stack1, {hash:{}});
-    buffer += escapeExpression(stack1) + "\" class='rank-image'>\n      <div class=\"rank-text box-align\">\n        <span class=\"resizeOnce\">";
-    stack1 = depth0.params;
-    stack1 = stack1 == null || stack1 === false ? stack1 : stack1.rank;
-    foundHelper = helpers.getRankName;
-    stack1 = foundHelper ? foundHelper.call(depth0, stack1, {hash:{}}) : helperMissing.call(depth0, "getRankName", stack1, {hash:{}});
-    buffer += escapeExpression(stack1) + "</span>\n      </div>\n    </div>\n  </div>\n  <a href=\"#game\" class=\"replay-btn\"></a>\n</div>\n";
+    stack1 = stack1 == null || stack1 === false ? stack1 : stack1.stats;
+    stack1 = helpers.each.call(depth0, stack1, {hash:{},inverse:self.noop,fn:self.program(1, program1, data)});
+    if(stack1 || stack1 === 0) { buffer += stack1; }
+    buffer += "\n      </table>\n    </div>\n\n  </div>\n\n  <a href=\"#game\" class=\"replay-btn\"></a>\n</div>\n";
     return buffer;});
 }});
 
@@ -66168,7 +66383,7 @@ window.require.define({"views/templates/ingame/stages/dupa-stage": function(expo
     buffer += escapeExpression(depth0) + "</div>\n  ";
     return buffer;}
 
-    buffer += "<div class=\"btn-menu\"></div>\n<div class='chrono-container'>\n  <div class='chrono-chrono'></div>\n  <div class='chrono-time'></div>\n  <div class='chrono-filler-container'>\n    <div class='chrono-filler'></div>\n  </div>\n</div>\n<div class='question-container'>\n  <div class='question-photo'></div>\n  <div class='question-theme'></div>\n  <div class='question-content'></div>\n  <div class='question-propositions-container'>\n  </div>\n</div>\n<div class='bonus-container'>\n  ";
+    buffer += "<div class=\"btn-menu\"></div>\n<div class='chrono-container'>\n  <div class='chrono-chrono'></div>\n  <div class='chrono-time'></div>\n  <div class='chrono-filler-container'>\n    <div class='chrono-filler'></div>\n  </div>\n</div>\n<div class='question-container'>\n  <div class='question-photo'></div>\n  <div class='question-theme-container'>\n    <div class='question-theme resize'></div>\n  </div>\n  <div class='question-content-container'>\n    <div class='question-content resize'></div>\n  </div>\n  <div class='question-propositions-container'>\n  </div>\n</div>\n<div class='bonus-container'>\n  ";
     stack1 = depth0.bonus;
     stack1 = helpers.each.call(depth0, stack1, {hash:{},inverse:self.noop,fn:self.program(1, program1, data)});
     if(stack1 || stack1 === 0) { buffer += stack1; }
@@ -66216,77 +66431,83 @@ window.require.define({"views/templates/outgame/home": function(exports, require
     foundHelper = helpers.credits;
     if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
     else { stack1 = depth0.credits; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
-    buffer += escapeExpression(stack1) + "</span>\n  <span id='credit-icon' class='icon'></span>\n</div>\n<div id='logo'></div>\n\n<div id='touch-me'>Touche pour afficher la Une</div>\n\n<div id='menu'>\n  <a class=\"game-link item\" id=\"game-link\"></a>\n  <a href=\"#shop\" class=\"shop-link item\"></a>\n  <div class=\"small-buttons-container\">\n    <a href=\"#hall-of-fame\" class=\"hall-of-fame item\"></a>\n    <a href=\"#options\" class=\"options-link item\"></a>\n  </div>\n</div>\n<a href=\"#more-games\" class=\"more-games-link\"></a>\n";
+    buffer += escapeExpression(stack1) + "</span>\n  <span id='credit-icon' class='icon'></span>\n</div>\n<div id='logo'></div>\n\n<div id='touch-me'>Touche pour afficher la Une</div>\n\n<div id='menu'>\n  <a class=\"game-link item\" id=\"game-link\"></a>\n  <a href=\"#shop\" class=\"shop-link item\"></a>\n  <div class=\"small-buttons-container\">\n    <a href=\"#profile\" class=\"profile item\"></a>\n    <a href=\"#options\" class=\"options-link item\"></a>\n  </div>\n</div>\n<a href=\"#more-games\" class=\"more-games-link\"></a>\n";
     return buffer;});
 }});
 
 window.require.define({"views/templates/outgame/journal/no-friends-journal": function(exports, require, module) {
   module.exports = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
     helpers = helpers || Handlebars.helpers;
-    var buffer = "", stack1, foundHelper, functionType="function", escapeExpression=this.escapeExpression;
+    var buffer = "", stack1, foundHelper, functionType="function", escapeExpression=this.escapeExpression, self=this;
 
+  function program1(depth0,data) {
+    
+    var buffer = "", stack1, foundHelper;
+    buffer += "\n    <div id='photo' style='background-image:url(https://graph.facebook.com/";
+    foundHelper = helpers.fb_id;
+    if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
+    else { stack1 = depth0.fb_id; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
+    buffer += escapeExpression(stack1) + "/picture?width=90&height=90)'></div>\n  ";
+    return buffer;}
+
+  function program3(depth0,data) {
+    
+    
+    return "\n    <div id='photo' style='background-image:url(http://media.comicvine.com/uploads/7/77914/2109064-4char_forever_alone_guy_high_resolution_icon.png)'></div>\n  ";}
+
+  function program5(depth0,data) {
+    
+    var buffer = "", stack1, foundHelper;
+    buffer += "\n    <span class='participant'>\n      <div class='rank'>";
+    foundHelper = helpers.position;
+    if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
+    else { stack1 = depth0.position; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
+    buffer += escapeExpression(stack1) + "</div>\n      ";
+    stack1 = depth0.fb_id;
+    stack1 = helpers['if'].call(depth0, stack1, {hash:{},inverse:self.program(8, program8, data),fn:self.program(6, program6, data)});
+    if(stack1 || stack1 === 0) { buffer += stack1; }
+    buffer += "\n      <div class='blaze'>";
+    foundHelper = helpers.username;
+    if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
+    else { stack1 = depth0.username; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
+    buffer += escapeExpression(stack1) + "</div>\n      <div class='score'>";
+    foundHelper = helpers.score;
+    if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
+    else { stack1 = depth0.score; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
+    buffer += escapeExpression(stack1) + "</div>\n    </span>\n    <span class='spacer'></span>\n  ";
+    return buffer;}
+  function program6(depth0,data) {
+    
+    var buffer = "", stack1, foundHelper;
+    buffer += "\n        <div class='photo' style='background-image:url(https://graph.facebook.com/";
+    foundHelper = helpers.fb_id;
+    if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
+    else { stack1 = depth0.fb_id; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
+    buffer += escapeExpression(stack1) + "/picture?width=90&height=90)'></div>\n      ";
+    return buffer;}
+
+  function program8(depth0,data) {
+    
+    
+    return "\n        <div class='photo' style='background-image:url(images/common/facebook-default.jpg)'></div>\n      ";}
 
     buffer += "<div id='equipe-btn'></div>\n<div id='date'>EDITION DU ";
     foundHelper = helpers.date;
     if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
     else { stack1 = depth0.date; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
     buffer += escapeExpression(stack1) + "</div>\n<div id='title'><span id='exculsive'>exclusif !</span> ";
-    foundHelper = helpers.name;
+    foundHelper = helpers.username;
     if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
-    else { stack1 = depth0.name; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
-    buffer += escapeExpression(stack1) + "</div>\n<div id='photo-container'><div id='photo' style='background-image:url(";
-    foundHelper = helpers.picture;
-    if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
-    else { stack1 = depth0.picture; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
-    buffer += escapeExpression(stack1) + ")'></div></div>\n<div id='message'>joue a sport quiz mais n'a toujours pas d'amis !</div>\n<a id='invite-btn'></a>\n<div id='countdown'>\n  <span id='days' class='number'>00</span>\n  <span id='hours' class='number'>00</span>\n  <span id='minutes' class='number'>00</span>\n</div>\n<div id='ranking'>\n  <span class='participant'>\n    <div class='rank'>";
-    stack1 = depth0.p1;
-    stack1 = stack1 == null || stack1 === false ? stack1 : stack1.rank;
-    stack1 = typeof stack1 === functionType ? stack1() : stack1;
-    buffer += escapeExpression(stack1) + "</div>\n    <div class='photo' style='background-image:url(";
-    stack1 = depth0.p1;
-    stack1 = stack1 == null || stack1 === false ? stack1 : stack1.picture;
-    stack1 = typeof stack1 === functionType ? stack1() : stack1;
-    buffer += escapeExpression(stack1) + "?width=90&height=90)'></div>\n    <div class='blaze'>";
-    stack1 = depth0.p1;
-    stack1 = stack1 == null || stack1 === false ? stack1 : stack1.name;
-    stack1 = typeof stack1 === functionType ? stack1() : stack1;
-    buffer += escapeExpression(stack1) + "</div>\n    <div class='score'>";
-    stack1 = depth0.p1;
-    stack1 = stack1 == null || stack1 === false ? stack1 : stack1.score;
-    stack1 = typeof stack1 === functionType ? stack1() : stack1;
-    buffer += escapeExpression(stack1) + "</div>\n  </span>\n  <span class='spacer'></span>\n  <span class='participant'>\n    <div class='rank'>";
-    stack1 = depth0.p2;
-    stack1 = stack1 == null || stack1 === false ? stack1 : stack1.rank;
-    stack1 = typeof stack1 === functionType ? stack1() : stack1;
-    buffer += escapeExpression(stack1) + "</div>\n    <div class='photo' style='background-image:url(";
-    stack1 = depth0.p2;
-    stack1 = stack1 == null || stack1 === false ? stack1 : stack1.picture;
-    stack1 = typeof stack1 === functionType ? stack1() : stack1;
-    buffer += escapeExpression(stack1) + "?width=90&height=90)'></div>\n    <div class='blaze'>";
-    stack1 = depth0.p2;
-    stack1 = stack1 == null || stack1 === false ? stack1 : stack1.name;
-    stack1 = typeof stack1 === functionType ? stack1() : stack1;
-    buffer += escapeExpression(stack1) + "</div>\n    <div class='score'>";
-    stack1 = depth0.p2;
-    stack1 = stack1 == null || stack1 === false ? stack1 : stack1.score;
-    stack1 = typeof stack1 === functionType ? stack1() : stack1;
-    buffer += escapeExpression(stack1) + "</div>\n  </span>\n  <span class='spacer'></span>\n  <span class='participant'>\n    <div class='rank'>";
-    stack1 = depth0.p3;
-    stack1 = stack1 == null || stack1 === false ? stack1 : stack1.rank;
-    stack1 = typeof stack1 === functionType ? stack1() : stack1;
-    buffer += escapeExpression(stack1) + "</div>\n    <div class='photo' style='background-image:url(";
-    stack1 = depth0.p3;
-    stack1 = stack1 == null || stack1 === false ? stack1 : stack1.picture;
-    stack1 = typeof stack1 === functionType ? stack1() : stack1;
-    buffer += escapeExpression(stack1) + "?width=90&height=90)'></div>\n    <div class='blaze'>";
-    stack1 = depth0.p3;
-    stack1 = stack1 == null || stack1 === false ? stack1 : stack1.name;
-    stack1 = typeof stack1 === functionType ? stack1() : stack1;
-    buffer += escapeExpression(stack1) + "</div>\n    <div class='score'>";
-    stack1 = depth0.p3;
-    stack1 = stack1 == null || stack1 === false ? stack1 : stack1.score;
-    stack1 = typeof stack1 === functionType ? stack1() : stack1;
-    buffer += escapeExpression(stack1) + "</div>\n  </span>\n</div>";
+    else { stack1 = depth0.username; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
+    buffer += escapeExpression(stack1) + "</div>\n<div id='photo-container'>\n  ";
+    stack1 = depth0.fb_id;
+    stack1 = helpers['if'].call(depth0, stack1, {hash:{},inverse:self.program(3, program3, data),fn:self.program(1, program1, data)});
+    if(stack1 || stack1 === 0) { buffer += stack1; }
+    buffer += "\n</div>\n<div id='message'>joue a sport quiz mais n'a toujours pas d'amis !</div>\n<a id='invite-btn'></a>\n<div id='countdown'>\n  <span id='days' class='number'>00</span>\n  <span id='hours' class='number'>00</span>\n  <span id='minutes' class='number'>00</span>\n</div>\n<div id='ranking'>\n  ";
+    stack1 = depth0.participants;
+    stack1 = helpers.each.call(depth0, stack1, {hash:{},inverse:self.noop,fn:self.program(5, program5, data)});
+    if(stack1 || stack1 === 0) { buffer += stack1; }
+    buffer += "\n</div>";
     return buffer;});
 }});
 
@@ -66298,20 +66519,34 @@ window.require.define({"views/templates/outgame/journal/one-friend-journal": fun
   function program1(depth0,data) {
     
     var buffer = "", stack1, foundHelper;
-    buffer += "\n  <div class='participant'>\n    <div class='photo' style='background-image:url(";
-    foundHelper = helpers.picture;
+    buffer += "\n  <div class='participant'>\n    ";
+    stack1 = depth0.fb_id;
+    stack1 = helpers['if'].call(depth0, stack1, {hash:{},inverse:self.program(4, program4, data),fn:self.program(2, program2, data)});
+    if(stack1 || stack1 === 0) { buffer += stack1; }
+    buffer += "\n    <div class='blaze'>";
+    foundHelper = helpers.username;
     if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
-    else { stack1 = depth0.picture; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
-    buffer += escapeExpression(stack1) + "?width=90&height=90)'></div>\n    <div class='blaze'>";
-    foundHelper = helpers.name;
-    if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
-    else { stack1 = depth0.name; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
+    else { stack1 = depth0.username; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
     buffer += escapeExpression(stack1) + "</div>\n    <div class='score'>";
     foundHelper = helpers.score;
     if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
     else { stack1 = depth0.score; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
     buffer += escapeExpression(stack1) + "</div>\n  </div>\n  ";
     return buffer;}
+  function program2(depth0,data) {
+    
+    var buffer = "", stack1, foundHelper;
+    buffer += "\n      <div class='photo' style='background-image:url(https://graph.facebook.com/";
+    foundHelper = helpers.fb_id;
+    if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
+    else { stack1 = depth0.fb_id; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
+    buffer += escapeExpression(stack1) + "/picture?width=90&height=90)'></div>\n    ";
+    return buffer;}
+
+  function program4(depth0,data) {
+    
+    
+    return "\n      <div class='photo' style='background-image:url(images/common/facebook-default.jpg)'></div>\n    ";}
 
     buffer += "<div id='equipe-btn'></div>\n<div id='date'>EDITION DU ";
     foundHelper = helpers.date;
@@ -66345,24 +66580,38 @@ window.require.define({"views/templates/outgame/journal/two-friends-journal": fu
     foundHelper = helpers.medal;
     if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
     else { stack1 = depth0.medal; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
-    buffer += escapeExpression(stack1) + "'>\n    <div class='photo' style='background-image:url(";
-    foundHelper = helpers.picture;
-    if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
-    else { stack1 = depth0.picture; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
-    buffer += escapeExpression(stack1) + "?width=90&height=90)'></div>\n    <div class='rank'>";
+    buffer += escapeExpression(stack1) + "'>\n    ";
+    stack1 = depth0.fb_id;
+    stack1 = helpers['if'].call(depth0, stack1, {hash:{},inverse:self.program(4, program4, data),fn:self.program(2, program2, data)});
+    if(stack1 || stack1 === 0) { buffer += stack1; }
+    buffer += "\n    <div class='rank'>";
     foundHelper = helpers.rank;
     if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
     else { stack1 = depth0.rank; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
     buffer += escapeExpression(stack1) + "</div>\n    <div class='blaze'>";
-    foundHelper = helpers.name;
+    foundHelper = helpers.username;
     if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
-    else { stack1 = depth0.name; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
+    else { stack1 = depth0.username; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
     buffer += escapeExpression(stack1) + "</div>\n    <div class='score'>";
     foundHelper = helpers.score;
     if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
     else { stack1 = depth0.score; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
     buffer += escapeExpression(stack1) + "</div>\n  </div>\n  ";
     return buffer;}
+  function program2(depth0,data) {
+    
+    var buffer = "", stack1, foundHelper;
+    buffer += "\n      <div class='photo' style='background-image:url(https://graph.facebook.com/";
+    foundHelper = helpers.fb_id;
+    if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
+    else { stack1 = depth0.fb_id; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
+    buffer += escapeExpression(stack1) + "/picture?width=90&height=90)'></div>\n    ";
+    return buffer;}
+
+  function program4(depth0,data) {
+    
+    
+    return "\n      <div class='photo' style='background-image:url(images/common/facebook-default.jpg)'></div>\n    ";}
 
     buffer += "<div id='equipe-btn'></div>\n<div id='date'>EDITION DU ";
     foundHelper = helpers.date;
@@ -66383,45 +66632,56 @@ window.require.define({"views/templates/outgame/journal/two-friends-journal": fu
 window.require.define({"views/templates/outgame/journal/twoplus-friends-journal": function(exports, require, module) {
   module.exports = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
     helpers = helpers || Handlebars.helpers;
-    var buffer = "", stack1, foundHelper, functionType="function", escapeExpression=this.escapeExpression, self=this;
+    var buffer = "", stack1, foundHelper, functionType="function", escapeExpression=this.escapeExpression, self=this, helperMissing=helpers.helperMissing;
 
   function program1(depth0,data) {
     
     var buffer = "", stack1, foundHelper;
     buffer += "\n    <tr class='participant'>\n      <td class='rank'>";
-    foundHelper = helpers.rank;
+    foundHelper = helpers.iPlus1;
     if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
-    else { stack1 = depth0.rank; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
-    buffer += escapeExpression(stack1) + "</td>\n      <td class='photo'>\n        <div style='background-image:url(";
-    foundHelper = helpers.picture;
+    else { stack1 = depth0.iPlus1; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
+    buffer += escapeExpression(stack1) + "</td>\n      <td class='photo'>\n      ";
+    stack1 = depth0.fb_id;
+    stack1 = helpers['if'].call(depth0, stack1, {hash:{},inverse:self.program(4, program4, data),fn:self.program(2, program2, data)});
+    if(stack1 || stack1 === 0) { buffer += stack1; }
+    buffer += "\n      </td>\n      <td class='blaze'>";
+    foundHelper = helpers.username;
     if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
-    else { stack1 = depth0.picture; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
-    buffer += escapeExpression(stack1) + "?width=90&height=90)'></div>\n      </td>\n      <td class='blaze'>";
-    foundHelper = helpers.name;
-    if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
-    else { stack1 = depth0.name; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
+    else { stack1 = depth0.username; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
     buffer += escapeExpression(stack1) + "</td>\n      <td class='score'>";
     foundHelper = helpers.score;
     if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
     else { stack1 = depth0.score; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
     buffer += escapeExpression(stack1) + "</td>\n    </tr>\n    ";
     return buffer;}
+  function program2(depth0,data) {
+    
+    var buffer = "", stack1, foundHelper;
+    buffer += "\n        <div style='background-image:url(https://graph.facebook.com/";
+    foundHelper = helpers.fb_id;
+    if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
+    else { stack1 = depth0.fb_id; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
+    buffer += escapeExpression(stack1) + "/picture?width=90&height=90)'></div>\n      ";
+    return buffer;}
+
+  function program4(depth0,data) {
+    
+    
+    return "\n        <div style='background-image:url(images/common/facebook-default.jpg)'></div>\n      ";}
 
     buffer += "<div id='equipe-btn'></div>\n<div id='date'>EDITION DU ";
     foundHelper = helpers.date;
     if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
     else { stack1 = depth0.date; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
     buffer += escapeExpression(stack1) + "</div>\n<div id='title'>";
-    foundHelper = helpers.name;
+    foundHelper = helpers.title;
     if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
-    else { stack1 = depth0.name; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
-    buffer += escapeExpression(stack1) + " seulement <span class='rank'>";
-    foundHelper = helpers.rank;
-    if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
-    else { stack1 = depth0.rank; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
-    buffer += escapeExpression(stack1) + "</span>eme parmi ses amis !</div>\n<div id='leaderboard-container'>\n  <table id='leaderboard'>\n    ";
+    else { stack1 = depth0.title; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
+    buffer += escapeExpression(stack1) + "</div>\n<div id='leaderboard-container'>\n  <table id='leaderboard'>\n    ";
     stack1 = depth0.participants;
-    stack1 = helpers.each.call(depth0, stack1, {hash:{},inverse:self.noop,fn:self.program(1, program1, data)});
+    foundHelper = helpers.each_with_index;
+    stack1 = foundHelper ? foundHelper.call(depth0, stack1, {hash:{},inverse:self.noop,fn:self.program(1, program1, data)}) : helperMissing.call(depth0, "each_with_index", stack1, {hash:{},inverse:self.noop,fn:self.program(1, program1, data)});
     if(stack1 || stack1 === 0) { buffer += stack1; }
     buffer += "\n  </table>\n</div>\n<div id='buttons'>\n  <a id='invite-btn'></a>\n  <a id='ranking-btn' href='#masters'></a>\n</div>";
     return buffer;});
@@ -66433,7 +66693,7 @@ window.require.define({"views/templates/outgame/login": function(exports, requir
     
 
 
-    return "<div id='flipper'>\n  <div class=\"btn-container\">\n    <a href=\"#\" id=\"facebook-login\" class=\"facebook-login\"></a>\n    <a href=\"#\" id=\"equipe-login\" class=\"equipe-login\"></a>\n  </div>\n  <div id='equipe-forms'>\n    <a id='close-btn'></a>\n    <form name='sso-login' id='sso-login-form' action='#'>\n      <input type='text' name='username' placeholder='username' required /><br />\n      <input type='password' name='password' placeholder='password' required /><br />\n      <input type='submit' value='login' name='submit' id='login-btn' />\n    </form>\n    <p>or</p>\n    <form name='sso-register' id='sso-register-form' action='#'>\n      <input type='email' name='email' placeholder='email' required /><br />\n      <input type='text' name='username' placeholder='username' required /><br />\n      <input type='password' name='password' placeholder='password' required /><br />\n      <input type='submit' value='register' name='submit' id='register-btn' />\n    </form>\n  </div>\n</div>";});
+    return "<div id='flipper'>\n  <div class=\"btn-container\">\n    <a href=\"#\" id=\"facebook-login\" class=\"facebook-login\"></a>\n    <a href=\"#\" id=\"equipe-login\" class=\"equipe-login\"></a>\n    <a href=\"#\" id=\"temp-login\" class=\"temp-login\"></a>\n  </div>\n  <div id='temp-form'>\n    <a id='close-btn'></a>\n    <form name='temp-login' id='temp-login-form' action='#'>\n      <input type='text' name='username' placeholder='username' required /><br />\n      <input type='submit' value='login' name='submit' id='temp-btn' />\n    </form>\n  </div>\n  <div id='equipe-forms'>\n    <a id='close-btn'></a>\n    <form name='sso-login' id='sso-login-form' action='#'>\n      <input type='text' name='username' placeholder='username' required /><br />\n      <input type='password' name='password' placeholder='password' required /><br />\n      <input type='submit' value='login' name='submit' id='login-btn' />\n    </form>\n    <p>or</p>\n    <form name='sso-register' id='sso-register-form' action='#'>\n      <input type='email' name='email' placeholder='email' required /><br />\n      <input type='text' name='username' placeholder='username' required /><br />\n      <input type='password' name='password' placeholder='password' required /><br />\n      <input type='submit' value='register' name='submit' id='register-btn' />\n    </form>\n  </div>\n</div>";});
 }});
 
 window.require.define({"views/templates/outgame/more-games": function(exports, require, module) {
@@ -66474,9 +66734,37 @@ window.require.define({"views/templates/outgame/options": function(exports, requ
 window.require.define({"views/templates/outgame/profile": function(exports, require, module) {
   module.exports = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
     helpers = helpers || Handlebars.helpers;
-    var buffer = "", stack1, foundHelper, functionType="function", escapeExpression=this.escapeExpression, self=this;
+    var buffer = "", stack1, foundHelper, functionType="function", escapeExpression=this.escapeExpression, helperMissing=helpers.helperMissing, self=this;
 
   function program1(depth0,data) {
+    
+    var buffer = "", stack1, foundHelper;
+    buffer += "\n            <tr>\n              <td class='left'>";
+    foundHelper = helpers.text;
+    if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
+    else { stack1 = depth0.text; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
+    buffer += escapeExpression(stack1) + "</td>\n              <td>";
+    foundHelper = helpers.number;
+    if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
+    else { stack1 = depth0.number; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
+    buffer += escapeExpression(stack1) + "</td>\n            </tr>\n          ";
+    return buffer;}
+
+  function program3(depth0,data) {
+    
+    var buffer = "", stack1, foundHelper;
+    buffer += "\n            <tr>\n              <td class='left'>";
+    foundHelper = helpers.text;
+    if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
+    else { stack1 = depth0.text; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
+    buffer += escapeExpression(stack1) + "</td>\n              <td>";
+    foundHelper = helpers.number;
+    if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
+    else { stack1 = depth0.number; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
+    buffer += escapeExpression(stack1) + "</td>\n            </tr>\n          ";
+    return buffer;}
+
+  function program5(depth0,data) {
     
     var stack1, foundHelper;
     foundHelper = helpers.avatar;
@@ -66484,7 +66772,7 @@ window.require.define({"views/templates/outgame/profile": function(exports, requ
     else { stack1 = depth0.avatar; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
     return escapeExpression(stack1);}
 
-  function program3(depth0,data) {
+  function program7(depth0,data) {
     
     var buffer = "", stack1, foundHelper;
     buffer += "images/avatar/";
@@ -66494,17 +66782,46 @@ window.require.define({"views/templates/outgame/profile": function(exports, requ
     buffer += escapeExpression(stack1) + ".jpg";
     return buffer;}
 
-    buffer += "<!-- HEADER BLOCK BEGIN -->\n<div class=\"header-container\">\n  <a href=\"#home\" class=\"home-btn\"></a>\n  <div class=\"title\"></div>\n  <div class=\"cash-container\">\n    <div class=\"token\"></div>\n    <p>Solde <span class=\"cash-value\">";
+    buffer += "<!--MAIN BLOCK-->\n<div class='background'>\n  <div class='picture-container'>\n    <div class='picture'></div>\n    <div class='name'>";
+    stack1 = depth0.user;
+    stack1 = stack1 == null || stack1 === false ? stack1 : stack1.username;
+    stack1 = typeof stack1 === functionType ? stack1() : stack1;
+    buffer += escapeExpression(stack1) + "</div>\n  </div>\n  <div class='personal-info'>\n    <div class='level'>";
+    stack1 = depth0.user;
+    stack1 = stack1 == null || stack1 === false ? stack1 : stack1.rank;
+    stack1 = typeof stack1 === functionType ? stack1() : stack1;
+    buffer += escapeExpression(stack1) + "</div>\n    <div class='score'>";
+    stack1 = depth0.user;
+    stack1 = stack1 == null || stack1 === false ? stack1 : stack1.score;
+    foundHelper = helpers.niceNumber;
+    stack1 = foundHelper ? foundHelper.call(depth0, stack1, {hash:{}}) : helperMissing.call(depth0, "niceNumber", stack1, {hash:{}});
+    buffer += escapeExpression(stack1) + "</div>\n    <div class='facebook-link'></div>\n  </div>\n  <div class='buttons'>\n    <a href=\"#hall-of-fame\"class='hall-of-fame'></a>\n    <div class='game-center'></div>\n  </div>\n  <div class='stats'>\n    <div class='stat1'>\n      <table>\n        <tbody>\n          ";
+    stack1 = depth0.stats;
+    stack1 = helpers.each.call(depth0, stack1, {hash:{},inverse:self.noop,fn:self.program(1, program1, data)});
+    if(stack1 || stack1 === 0) { buffer += stack1; }
+    buffer += "\n        </tbody>\n      </table>\n    </div>\n    <div class='stat2'>\n      <table>\n        <tbody>\n\n          ";
+    stack1 = depth0.sports;
+    stack1 = helpers.each.call(depth0, stack1, {hash:{},inverse:self.noop,fn:self.program(3, program3, data)});
+    if(stack1 || stack1 === 0) { buffer += stack1; }
+    buffer += "\n\n        </tbody>\n      </table>\n    </div>\n  </div>\n</div>\n\n<!--BONUS BLOCK-->\n<div class='bonus'>\n  <div class='elem x2'>\n    <div class='number'>0</div>\n  </div>\n  <div class='elem percent'>\n    <div class='number'>0</div>\n  </div>\n  <div class='elem divide'>\n    <div class='number'>0</div>\n  </div>\n  <div class='elem extra-time'>\n    <div class='number'>0</div>\n  </div>\n  <div class='elem pass'>\n    <div class='number'>0</div>\n  </div>\n</div>\n\n<!--HEADER BLOCK-->\n<div class=\"header\">\n  <a href=\"#home\" class=\"home-btn\"></a>\n  <div class=\"informations\">\n    <div class=\"cash\">\n      <div class='cash-value'>";
+    stack1 = depth0.user;
+    stack1 = stack1 == null || stack1 === false ? stack1 : stack1.credits;
+    stack1 = typeof stack1 === functionType ? stack1() : stack1;
+    buffer += escapeExpression(stack1) + "</div>\n      <div class=\"cash-icone\"></div>\n    </div>\n    <div class=\"lifes\">\n      <div class=\"lifes-value\">";
+    stack1 = depth0.user;
+    stack1 = stack1 == null || stack1 === false ? stack1 : stack1.health;
+    stack1 = typeof stack1 === functionType ? stack1() : stack1;
+    buffer += escapeExpression(stack1) + "</div>\n      <div class=\"lifes-icone\"></div>\n    </div>\n  </div>\n</div>\n\n<!-- HEADER BLOCK BEGIN\n<div class=\"header-container\">\n  <a href=\"#home\" class=\"home-btn\"></a>\n  <div class=\"title\"></div>\n  <div class=\"cash-container\">\n    <div class=\"token\"></div>\n    <p>Solde <span class=\"cash-value\">";
     foundHelper = helpers.credits;
     if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
     else { stack1 = depth0.credits; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
-    buffer += escapeExpression(stack1) + "</span></p>\n    <div class=\"clearfix\"></div>\n  </div>\n  <div class=\"clearfix\"></div>\n</div>\n<!-- CONTENT BLOCK BEGIN -->\n<div class=\"content-container\">\n  <div class=\"left-block\">\n    <div class=\"fb-head-container ";
+    buffer += escapeExpression(stack1) + "</span></p>\n    <div class=\"clearfix\"></div>\n  </div>\n  <div class=\"clearfix\"></div>\n</div>\n<!-- CONTENT BLOCK BEGIN\n<div class=\"content-container\">\n  <div class=\"left-block\">\n    <div class=\"fb-head-container ";
     foundHelper = helpers.gender;
     if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
     else { stack1 = depth0.gender; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
     buffer += escapeExpression(stack1) + "\">\n      <img src=\"";
     stack1 = depth0.avatar;
-    stack1 = helpers['if'].call(depth0, stack1, {hash:{},inverse:self.program(3, program3, data),fn:self.program(1, program1, data)});
+    stack1 = helpers['if'].call(depth0, stack1, {hash:{},inverse:self.program(7, program7, data),fn:self.program(5, program5, data)});
     if(stack1 || stack1 === 0) { buffer += stack1; }
     buffer += "\" alt=\"\" class=\"fb-head\">\n    </div>\n  </div>\n  <div class=\"center-block\">\n    <div class=\"username box-align\">";
     foundHelper = helpers.username;
@@ -66518,7 +66835,7 @@ window.require.define({"views/templates/outgame/profile": function(exports, requ
     foundHelper = helpers.rank;
     if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
     else { stack1 = depth0.rank; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
-    buffer += escapeExpression(stack1) + "</a>\n  </div>\n</div>\n<div class=\"clearfix\"></div>\n<!-- FOOTER BLOCK BEGIN -->\n<div class=\"footer-container box-align\">\n  <div class=\"block played\">\n    <div class=\"score-container box-align\"></div>\n    <div class=\"text box-align\">Parties jouées</div>\n  </div>\n  <div class=\"block won\">\n    <div class=\"score-container box-align\"></div>\n    <div class=\"text box-align\">Parties gagnées</div>\n  </div>\n  <div class=\"block best-score\">\n    <div class=\"score-container box-align\"></div>\n    <div class=\"text box-align\">Meilleur niveau</div>\n  </div>\n  <div class=\"block best-cash\">\n    <div class=\"score-container box-align\"></div>\n    <div class=\"text box-align\">Meilleure cagnotte</div>\n  </div>\n  <div class=\"block stars\">\n    <div class=\"score-container box-align\"></div>\n    <div class=\"text box-align\">Etoiles Mystérieuses</div>\n  </div>\n</div>\n";
+    buffer += escapeExpression(stack1) + "</a>\n  </div>\n</div>\n<div class=\"clearfix\"></div>\n\n<div class=\"footer-container box-align\">\n  <div class=\"block played\">\n    <div class=\"score-container box-align\"></div>\n    <div class=\"text box-align\">Parties jouées</div>\n  </div>\n  <div class=\"block won\">\n    <div class=\"score-container box-align\"></div>\n    <div class=\"text box-align\">Parties gagnées</div>\n  </div>\n  <div class=\"block best-score\">\n    <div class=\"score-container box-align\"></div>\n    <div class=\"text box-align\">Meilleur niveau</div>\n  </div>\n  <div class=\"block best-cash\">\n    <div class=\"score-container box-align\"></div>\n    <div class=\"text box-align\">Meilleure cagnotte</div>\n  </div>\n  <div class=\"block stars\">\n    <div class=\"score-container box-align\"></div>\n    <div class=\"text box-align\">Etoiles Mystérieuses</div>\n  </div>\n</div>-->\n";
     return buffer;});
 }});
 
