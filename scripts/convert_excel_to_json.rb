@@ -32,6 +32,10 @@ data.default_sheet = data.sheets.first
 
 questions = []
 for i in 2..data.last_row
+
+  # Row look like : 
+  # enonce | answer A | answer B | answer C | answer D | Good answer | category | real_category | level | une
+
   begin
     @row = data.row(i)
 
@@ -50,8 +54,8 @@ for i in 2..data.last_row
       id: i,
       text: extract_answer(0),
       category: extract_answer(6),
-      difficulty: @row[7].to_i,
-      sub_category: extract_answer(8),
+      difficulty: @row[8].to_i,
+      sub_category: extract_answer(7),
       une_id: extract_answer(9),
       propositions: propositions
     }
