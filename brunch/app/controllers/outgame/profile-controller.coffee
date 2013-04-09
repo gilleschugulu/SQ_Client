@@ -6,6 +6,7 @@ FacebookHelper  = require 'helpers/facebook-helper'
 ConfigHelper    = require 'helpers/config-helper'
 GameStatHelper  = require 'helpers/game-stat-helper'
 I18n            = require 'lib/i18n'
+User            = require 'models/outgame/user-model'
 
 module.exports = class ProfilesController extends Controller
   title     : 'Profile'
@@ -13,9 +14,8 @@ module.exports = class ProfilesController extends Controller
   stats : null
 
   index: =>
-    @user = Parse.User.current()
-    @user.set('score', 234234).save()
-    console.log @user
+    @user = new User(Parse.User.current().attributes)
+    
     @loadView 'profile'
       , =>
         stats = GameStatHelper.getProfileStat()
@@ -28,7 +28,7 @@ module.exports = class ProfilesController extends Controller
           text: val.name
           name: key
 
-        new ProfileView({ user : @user.attributes, stats: stats_stats, sports: stats_sports })
+        new ProfileView({ user : @user.attributes, stats: stats_stats, sports: stats_sports, bonus: @user.getBonuses()})
 
       , (view) =>
         view.delegate 'click', '.facebook-link', @linkFacebook

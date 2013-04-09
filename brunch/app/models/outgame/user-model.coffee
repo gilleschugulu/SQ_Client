@@ -25,3 +25,13 @@ module.exports = class User extends Parse.User
       good_answers_count:   0
       wrong_answers_count:  0
       sports:               {}
+
+  getBonuses: ->
+    bonuses = []
+    for name, qty of @get('bonus')
+      bonuses.push({
+        name: name
+        quantity: qty
+      })
+
+    bonuses

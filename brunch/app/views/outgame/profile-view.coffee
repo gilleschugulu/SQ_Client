@@ -10,5 +10,3 @@ module.exports = class ProfileView extends View
 
   getTemplateData: ->
     @options
-
-

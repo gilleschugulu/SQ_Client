@@ -45,21 +45,11 @@
 
 <!--BONUS BLOCK-->
 <div class='bonus'>
-  <div class='elem x2'>
-    <div class='number'>0</div>
-  </div>
-  <div class='elem percent'>
-    <div class='number'>0</div>
-  </div>
-  <div class='elem divide'>
-    <div class='number'>0</div>
-  </div>
-  <div class='elem extra-time'>
-    <div class='number'>0</div>
-  </div>
-  <div class='elem pass'>
-    <div class='number'>0</div>
-  </div>
+  {{#each bonus}}
+    <div class='elem {{name}}'>
+      <div class='number'>{{quantity}}</div>
+    </div>
+  {{/each}}
 </div>
 
 <!--HEADER BLOCK-->
