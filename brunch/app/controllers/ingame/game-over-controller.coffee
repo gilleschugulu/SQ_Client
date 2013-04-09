@@ -14,6 +14,7 @@ module.exports = class GameOverController extends Controller
       GameStatHelper.incrementSumScore(params.jackpot)
       GameStatHelper.saveStats()
       user = Parse.User.current()
+      user.increment('credits', 10).save()
 
       params.stats = _.map GameStatHelper.getEndGameScoreStat(), (val, key) ->
         name: key
@@ -21,6 +22,7 @@ module.exports = class GameOverController extends Controller
         text: I18n.t('controller.game_over.stats.' + key)
 
       new GameOverView {success, params, player: {health: user.get('health'), credits: user.get('credits')}}
+
     , (view) =>
       view.delegate 'click', '#replay', => @redirectTo 'game'
     , {viewTransition: yes, music: 'game-over'}
