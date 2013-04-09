@@ -15,6 +15,10 @@ module.exports = class ProfilesController extends Controller
 
   index: =>
     @user = new User(Parse.User.current().attributes)
+    if fb_id = @user.get('fb_id')
+      avatar = 'https://graph.facebook.com/' + fb_id + '/picture?width=150&height=170'
+    else
+      avatar = 'images/common/facebook-default.jpg'
     
     @loadView 'profile'
       , =>
@@ -28,7 +32,7 @@ module.exports = class ProfilesController extends Controller
           text: val.name
           name: key
 
-        new ProfileView({ user : @user.attributes, stats: stats_stats, sports: stats_sports, bonus: @user.getBonuses()})
+        new ProfileView({ user : @user.attributes, stats: stats_stats, sports: stats_sports, bonus: @user.getBonuses(), avatar})
 
       , (view) =>
         view.delegate 'click', '.facebook-link', @linkFacebook
