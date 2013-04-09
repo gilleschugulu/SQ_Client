@@ -81,7 +81,7 @@ module.exports = class DupaStageController extends StageController
     return no if bonusName == 'mass' and @bonusMassUsed
     return no if bonusName == 'fifty_fifty' and @bonusFiftyFiftyUsed
     return no if bonusName == 'double' and @bonusDoubleUsed
-    return no if bonusName == 'add_time' and @timer.duration >= @model.getConfigValue('time_bonus_threshold')
+    return no if bonusName == 'add_time' and @model.getConfigValue('timeBonus') + Math.floor(@timer.duration) > @model.getConfigValue('answerTime')
     true
 
   executeBonus: (bonusName) ->
