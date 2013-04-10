@@ -69,13 +69,14 @@ module.exports = class FacebookHelper
   # Get friends
   # -----------------
   @getFriends: (callback) ->
+    #friendList = ({id: fb_id} for fb_id in ['1509669172','599526180','100003164482205','100001321941779','1509669172','599526180','100003164482205','100001321941779', '1509669172','599526180','100003164482205','100001321941779'])
+    #callback(friendList)
     if @isLinked()
-      FB.api '/me/friends?fields=installed', (response) => 
+      FB.api '/me/friends?fields=installed', (response) =>
         friends = (friend for friend in response.data when friend.installed)
         callback(friends)
     else
       callback([])
-
 
   # # Like the appli
   # # HAHA, like an Open Graph object. Not usable now, maybe later

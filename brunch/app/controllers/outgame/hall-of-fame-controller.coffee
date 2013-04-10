@@ -3,6 +3,8 @@ HallOfFameView  = require 'views/outgame/hall-of-fame-view'
 mediator        = require 'mediator'
 ConfigHelper    = require 'helpers/config-helper'
 AnalyticsHelper = require 'helpers/analytics-helper'
+FacebookHelper  = require 'helpers/facebook-helper'
+i18n            = require 'lib/i18n'
 
 module.exports = class HallOfFameController extends Controller
   historyURL: 'hall-of-fame'
@@ -14,33 +16,36 @@ module.exports = class HallOfFameController extends Controller
     @friend = if withFriends then true else false
     ranking = if withFriends then @friendsArray else @globalArray
     @collection = []
-    for i in [0..ranking.length-1]
+    for i in [0...ranking.length]
       @collection[i] =
         friend     : @friend
-        rank       : ranking[i].attributes.order
-        username   : ranking[i].attributes.username
-        jackpot    : ranking[i].attributes.score
-        profilepic : if Math.random() > 0.49 then 'https://graph.facebook.com/sergio.chugulu/picture' else null
-    # params =
-    #   uuid   : mediator.user.get('uuid')
-    #   friends: withFriends
-    # @request?.abort()
-    # @request = ApiCallHelper.fetch.getLeaderboards params, (@collection) =>
-    #   @request = null
-      @updateRanking()
+        rank       : ranking[i].rank
+        username   : ranking[i].username
+        jackpot    : ranking[i].score
+        profilepic : if ranking[i].fb_id isnt undefined then 'https://graph.facebook.com/'+ranking[i].fb_id+'/picture' else null
+      if ranking[i].username is @user.get('username')
+        position = i
+    if !@fbConnected and withFriends then fbconnected = false else fbConnected = true
+    if @collection.length<=1 then noFriends = true else noFriends = false
+    @updateRanking(position, noFriends, fbConnected)
 
   index: ->
-    user = Parse.User.current()
-    @friendsArray = new Array();
-    @globalArray = new Array();
-    Parse.Cloud.run('getGlobalScores', {id : user.id , rank : user.get('rank')}, {
-      success: (result) =>
-        @globalArray = result
-        @friendsArray = result
-        @fetchPlayers yes
-      error: (error) =>
-        console.log error
-    });
+    @user = Parse.User.current()
+    @friendsArray = []
+    @globalArray = []
+    @fbConnected = Parse.FacebookUtils.isLinked @user
+    Parse.Cloud.run 'getAllScore' , {rank : @user.get('rank'), userId : @user.id},
+      success: (players) =>
+        @globalArray = players
+    FacebookHelper.getFriends (friends) =>
+      friendsId = _.pluck(friends, 'id')
+      Parse.Cloud.run 'getFriendsScore' , {friendsId: friendsId},
+        success: (players) =>
+          players.push Parse.User.current().attributes
+          players = players.sort (f1, f2) ->
+            f2.score - f1.score
+          @friendsArray = players
+          @fetchPlayers yes
 
 
 
@@ -57,11 +62,13 @@ module.exports = class HallOfFameController extends Controller
       view.delegate 'click', '#btn-friends', @onClickFriends
       view.delegate 'click', '#btn-global', @onClickGlobal
       view.delegate 'click', '.ask-friend', @askFriend
+      view.delegate 'click', '#no-friends', @addFriends
+      view.delegate 'click', '#no-fb-connected', @connectFacebook
       @updateRanking() if @collection
     , {viewTransition: yes, music: 'outgame'}
 
-  updateRanking: =>
-    @view?.updateRankingList @collection
+  updateRanking: (i, noFriends, fbConnected) =>
+    @view?.updateRankingList @collection, i, noFriends, fbConnected
 
   onClickFriends: (e) =>
     if !$(e.target).hasClass('active')
@@ -88,3 +95,9 @@ module.exports = class HallOfFameController extends Controller
   askFriend: (e) =>
     if !$(e.target).hasClass('asked')
       @view.askFriend e.target
+
+  addFriends: =>
+    FacebookHelper.friendRequest i18n.t('controller.home.facebook_invite_message')
+
+  connectFacebook: =>
+    FacebookHelper.linkPlayer() unless FacebookHelper.isLinked()
