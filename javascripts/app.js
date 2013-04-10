@@ -61368,6 +61368,7 @@ window.require.register("controllers/outgame/hall-of-fame-controller", function(
     HallOfFameController.prototype.friendsToInvite = function(friends) {
       var i, tmp, _i;
 
+      console.log(friends);
       tmp = [];
       for (_i = 0; _i <= 2; _i++) {
         i = Math.floor(Math.random() * friends.length);
