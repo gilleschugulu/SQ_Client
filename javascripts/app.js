@@ -61235,7 +61235,7 @@ window.require.register("controllers/outgame/hall-of-fame-controller", function(
     HallOfFameController.prototype.request = null;
 
     HallOfFameController.prototype.fetchPlayers = function(withFriends) {
-      var fbconnected, i, noFriends, position, ranking, _i, _ref1;
+      var fbConnected, i, noFriends, position, ranking, _i, _ref1;
 
       this.friend = withFriends ? true : false;
       ranking = withFriends ? this.friendsArray : this.globalArray;
@@ -61252,7 +61252,7 @@ window.require.register("controllers/outgame/hall-of-fame-controller", function(
           position = i;
         }
       }
-      fbconnected = FacebookHelper.isLinked();
+      fbConnected = FacebookHelper.isLinked();
       noFriends = this.collection.length <= 1;
       return this.updateRanking(position, noFriends, fbConnected, withFriends);
     };
