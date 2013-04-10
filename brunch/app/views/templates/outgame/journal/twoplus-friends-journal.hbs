@@ -1,18 +1,22 @@
 <div id='equipe-btn'></div>
 <div id='date'>EDITION DU {{date}}</div>
-<div id='title'>{{name}} seulement <span class='rank'>{{rank}}</span>eme parmi ses amis !</div>
+<div id='title'>{{title}}</div>
 <div id='leaderboard-container'>
   <table id='leaderboard'>
-    {{#each participants}}
+    {{#each_with_index participants}}
     <tr class='participant'>
-      <td class='rank'>{{rank}}</td>
+      <td class='rank'>{{iPlus1}}</td>
       <td class='photo'>
-        <div style='background-image:url({{picture}}?width=90&height=90)'></div>
+      {{#if fb_id}}
+        <div style='background-image:url(https://graph.facebook.com/{{fb_id}}/picture?width=90&height=90)'></div>
+      {{else}}
+        <div style='background-image:url(images/common/facebook-default.jpg)'></div>
+      {{/if}}
       </td>
-      <td class='blaze'>{{name}}</td>
+      <td class='blaze'>{{username}}</td>
       <td class='score'>{{score}}</td>
     </tr>
-    {{/each}}
+    {{/each_with_index}}
   </table>
 </div>
 <div id='buttons'>

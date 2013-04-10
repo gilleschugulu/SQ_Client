@@ -1,25 +1,41 @@
 <div class="header-container">
   <a href="#home" class="home-btn"></a>
+  <div id="title" class="title"></div>
 </div>
-<div class="content-container{{#if success}} sucess{{else}} lost{{/if}}">
+
+<div id='numbers'>
+  <span id='hearts' class='number'>{{player.health}}</span>
+  <span id='heart-icon' class='icon'></span>
+  <span id='credits' class='number'>{{player.credits}}</span>
+  <span id='credit-icon' class='icon'></span>
+</div>
+
+
+<div class="content-container">
   <h1 class="title box-align">
-    {{#if success}}
-      Pour te récompense voici <span class="jetons">{{params.reward}}</span> offerts!
-    {{else}}
-      Ne baisse pas les bras.<br>
-      Tu feras mieux la prochaine fois!
-    {{/if}}
+    Bravo, tu as gagné <span class="jetons-number">{{params.reward}}</span> <span class="jetons"></span> !
   </h1>
+
   <div class="blocks-container">
     <div class="block jackpot">
-      <span class="value">{{niceNumber params.jackpot}}</span>
+      <div class="title"></div>
+      <div class="value">{{niceNumber params.jackpot }}</div>
     </div>
-    <div class="block rank">
-      <img src="{{getRankImage params.rank}}" class='rank-image'>
-      <div class="rank-text box-align">
-        <span class="resizeOnce">{{getRankName params.rank}}</span>
-      </div>
+
+    <div class='block stats'>
+
+
+      <table id='stats'>
+        {{#each params.stats}}
+        <tr>
+          <td class='name'>{{text}}</td>
+          <td class='number'>{{number}}</td>
+        </tr>
+        {{/each}}
+      </table>
     </div>
+
   </div>
+
   <a href="#game" class="replay-btn"></a>
 </div>

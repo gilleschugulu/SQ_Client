@@ -1,28 +1,57 @@
 <!-- HEADER BLOCK BEGIN -->
-<div class="header-container">
-  <a href="#home" class="home-btn"></a>
-  <div class="title"></div>
-  <div class="cash-container">
-    <div class="cash-value">{{credits}}</div>
-  </div>
-  <div class="clearfix"></div>
+<a href="#home" class="home-btn"></a>
+<div class='tabs-container'>
+  <div class='tab active' id='credits'></div>
+  <div class='tab inactive' id='bonuses'></div>
 </div>
-<!-- CONTENT BLOCK BEGIN -->
-<div class="content-container">
-  <div class="paid-offers">
-    {{#each packs.credit_packs}}
-      <a class="paid-pack first-offer" data-id="{{id}}" style="background-image:url({{image}})"></a>
-    {{/each}}
+
+<div id='numbers'>
+  <span id='hearts' class='number'>{{health}}</span>
+  <span id='heart-icon' class='icon'></span>
+  <span id='credits' class='number'>{{credits}}</span>
+  <span id='credit-icon' class='icon'></span>
+</div>
+
+<div class="clearfix"></div>
+
+
+<div class='tab-container'>
+
+  <!-- CREDITS CONTENT BLOCK BEGIN -->
+  <div class="content-container" id='credits'>
+    <div class="free-offers">
+      {{#each packs.free_packs}}
+        {{#unless disabled}}
+          <a class="free-pack" id="{{name}}">
+            <span>+ {{value}}</span>
+          </a>
+        {{/unless}}
+      {{/each}}
+    </div>
+    <div class="clearfix"></div>
+    <div class="paid-offers">
+      {{#each packs.credit_packs}}
+        <a class="paid-pack first-offer {{../packs.type}}" data-id="{{product_id}}" style="background-image:url({{image}})">
+          <span class='marker'>+</span>
+          <span class='value'>{{value}}</span>
+          <span class='credit-icon'></span>
+        </a>
+      {{/each}}
+    </div>
+    <div class="clearfix"></div>
   </div>
-  <div class="clearfix"></div>
-  <div class="free-offers">
-    <div class="title"></div>
-    {{#if packs.free_packs.adcolony}}<a class="free-pack first-offer" id="adcolony"></a>{{/if}}
-    {{#if packs.free_packs.tapjoy}}<a class="free-pack second-offer" id="tapjoy"></a>{{/if}}
-    {{#if packs.free_packs.app_store_rating}}<a class="free-pack fifth-offer" id="app_store_rating"></a>{{/if}}
-    {{#if packs.free_packs.invite_friends}}<a class="free-pack third-offer" id="facebook_invitation"></a>{{/if}}
-    {{#if packs.free_packs.facebook_like}}<a target="_blank" href="{{../like_page_url}}" class="free-pack fourth-offer" id="facebook_like"></a>{{/if}}
-    {{#if packs.free_packs.twitter}}<a class="free-pack first-offer" id="twitter">FOLLOW US</a>{{/if}}
+
+
+  <!-- BONUSES CONTENT BLOCK BEGIN -->
+  <div class="content-container" id='bonus' style='display: none'>
+    <div class='life-container'>
+      {{#each bonuses.life_packs}}
+        <div class="life-pack" style='background-image: url(images/shop/life_and_bonus/Vies/{{value}}.png)' data-position='{{@index}}'></div>
+      {{/each}}
+    </div>
+    <div data-position='0' class='bonus-pack small'></div>
+    <div data-position='1' class='bonus-pack medium'></div>
+    <div data-position='2' class='bonus-pack big'></div>
   </div>
-  <div class="clearfix"></div>
+
 </div>

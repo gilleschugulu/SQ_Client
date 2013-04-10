@@ -15,10 +15,15 @@ module.exports = class DupaStage extends Stage
     @currentThresholdIndex = 0
     player
 
-  playerMadeSuccess: (player) ->
-    player.addJackpot @getCurrentThreshold()
-    @currentThresholdIndex++ if @currentThresholdIndex < @getConfigValue('thresholds').length
+  playerMadeSuccess: (player, doubleScore) ->
+    jackpot = @getCurrentThreshold()
+    jackpot *= 2 if doubleScore
+    player.addJackpot jackpot
+    @increaseThreshold()
     player
+
+  increaseThreshold: ->
+    @currentThresholdIndex++ if @currentThresholdIndex < @getConfigValue('thresholds').length - 1
 
   getCurrentThreshold: ->
     @getConfigValue('thresholds')[@currentThresholdIndex]

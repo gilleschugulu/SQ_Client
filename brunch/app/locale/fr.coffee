@@ -1,12 +1,27 @@
 module.exports =
   fr:
     controller:
-      invite:
+      home:
         facebook_invite_message: 'Vasy rejoins ce jeu il déchire'
+        journal:
+          twoplus:
+            rank_1 : '{0} est numero uno'
+            rank_2 : '{0} y est presque'
+            rank_3 : '{0} dernier du podium'
+            rank_n : '{0} n\'est qu\'a la position {1}'
       shop:
         unavailable_pack:
           title: 'erreur'
           message: 'pack indisponible'
+        not_enough_credits:
+          title: 'erreur'
+          message: 'pas assez de crédits'
+      game_over:
+        stats:
+          nb_questions: 'Nombre de questions'
+          good_answers: 'Bonnes réponses'
+          wrong_answers: 'Mauvaises réponses'
+          best_row: 'Plus longue série'
     helper:
       app_store_link: "http://itunes.apple.com/app/les-12-coups-de-midi/id584885677?mt=8"
       game_icon: "https://midi-preproduction.chugulu.com/assets/Icon-72@2x.png"
@@ -48,7 +63,9 @@ module.exports =
             title: 'Erreur'
             message: "Une erreur est survenue. Veuillez réessayer plus tard."
         facebook:
-          invitation_text: 'accepte'
+          invitation:
+            text: 'accepte'
+            reward : "Youpi ! tu as des credits en plus...ou pas"
     view:
       outgame:
         login:

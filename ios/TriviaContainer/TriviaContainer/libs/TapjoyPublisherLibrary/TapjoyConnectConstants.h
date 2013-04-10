@@ -53,6 +53,9 @@
 // Fired when any Tapjoy view is closed.
 #define TJC_VIEW_CLOSED_NOTIFICATION						@"TJC_VIEW_CLOSED_NOTIFICATION"
 
+// Error notification for the Offer Wall
+#define TJC_OFFERS_RESPONSE_NOTIFICATION_ERROR		@"TJC_OFFERS_RESPONSE_NOTIFICATION_ERROR"
+
 // The keys for the options dictionary when calling requestTapjoyConnect.
 #define TJC_OPTION_DISABLE_VIDEOS				@"TJC_OPTION_DISABLE_VIDEOS"
 #define TJC_OPTION_VIDEO_CACHE_COUNT			@"TJC_OPTION_VIDEO_CACHE_COUNT"

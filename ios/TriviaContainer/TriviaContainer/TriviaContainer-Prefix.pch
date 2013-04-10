@@ -6,20 +6,20 @@
     #import <UIKit/UIKit.h>
 #endif
 
-#define iTunesAppID         @"584885677"
+#define iTunesAppID         @"619795233"
 
 /* ChartBoost */
-#define ChartBoostAppID         @"50eef0b616ba47f706000008"
-#define ChartBoostAppSignature  @"2d642d25327687c0d9f4718ae196c632d3fdd26d"
+#define ChartBoostAppID         @"5151bde417ba472944000023"
+#define ChartBoostAppSignature  @"8421b9c17ece2e302d9ace1a5c26d9c82a565a74"
 
 
 /* Tapjoy */
-#define TapjoyAppID             @"f03160d9-d7b5-4ab3-91c7-b165d92ab81f"
-#define TapjoyAppSecretKey      @"4fmMoybNopa7Ese7pFNA"
+#define TapjoyAppID             @"2948f4c1-5a8d-4090-beb1-725c617477c8"
+#define TapjoyAppSecretKey      @"mbE9tcK5pZhQeiUHVCY6"
 
 /* AdColony */
-#define AdColonyAppID           @"app9459fde090db4b32a65252"
-#define AdColonyAppV4VCSecret   @"v4vce6e7cd65db2e4bb29d2cf8"
+#define AdColonyAppID           @"app307ea6d952a043289cbec1"
+#define AdColonyAppV4VCSecret   @"v4vc84af66cd1a2844c388d29c"
 
 #ifdef DEBUG
 
@@ -28,11 +28,11 @@
 #endif
 
 /* MKStoreKit Config (see MKStoreKitConfig.h) */
-#define MKSK_USE_REMOTE_PRODUCT_SERVER              YES
-#define MKSK_REMOTE_PRODUCT_MODEL                   YES
+#define MKSK_USE_REMOTE_PRODUCT_SERVER              NO
+#define MKSK_REMOTE_PRODUCT_MODEL                   NO
 #define MKSK_PRODUCT_VERIFY_RECEIPT_PATH            @"purchases/verify_receipt"
 
-#define TestFlightTeamToken @"dcb5995c6575d8c307c409c8c9010430_NTQxOTcyMDEyLTAxLTE2IDExOjIxOjI2LjA3MzEyMw"
+#define TestFlightTeamToken @"ff3e918d-cde3-407d-9975-cfb7552f41bb"
 
 // app rating
 #define APP_RATING_COUNTER_MODULO 2

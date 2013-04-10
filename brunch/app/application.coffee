@@ -3,7 +3,6 @@ Layout        = require 'views/layout'
 mediator      = require 'mediator'
 routes        = require 'routes'
 config        = require 'config/environment-config'
-ApiCallHelper = require 'helpers/api-call-helper'
 
 # The application object
 module.exports = class Application extends Chaplin.Application
@@ -103,7 +102,7 @@ module.exports = class Application extends Chaplin.Application
     Message?.checkCanSendMail()
     Message?.checkCanSendText()
     AdColony?.init config.services.adcolony.zones
-    TapjoyConnect?.requestTapjoyConnect ->
+    TapjoyConnect?.requestTapjoyConnect null, null, ->
       TapjoyConnect.initVideoAd()
     GameCenter?.authenticateLocalUser()
     ChartBoost?.cacheInterstitial()

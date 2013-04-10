@@ -18,10 +18,14 @@ module.exports = class DupaView extends View
     callback?()
 
   updateTimer: (duration) ->
-    $('.chrono-time', @$el).text (duration - 1) + 's'
-    progress = duration / @options.time * 100
-    if progress > 100
-      progress = 100
+    duration = parseInt(duration)
+    duration = @options.time if duration > @options.time
+    duration = 0 if duration <= 0
+
+    $('.chrono-time', @$el).text duration + 's'
+
+    progress = duration / (@options.time) * 100
+    progress = 100 if progress > 100
     progressEl = $('.chrono-container .chrono-filler', @$el).css('height', progress + '%')
 
   clearTimer: ->
@@ -36,15 +40,21 @@ module.exports = class DupaView extends View
   showQuestion: (question, callback) ->
     setTimeout => # http://i.imgur.com/xVyoSl.jpg
       propositionsEl = $('.question-propositions-container', @$el)
-      $('.proposition', propositionsEl).remove()
+      $('.proposition-container', propositionsEl).remove()
       for proposition in question.getPropositions()
-        propositionsEl.prepend "<div class='proposition box-align' data-id='#{proposition.id}'>
-            <span class='resize'>#{if proposition.masked then '?' else proposition.text}</span>
+        propositionsEl.prepend "<div class='proposition-container box-align' data-id='#{proposition.id}'>
+            <span class='proposition resize' data-id='#{proposition.id}'>#{proposition.text}</span>
             <div class='massOpinion'></div>
           </div>"
-      @autoSizeText()
-      $('.question-theme').text question.get('theme')
+
+      $('.proposition-container', @$el).addClass('animated pulse').one 'webkitAnimationEnd', ->
+        $(@).removeClass('animated pulse')
+
+      theme = question.get('theme')
+      theme = 'Question' unless theme
+      $('.question-theme').text(theme)
       $('.question-content').text question.get('text')
+      @autoSizeText()
       callback()
     , 0
 
@@ -64,15 +74,19 @@ module.exports = class DupaView extends View
 
   updateAnswerButton: (propositionId, status, callback, question) ->
     @updatePropositionsText question
+    klass = if status then 'success' else 'error'
+
     if propositionId
       propositionEl = $('.proposition[data-id="'+propositionId+'"]', @$el)
+      propositionEl.parent().addClass(klass)
     else
       propositionEl = $('.proposition', @$el)
-    klass = if status then 'success' else 'error'
+
     setTimeout =>
-      propositionEl.addClass('animated fadeOut').one 'webkitAnimationEnd', =>
-        propositionEl.removeClass('fadeOut').addClass(klass + ' fadeIn').one 'webkitAnimationEnd', ->
-          callback()
+      propositionEl.removeClass('animated').addClass('animated fadeOut').one 'webkitAnimationEnd', =>
+        # propositionEl.parent().removeClass(klass)
+        # propositionEl.removeClass('fadeOut').addClass('fadeIn').one 'webkitAnimationEnd', ->
+        callback()
     , 500
 
   beforeNextQuestionMessage: (textKey, jackpot, callback) ->
@@ -83,20 +97,32 @@ module.exports = class DupaView extends View
         callback?()
     , 2000
 
-  updateJackpot: (jackpot, currentThresholdValue) ->
+  updateJackpot: (jackpot, currentThresholdValue, result) ->
     el = $('.jackpot-container', @$el)
     $('#total-jackpot', el).text jackpot
-    $(".threshold", el).removeClass('highlighted')
-    $(".threshold[data-value='#{currentThresholdValue}']", el).addClass('highlighted')
-    @updateJackpotMarker(currentThresholdValue)
+    
+    $(".threshold .highlighted", el).addClass('animated fadeOut').one 'webkitAnimationEnd', ->
+      $(@).remove()
 
-  updateJackpotMarker: (currentThresholdValue) ->
+    blockEl = $(".threshold[data-value='#{currentThresholdValue}']", el)
+
+    blockEl.append("<div class='highlighted'>#{currentThresholdValue}</div>")
+    $('.highlighted', blockEl).addClass('animated fadeIn')
+
+    @updateJackpotMarker(currentThresholdValue, result)
+
+  updateJackpotMarker: (currentThresholdValue, result = true) ->
     el = $('.jackpot-container', @$el)
     currentThresholdIndex = @options.thresholds.indexOf(currentThresholdValue)
 
     # Position go for 91 to 10. May need some... adaptation
     height = (currentThresholdIndex + 1) * 9 + 1
-    $('#jackpot-marker', el).css('top', height + '%')
+
+    klass = if result then 'bounce' else 'inverseBounce'
+    $('#jackpot-marker', el).css('top', height + '%').one 'webkitTransitionEnd', ->
+      $(@).addClass(klass + ' animated').one 'webkitAnimationEnd', ->
+        $(@).removeClass(klass + ' animated')
+
 
   updateBonus: (targetElement, quantity, callback) ->
     targetElement = $(targetElement, @$el)
@@ -110,8 +136,15 @@ module.exports = class DupaView extends View
 
   displayMass: (propositions, callback) ->
     for proposition in propositions
-      $(".proposition[data-id='#{proposition.id}'] .massOpinion").html(proposition.massOpinion + '%').show()
+      $(".proposition-container[data-id='#{proposition.id}'] .massOpinion").html(proposition.massOpinion + '%').show()
     callback?()
+
+  doubleScoreActivated: ->
+    $('.highlighted').addClass('gold')
+    $('#jackpot-marker').addClass('gold')
+
+  doubleScoreDeactivated: ->
+    $('#jackpot-marker').removeClass('gold')
 
   finishMessage: (textKey, params, callback) ->
     @displayMessage textKey, params

@@ -1,113 +1,97 @@
 mediator        = require 'mediator'
 ConfigHelper    = require 'helpers/config-helper'
 SpinnerHelper   = require 'helpers/spinner-helper'
-ApiCallHelper   = require 'helpers/api-call-helper'
 PopUpHelper     = require 'helpers/pop-up-helper'
 FacebookHelper  = require 'helpers/facebook-helper'
 i18n            = require 'lib/i18n'
 AnalyticsHelper = require 'helpers/analytics-helper'
 
 module.exports = class PurchaseHelper
-  @purchaseAppstoreRating: (successCallback) ->
+  @tapPoints : 0
+
+  @purchaseAppstoreRating: (pack, successCallback) ->
+    user = Parse.User.current()
+
     AppStoreRating?.openRatingsPage (appVersion) ->
-      console.log appVersion
-      # Formating params before calling API for reward
-      params_reward =
-        url:
-          app_version : appVersion
-        to_change:
-          action: 'app_store_rating'
-          uuid  : mediator.user.get('uuid')
+      user.increment('credits', pack.value).save()
+      successCallback?(user.get('credits'))
 
-      # Call the server API
-      ApiCallHelper.send.updatePlayer params_reward
-        , (response) -> # Success Callback
-          console.log response
-          mediator.user.set 'credits', response.player.credits
-          successCallback?(mediator.user.get('credits'))
+  @purchaseTwitter: (pack, twitterConfig, successCallback) ->
+    window.open('http://twitter.com', '_blank')
+    successCallback?(Parse.User.current().get('credits'))
 
 
-  @purchaseFacebookLike: (successCallback) ->
-    # Formating params before calling API for reward
-    params_reward =
-      to_change:
-        action: 'facebook_like'
-        uuid  : mediator.user.get('uuid')
+  @purchaseFacebookLike: (pack, successCallback) ->
+    window.open('http://facebook.com', '_blank')
+    user = Parse.User.current()
+    user.increment('credits', pack.value).save()
+    successCallback?(user.get('credits'))
 
-    ApiCallHelper.send.updatePlayer params_reward
-      , (response) -> # Success Callback
-        console.log 'Server give credits', response
-        mediator.user.set 'credits', response.player.credits
 
-        PopUpHelper.initialize
-          title  : i18n.t 'helper.purchase.apple.error.title'
-          message: i18n.t 'helper.purchase.apple.error.message'
-          key    : 'purchase-fail'
+  @purchaseFacebookInvitation: (pack, successCallback) ->
+    user = Parse.User.current()
 
-        successCallback?(mediator.user.get('credits'))
-
-  @purchaseFacebookInvitation: (successCallback) ->
-    FacebookHelper.friendRequest i18n.t('helper.purchase.facebook.invitation_text'), (response) =>
+    FacebookHelper.friendRequest i18n.t('helper.purchase.facebook.invitation.text'), (response) =>
       # We don't need this shhh*t
       delete response.request
 
-      # Formating params before calling API for reward
-      params_reward =
-        url:
-          friends      : response.to
-          provider_name: 'facebook'
-        to_change:
-          action: 'invite_friends'
-          uuid  : mediator.user.get('uuid')
 
-      console.log 'Friends count : ', params_reward.url.friends
+      # Filter friends already invited : local ? Parse ? Both ?
 
       # # Pushing id of friends invited into the array before sending
-      # for to, id of response
-      #   params_reward.url.friends.push id
+      friends_invited = []
+      for to, id of response
+        friends_invited.push id
 
-      # Call the server API
-      ApiCallHelper.send.updatePlayer params_reward
-        , (response) -> # Success Callback
-          console.log response
-          mediator.user.set 'credits', response.info.data.player.credits
-          successCallback?(mediator.user.get('credits'))
-          PopUpHelper.initialize
-            title  : 'info'
-            message: response.info.messages
-            key    : 'fb-reward'
-        # , (response) -> # Error Callback
-        #   console.log response
+      user.increment('credits', pack.value * friends_invited.length).save()
+      successCallback?(user.get('credits'))
 
-  @purchaseTapjoy: (currency, successCallback) ->
+      PopUpHelper.initialize
+        title  : 'info'
+        message: i18n.t('helper.purchase.facebook.invitation.reward')
+        key    : 'fb-reward'
+
+  @purchaseTapjoy: (pack, currency, successCallback) ->
+    user = Parse.User.current()
+
     if TapjoyConnect?
-      TapjoyConnect.setUserID mediator.user.get 'uuid'
+      TapjoyConnect.setUserID Parse.User.current().id
       TapjoyConnect.showOffersWithCurrencyID currency, no, =>
-        # AnalyticsHelper.item('Pack de crédits Tapjoy', 'Visionné', pack.name, 0)
-        currentBalance = mediator.user.get 'credits'
-        ApiCallHelper.fetch.player mediator.user.get('uuid'), (response) =>
-          console.log "fetch player after tapjoy"
-          console.log response
-          if currentBalance isnt response.credits
-            # AnalyticsHelper.trackTransaction AnalyticsHelper.getTransactionHash([pack], ConnectionHelper.getUUID())
-            mediator.user.set 'credits', response.player.credits
-            successCallback?(mediator.user.get('credits'))
+        TapjoyConnect.getTapPoints (points) =>
+          console.log "TAPJOY POINTS"
+          console.log @tapPoints
+          console.log points
+          console.log points - @tapPoints
+          user.increment('credits', points - @tapPoints).save()
+          @tapPoints = points
+          successCallback?(user.get('credits'))
 
-  @purchaseAdcolony: (zone, successCallback) ->
+  @initTapPoints: ->
+    TapjoyConnect?.setUserID Parse.User.current().id
+    TapjoyConnect?.getTapPoints (@tapPoints) =>
+
+  @purchaseAdcolony: (pack, zone, successCallback) ->
+    user = Parse.User.current()
+
     if AdColony?
       options =
         zone     : zone
-        custom   : mediator.user.get 'uuid'
+        custom   : Parse.User.current().id
         # prepopup : yes
         # postpopup: yes
       AdColony.playVideo options, (amount) =>
         console.log "AD COLO : I gots some reward"
         console.log amount
-        console.log mediator.user.get('credits')
-        console.log mediator.user.get('credits') + amount
+        console.log Parse.User.current().get('credits')
+        console.log Parse.User.current().get('credits') + amount
         # AnalyticsHelper.item('Pack de crédits AdColony', 'Visionné', pack.name, 0)
-        mediator.user.set('credits', amount + mediator.user.get('credits'))
-        successCallback?(mediator.user.get('credits'))
+        # Parse.User.current().set('credits', amount + Parse.User.current().get('credits'))
+        # successCallback?(Parse.User.current().get('credits'))
+
+        # TODO : Pack doesn't have a constant value
+        user.increment('credits', amount).save()
+        successCallback?(user.get('credits'))
+
       , (error) =>
         console.log "AD COLO : fail"
         console.log error
@@ -123,17 +107,35 @@ module.exports = class PurchaseHelper
             key    : 'adcolony-fail'
         PopUpHelper.initialize popupStuff
 
+  @purchaseLife: (pack, successCallback) ->
+    user = Parse.User.current()
+
+    user.increment('health', pack.value).increment('credits', -pack.price).save()
+    successCallback?(user.get('credits'), user.get('health'))
+
+  @purchaseBonus: (pack, successCallback) ->
+    user = Parse.User.current()
+    bonus_added = pack.value
+    bonuses = {}
+
+    for name, value of user.get('bonus')
+      bonuses[name] = value + bonus_added
+
+    user.set('bonus', bonuses).increment('credits', -pack.price).save()
+
+    successCallback?(user.get('credits'))
+
   @purchaseApple: (pack, successCallback) ->
     if pack.product_id and MKStore? and MKStore.gotProducts
       # AnalyticsHelper.item('Pack de crédits In App', 'click', pack.name, pack.price)
       SpinnerHelper.start()
-
+      console.log pack.product_id
       # alert 'wait for it...'
       MKStore.buyFeature pack.product_id, (response) =>
         # Used by Google to track pack bought
         # AnalyticsHelper.trackTransaction AnalyticsHelper.getTransactionHash([pack], ConnectionHelper.getUUID())
-        mediator.user.set 'credits', response.credits
-        successCallback?(mediator.user.get('credits'))
+        Parse.User.current().set 'credits', response.credits
+        successCallback?(Parse.User.current().get('credits'))
         SpinnerHelper.stop()
       , (error) =>
         # Track event
@@ -157,16 +159,11 @@ module.exports = class PurchaseHelper
           key    : 'purchase-fail'
         console.log "canceled"
         SpinnerHelper.stop()
-      , {
-          postData :
-            uuid   : mediator.user.get 'uuid'
-            sandbox: (if yes then 'true' else 'false')
-          remoteProductServer : ConfigHelper.config.urls.base
-      }
+      , null
     else
       console.error "Trying to by pack without product_id OR did not getProducts()"
 
-  @fecthAppleProducts: (packs, callback) ->
+  @fetchAppleProducts: (packs, callback) ->
     return callback?({}) unless MKStore?
     SpinnerHelper.start()
 
@@ -175,7 +172,7 @@ module.exports = class PurchaseHelper
       nonConsumables: {}
       subscriptions : {}
 
-    products.consumables[pack.product_id] = pack for pack in packs when pack.provider is 'apple' and pack.product_id
+    products.consumables[pack.product_id] = pack for pack in packs when pack.product_id
 
     MKStore.getProducts products, (availableProducts) =>
       SpinnerHelper.stop()

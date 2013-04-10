@@ -4,8 +4,12 @@
 <div id='vs'>
   {{#each participants}}
   <div class='participant'>
-    <div class='photo' style='background-image:url({{picture}}?width=90&height=90)'></div>
-    <div class='blaze'>{{name}}</div>
+    {{#if fb_id}}
+      <div class='photo' style='background-image:url(https://graph.facebook.com/{{fb_id}}/picture?width=90&height=90)'></div>
+    {{else}}
+      <div class='photo' style='background-image:url(images/common/facebook-default.jpg)'></div>
+    {{/if}}
+    <div class='blaze'>{{username}}</div>
     <div class='score'>{{score}}</div>
   </div>
   {{/each}}

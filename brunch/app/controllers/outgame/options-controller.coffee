@@ -1,20 +1,19 @@
 Controller         = require 'controllers/base/controller'
 OptionsView        = require 'views/outgame/options-view'
 LocalStorageHelper = require 'helpers/local-storage-helper'
-ApiCallHelper      = require 'helpers/api-call-helper'
 SoundHelper        = require 'helpers/sound-helper'
 AnalyticsHelper    = require 'helpers/analytics-helper'
 mediator           = require 'mediator'
 DeviceHelper       = require 'helpers/device-helper'
+SpinnerHelper      = require 'helpers/spinner-helper'
+FacebookHelper     = require 'helpers/facebook-helper'
 
 module.exports = class OptionsController extends Controller
   historyURL: 'options'
   title: 'Options'
 
   index: =>
-    @setLocalOption 'option-info-notif',    mediator.user.get('notifications').info
-    @setLocalOption 'option-ranking-notif', mediator.user.get('notifications').ranking
-    @setLocalOption 'option-level-notif',   mediator.user.get('notifications').decrease_rank
+    @setLocalOption 'option-info-notif', Parse.User.current().get('notifications')
 
     @loadView null
     , =>
@@ -23,9 +22,7 @@ module.exports = class OptionsController extends Controller
         music        : if SoundHelper.musicMuted then 'off' else '' # sounds helper : music on/off
         fx           : if SoundHelper.sfxMuted then 'off' else '' # sounds helper : fx on/off
         info_notif   : if @getLocalOption('option-info-notif', 'true') is 'false' then 'off' else ''
-        level_notif  : if @getLocalOption('option-level-notif', 'true') is 'false' then 'off' else ''
-        ranking_notif: if @getLocalOption('option-ranking-notif', 'true') is 'false' then 'off' else ''
-        facebook     : 'off' # facebook helper: connected to fb
+        facebook     : if FacebookHelper.isLinked() then 'off' else '' # facebook helper: connected to fb
 
       new OptionsView({templateData})
     , (view) =>
@@ -33,8 +30,6 @@ module.exports = class OptionsController extends Controller
       view.delegate 'click', '#option-music',            @onClickToggleMusic
       view.delegate 'click', '#option-fx',               @onClickToggleFX
       view.delegate 'click', '#option-info-notif',       @onClickToggleInfoNotif
-      view.delegate 'click', '#option-level-notif',      @onClickToggleLevelNotif
-      view.delegate 'click', '#option-ranking-notif',    @onClickToggleRankingNotif
       view.delegate 'click', '#option-help',             @onClickHelp
       view.delegate 'click', '#option-facebook-connect', @onClickFacebookConnect
     , {viewTransition: yes, music: 'outgame'}
@@ -47,19 +42,6 @@ module.exports = class OptionsController extends Controller
   setLocalOption: (key, value) =>
     LocalStorageHelper.set key, value
 
-  toggleRemoteOption: (key, remoteKey) =>
-    filters = {}
-    newValue = if @getLocalOption(key, 'true') is 'true' then 'false' else 'true'
-    filters[remoteKey] = newValue
-    ApiCallHelper.send.notificationFilters mediator.user.get('uuid'), filters, (response) =>
-      # Track Event
-      AnalyticsHelper.trackEvent 'Options', "#{key} = #{newValue}"
-
-      @setLocalOption key, newValue
-      @view.toggleButton key
-    # on error
-      # display message
-
   # Actions
   # -------
   # uservoice
@@ -67,18 +49,28 @@ module.exports = class OptionsController extends Controller
   onClickHelp: =>
     # Track Event
     AnalyticsHelper.trackEvent 'Options', "Demander de l'aide"
-
-    uvData = mediator.user.get('uuid') || "Joueur-non-connecté"
+    rawurlencode: (str) ->
+      str = (str + '').toString();
+      encodeURIComponent(str).replace(/!/g, '%21').replace(/'/g, '%27').replace(/\(/g, '%28').replace(/\)/g, '%29').replace(/\*/g, '%2A')
+    uvData = Parse.User.current().id || "Joueur-non-connecté"
     uvData += ' / ' + DeviceHelper.device()
     uvData += ' / ' + BuildVersion.toString() if BuildVersion
-    UserVoice.setCustomFields {UUID_Version : uvData}
-    UserVoice.showPopupWidget()
+    uvData = "votre message ici\n\n\ninformations pour les développeurs\n" + uvData
+    if Message?
+      mail =
+        to  : ["lequipe@chugulu.com"]
+        body: uvData
+        html: no
+      Message.composeMail mail
+    else
+      window.open("mailto:lequipe@chugulu.com?body=" + rawurlencode(uvData), 'width=700,height=500') if window
 
 
   # link account
   onClickFacebookConnect: =>
     # Track Event
     AnalyticsHelper.trackEvent 'Options', "Liaison facebook"
+    FacebookHelper.linkPlayer() unless FacebookHelper.isLinked()
 
   onClickToggleFX: =>
     @view.toggleButton 'option-fx'
@@ -88,11 +80,15 @@ module.exports = class OptionsController extends Controller
     @view.toggleButton 'option-music'
     SoundHelper.toggleMusic()
 
-  onClickToggleRankingNotif: =>
-    @toggleRemoteOption 'option-ranking-notif', 'ranking'
-
-  onClickToggleLevelNotif: =>
-    @toggleRemoteOption 'option-level-notif', 'decrease_rank'
-
   onClickToggleInfoNotif: =>
-    @toggleRemoteOption 'option-info-notif', 'info'
+    user = Parse.User.current()
+    newVal = !user.get('notifications')
+    user.set 'notifications', newVal
+    SpinnerHelper.start()
+    user.save null,
+      success : =>
+        SpinnerHelper.stop()
+        @setLocalOption 'option-info-notif', newVal
+        @view.toggleButton 'option-info-notif'
+      error : =>
+        SpinnerHelper.stop()

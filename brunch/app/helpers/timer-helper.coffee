@@ -11,6 +11,7 @@ module.exports = class TimerHelper
   startTime            : null
   timerAlreadyStarted  : no
   remaining            : 0
+  running              : false
 
   interruptionDate : null
 
@@ -45,15 +46,11 @@ module.exports = class TimerHelper
     @duration = duration * @durationPrecisionCoef
     @totalDuration = @duration
     @remaining = @duration
-    console.log "schedule", @duration
     @stop()
     @onTick?((@duration / @durationPrecisionCoef).toFixed(@precision))
 
   setDuration: (duration) =>
-    if duration > 0
-      @duration = duration
-    else
-      @duration = 0 # timer will stop on the next tick()
+    @duration = duration
 
   adjustDuration: (offset) =>
     @remaining += offset
@@ -61,6 +58,9 @@ module.exports = class TimerHelper
     @onTick?((@duration / @durationPrecisionCoef).toFixed(@precision))
 
   stop: =>
+    return unless @running
+    @running = no
+
     @remaining = @duration
     return unless @interval
     clearInterval @interval
@@ -69,20 +69,26 @@ module.exports = class TimerHelper
   tick: =>
     offset = (Math.round(@startTime.getTime() - (new Date()).getTime()) / (1000 / @durationPrecisionCoef))
     @setDuration (@remaining + offset)
+    
     @onTick?((@duration / @durationPrecisionCoef).toFixed(@precision))
-    if @duration < 1
-      @setDuration 0
+    if Math.round(@duration) < 0
       @stop()
       @onTimeout?()
 
   pause: ->
+    return unless @running
+    @running = no
     @stop()
 
   start: ->
+    return if @running
+    @running = yes
     @startTime = new Date()
-    console.log "start", @duration
     @interval = setInterval @tick, Math.pow(10, 3 - @precision)
 
   resume: -> @start()
+    # return if @running
+    # @running = yes
+
     # @schedule @duration, @precision, @onTimeout
     # @start()

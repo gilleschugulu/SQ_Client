@@ -23,11 +23,11 @@
     <div class="spinner-container box-align" id="spinner-container"></div>
   </div>
   <script type="text/javascript">
+    var ConfigHelper = require('helpers/config-helper');
+    Parse.initialize(ConfigHelper.config.services.parse.app_id, ConfigHelper.config.services.parse.js_key);
     // facebook
     if (typeof CDV == 'undefined') { // if cordova plugin does not exist => web version
       window.fbAsyncInit = function() {
-        var ConfigHelper;
-        ConfigHelper = require('helpers/config-helper');
         Parse.FacebookUtils.init({
           appId      : ConfigHelper.config.services.facebook.app_id,
           status     : true,
@@ -51,8 +51,6 @@
       // if (typeof FB == 'undefined') alert('FB variable does not exist. Check that you have included the Facebook JS SDK file.');
       document.addEventListener('deviceready',
         function() {
-          var ConfigHelper;
-          ConfigHelper = require('helpers/config-helper');
           Parse.FacebookUtils.init({
             appId             : ConfigHelper.config.services.facebook.app_id,
             nativeInterface   : CDV.FB,
@@ -66,11 +64,6 @@
       uv.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'widget.uservoice.com/CVrgbyzlDW1YevylOQWzUQ.js';
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(uv, s);
     })();
-
-
-    Parse.initialize("ixxjIFjdYTjOeKSZycsaPw8DHndujhvHFX2rNW10", "XQMt26dlAXV32EmVVEQYwhSK2yYuvD6qDA3HaFqS");
-
   </script>
-
 </body>
 </html>

@@ -1,15 +1,17 @@
-Controller          = require 'controllers/base/controller'
-utils               = require 'lib/utils'
-LocalStorageHelper  = require 'helpers/local-storage-helper'
-LoginView           = require 'views/outgame/login-view'
-mediator            = require 'mediator'
-PopUpHelper         = require 'helpers/pop-up-helper'
-FacebookHelper      = require 'helpers/facebook-helper'
-ApiCallHelper       = require 'helpers/api-call-helper'
-User                = require 'models/outgame/user-model'
-i18n                = require 'lib/i18n'
-AnalyticsHelper     = require 'helpers/analytics-helper'
-config              = require 'config/environment-config'
+Controller         = require 'controllers/base/controller'
+utils              = require 'lib/utils'
+LocalStorageHelper = require 'helpers/local-storage-helper'
+LoginView          = require 'views/outgame/login-view'
+mediator           = require 'mediator'
+PopUpHelper        = require 'helpers/pop-up-helper'
+FacebookHelper     = require 'helpers/facebook-helper'
+User               = require 'models/outgame/user-model'
+i18n               = require 'lib/i18n'
+AnalyticsHelper    = require 'helpers/analytics-helper'
+config             = require 'config/environment-config'
+SpinnerHelper      = require 'helpers/spinner-helper'
+LequipeSSOHelper   = require 'helpers/lequipe-sso-helper'
+ConfigHelper       = require 'helpers/config-helper'
 
 module.exports = class LoginController extends Controller
   historyURL: ''
@@ -26,6 +28,122 @@ module.exports = class LoginController extends Controller
     # Suscribe to Events
     @subscribeEvent 'login:gotPlayer', @bindPlayer
 
+  loginToParse: (user, params) =>
+    manageError = (child, error, opts) ->
+      # manage parse error here
+      # at this point user exists in SSO, so we can show "try again[ later]"
+      console.log "PARSE ERROR"
+      console.log error
+    Parse.User.logIn params.username, params.password, {
+      success: =>
+        @bindPlayer()
+      error: (child, error, opts) =>
+        # signUp if user does not exists
+        if error.code is Parse.Error.OBJECT_NOT_FOUND
+          delete user.id
+          u = new User user
+          options =
+            success: =>
+              @bindPlayer()
+            error: =>
+              manageError.apply null, arguments
+          Parse.User.signUp params.username, params.password, u.attributes, options
+        else
+          manageError.apply null, arguments
+    }
+
+  loginWithTemp: =>
+    username = $('#temp-login-form input[name=username]', @view.$el)[0].value
+    SpinnerHelper.start()
+    Parse.User.signUp username, '123456', (new User).attributes, {
+      success: =>
+        SpinnerHelper.stop()
+        @bindPlayer()
+      error: =>
+        SpinnerHelper.stop()
+        manageError.apply null, arguments
+    }
+    return no
+
+    # LequipeSSOHelper.login params, (user) =>
+    #   console.log "GOT USER", user
+    #   @loginToParse user, params
+    # , (status, error) ->
+    #   console.log "LOGIN ERROR", status, error
+    # no
+
+  loginWithSSO: =>
+    console.log "LOGIN YO"
+    unless @validateForm('#sso-login-form')
+      return no
+    form = $('#sso-login-form', @view.$el).serializeArray()
+    params = {}
+    params[f.name] = f.value for f in form
+    console.log params
+    LequipeSSOHelper.login params, (user) =>
+      console.log "GOT USER", user
+      @loginToParse user, params
+    , (status, error) ->
+      console.log "LOGIN ERROR", status, error
+    no
+
+  registerWithSSO: =>
+    console.log "REGISTER YO"
+    unless @validateForm('#sso-register-form')
+      return no
+    form = $('#sso-register-form', @view.$el).serializeArray()
+    params = {}
+    params[f.name] = f.value for f in form
+    console.log params
+    LequipeSSOHelper.register params, (user) =>
+      console.log "GOT USER", user
+      @loginToParse user, params
+    , (status, error) ->
+      console.log "LOGIN ERROR", status, error
+    no
+
+  # check to see if email/username are available
+  checkAvailabilityWithSSO: =>
+    console.log "CHECING AVAILABILITY YO"
+    form = $('#sso-register-form', @view.$el).serializeArray()
+    params = {}
+    params[f.name] = f.value for f in form
+    LequipeSSOHelper.alreadyUsed params, (user) =>
+      # alert('email/username sont pas dispo')
+      $("#sso-register-form input[name=email]", @view.$el).addClass 'invalid'
+      $("#sso-register-form input[name=username]", @view.$el).addClass 'invalid'
+      console.error 'email/username sont pas dispo'
+    , (code, error) =>
+      if code is LequipeSSOHelper.error.alreadyUsed.USER_NOT_FOUND
+        # dispo
+        $("#sso-register-form input[name=email]", @view.$el).removeClass 'invalid'
+        $("#sso-register-form input[name=username]", @view.$el).removeClass 'invalid'
+      else if code is LequipeSSOHelper.error.alreadyUsed.USED_BY_ANOTHER_USER
+        # alert('email/username sont pas dispo')
+        $("#sso-register-form input[name=email]", @view.$el).addClass 'invalid'
+        $("#sso-register-form input[name=username]", @view.$el).addClass 'invalid'
+        console.error 'email/username sont pas dispo'
+
+  validateForm: (formId) =>
+    validationRules =
+      email   : /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$/
+      username: /^[a-zA-Z0-9_\-\.àáâãäçèéêëìíîïñòóõöûüúù@?£%€\(\)°\[\]\}\{\*~\\'"]{6,}$/
+    form = $(formId, @view.$el).serializeArray()
+    invalidFields = []
+    for f in form
+      if validationRules[f.name]?
+        if not validationRules[f.name].test f.value
+          invalidFields.push f.name
+          $("#{formId} input[name=#{f.name}]", @view.$el).addClass 'invalid'
+        else
+          $("#{formId} input[name=#{f.name}]", @view.$el).removeClass 'invalid'
+    console.log "INVALID", invalidFields
+    if invalidFields.length > 0
+      console.error invalidFields.join(',') + ' pas bon'
+      # alert(invalidFields.join(',') + ' pas bon')
+      return no
+    yes
+
   # Show the login view
   # -------------------
   showLoginView: =>
@@ -34,19 +152,36 @@ module.exports = class LoginController extends Controller
     , (view) =>
       view.animateFacebook()
       navigator.splashscreen.hide() if navigator?.splashscreen?.hide?
+      view.delegate 'click', '#register-btn', @registerWithSSO
+      view.delegate 'click', '#login-btn', @loginWithSSO
+      view.delegate 'click', '#temp-btn', @loginWithTemp
+      view.delegate 'keyup', '#sso-register-form input[name=email]', @checkAvailabilityWithSSO
+      view.delegate 'keyup', '#sso-register-form input[name=username]', @checkAvailabilityWithSSO
+      view.delegate 'click', '#close-btn', ->
+        view.closeForms()
+      view.delegate 'click', '#equipe-login', ->
+        view.openForms()
+      view.delegate 'click', '#temp-login', ->
+        view.openTempForm()
       view.delegate "click", "#facebook-login", =>
         AnalyticsHelper.trackEvent 'Login', 'Login with facebook'
 
         # Note : logIn automatically creates a Parse.User in case of success \o/
-        Parse.FacebookUtils.logIn('email, user_location, user_birthday, publish_stream', 
+        Parse.FacebookUtils.logIn('email, user_location, user_birthday, publish_stream',
           success: =>
-            console.log 'Player will be logged in thanks to Facebook'
-            @bindPlayer()
+            FacebookHelper.getPersonalInfo (fb_attributes) =>
+              parse_attributes = User.prototype.defaults
+              parse_attributes.username = fb_attributes.name
+              parse_attributes.fb_id = fb_attributes.id
+
+              Parse.User.current().set(parse_attributes).save()
+              @bindPlayer()
+
           , error: (response) =>
             if config.services.facebook.createAnyway
               console.log 'Forced creation of player even if Facebook fail (local)'
               # We don't have a nickname to use (must be uniq), so we must generate one
-              Parse.User.signUp(Math.random() * 56056105 + '', 'password', (new User).attributes, 
+              Parse.User.signUp(Math.random() * 56056105 + '', 'password', (new User).attributes,
                 success: =>
                   user = Parse.User.current()
                   console.log(user, user?.get('username'))
@@ -55,8 +190,6 @@ module.exports = class LoginController extends Controller
             else
               PopUpHelper.initialize {message: 'Erreur avec Facebook', title: 400, key: 'api-error'}
         )
-
-        # FacebookHelper.getLoginStatus()
     , {viewTransition: yes}
 
 
@@ -86,8 +219,27 @@ module.exports = class LoginController extends Controller
       PushNotifications.configure
         buttonCancel: i18n.t('helper.push.how_about_no')
         buttonOK    : i18n.t('helper.push.kthx')
-      # PushNotifications.register (pushData) ->
-      #   console.log "GOT TOKEN"
-      #   pushData.uuid = mediator.user.get('uuid')
-      #   console.log pushData
-      #   ApiCallHelper.send.registerPushToken pushData
+      PushNotifications.register (pushData) ->
+        console.log "GOT TOKEN"
+        console.log pushData
+        data =
+          deviceToken: pushData.token.replace(/\s+/g, '')
+          deviceType : 'ios'
+        console.log "PUSH DATA"
+        console.log data
+        $.ajax
+            url        : 'https://api.parse.com/1/installations'
+            dataType   : 'json'
+            contentType: 'application/json'
+            data       : JSON.stringify data
+            type       : 'POST'
+            success    : (response) ->
+              console.log "PARSE SUCCESS"
+              console.log response
+            error      : ->
+              console.log "PARSE ERROR"
+              console.log arguments
+            headers    : ConfigHelper.config.services.parse.headers
+        # pushData.uuid = mediator.user.get('uuid')
+        # ApiCallHelper.send.registerPushToken pushData
+
