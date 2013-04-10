@@ -22,7 +22,7 @@ module.exports = class HallOfFameController extends Controller
         rank       : ranking[i].rank
         username   : ranking[i].username
         jackpot    : ranking[i].score
-        profilepic : if ranking[i].fb_id isnt undefined then 'https://graph.facebook.com/'+ranking[i].fb_id+'/picture' else null
+        profilepic : if !!ranking[i].fb_id then 'https://graph.facebook.com/'+ranking[i].fb_id+'/picture' else null
       if ranking[i].username is @user.get('username')
         position = i
     if !@fbConnected and withFriends then fbconnected = false else fbConnected = true

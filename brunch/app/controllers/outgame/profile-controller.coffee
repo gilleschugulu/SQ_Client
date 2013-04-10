@@ -15,7 +15,7 @@ module.exports = class ProfilesController extends Controller
 
   index: =>
     @user = new User(Parse.User.current().attributes)
-    
+
     @loadView 'profile'
       , =>
         stats = GameStatHelper.getProfileStat()

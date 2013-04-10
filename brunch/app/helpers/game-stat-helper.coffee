@@ -29,7 +29,7 @@ module.exports = class GameStatHelper
     stats = user.get('stats')
 
     unless stats.sports[sport]
-      stats.sports[sport] = 
+      stats.sports[sport] =
         percent: 0
         good: 0
         total: 0
@@ -59,6 +59,7 @@ module.exports = class GameStatHelper
 
   @getProfileStat: ->
     @_stats = Parse.User.current().get('stats')
+    console.log @_stats
     answers_count = (@_getStat('wrong_answers_count') + @_getStat('good_answers_count')) | 1
 
     {
@@ -74,7 +75,7 @@ module.exports = class GameStatHelper
 
 
   @getBestSport: ->
-    best_sport = _.max @getAllSports(), (sport) -> 
+    best_sport = _.max @getAllSports(), (sport) ->
       sport.percent
     best_sport.name
 

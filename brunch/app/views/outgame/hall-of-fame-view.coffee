@@ -91,3 +91,7 @@ module.exports = class HallOfFameView extends View
     el = $('.ranking-container')[0]
     height = $('.div-ranking').height()
     if i>3 then el.scrollTop = (i-4)*height
+
+  dispose: ->
+    clearInterval @interval if @interval?
+    super

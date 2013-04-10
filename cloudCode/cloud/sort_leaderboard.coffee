@@ -1,11 +1,9 @@
 exports.task = (request, response) ->
   userRank = request.params.rank
   userId = request.params.userId
-
   query = new Parse.Query('User')
   query.equalTo('rank', userRank)
   query.descending('score')
-
   query.find
     success: (results) ->
       i = 0
