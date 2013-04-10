@@ -27,13 +27,14 @@ module.exports = class HallOfFameController extends Controller
         position = i
     if !@fbConnected and withFriends then fbconnected = false else fbConnected = true
     if @collection.length<=1 then noFriends = true else noFriends = false
-    @updateRanking(position, noFriends, fbConnected)
+    @updateRanking(position, noFriends, fbConnected, withFriends)
 
   index: ->
     @user = Parse.User.current()
     @friendsArray = []
     @globalArray = []
     @fbConnected = Parse.FacebookUtils.isLinked @user
+    FacebookHelper.getOtherFriends(@friendsToInvite)
     Parse.Cloud.run 'getAllScore' , {rank : @user.get('rank'), userId : @user.id},
       success: (players) =>
         @globalArray = players
@@ -55,6 +56,7 @@ module.exports = class HallOfFameController extends Controller
         rank   : mediator.user.get('rank')
         credits: mediator.user.get('credits')
         health : mediator.user.get('health')
+        friendsToInvite : @friendsToInvite
       new HallOfFameView params
     , (view) =>
       view.delegate 'click', '#btn-friends', @onClickFriends
@@ -65,8 +67,8 @@ module.exports = class HallOfFameController extends Controller
       @updateRanking() if @collection
     , {viewTransition: yes, music: 'outgame'}
 
-  updateRanking: (i, noFriends, fbConnected) =>
-    @view?.updateRankingList @collection, i, noFriends, fbConnected
+  updateRanking: (i, noFriends, fbConnected, withFriends) =>
+    @view?.updateRankingList @collection, i, noFriends, fbConnected, withFriends
 
   onClickFriends: (e) =>
     if !$(e.target).hasClass('active')
@@ -99,3 +101,16 @@ module.exports = class HallOfFameController extends Controller
 
   connectFacebook: =>
     FacebookHelper.linkPlayer() unless FacebookHelper.isLinked()
+
+  friendsToInvite:(friends) =>
+    tmp = []
+    for [0..2]
+      i = Math.floor Math.random() * friends.length
+      tmp.push {
+        username : friend.username
+        profilepic : 'https://graph.facebook.com/'+friend.fb_id+'/picture'
+        id : friend.fb_id
+      }
+      friends.splice(i, 1)
+    @friendsToInvite  = tmp
+

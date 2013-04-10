@@ -78,6 +78,13 @@ module.exports = class FacebookHelper
     else
       callback([])
 
+  @getOtherFriends:(callback) ->
+    if @isLinked()
+      FB.api '/me/friends?fields=installed', (response) =>
+        friends = (friend for friend in response.data when !friend.installed)
+        callback(friends)
+    else
+      callback([])
   # # Like the appli
   # # HAHA, like an Open Graph object. Not usable now, maybe later
   # # -------------------------------------------------

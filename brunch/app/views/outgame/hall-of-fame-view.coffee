@@ -44,7 +44,7 @@ module.exports = class HallOfFameView extends View
     separator+'<div class="div-ranking '+@color+'">'+rank+'<img class="profilepic" src="'+pic+'" width="'+picSize+'" height="'+picSize+'"/><span class="username">'+player.username+'</span><span class="money">'+player.jackpot+'</span>'+friend+'</div>'
 
 
-  updateRankingList: (players, playerPosition, noFriends, fbConnected) ->
+  updateRankingList: (players, playerPosition, noFriends, fbConnected, withFriends) ->
     @i = 0
     @color= 'pink'
     el = $('.ranking-container', @$el).empty()
@@ -54,6 +54,7 @@ module.exports = class HallOfFameView extends View
       el.append '<a id="no-friends"></a>'
     else
       el.append @newPlayerHTML(player, 40, players) for player in players
+      el.append @suggestFriends() if withFriends
       @scrollTo(playerPosition)
 
   chooseList: (eventTargetEl) ->
@@ -95,3 +96,11 @@ module.exports = class HallOfFameView extends View
   dispose: ->
     clearInterval @interval if @interval?
     super
+
+  suggestFriends: ->
+    console.log @options.friendsToInvite
+    moreFriends = ''
+    for friend in @options.friendsToInvite
+      if(friend isnt undefined)
+        moreFriends+="<div class='moreFriends'><img class='profilepic' src='"+friend.profilepic+"'/><span class='username'>"+friend.username+"</span><div class='infite-btn'></div></div>"
+    return moreFriends
