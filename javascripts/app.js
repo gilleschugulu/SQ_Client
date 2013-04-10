@@ -61262,7 +61262,7 @@ window.require.register("controllers/outgame/hall-of-fame-controller", function(
       } else {
         noFriends = false;
       }
-      return this.updateRanking(position, noFriends, fbConnected);
+      return this.updateRanking(position, noFriends, fbConnected, withFriends);
     };
 
     HallOfFameController.prototype.index = function() {
@@ -61272,7 +61272,7 @@ window.require.register("controllers/outgame/hall-of-fame-controller", function(
       this.friendsArray = [];
       this.globalArray = [];
       this.fbConnected = Parse.FacebookUtils.isLinked(this.user);
-      facebook - helper.getOtherFriends(this.friendsToInvite);
+      FacebookHelper.getOtherFriends(this.friendsToInvite);
       Parse.Cloud.run('getAllScore', {
         rank: this.user.get('rank'),
         userId: this.user.id
@@ -61306,7 +61306,8 @@ window.require.register("controllers/outgame/hall-of-fame-controller", function(
           targetDate: _this.targetDate,
           rank: mediator.user.get('rank'),
           credits: mediator.user.get('credits'),
-          health: mediator.user.get('health')
+          health: mediator.user.get('health'),
+          friendsToInvite: _this.friendsToInvite
         };
         return new HallOfFameView(params);
       }, function(view) {
@@ -61324,10 +61325,10 @@ window.require.register("controllers/outgame/hall-of-fame-controller", function(
       });
     };
 
-    HallOfFameController.prototype.updateRanking = function(i, noFriends, fbConnected) {
+    HallOfFameController.prototype.updateRanking = function(i, noFriends, fbConnected, withFriends) {
       var _ref1;
 
-      return (_ref1 = this.view) != null ? _ref1.updateRankingList(this.collection, i, noFriends, fbConnected) : void 0;
+      return (_ref1 = this.view) != null ? _ref1.updateRankingList(this.collection, i, noFriends, fbConnected, withFriends) : void 0;
     };
 
     HallOfFameController.prototype.onClickFriends = function(e) {
@@ -61374,18 +61375,19 @@ window.require.register("controllers/outgame/hall-of-fame-controller", function(
     };
 
     HallOfFameController.prototype.friendsToInvite = function(friends) {
-      var friend1, friend2, friend3, length, _results;
+      var i, tmp, _i;
 
-      length = friends.length - 1;
-      friend1 = Math.round(Math.random() * length);
-      while (friend2 !== friend1) {
-        friend2 = Math.round(Math.random() * length);
+      tmp = [];
+      for (_i = 0; _i <= 2; _i++) {
+        i = Math.floor(Math.random() * friends.length);
+        tmp.push({
+          username: friend.username,
+          profilepic: 'https://graph.facebook.com/' + friend.fb_id + '/picture',
+          id: friend.fb_id
+        });
+        friends.splice(i, 1);
       }
-      _results = [];
-      while (friend3 !== friend2 && friend3 !== (this.friendsToInvite = [friend1, friend2, friend3])) {
-        _results.push(friend3 = Math.round(Math.random() * length));
-      }
-      return _results;
+      return this.friendsToInvite = tmp;
     };
 
     return HallOfFameController;
@@ -65949,7 +65951,7 @@ window.require.register("views/outgame/hall-of-fame-view", function(exports, req
       return separator + '<div class="div-ranking ' + this.color + '">' + rank + '<img class="profilepic" src="' + pic + '" width="' + picSize + '" height="' + picSize + '"/><span class="username">' + player.username + '</span><span class="money">' + player.jackpot + '</span>' + friend + '</div>';
     };
 
-    HallOfFameView.prototype.updateRankingList = function(players, playerPosition, noFriends, fbConnected) {
+    HallOfFameView.prototype.updateRankingList = function(players, playerPosition, noFriends, fbConnected, withFriends) {
       var el, player, _i, _len;
 
       this.i = 0;
@@ -65963,6 +65965,9 @@ window.require.register("views/outgame/hall-of-fame-view", function(exports, req
         for (_i = 0, _len = players.length; _i < _len; _i++) {
           player = players[_i];
           el.append(this.newPlayerHTML(player, 40, players));
+        }
+        if (withFriends) {
+          el.append(this.suggestFriends());
         }
         return this.scrollTo(playerPosition);
       }
@@ -66021,6 +66026,21 @@ window.require.register("views/outgame/hall-of-fame-view", function(exports, req
         clearInterval(this.interval);
       }
       return HallOfFameView.__super__.dispose.apply(this, arguments);
+    };
+
+    HallOfFameView.prototype.suggestFriends = function() {
+      var friend, moreFriends, _i, _len, _ref1;
+
+      console.log(this.options.friendsToInvite);
+      moreFriends = '';
+      _ref1 = this.options.friendsToInvite;
+      for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
+        friend = _ref1[_i];
+        if (friend !== void 0) {
+          moreFriends += "<div class='moreFriends'><img class='profilepic' src='" + friend.profilepic + "'/><span class='username'>" + friend.username + "</span><div class='infite-btn'></div></div>";
+        }
+      }
+      return moreFriends;
     };
 
     return HallOfFameView;
@@ -67061,7 +67081,11 @@ window.require.register("views/templates/outgame/profile", function(exports, req
     return buffer;
     }
 
-    buffer += "<!--MAIN BLOCK-->\n<div class='background'>\n  <div class='picture-container'>\n    <div class='picture'></div>\n    <div class='name'>"
+    buffer += "<!--MAIN BLOCK-->\n<div class='background'>\n<!--HEADER BLOCK-->\n  <div class=\"header\">\n    <a href=\"#home\" class=\"home-btn\"></a>\n    <div class=\"informations\">\n      <div class=\"cash\">\n        <div class='cash-value'>"
+      + escapeExpression(((stack1 = ((stack1 = depth0.user),stack1 == null || stack1 === false ? stack1 : stack1.credits)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+      + "</div>\n        <div class=\"cash-icone\"></div>\n      </div>\n      <div class=\"lifes\">\n        <div class=\"lifes-value\">"
+      + escapeExpression(((stack1 = ((stack1 = depth0.user),stack1 == null || stack1 === false ? stack1 : stack1.health)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+      + "</div>\n        <div class=\"lifes-icone\"></div>\n      </div>\n    </div>\n  </div>\n  <div class='picture-container'>\n    <div class='picture'></div>\n    <div class='name'>"
       + escapeExpression(((stack1 = ((stack1 = depth0.user),stack1 == null || stack1 === false ? stack1 : stack1.username)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
       + "</div>\n  </div>\n  <div class='personal-info'>\n    <div class='level'>"
       + escapeExpression(((stack1 = ((stack1 = depth0.user),stack1 == null || stack1 === false ? stack1 : stack1.rank)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
@@ -67077,15 +67101,7 @@ window.require.register("views/templates/outgame/profile", function(exports, req
     buffer += "\n\n        </tbody>\n      </table>\n    </div>\n  </div>\n</div>\n\n<!--BONUS BLOCK-->\n<div class='bonus'>\n  ";
     stack2 = helpers.each.call(depth0, depth0.bonus, {hash:{},inverse:self.noop,fn:self.program(3, program3, data),data:data});
     if(stack2 || stack2 === 0) { buffer += stack2; }
-    buffer += "\n</div>\n\n<!--HEADER BLOCK-->\n<div class=\"header\">\n  <a href=\"#home\" class=\"home-btn\"></a>\n  <div class=\"informations\">\n    <div class=\"cash\">\n      <div class='cash-value'>"
-      + escapeExpression(((stack1 = ((stack1 = depth0.user),stack1 == null || stack1 === false ? stack1 : stack1.credits)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-      + "</div>\n      <div class=\"cash-icone\"></div>\n    </div>\n    <div class=\"lifes\">\n      <div class=\"lifes-value\">"
-      + escapeExpression(((stack1 = ((stack1 = depth0.user),stack1 == null || stack1 === false ? stack1 : stack1.health)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-      + "</div>\n      <div class=\"lifes-icone\"></div>\n    </div>\n  </div>\n</div>\n\n<!-- HEADER BLOCK BEGIN\n<div class=\"header-container\">\n  <a href=\"#home\" class=\"home-btn\"></a>\n  <div class=\"title\"></div>\n  <div class=\"cash-container\">\n    <div class=\"token\"></div>\n    <p>Solde <span class=\"cash-value\">";
-    if (stack2 = helpers.credits) { stack2 = stack2.call(depth0, {hash:{},data:data}); }
-    else { stack2 = depth0.credits; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; }
-    buffer += escapeExpression(stack2)
-      + "</span></p>\n    <div class=\"clearfix\"></div>\n  </div>\n  <div class=\"clearfix\"></div>\n</div>\n<!-- CONTENT BLOCK BEGIN\n<div class=\"content-container\">\n  <div class=\"left-block\">\n    <div class=\"fb-head-container ";
+    buffer += "\n</div>\n\n<!-- CONTENT BLOCK BEGIN\n<div class=\"content-container\">\n  <div class=\"left-block\">\n    <div class=\"fb-head-container ";
     if (stack2 = helpers.gender) { stack2 = stack2.call(depth0, {hash:{},data:data}); }
     else { stack2 = depth0.gender; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; }
     buffer += escapeExpression(stack2)
