@@ -4271,10 +4271,16 @@ body.box-align {
   background-size: contain;
 }
 .home-page .journal-container.no-friends #title {
-  background-image: url("../images/home/pasamis/exclusif.png");
+  left: 25%;
+  color: #000;
+  font-size: 1.2em;
 }
 .home-page .journal-container.no-friends #title #exculsive {
   color: #f00;
+  font-size: 0.7em;
+  position: relative;
+  left: -6%;
+  ((null)): 0;
 }
 .home-page .journal-container.no-friends #photo-container {
   width: 25.5%;
@@ -4804,11 +4810,11 @@ body.box-align {
   width: 30%;
   margin-right: 15%;
 }
-.home-page #menu .small-buttons-container .hall-of-fame {
+.home-page #menu .small-buttons-container .profile {
   margin-left: 12%;
   background-image: url("../images/home/common/profile.png");
 }
-.home-page #menu .small-buttons-container .hall-of-fame:active {
+.home-page #menu .small-buttons-container .profile:active {
   background-image: url("../images/home/common/profile_a.png");
 }
 .home-page #menu .small-buttons-container .options-link {
@@ -5333,7 +5339,7 @@ body.box-align {
 .game-over .header-container {
   width: 100%;
   height: 11%;
-  position: relative;
+  position: absolute;
 }
 .game-over .header-container .home-btn {
   width: 7.4%;
@@ -5349,6 +5355,9 @@ body.box-align {
   left: 0.7%;
 }
 .game-over .content-container {
+  position: relative;
+  top: 16%;
+  ((null)): 0;
   width: 88.6%;
   height: 84.8%;
   -webkit-background-size: 100% 100%;
@@ -5872,242 +5881,443 @@ body.box-align {
 .profile-page {
   width: 100%;
   height: 100%;
-  background-repeat: no-repeat;
-  background-image: url("../images/common/background.jpg");
-  -webkit-background-size: 100% 100%;
-  -moz-background-size: 100% 100%;
-  background-size: 100% 100%;
   position: relative;
+  font-family: ramblabold;
+  font-size: 1.1em;
 }
-.profile-page .header-container {
+.profile-page .background {
   width: 100%;
-  height: 20%;
-  position: relative;
-}
-.profile-page .header-container .title {
-  width: 32.3%;
-  height: 66%;
-  position: absolute;
-  top: 0;
-  left: 34%;
-  display: inline-block;
+  height: 100%;
   background-repeat: no-repeat;
+  background-image: url("../images/profile/bg_profil.png");
   -webkit-background-size: 100% 100%;
   -moz-background-size: 100% 100%;
   background-size: 100% 100%;
-  background-image: url("../images/profile/title.png");
-}
-.profile-page .header-container .home-btn {
-  width: 7.4%;
-  height: 55%;
-  display: inline-block;
-  background-image: url("../images/common/home.png");
-  background-repeat: no-repeat;
-  -webkit-background-size: contain;
-  -moz-background-size: contain;
-  background-size: contain;
   position: absolute;
-  top: 4%;
-  left: 0.7%;
-  z-index: 99;
 }
-.profile-page .header-container .cash-container {
-  margin-top: 2%;
-  margin-right: 2%;
-  float: right;
-  width: 30%;
-  height: 100%;
-}
-.profile-page .header-container .cash-container p {
-  float: right;
-  font: 1.4em grilled;
-  margin: 0;
-  padding: 0;
-  color: #fff;
-  text-shadow: -1px -1px 0 #5e3fac, 1px -1px 0 #5e3fac, -1px 1px 0 #5e3fac, 1px 1px 0 #5e3fac;
-}
-.profile-page .header-container .cash-container p .cash-value {
-  color: #e5a42c;
-}
-.profile-page .header-container .cash-container .token {
-  float: right;
-  background-repeat: no-repeat;
-  -webkit-background-size: contain;
-  -moz-background-size: contain;
-  background-size: contain;
-  background-image: url("../images/profile/jeton.png");
-  width: 11%;
-  height: 24%;
+.profile-page .background .picture-container {
+  height: 34%;
+  width: 20%;
   display: inline-block;
-  margin-left: 5%;
-  margin-top: -1%;
+  margin-left: 14%;
+  margin-top: 4.5%;
 }
-.profile-page .content-container {
-  width: 95%;
-  height: 50%;
+.profile-page .background .picture-container .picture {
+  margin-left: 13%;
+  height: 75%;
+  width: 76%;
+  -webkit-background-size: 100%;
+  -moz-background-size: 100%;
+  background-size: 100%;
 }
-.profile-page .content-container .left-block {
-  width: 23.7%;
-  height: 82%;
-  float: left;
-  background-image: url("../images/profile/framephoto.png");
-  -webkit-background-size: contain;
-  -moz-background-size: contain;
-  background-size: contain;
-  background-repeat: no-repeat;
-  position: relative;
-  margin-left: 6%;
-}
-.profile-page .content-container .left-block .fb-head-container {
+.profile-page .background .picture-container .name {
+  padding-top: 4%;
   width: 90%;
-  height: 87.5%;
-  -webkit-background-size: 100% 100%;
-  -moz-background-size: 100% 100%;
-  background-size: 100% 100%;
-  background-repeat: no-repeat;
-}
-.profile-page .content-container .left-block .fb-head-container.male {
-  background-image: url("../images/profile/photo_m.png");
-  position: absolute;
-  bottom: 5.2%;
-  left: 4%;
-}
-.profile-page .content-container .left-block .fb-head-container.female {
-  background-image: url("../images/profile/photo_w.png");
-  position: absolute;
-  bottom: 5.2%;
-  left: 6.3%;
-}
-.profile-page .content-container .left-block .fb-head-container.female .fb-head {
-  position: absolute;
-  top: 3.2%;
-  left: 15.2%;
-}
-.profile-page .content-container .left-block .fb-head-container .fb-head {
-  width: 68%;
-  height: 58%;
-  position: absolute;
-  top: 1.8%;
-  left: 18.8%;
-  -webkit-border-radius: 2.5%;
-  border-radius: 2.5%;
-}
-.profile-page .content-container .center-block {
-  float: left;
-  width: 29.4%;
-  height: 100%;
-  margin-left: 4%;
-  margin-top: 1%;
-}
-.profile-page .content-container .center-block .username,
-.profile-page .content-container .center-block .current-cash,
-.profile-page .content-container .center-block .rankings {
-  width: 100%;
-  height: 18.1%;
-  display: block;
-  margin-bottom: 6%;
-  -webkit-background-size: contain;
-  -moz-background-size: contain;
-  background-size: contain;
-  background-repeat: no-repeat;
+  margin: auto;
   text-align: center;
+  font-size: 1.3em;
 }
-.profile-page .content-container .center-block .username {
-  background-image: url("../images/profile/pseudo.png");
-  color: #4418a4;
-  font-weight: bold;
+.profile-page .background .personal-info {
+  font-family: grilled;
+  display: inline-block;
+  height: 26%;
+  width: 25%;
+  position: absolute;
+  top: 15%;
+  ((null)): 0;
 }
-.profile-page .content-container .center-block .current-cash {
-  background-image: url("../images/profile/cagnottecourante.png");
-  width: 102%;
-  height: 24.3%;
-  padding-top: 15%;
-  color: #f8f568;
+.profile-page .background .personal-info .level {
+  text-align: center;
+  width: 36%;
+  font-size: 1.5em;
+  color: #c50000;
+  display: inline-block;
 }
-.profile-page .content-container .center-block .rankings {
-  background-image: url("../images/profile/classement.png");
-  width: 102%;
-  height: 24.3%;
-  cursor: pointer;
+.profile-page .background .personal-info .score {
+  text-align: center;
+  width: 60%;
+  display: inline-block;
 }
-.profile-page .content-container .right-block {
-  float: right;
-  width: 35.2%;
-  height: 90%;
-  position: relative;
-}
-.profile-page .content-container .right-block .link-fb,
-.profile-page .content-container .right-block .current-level {
-  cursor: pointer;
+.profile-page .background .personal-info .facebook-link {
+  display: inline-block;
+  margin-top: 20%;
   width: 100%;
-  height: 27.4%;
-  display: block;
+  height: 50%;
   -webkit-background-size: contain;
   -moz-background-size: contain;
   background-size: contain;
   background-repeat: no-repeat;
+  background-image: url("../images/profile/linkfb.png");
 }
-.profile-page .content-container .right-block .link-fb {
-  background-image: url("../images/profile/liaison_fb.png");
-  width: 87.5%;
-  height: 25%;
-  margin-left: 9%;
-  margin-bottom: 3.5%;
+.profile-page .background .personal-info .facebook-link.done {
+  background-image: url("../images/profile/linkfb_done.png");
 }
-.profile-page .content-container .right-block .current-level {
-  background-image: url("../images/profile/niveaucourant.png");
-  width: 100%;
-  height: 27.4%;
-  color: #f8f568;
-  padding-left: 85%;
-  padding-top: 8%;
-  font: 1.4em dax;
+.profile-page .background .buttons {
+  display: inline-block;
+  height: 35%;
+  width: 20%;
+  position: absolute;
+  right: 19%;
+  top: 10%;
 }
-.profile-page .footer-container {
-  width: 96%;
-  height: 31.8%;
-  position: relative;
+.profile-page .background .buttons .hall-of-fame {
+  display: inline-block;
+  height: 40%;
+  width: 90%;
+  -webkit-background-size: contain;
+  -moz-background-size: contain;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-image: url("../images/profile/bt_ranking.png");
+}
+.profile-page .background .buttons .game-center {
+  display: inline-block;
+  height: 40%;
+  width: 90%;
+  -webkit-background-size: contain;
+  -moz-background-size: contain;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-image: url("../images/profile/bt_gamecenter.png");
+}
+.profile-page .background .stats {
+  display: inline-block;
+  height: 45%;
+  width: 70%;
+  position: absolute;
   bottom: 6%;
-  left: 2%;
-  background-image: url("../images/profile/bloc_infos.png");
-  -webkit-background-size: contain;
-  -moz-background-size: contain;
-  background-size: contain;
-  background-repeat: no-repeat;
-  position: relative;
-}
-.profile-page .footer-container .block {
-  background-image: url("../images/profile/box_info.png");
-  -webkit-background-size: contain;
-  -moz-background-size: contain;
-  background-size: contain;
-  background-repeat: no-repeat;
-  width: 17.1%;
-  height: 62%;
-  margin-right: 2%;
-  margin-top: -2%;
-  position: relative;
-}
-.profile-page .footer-container .block .score-container {
-  position: absolute;
-  top: 12%;
-  left: 12%;
-  width: 75%;
-  height: 29%;
-  color: #fff;
-  text-align: center;
-  text-shadow: -1px -1px 0 #5c00ae, 1px -1px 0 #5c00ae, -1px 1px 0 #5c00ae, 1px 1px 0 #5c00ae;
-}
-.profile-page .footer-container .block .text {
-  width: 87%;
-  height: 54%;
-  position: absolute;
-  bottom: 4%;
   left: 7%;
-  text-align: center;
-  color: #3e0a87;
-  text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff;
 }
+.profile-page .background .stats div {
+  display: inline-block;
+  height: 85%;
+  margin-top: 6%;
+  margin-left: 2%;
+}
+.profile-page .background .stats div table {
+  width: 100%;
+  height: 100%;
+}
+.profile-page .background .stats div table tbody {
+  width: 100%;
+}
+.profile-page .background .stats div table tbody tr {
+  width: 100%;
+}
+.profile-page .background .stats div table tbody tr td {
+  text-align: center;
+}
+.profile-page .background .stats .stat1 {
+  width: 50%;
+}
+.profile-page .background .stats .stat1 table tbody tr .left {
+  width: 60%;
+}
+.profile-page .background .stats .stat2 {
+  width: 44%;
+}
+.profile-page .background .stats .stat2 table tbody tr .left {
+  width: 50%;
+}
+.profile-page .bonus {
+  position: absolute;
+  right: 8%;
+  bottom: 0%;
+  height: 79%;
+  width: 11%;
+}
+.profile-page .bonus .elem {
+  width: 86%;
+  height: 15%;
+  -webkit-background-size: contain;
+  -moz-background-size: contain;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+.profile-page .bonus .elem.double {
+  position: absolute;
+  top: 5%;
+  left: 7%;
+  background-image: url("../images/profile/bonus/x2.png");
+}
+.profile-page .bonus .elem.mass {
+  position: absolute;
+  top: 25%;
+  left: 7%;
+  background-image: url("../images/profile/bonus/divide.png");
+}
+.profile-page .bonus .elem.fifty_fifty {
+  position: absolute;
+  top: 45%;
+  left: 7%;
+  background-image: url("../images/profile/bonus/50-50.png");
+}
+.profile-page .bonus .elem.add_time {
+  position: absolute;
+  top: 65%;
+  left: 7%;
+  background-image: url("../images/profile/bonus/freeze_10s.png");
+}
+.profile-page .bonus .elem.skip {
+  position: absolute;
+  top: 85%;
+  left: 7%;
+  background-image: url("../images/profile/bonus/pass.png");
+}
+.profile-page .bonus .elem .number {
+  height: 46%;
+  width: 40%;
+  position: absolute;
+  top: -19%;
+  right: -15%;
+  background: #c50000;
+  text-align: center;
+  -webkit-border-radius: 400%;
+  border-radius: 400%;
+  color: #fff;
+  font-size: 1.2em;
+}
+.profile-page .header {
+  position: absolute;
+  top: 0%;
+  left: 0%;
+  width: 100%;
+  height: 16%;
+}
+.profile-page .header .home-btn {
+  position: absolute;
+  left: 5%;
+  top: 5%;
+  width: 8%;
+  height: 76%;
+  -webkit-background-size: contain;
+  -moz-background-size: contain;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-image: url("../images/common/home.png");
+}
+.profile-page .header .informations {
+  position: absolute;
+  top: 0%;
+  right: 7%;
+  height: 100%;
+  width: 14%;
+  font-size: 1.5em;
+}
+.profile-page .header .informations .cash {
+  width: 100%;
+  height: 45%;
+}
+.profile-page .header .informations .cash .cash-value {
+  text-align: right;
+  position: absolute;
+  width: 50%;
+  top: 11%;
+}
+.profile-page .header .informations .cash .cash-icone {
+  position: absolute;
+  top: 11%;
+  right: 16%;
+  width: 28%;
+  height: 35%;
+  -webkit-background-size: contain;
+  -moz-background-size: contain;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-image: url("../images/home/common/credit.png");
+}
+.profile-page .header .informations .lifes {
+  width: 100%;
+  height: 45%;
+}
+.profile-page .header .informations .lifes .lifes-value {
+  text-align: right;
+  position: absolute;
+  top: 52%;
+  ((null)): 0;
+  width: 50%;
+}
+.profile-page .header .informations .lifes .lifes-icone {
+  position: absolute;
+  top: 55%;
+  right: 16%;
+  width: 28%;
+  height: 35%;
+  -webkit-background-size: contain;
+  -moz-background-size: contain;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-image: url("../images/home/common/heart.png");
+}
+/*.profile-page
+  width: 100%
+  height: 100%
+  background-repeat: no-repeat
+  background-image: url("../images/common/background.jpg")
+  background-size: 100% 100%
+  position: relative
+  .header-container
+    width: 100%
+    height: 20%
+    position: relative
+    .title
+      width: 32.3%
+      height: 66%
+      absolute: top 0 left 34%
+      display: inline-block
+      background-repeat: no-repeat
+      background-size: 100% 100%
+      background-image: url("../images/profile/title.png")
+    .home-btn
+      width: 7.4%
+      height: 55%
+      display: inline-block
+      background-image: url('../images/common/home.png')
+      background-repeat: no-repeat
+      background-size: contain
+      absolute: top 4% left 0.7%
+      z-index: 99
+    .cash-container
+      margin-top: 2%
+      margin-right: 2%
+      float: right
+      width: 30%
+      height: 100%
+      p
+        float: right
+        font: 1.4em grilled
+        margin: 0
+        padding: 0
+        color: #fff
+        stroke(#5E3FAC)
+        .cash-value
+          color: #E5A42C
+      .token
+        float: right
+        background-repeat: no-repeat
+        background-size: contain
+        background-image: url("../images/profile/jeton.png")
+        width: 11%
+        height: 24%
+        display: inline-block
+        margin-left: 5%
+        margin-top: -1%
+  .content-container
+    width: 95%
+    height: 50%
+    .left-block
+      width: 23.7%
+      height: 82%
+      float: left
+      background-image: url("../images/profile/framephoto.png")
+      background-size: contain
+      background-repeat: no-repeat
+      position: relative
+      margin-left: 6%
+      .fb-head-container
+        width: 90%
+        height: 87.5%
+        background-size: 100% 100%
+        background-repeat: no-repeat
+        &.male
+          background-image: url("../images/profile/photo_m.png")
+          absolute: bottom 5.2% left 4%
+        &.female
+          background-image: url("../images/profile/photo_w.png")
+          absolute: bottom 5.2% left 6.3%
+          .fb-head
+            absolute: top 3.2% left 15.2%
+        .fb-head
+          width: 68%
+          height: 58%
+          absolute: top 1.8% left 18.8%
+          border-radius: 2.5%
+    .center-block
+      float: left
+      width: 29.4%
+      height: 100%
+      margin-left: 4%
+      margin-top: 1%
+      .username, .current-cash, .rankings
+        width: 100%
+        height: 18.1%
+        display: block
+        margin-bottom: 6%
+        background-size: contain
+        background-repeat: no-repeat
+        text-align: center
+      .username
+        background-image: url("../images/profile/pseudo.png")
+        color: #4418A4
+        font-weight: bold
+      .current-cash
+        background-image: url("../images/profile/cagnottecourante.png")
+        width: 102%
+        height: 24.3%
+        padding-top: 15%
+        color: #F8F568
+      .rankings
+        background-image: url("../images/profile/classement.png")
+        width: 102%
+        height: 24.3%
+        cursor: pointer
+    .right-block
+      float: right
+      width: 35.2%
+      height: 90%
+      position: relative
+      .link-fb, .current-level
+        cursor: pointer
+        width: 100%
+        height: 27.4%
+        display: block
+        background-size: contain
+        background-repeat: no-repeat
+      .link-fb
+        background-image: url("../images/profile/liaison_fb.png")
+        width: 87.5%
+        height: 25%
+        margin-left: 9%
+        margin-bottom: 3.5%
+      .current-level
+        background-image: url("../images/profile/niveaucourant.png")
+        width: 100%
+        height: 27.4%
+        color: #F8F568
+        padding-left: 85%
+        padding-top: 8%
+        font: 1.4em dax
+  .footer-container
+    width: 96%
+    height: 31.8%
+    relative: bottom 6% left 2%
+    background-image: url("../images/profile/bloc_infos.png")
+    background-size: contain
+    background-repeat: no-repeat
+    position: relative
+    .block
+      background-image: url("../images/profile/box_info.png")
+      background-size: contain
+      background-repeat: no-repeat
+      width: 17.1%
+      height: 62%
+      margin-right: 2%
+      margin-top: -2%
+      position: relative
+      .score-container
+        absolute: top 12% left 12%
+        width: 75%
+        height: 29%
+        color: #fff
+        text-align: center
+        stroke(#5C00AE)
+      .text
+        width: 87%
+        height 54%
+        absolute: bottom 4% left 7%
+        text-align: center
+        color: #3E0A87
+        stroke(#fff)*/
 .shop-page {
   width: 100%;
   height: 100%;
