@@ -3635,10 +3635,10 @@ Handlebars.template = Handlebars.VM.template;
 ;;
 var BuildVersion = {
   version     : '',
-  commit      : '673c1f5a6e8e78a65a374968490fdf5481ee99da',
-  shortCommit : '673c1f5',
+  commit      : '5b8c28f975f963474b6d89aba8dbfc56c65773a5',
+  shortCommit : '5b8c28f',
   branch      : 'feature/hall-of-fame',
-  time        : '2013-04-10 14:27',
+  time        : '2013-04-10 16:31',
   author      : 'Louis',
 
   getCommitLink: function() {
@@ -23845,27 +23845,27 @@ window.require.register("config/bonus-config", function(exports, require, module
   
 });
 window.require.register("config/environment-config", function(exports, require, module) {
-  var LocalConfig, Parent, _ref,
+  var Parent, PreprodConfig, _ref,
     __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-  Parent = require('config/preprod-config');
+  Parent = require('config/prod-config');
 
-  LocalConfig = (function(_super) {
-    __extends(LocalConfig, _super);
+  PreprodConfig = (function(_super) {
+    __extends(PreprodConfig, _super);
 
-    function LocalConfig() {
-      _ref = LocalConfig.__super__.constructor.apply(this, arguments);
+    function PreprodConfig() {
+      _ref = PreprodConfig.__super__.constructor.apply(this, arguments);
       return _ref;
     }
 
-    LocalConfig.analytics = {
-      enabled: false
-    };
+    PreprodConfig.log = true;
 
-    LocalConfig.pay_game = false;
+    PreprodConfig.long_version_format = true;
 
-    LocalConfig.services = {
+    PreprodConfig.pay_game = false;
+
+    PreprodConfig.services = {
       parse: {
         app_id: 'ixxjIFjdYTjOeKSZycsaPw8DHndujhvHFX2rNW10',
         js_key: 'XQMt26dlAXV32EmVVEQYwhSK2yYuvD6qDA3HaFqS',
@@ -23892,11 +23892,11 @@ window.require.register("config/environment-config", function(exports, require, 
       }
     };
 
-    return LocalConfig;
+    return PreprodConfig;
 
   })(Parent);
 
-  module.exports = LocalConfig;
+  module.exports = PreprodConfig;
   
 });
 window.require.register("config/local-config", function(exports, require, module) {
@@ -61214,6 +61214,7 @@ window.require.register("controllers/outgame/hall-of-fame-controller", function(
     __extends(HallOfFameController, _super);
 
     function HallOfFameController() {
+      this.friendsToInvite = __bind(this.friendsToInvite, this);
       this.connectFacebook = __bind(this.connectFacebook, this);
       this.addFriends = __bind(this.addFriends, this);
       this.askFriend = __bind(this.askFriend, this);
@@ -61271,6 +61272,7 @@ window.require.register("controllers/outgame/hall-of-fame-controller", function(
       this.friendsArray = [];
       this.globalArray = [];
       this.fbConnected = Parse.FacebookUtils.isLinked(this.user);
+      facebook - helper.getOtherFriends(this.friendsToInvite);
       Parse.Cloud.run('getAllScore', {
         rank: this.user.get('rank'),
         userId: this.user.id
@@ -61369,6 +61371,21 @@ window.require.register("controllers/outgame/hall-of-fame-controller", function(
       if (!FacebookHelper.isLinked()) {
         return FacebookHelper.linkPlayer();
       }
+    };
+
+    HallOfFameController.prototype.friendsToInvite = function(friends) {
+      var friend1, friend2, friend3, length, _results;
+
+      length = friends.length - 1;
+      friend1 = Math.round(Math.random() * length);
+      while (friend2 !== friend1) {
+        friend2 = Math.round(Math.random() * length);
+      }
+      _results = [];
+      while (friend3 !== friend2 && friend3 !== (this.friendsToInvite = [friend1, friend2, friend3])) {
+        _results.push(friend3 = Math.round(Math.random() * length));
+      }
+      return _results;
     };
 
     return HallOfFameController;
@@ -62961,6 +62978,33 @@ window.require.register("helpers/facebook-helper", function(exports, require, mo
             for (_i = 0, _len = _ref.length; _i < _len; _i++) {
               friend = _ref[_i];
               if (friend.installed) {
+                _results.push(friend);
+              }
+            }
+            return _results;
+          })();
+          return callback(friends);
+        });
+      } else {
+        return callback([]);
+      }
+    };
+
+    FacebookHelper.getOtherFriends = function(callback) {
+      var _this = this;
+
+      if (this.isLinked()) {
+        return FB.api('/me/friends?fields=installed', function(response) {
+          var friend, friends;
+
+          friends = (function() {
+            var _i, _len, _ref, _results;
+
+            _ref = response.data;
+            _results = [];
+            for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+              friend = _ref[_i];
+              if (!friend.installed) {
                 _results.push(friend);
               }
             }
