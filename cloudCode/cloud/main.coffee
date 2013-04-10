@@ -7,4 +7,3 @@ Parse.Cloud.define 'getAllScore', (request, response) ->
 
 Parse.Cloud.define 'smallLeaderboard', (request, response) ->
   require('cloud/small_leaderboard.js').task request, response
-

@@ -15,4 +15,4 @@ module.exports = class HomePageView extends View
 
   addJournalView: (journalView) ->
     @subview 'journal', journalView
-    @subview('journal').render()
+    @subview('journal').render().toggle()

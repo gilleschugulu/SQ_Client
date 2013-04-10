@@ -16,7 +16,12 @@ module.exports = class Stage extends Model
     @
 
   setQuestions: (questions) ->
-    @set 'questions', (Factory.questionModel(question_data) for question_data in questions)
+    q = {}
+
+    for question_difficulty, questions_data of questions
+      q[question_difficulty] = (Factory.questionModel(question_data) for question_data in questions_data.shuffle())
+
+    @set 'questions', q
     @
 
   setPlayers: (players) ->

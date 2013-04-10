@@ -47,8 +47,6 @@ module.exports = class HallOfFameController extends Controller
           @friendsArray = players
           @fetchPlayers yes
 
-
-
     @targetDate = @getDate()
     @loadView null
     , =>

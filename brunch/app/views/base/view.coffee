@@ -22,7 +22,8 @@ module.exports = class View extends Chaplin.View
     # templateFunc = JST[@templateName]
 
     # Register Handlebars Helper to use i18n in Templates
-
+    Handlebars.registerHelper 'niceNumber', (number, options) =>
+      @niceNumber number
     template = @template
 
     if typeof template is 'string'

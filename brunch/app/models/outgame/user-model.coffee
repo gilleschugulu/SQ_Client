@@ -1,5 +1,3 @@
-# Model = require 'models/base/model'
-
 module.exports = class User extends Parse.User
   defaults:
     uuid:           null
@@ -18,3 +16,22 @@ module.exports = class User extends Parse.User
       add_time:     5
       skip:         5
       mass:         5
+    stats:
+      best_score:           0
+      best_row:             0
+      games_played_count:   0
+      sum_score:            0
+      sum_time_question:    0
+      good_answers_count:   0
+      wrong_answers_count:  0
+      sports:               {}
+
+  getBonuses: ->
+    bonuses = []
+    for name, qty of @get('bonus')
+      bonuses.push({
+        name: name
+        quantity: qty
+      })
+
+    bonuses
