@@ -25,15 +25,14 @@ module.exports = class HallOfFameController extends Controller
         profilepic : if !!ranking[i].fb_id then 'https://graph.facebook.com/'+ranking[i].fb_id+'/picture' else null
       if ranking[i].username is @user.get('username')
         position = i
-    if !@fbConnected and withFriends then fbconnected = false else fbConnected = true
-    if @collection.length<=1 then noFriends = true else noFriends = false
+    fbConnected = FacebookHelper.isLinked()
+    noFriends = @collection.length <= 1
     @updateRanking(position, noFriends, fbConnected, withFriends)
 
   index: ->
     @user = Parse.User.current()
     @friendsArray = []
     @globalArray = []
-    @fbConnected = Parse.FacebookUtils.isLinked @user
     FacebookHelper.getOtherFriends(@friendsToInvite)
     Parse.Cloud.run 'getAllScore' , {rank : @user.get('rank'), userId : @user.id},
       success: (players) =>
@@ -99,18 +98,13 @@ module.exports = class HallOfFameController extends Controller
   addFriends: =>
     FacebookHelper.friendRequest i18n.t('controller.home.facebook_invite_message')
 
+    #TODO : Think to add callbacks
   connectFacebook: =>
     FacebookHelper.linkPlayer() unless FacebookHelper.isLinked()
 
   friendsToInvite:(friends) =>
-    tmp = []
-    for [0..2]
-      i = Math.floor Math.random() * friends.length
-      tmp.push {
-        username : friend.username
-        profilepic : 'https://graph.facebook.com/'+friend.fb_id+'/picture'
-        id : friend.fb_id
-      }
-      friends.splice(i, 1)
+    tmp = _.shuffle(friends)
+    tmp = tmp[0..2]
+    console.log tmp
     @friendsToInvite  = tmp
 

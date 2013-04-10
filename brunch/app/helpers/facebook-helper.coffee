@@ -74,6 +74,8 @@ module.exports = class FacebookHelper
     if @isLinked()
       FB.api '/me/friends?fields=installed', (response) =>
         friends = (friend for friend in response.data when friend.installed)
+        if !!friends
+          friends = []
         callback(friends)
     else
       callback([])
