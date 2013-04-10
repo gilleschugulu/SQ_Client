@@ -61366,19 +61366,11 @@ window.require.register("controllers/outgame/hall-of-fame-controller", function(
     };
 
     HallOfFameController.prototype.friendsToInvite = function(friends) {
-      var i, tmp, _i;
+      var tmp;
 
-      console.log(friends);
-      tmp = [];
-      for (_i = 0; _i <= 2; _i++) {
-        i = Math.floor(Math.random() * friends.length);
-        tmp.push({
-          username: friend.username,
-          profilepic: 'https://graph.facebook.com/' + friend.fb_id + '/picture',
-          id: friend.fb_id
-        });
-        friends.splice(i, 1);
-      }
+      tmp = _.shuffle(friends);
+      tmp = tmp.slice(0, 3);
+      console.log(tmp);
       return this.friendsToInvite = tmp;
     };
 
