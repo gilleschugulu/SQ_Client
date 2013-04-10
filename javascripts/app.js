@@ -62977,6 +62977,9 @@ window.require.register("helpers/facebook-helper", function(exports, require, mo
             }
             return _results;
           })();
+          if (!!friends) {
+            friends = [];
+          }
           return callback(friends);
         });
       } else {
