@@ -14,8 +14,14 @@ module.exports =
           title: 'erreur'
           message: 'pack indisponible'
         not_enough_credits:
-          title: 'erreur'
+          title: 'Erreur'
           message: 'pas assez de crédits'
+        bonus_pack_bought:
+          title: 'Achat confirmé'
+          message: "Tout c'est bien passé, bon jeu !"
+        life_pack_bought:
+          title: 'Achat confirmé'
+          message: "Tout c'est bien passé, bon jeu !"
       game_over:
         stats:
           nb_questions: 'Nombre de questions'
