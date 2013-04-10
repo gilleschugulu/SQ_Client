@@ -3998,6 +3998,30 @@ body.box-align {
   background-image: url("../images/hall-of-fame/box_classements.png");
   padding-top: 1%;
 }
+.hall-of-fame .content-container .ranking-container #no-friends {
+  width: 40%;
+  height: 20%;
+  background-image: url("../images/hall-of-fame/invite.png");
+  -webkit-background-size: contain;
+  -moz-background-size: contain;
+  background-size: contain;
+  background-repeat: no-repeat;
+  position: absolute;
+  left: 40%;
+  top: 40%;
+}
+.hall-of-fame .content-container .ranking-container #no-fb-connected {
+  width: 40%;
+  height: 20%;
+  background-image: url("../images/hall-of-fame/linkfb.png");
+  -webkit-background-size: contain;
+  -moz-background-size: contain;
+  background-size: contain;
+  background-repeat: no-repeat;
+  position: absolute;
+  left: 30%;
+  top: 40%;
+}
 .hall-of-fame .content-container .ranking-container .separator {
   width: 98%;
   height: 2%;
@@ -4072,6 +4096,8 @@ body.box-align {
   left: 13%;
   ((null)): 0;
   margin-top: 1%;
+  height: 8%;
+  width: 7%;
 }
 .hall-of-fame .content-container .ranking-container .div-ranking .username {
   display: inline-block;

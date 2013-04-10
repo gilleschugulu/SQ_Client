@@ -3303,7 +3303,7 @@ PxLoader.prototype.addImage = function(url, tags, priority) {
 var AssetsList = {
   assets: { 'common/': ["images/common/background.png", "images/common/close.png", "images/common/close_a.png", "images/common/facebook-default.jpg", "images/common/home.png"],
 'game-over/': ["images/game-over/replay.png", "images/game-over/score.png", "images/game-over/small-background.png", "images/game-over/title.png"],
-'hall-of-fame/': ["images/hall-of-fame/adversaire.png", "images/hall-of-fame/adversaires_deactive.png", "images/hall-of-fame/amis.png", "images/hall-of-fame/amis_deactive.png", "images/hall-of-fame/amis_inactive.png", "images/hall-of-fame/background.jpg", "images/hall-of-fame/background.png", "images/hall-of-fame/box_classements.png", "images/hall-of-fame/fond_classement.png", "images/hall-of-fame/gamecenter.png", "images/hall-of-fame/global.png", "images/hall-of-fame/global_inactive.png", "images/hall-of-fame/jeton.png", "images/hall-of-fame/line.png", "images/hall-of-fame/pink.png", "images/hall-of-fame/precedent.png", "images/hall-of-fame/rank1.png", "images/hall-of-fame/rank2.png", "images/hall-of-fame/rank3.png", "images/hall-of-fame/rank_1.png", "images/hall-of-fame/rank_2.png", "images/hall-of-fame/rank_3.png", "images/hall-of-fame/rankadversaire.png", "images/hall-of-fame/title.png", "images/hall-of-fame/tournoi.png", "images/hall-of-fame/vie_asked.png", "images/hall-of-fame/vie_toask.png", "images/hall-of-fame/white.png"],
+'hall-of-fame/': ["images/hall-of-fame/amis.png", "images/hall-of-fame/amis_inactive.png", "images/hall-of-fame/background.png", "images/hall-of-fame/box_classements.png", "images/hall-of-fame/global.png", "images/hall-of-fame/global_inactive.png", "images/hall-of-fame/invite.png", "images/hall-of-fame/line.png", "images/hall-of-fame/linkfb.png", "images/hall-of-fame/pink.png", "images/hall-of-fame/rank1.png", "images/hall-of-fame/rank2.png", "images/hall-of-fame/rank3.png", "images/hall-of-fame/rank_1.png", "images/hall-of-fame/rank_2.png", "images/hall-of-fame/rank_3.png", "images/hall-of-fame/rankadversaire.png", "images/hall-of-fame/tournoi.png", "images/hall-of-fame/vie_asked.png", "images/hall-of-fame/vie_toask.png", "images/hall-of-fame/white.png"],
 'home/+2amis/': ["images/home/+2amis/inviter.png", "images/home/+2amis/inviter_a.png", "images/home/+2amis/ranking.png", "images/home/+2amis/ranking_a.png", "images/home/+2amis/title.png"],
 'home/1ami/': ["images/home/1ami/invite.png", "images/home/1ami/invite_a.png", "images/home/1ami/player_VS.png", "images/home/1ami/ranking.png", "images/home/1ami/ranking_a.png", "images/home/1ami/title.png"],
 'home/2amis/': ["images/home/2amis/invite.png", "images/home/2amis/invite_a.png", "images/home/2amis/podium_rank_bronze.png", "images/home/2amis/podium_rank_gold.png", "images/home/2amis/podium_rank_silver.png", "images/home/2amis/rank_3players.png", "images/home/2amis/ranking.png", "images/home/2amis/ranking_a.png", "images/home/2amis/title.png"],
@@ -3637,7 +3637,7 @@ var BuildVersion = {
   commit      : '5d733127925d8882be5b7b15727935a2b21c1b61',
   shortCommit : '5d73312',
   branch      : 'feature/hall-of-fame',
-  time        : '2013-04-08 12:41',
+  time        : '2013-04-10 11:01',
   author      : 'Louis',
 
   getCommitLink: function() {
@@ -61172,7 +61172,7 @@ window.require.register("controllers/ingame/stages/dupa-stage-controller", funct
   
 });
 window.require.register("controllers/outgame/hall-of-fame-controller", function(exports, require, module) {
-  var AnalyticsHelper, ConfigHelper, Controller, FacebookHelper, HallOfFameController, HallOfFameView, mediator, _ref,
+  var AnalyticsHelper, ConfigHelper, Controller, FacebookHelper, HallOfFameController, HallOfFameView, i18n, mediator, _ref,
     __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
     __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
@@ -61189,10 +61189,14 @@ window.require.register("controllers/outgame/hall-of-fame-controller", function(
 
   FacebookHelper = require('helpers/facebook-helper');
 
+  i18n = require('lib/i18n');
+
   module.exports = HallOfFameController = (function(_super) {
     __extends(HallOfFameController, _super);
 
     function HallOfFameController() {
+      this.connectFacebook = __bind(this.connectFacebook, this);
+      this.addFriends = __bind(this.addFriends, this);
       this.askFriend = __bind(this.askFriend, this);
       this.getDate = __bind(this.getDate, this);
       this.onClickGlobal = __bind(this.onClickGlobal, this);
@@ -61211,43 +61215,68 @@ window.require.register("controllers/outgame/hall-of-fame-controller", function(
     HallOfFameController.prototype.request = null;
 
     HallOfFameController.prototype.fetchPlayers = function(withFriends) {
-      var i, ranking, _i, _ref1, _results;
+      var fbConnected, fbconnected, i, noFriends, position, ranking, _i, _ref1;
 
       this.friend = withFriends ? true : false;
       ranking = withFriends ? this.friendsArray : this.globalArray;
       this.collection = [];
-      _results = [];
-      for (i = _i = 0, _ref1 = ranking.length - 1; 0 <= _ref1 ? _i <= _ref1 : _i >= _ref1; i = 0 <= _ref1 ? ++_i : --_i) {
+      for (i = _i = 0, _ref1 = ranking.length; 0 <= _ref1 ? _i < _ref1 : _i > _ref1; i = 0 <= _ref1 ? ++_i : --_i) {
         this.collection[i] = {
           friend: this.friend,
-          rank: ranking[i].attributes.order,
-          username: ranking[i].attributes.username,
-          jackpot: ranking[i].attributes.score,
-          profilepic: Math.random() > 0.49 ? 'https://graph.facebook.com/sergio.chugulu/picture' : null
+          rank: ranking[i].rank,
+          username: ranking[i].username,
+          jackpot: ranking[i].score,
+          profilepic: ranking[i].fb_id !== void 0 ? 'https://graph.facebook.com/' + ranking[i].fb_id + '/picture' : null
         };
-        _results.push(this.updateRanking());
+        if (ranking[i].username === this.user.get('username')) {
+          position = i;
+        }
       }
-      return _results;
+      if (!this.fbConnected && withFriends) {
+        fbconnected = false;
+      } else {
+        fbConnected = true;
+      }
+      if (this.collection.length <= 1) {
+        noFriends = true;
+      } else {
+        noFriends = false;
+      }
+      return this.updateRanking(position, noFriends, fbConnected);
     };
 
     HallOfFameController.prototype.index = function() {
-      var user,
-        _this = this;
+      var _this = this;
 
-      user = Parse.User.current();
-      this.friendsArray = new Array();
-      this.globalArray = new Array();
-      FacebookHelper.getFriends(function(friends) {});
-      /*Parse.Cloud.run('getGlobalScores', {id : user.id , rank : user.get('rank')}, {
-        success: (result) =>
-          @globalArray = result
-          @friendsArray = result
-          @fetchPlayers yes
-        error: (error) =>
-          console.log error
+      this.user = Parse.User.current();
+      this.friendsArray = [];
+      this.globalArray = [];
+      this.fbConnected = Parse.FacebookUtils.isLinked(this.user);
+      Parse.Cloud.run('getAllScore', {
+        rank: this.user.get('rank'),
+        userId: this.user.id
+      }, {
+        success: function(players) {
+          return _this.globalArray = players;
+        }
       });
-      */
+      FacebookHelper.getFriends(function(friends) {
+        var friendsId;
 
+        friendsId = _.pluck(friends, 'id');
+        return Parse.Cloud.run('getFriendsScore', {
+          friendsId: friendsId
+        }, {
+          success: function(players) {
+            players.push(Parse.User.current().attributes);
+            players = players.sort(function(f1, f2) {
+              return f2.score - f1.score;
+            });
+            _this.friendsArray = players;
+            return _this.fetchPlayers(true);
+          }
+        });
+      });
       this.targetDate = this.getDate();
       return this.loadView(null, function() {
         var params;
@@ -61263,6 +61292,8 @@ window.require.register("controllers/outgame/hall-of-fame-controller", function(
         view.delegate('click', '#btn-friends', _this.onClickFriends);
         view.delegate('click', '#btn-global', _this.onClickGlobal);
         view.delegate('click', '.ask-friend', _this.askFriend);
+        view.delegate('click', '#no-friends', _this.addFriends);
+        view.delegate('click', '#no-fb-connected', _this.connectFacebook);
         if (_this.collection) {
           return _this.updateRanking();
         }
@@ -61272,10 +61303,10 @@ window.require.register("controllers/outgame/hall-of-fame-controller", function(
       });
     };
 
-    HallOfFameController.prototype.updateRanking = function() {
+    HallOfFameController.prototype.updateRanking = function(i, noFriends, fbConnected) {
       var _ref1;
 
-      return (_ref1 = this.view) != null ? _ref1.updateRankingList(this.collection) : void 0;
+      return (_ref1 = this.view) != null ? _ref1.updateRankingList(this.collection, i, noFriends, fbConnected) : void 0;
     };
 
     HallOfFameController.prototype.onClickFriends = function(e) {
@@ -61308,6 +61339,16 @@ window.require.register("controllers/outgame/hall-of-fame-controller", function(
     HallOfFameController.prototype.askFriend = function(e) {
       if (!$(e.target).hasClass('asked')) {
         return this.view.askFriend(e.target);
+      }
+    };
+
+    HallOfFameController.prototype.addFriends = function() {
+      return FacebookHelper.friendRequest(i18n.t('controller.home.facebook_invite_message'));
+    };
+
+    HallOfFameController.prototype.connectFacebook = function() {
+      if (!FacebookHelper.isLinked()) {
+        return FacebookHelper.linkPlayer();
       }
     };
 
@@ -65543,11 +65584,13 @@ window.require.register("views/outgame/hall-of-fame-view", function(exports, req
     HallOfFameView.prototype.newPlayerHTML = function(player, picSize, players) {
       var friend, pic, rank, separator;
 
-      separator = '';
+      separator = '<div class="separator"></div>';
       if (this.i > 0) {
-        if (players[this.i - 1].rank + 1 !== player.rank) {
-          separator = '<div class="separator"></div>';
+        if (players[this.i - 1].rank + 1 === player.rank || players[this.i - 1].rank === player.rank) {
+          separator = '';
         }
+      } else {
+        separator = '';
       }
       friend = player.friend ? '<div class="ask-friend"></div>' : '';
       if (this.color === 'pink') {
@@ -65565,21 +65608,26 @@ window.require.register("views/outgame/hall-of-fame-view", function(exports, req
       }
       this.i++;
       pic = player.profilepic ? player.profilepic : 'http://profile.ak.fbcdn.net/static-ak/rsrc.php/v2/yo/r/UlIqmHJn-SK.gif';
-      return separator + '<div class="div-ranking ' + this.color + '">' + rank + '<div class="profilepic"><img src="' + pic + '" width="' + picSize + '" height="' + picSize + '"/></div><span class="username">' + player.username + '</span><span class="money">' + player.jackpot + '</span>' + friend + '</div>';
+      return separator + '<div class="div-ranking ' + this.color + '">' + rank + '<img class="profilepic" src="' + pic + '" width="' + picSize + '" height="' + picSize + '"/><span class="username">' + player.username + '</span><span class="money">' + player.jackpot + '</span>' + friend + '</div>';
     };
 
-    HallOfFameView.prototype.updateRankingList = function(players) {
-      var el, player, _i, _len, _results;
+    HallOfFameView.prototype.updateRankingList = function(players, playerPosition, noFriends, fbConnected) {
+      var el, player, _i, _len;
 
       this.i = 0;
       this.color = 'pink';
       el = $('.ranking-container', this.$el).empty();
-      _results = [];
-      for (_i = 0, _len = players.length; _i < _len; _i++) {
-        player = players[_i];
-        _results.push(el.append(this.newPlayerHTML(player, 40, players)));
+      if (!fbConnected) {
+        return el.append('<a id="no-fb-connected"></a>');
+      } else if (noFriends) {
+        return el.append('<a id="no-friends"></a>');
+      } else {
+        for (_i = 0, _len = players.length; _i < _len; _i++) {
+          player = players[_i];
+          el.append(this.newPlayerHTML(player, 40, players));
+        }
+        return this.scrollTo(playerPosition);
       }
-      return _results;
     };
 
     HallOfFameView.prototype.chooseList = function(eventTargetEl) {
@@ -65618,6 +65666,16 @@ window.require.register("views/outgame/hall-of-fame-view", function(exports, req
 
     HallOfFameView.prototype.askFriend = function(el) {
       return $(el).addClass('asked');
+    };
+
+    HallOfFameView.prototype.scrollTo = function(i) {
+      var el, height;
+
+      el = $('.ranking-container')[0];
+      height = $('.div-ranking').height();
+      if (i > 3) {
+        return el.scrollTop = (i - 4) * height;
+      }
     };
 
     return HallOfFameView;
@@ -66272,7 +66330,7 @@ window.require.register("views/templates/outgame/hall-of-fame", function(exports
     if (stack1 = helpers.rank) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
     else { stack1 = depth0.rank; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
     buffer += escapeExpression(stack1)
-      + "</div>\n  <div id=\"btn_HoF\">\n    <div class=\"friends active category\" id=\"btn-friends\"></div>\n    <div class=\"global category\" id=\"btn-global\"></div>\n  </div>\n  <div class=\"ranking-container\">\n  </div>\n</div>\n\n<!-- HEADER BLOCK BEGIN -->\n<div class=\"cash-container\">\n  <span class=\"life-value\">";
+      + "</div>\n  <div id=\"btn_HoF\">\n    <div class=\"friends active category\" id=\"btn-friends\"></div>\n    <div class=\"global category\" id=\"btn-global\"></div>\n  </div>\n  <div class=\"ranking-container\" id=\"toto\">\n  </div>\n</div>\n\n<!-- HEADER BLOCK BEGIN -->\n<div class=\"cash-container\">\n  <span class=\"life-value\">";
     if (stack1 = helpers.health) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
     else { stack1 = depth0.health; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
     buffer += escapeExpression(stack1)
