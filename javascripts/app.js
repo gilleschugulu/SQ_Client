@@ -62968,6 +62968,7 @@ window.require.register("helpers/facebook-helper", function(exports, require, mo
             }
             return _results;
           })();
+          console.log(response);
           console.log('!');
           console.log((function() {
             var _i, _len, _ref, _results;
