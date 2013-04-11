@@ -61255,7 +61255,7 @@ window.require.register("controllers/outgame/hall-of-fame-controller", function(
       }
       fbConnected = FacebookHelper.isLinked();
       noFriends = this.collection.length <= 1;
-      return this.updateRanking(position, noFriends, fbConnected, withFriends);
+      return this.updateRanking(position, noFriends, fbConnected, withFriends, this.friendsToInvite);
     };
 
     HallOfFameController.prototype.index = function() {
@@ -61302,8 +61302,7 @@ window.require.register("controllers/outgame/hall-of-fame-controller", function(
           targetDate: _this.targetDate,
           rank: mediator.user.get('rank'),
           credits: mediator.user.get('credits'),
-          health: mediator.user.get('health'),
-          friends: _this.friendsToInvite
+          health: mediator.user.get('health')
         };
         return new HallOfFameView(params);
       }, function(view) {
@@ -65943,7 +65942,7 @@ window.require.register("views/outgame/hall-of-fame-view", function(exports, req
       return separator + '<div class="div-ranking ' + this.color + '">' + rank + '<img class="profilepic" src="' + pic + '" width="' + picSize + '" height="' + picSize + '"/><span class="username">' + player.username + '</span><span class="money">' + player.jackpot + '</span>' + friend + '</div>';
     };
 
-    HallOfFameView.prototype.updateRankingList = function(players, playerPosition, noFriends, fbConnected, withFriends) {
+    HallOfFameView.prototype.updateRankingList = function(players, playerPosition, noFriends, fbConnected, withFriends, friendsToInvite) {
       var el, player, _i, _len;
 
       this.i = 0;
@@ -65959,7 +65958,7 @@ window.require.register("views/outgame/hall-of-fame-view", function(exports, req
           el.append(this.newPlayerHTML(player, 40, players));
         }
         if (withFriends) {
-          el.append(this.suggestFriends());
+          el.append(this.suggestFriends(friendsToInvite));
         }
         return this.scrollTo(playerPosition);
       }
@@ -66020,7 +66019,7 @@ window.require.register("views/outgame/hall-of-fame-view", function(exports, req
       return HallOfFameView.__super__.dispose.apply(this, arguments);
     };
 
-    HallOfFameView.prototype.suggestFriends = function() {
+    HallOfFameView.prototype.suggestFriends = function(friends) {
       var friend, moreFriends, _i, _len, _ref1;
 
       console.log(this.options.friends);
