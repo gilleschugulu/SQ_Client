@@ -62985,7 +62985,7 @@ window.require.register("helpers/facebook-helper", function(exports, require, mo
       var _this = this;
 
       if (this.isLinked()) {
-        return FB.api('/me/friends?fields=installed', function(response) {
+        return FB.api('/me/friends?fields=id,name,installed', function(response) {
           var friend, friends;
 
           friends = (function() {
@@ -66026,7 +66026,7 @@ window.require.register("views/outgame/hall-of-fame-view", function(exports, req
       for (_i = 0, _len = friends.length; _i < _len; _i++) {
         friend = friends[_i];
         if (friend !== void 0) {
-          moreFriends += "<div class='moreFriends'><img class='profilepic' src='" + friend.profilepic + "'/><span class='username'>" + friend.username + "</span><div class='infite-btn'></div></div>";
+          moreFriends += "<div class='moreFriends'><img class='profilepic' src='https://graph.facebook.com/" + player.id + "/picture'/><span class='username'>" + friend.name + "</span><div class='infite-btn'></div></div>";
         }
       }
       return moreFriends;
