@@ -63050,7 +63050,7 @@ window.require.register("helpers/facebook-helper", function(exports, require, mo
       }
     };
 
-    FacebookHelper.invitedList = function(response) {
+    FacebookHelper.prototype.invitedList = function(response) {
       var friend, friends, _i, _len, _ref;
 
       _ref = response.to;
