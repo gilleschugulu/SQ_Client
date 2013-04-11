@@ -61237,7 +61237,6 @@ window.require.register("controllers/outgame/hall-of-fame-controller", function(
     HallOfFameController.prototype.fetchPlayers = function(withFriends) {
       var fbConnected, i, noFriends, position, ranking, _i, _ref1;
 
-      console.log('freinds3 ' + this.friendsToInvite);
       this.friend = withFriends ? true : false;
       ranking = withFriends ? this.friendsArray : this.globalArray;
       this.collection = [];
@@ -61255,7 +61254,7 @@ window.require.register("controllers/outgame/hall-of-fame-controller", function(
       }
       fbConnected = FacebookHelper.isLinked();
       noFriends = this.collection.length <= 1;
-      return this.updateRanking(position, noFriends, fbConnected, withFriends, this.friendsToInvite);
+      return this.updateRanking(position, noFriends, fbConnected, withFriends);
     };
 
     HallOfFameController.prototype.index = function() {
@@ -61323,7 +61322,7 @@ window.require.register("controllers/outgame/hall-of-fame-controller", function(
     HallOfFameController.prototype.updateRanking = function(i, noFriends, fbConnected, withFriends) {
       var _ref1;
 
-      return (_ref1 = this.view) != null ? _ref1.updateRankingList(this.collection, i, noFriends, fbConnected, withFriends) : void 0;
+      return (_ref1 = this.view) != null ? _ref1.updateRankingList(this.collection, i, noFriends, fbConnected, withFriends, this.friendsToInvite) : void 0;
     };
 
     HallOfFameController.prototype.onClickFriends = function(e) {
