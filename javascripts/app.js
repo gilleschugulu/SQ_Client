@@ -61515,10 +61515,12 @@ window.require.register("controllers/outgame/home-controller", function(exports,
         _this = this;
 
       friendsId = _.pluck(friends, 'id');
+      console.log(friendsId);
       return Parse.Cloud.run('getFriendsScore', {
         friendsId: friendsId
       }, {
         success: function(players) {
+          console.log(players);
           players.push(Parse.User.current().attributes);
           players = players.sort(function(f1, f2) {
             f2.score - f1.score;
@@ -62954,9 +62956,11 @@ window.require.register("helpers/facebook-helper", function(exports, require, mo
 
       return callback([
         {
-          id: '100003164482205'
+          id: '1509669172'
         }, {
-          id: '100002541700523'
+          id: '599526180'
+        }, {
+          id: '100001321941779'
         }
       ]);
       if (this.isLinked()) {
