@@ -61270,7 +61270,8 @@ window.require.register("controllers/outgame/hall-of-fame-controller", function(
         userId: this.user.id
       }, {
         success: function(players) {
-          return _this.globalArray = players;
+          _this.globalArray = players;
+          return console.log(players);
         }
       });
       FacebookHelper.getFriends(function(friends) {
