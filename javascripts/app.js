@@ -61265,8 +61265,7 @@ window.require.register("controllers/outgame/hall-of-fame-controller", function(
       this.friendsArray = [];
       this.globalArray = [];
       FacebookHelper.getOtherFriends(this.friendsToInvite);
-      console.log('user' + this.user.attributes);
-      console.log('rank' + this.user.rank);
+      console.log('user ' + Parse.User.current());
       Parse.Cloud.run('getAllScore', {
         rank: this.user.get('rank'),
         userId: this.user.id
