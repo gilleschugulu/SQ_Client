@@ -62954,15 +62954,6 @@ window.require.register("helpers/facebook-helper", function(exports, require, mo
     FacebookHelper.getFriends = function(callback) {
       var _this = this;
 
-      return callback([
-        {
-          id: '1509669172'
-        }, {
-          id: '599526180'
-        }, {
-          id: '100001321941779'
-        }
-      ]);
       if (this.isLinked()) {
         return FB.api('/me/friends?fields=installed', function(response) {
           var friend, friends;
