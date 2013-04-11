@@ -66022,7 +66022,7 @@ window.require.register("views/outgame/hall-of-fame-view", function(exports, req
     HallOfFameView.prototype.suggestFriends = function(friends) {
       var friend, moreFriends, _i, _len, _ref1;
 
-      console.log(this.options.friends);
+      console.log('friends ' + friends);
       moreFriends = '';
       _ref1 = this.options.friends;
       for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
