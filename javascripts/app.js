@@ -61237,7 +61237,7 @@ window.require.register("controllers/outgame/hall-of-fame-controller", function(
     HallOfFameController.prototype.fetchPlayers = function(withFriends) {
       var fbConnected, i, noFriends, position, ranking, _i, _ref1;
 
-      console.log(withFriends);
+      console.globalArray;
       this.friend = withFriends ? true : false;
       ranking = withFriends ? this.friendsArray : this.globalArray;
       this.collection = [];
@@ -61265,7 +61265,6 @@ window.require.register("controllers/outgame/hall-of-fame-controller", function(
       this.friendsArray = [];
       this.globalArray = [];
       FacebookHelper.getOtherFriends(this.friendsToInvite);
-      console.log('user ' + Parse.User.current());
       Parse.Cloud.run('getAllScore', {
         rank: this.user.get('rank'),
         userId: this.user.id
