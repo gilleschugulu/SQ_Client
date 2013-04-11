@@ -61303,7 +61303,7 @@ window.require.register("controllers/outgame/hall-of-fame-controller", function(
           rank: mediator.user.get('rank'),
           credits: mediator.user.get('credits'),
           health: mediator.user.get('health'),
-          friendsToInvite: _this.friendsToInvite
+          friends: _this.friendsToInvite
         };
         return new HallOfFameView(params);
       }, function(view) {
@@ -66022,9 +66022,9 @@ window.require.register("views/outgame/hall-of-fame-view", function(exports, req
     HallOfFameView.prototype.suggestFriends = function() {
       var friend, moreFriends, _i, _len, _ref1;
 
-      console.log(this.options.friendsToInvite);
+      console.log(this.options.friends);
       moreFriends = '';
-      _ref1 = this.options.friendsToInvite;
+      _ref1 = this.options.friends;
       for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
         friend = _ref1[_i];
         if (friend !== void 0) {
