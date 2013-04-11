@@ -61237,7 +61237,7 @@ window.require.register("controllers/outgame/hall-of-fame-controller", function(
     HallOfFameController.prototype.fetchPlayers = function(withFriends) {
       var fbConnected, i, noFriends, position, ranking, _i, _ref1;
 
-      console.globalArray;
+      console.log(this.globalArray);
       this.friend = withFriends ? true : false;
       ranking = withFriends ? this.friendsArray : this.globalArray;
       this.collection = [];
