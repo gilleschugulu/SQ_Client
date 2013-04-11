@@ -61521,7 +61521,8 @@ window.require.register("controllers/outgame/home-controller", function(exports,
         success: function(players) {
           players.push(Parse.User.current().attributes);
           players = players.sort(function(f1, f2) {
-            return f2.score - f1.score;
+            f2.score - f1.score;
+            return console.log(players);
           });
           return _this.view.addJournalView(callback(players));
         },
