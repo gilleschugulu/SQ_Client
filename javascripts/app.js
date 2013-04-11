@@ -62908,7 +62908,10 @@ window.require.register("helpers/facebook-helper", function(exports, require, mo
           message: message
         }, function(response) {
           if (response && callback) {
-            return callback(response);
+            callback(response);
+          }
+          if (response) {
+            return console.log(response);
           }
         });
       };
