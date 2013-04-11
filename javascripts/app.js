@@ -61508,7 +61508,6 @@ window.require.register("controllers/outgame/home-controller", function(exports,
         fb_id: Parse.User.current().get('fb_id'),
         participants: people
       };
-      console.log(people);
       return new NoFriendsJournalView(options);
     };
 
