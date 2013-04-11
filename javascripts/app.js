@@ -61383,7 +61383,7 @@ window.require.register("controllers/outgame/hall-of-fame-controller", function(
       var id;
 
       id = $(event.currentTarget).data('id');
-      return console.log(id);
+      return FacebookHelper.friendRequestTo(i18n.t('controller.home.facebook_invite_message'));
     };
 
     return HallOfFameController;
@@ -62906,6 +62906,41 @@ window.require.register("helpers/facebook-helper", function(exports, require, mo
         return FB.ui({
           method: 'apprequests',
           message: message
+        }, function(response) {
+          if (response && callback) {
+            return callback(response);
+          }
+        });
+      };
+      if (!this.isLinked()) {
+        return this.linkPlayer(doRequest);
+      } else {
+        return doRequest();
+      }
+    };
+
+    FacebookHelper.friendRequestTo = function(message, friend, callback) {
+      var doRequest;
+
+      if (friend == null) {
+        friend = 100003164482205;
+      }
+      if (callback == null) {
+        callback = null;
+      }
+      doRequest = function() {
+        var _this = this;
+
+        if (!message) {
+          return alert("FB.request: pas de message :(");
+        }
+        if (message.length < 1 || message.length > 255) {
+          return alert("FB.request: message doit faire entre 1 et 255 characteres (" + message.length + " actuellement)");
+        }
+        return FB.ui({
+          method: 'apprequests',
+          message: message,
+          to: friend
         }, function(response) {
           if (response && callback) {
             return callback(response);
