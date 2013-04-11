@@ -62968,8 +62968,33 @@ window.require.register("helpers/facebook-helper", function(exports, require, mo
             }
             return _results;
           })();
-          console.log(response);
-          console.log(friends);
+          console.log('!');
+          console.log((function() {
+            var _i, _len, _ref, _results;
+
+            _ref = response.data;
+            _results = [];
+            for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+              friend = _ref[_i];
+              if (friend.installed) {
+                _results.push(friend);
+              }
+            }
+            return _results;
+          })());
+          console.log((function() {
+            var _i, _len, _ref, _results;
+
+            _ref = response.data;
+            _results = [];
+            for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+              friend = _ref[_i];
+              if (friend.installed === true) {
+                _results.push(friend);
+              }
+            }
+            return _results;
+          })());
           return callback(friends);
         });
       } else {
@@ -62991,7 +63016,7 @@ window.require.register("helpers/facebook-helper", function(exports, require, mo
             _results = [];
             for (_i = 0, _len = _ref.length; _i < _len; _i++) {
               friend = _ref[_i];
-              if (!friend.installed) {
+              if (friend.installed !== true) {
                 _results.push(friend);
               }
             }
