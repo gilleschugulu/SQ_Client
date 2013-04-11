@@ -61383,7 +61383,7 @@ window.require.register("controllers/outgame/hall-of-fame-controller", function(
       var id;
 
       id = $(event.currentTarget).data('id');
-      return FacebookHelper.friendRequestTo(i18n.t('controller.home.facebook_invite_message'));
+      return FacebookHelper.friendRequestTo(i18n.t('controller.home.facebook_invite_message')(id));
     };
 
     return HallOfFameController;
@@ -62922,9 +62922,6 @@ window.require.register("helpers/facebook-helper", function(exports, require, mo
     FacebookHelper.friendRequestTo = function(message, friend, callback) {
       var doRequest;
 
-      if (friend == null) {
-        friend = 100003164482205;
-      }
       if (callback == null) {
         callback = null;
       }
@@ -62943,7 +62940,10 @@ window.require.register("helpers/facebook-helper", function(exports, require, mo
           to: friend
         }, function(response) {
           if (response && callback) {
-            return callback(response);
+            callback(response);
+          }
+          if (response) {
+            return console.log(response);
           }
         });
       };
@@ -63045,7 +63045,6 @@ window.require.register("helpers/facebook-helper", function(exports, require, mo
             }
             return _results;
           })();
-          console.log(friends);
           return callback(friends);
         });
       } else {
