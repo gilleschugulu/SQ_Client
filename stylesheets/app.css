@@ -4042,7 +4042,7 @@ body.box-align {
   background-size: 100%;
 }
 .hall-of-fame .content-container .ranking-container .div-ranking.moreFriends {
-  background-color: '#B5B5B5';
+  background-color: #b5b5b5;
 }
 .hall-of-fame .content-container .ranking-container .div-ranking.pink {
   background-image: url("../images/hall-of-fame/pink.png");
@@ -4058,7 +4058,7 @@ body.box-align {
   ((null)): 0;
   width: 9%;
   height: 9%;
-  background-image: url("../images/home/1ami/invite.png");
+  background-image: url("../images/hall-of-fame/invite.png");
   -webkit-background-size: contain;
   -moz-background-size: contain;
   background-size: contain;

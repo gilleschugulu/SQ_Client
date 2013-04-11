@@ -61214,6 +61214,7 @@ window.require.register("controllers/outgame/hall-of-fame-controller", function(
     __extends(HallOfFameController, _super);
 
     function HallOfFameController() {
+      this.FacebookInvite = __bind(this.FacebookInvite, this);
       this.friendsToInvite = __bind(this.friendsToInvite, this);
       this.connectFacebook = __bind(this.connectFacebook, this);
       this.addFriends = __bind(this.addFriends, this);
@@ -61311,6 +61312,7 @@ window.require.register("controllers/outgame/hall-of-fame-controller", function(
         view.delegate('click', '.ask-friend', _this.askFriend);
         view.delegate('click', '#no-friends', _this.addFriends);
         view.delegate('click', '#no-fb-connected', _this.connectFacebook);
+        view.delegate('click', '.invite-btn', _this.FacebookInvite);
         if (_this.collection) {
           return _this.updateRanking();
         }
@@ -61375,6 +61377,13 @@ window.require.register("controllers/outgame/hall-of-fame-controller", function(
       tmp = _.shuffle(friends);
       tmp = tmp.slice(0, 3);
       return this.friendsToInvite = tmp;
+    };
+
+    HallOfFameController.prototype.FacebookInvite = function(event) {
+      var id;
+
+      id = $(event.currentTarget).data('id');
+      return console.log(id);
     };
 
     return HallOfFameController;
@@ -66025,7 +66034,7 @@ window.require.register("views/outgame/hall-of-fame-view", function(exports, req
       moreFriends = '';
       for (_i = 0, _len = friends.length; _i < _len; _i++) {
         friend = friends[_i];
-        moreFriends += "<div class='div-ranking moreFriends'><img class='profilepic' src='https://graph.facebook.com/" + friend.id + "/picture'/><span class='username'>" + friend.name + "</span><div class='invite-btn'></div></div>";
+        moreFriends += "<div data-id='" + friend.id + "'class='div-ranking moreFriends'><img class='profilepic' src='https://graph.facebook.com/" + friend.id + "/picture'/><span class='username'>" + friend.name + "</span><div class='invite-btn'></div></div>";
       }
       return moreFriends;
     };
