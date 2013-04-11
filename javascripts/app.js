@@ -61214,6 +61214,7 @@ window.require.register("controllers/outgame/hall-of-fame-controller", function(
     __extends(HallOfFameController, _super);
 
     function HallOfFameController() {
+      this.getFriendsDatas = __bind(this.getFriendsDatas, this);
       this.friendsToInvite = __bind(this.friendsToInvite, this);
       this.connectFacebook = __bind(this.connectFacebook, this);
       this.addFriends = __bind(this.addFriends, this);
@@ -61263,7 +61264,9 @@ window.require.register("controllers/outgame/hall-of-fame-controller", function(
       this.user = Parse.User.current();
       this.friendsArray = [];
       this.globalArray = [];
-      FacebookHelper.getOtherFriends(this.friendsToInvite);
+      FacebookHelper.getOtherFriends(friends)(function() {
+        return _this.getFriendsDatas(friends);
+      });
       Parse.Cloud.run('getAllScore', {
         rank: this.user.get('rank'),
         userId: this.user.id
@@ -61376,6 +61379,8 @@ window.require.register("controllers/outgame/hall-of-fame-controller", function(
       console.log(tmp);
       return this.friendsToInvite = tmp;
     };
+
+    HallOfFameController.prototype.getFriendsDatas = function(friends) {};
 
     return HallOfFameController;
 
