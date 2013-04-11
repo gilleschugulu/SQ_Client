@@ -61458,7 +61458,6 @@ window.require.register("controllers/outgame/home-controller", function(exports,
         navigator.splashscreen.hide();
       }
       return FacebookHelper.getFriends(function(friends) {
-        console.log(friends);
         _this.getJournalView(friends);
         _this.view.delegate('click', '#equipe-btn', function() {
           return _this.view.toggleJournal();
@@ -62969,6 +62968,7 @@ window.require.register("helpers/facebook-helper", function(exports, require, mo
             }
             return _results;
           })();
+          console.log(friends);
           if (!!friends) {
             friends = [];
           }
