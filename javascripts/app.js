@@ -61272,6 +61272,9 @@ window.require.register("controllers/outgame/hall-of-fame-controller", function(
         success: function(players) {
           _this.globalArray = players;
           return console.log(players);
+        },
+        error: function() {
+          return console.log('toto s dead');
         }
       });
       FacebookHelper.getFriends(function(friends) {
