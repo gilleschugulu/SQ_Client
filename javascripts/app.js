@@ -62968,9 +62968,7 @@ window.require.register("helpers/facebook-helper", function(exports, require, mo
             }
             return _results;
           })();
-          console.log(friends != null);
-          console.log(friends != null);
-          if (friends != null) {
+          if (friends == null) {
             friends = [];
           }
           return callback(friends);
