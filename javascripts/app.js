@@ -62962,13 +62962,14 @@ window.require.register("helpers/facebook-helper", function(exports, require, mo
             _results = [];
             for (_i = 0, _len = _ref.length; _i < _len; _i++) {
               friend = _ref[_i];
-              if (friend.installed) {
+              if (friend.installed === true) {
                 _results.push(friend);
               }
             }
             return _results;
           })();
           console.log(response);
+          console.log(friends);
           return callback(friends);
         });
       } else {
