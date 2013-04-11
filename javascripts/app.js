@@ -62903,15 +62903,15 @@ window.require.register("helpers/facebook-helper", function(exports, require, mo
         if (message.length < 1 || message.length > 255) {
           return alert("FB.request: message doit faire entre 1 et 255 characteres (" + message.length + " actuellement)");
         }
-        FB.ui({
+        return FB.ui({
           method: 'apprequests',
           message: message
         }, function(response) {
-          return _this.invitedList(response);
+          _this.invitedList(response);
+          if (response && callback) {
+            return callback(response);
+          }
         });
-        if (response && callback) {
-          return callback(response);
-        }
       };
       if (!this.isLinked()) {
         return this.linkPlayer(doRequest);
