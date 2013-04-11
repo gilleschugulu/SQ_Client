@@ -61481,7 +61481,6 @@ window.require.register("controllers/outgame/home-controller", function(exports,
     };
 
     HomeController.prototype.getJournalView = function(friends) {
-      console.log(friends);
       switch (friends.length) {
         case 0:
           return this.getSmallLeaderboard(this.getNoFriendsJournalView);
@@ -61516,16 +61515,13 @@ window.require.register("controllers/outgame/home-controller", function(exports,
         _this = this;
 
       friendsId = _.pluck(friends, 'id');
-      console.log(friendsId);
       return Parse.Cloud.run('getFriendsScore', {
         friendsId: friendsId
       }, {
         success: function(players) {
-          console.log(players);
           players.push(Parse.User.current().attributes);
           players = players.sort(function(f1, f2) {
-            f2.score - f1.score;
-            return console.log(players);
+            return f2.score - f1.score;
           });
           return _this.view.addJournalView(callback(players));
         },
