@@ -62903,12 +62903,15 @@ window.require.register("helpers/facebook-helper", function(exports, require, mo
         if (message.length < 1 || message.length > 255) {
           return alert("FB.request: message doit faire entre 1 et 255 characteres (" + message.length + " actuellement)");
         }
-        return FB.ui({
+        FB.ui({
           method: 'apprequests',
           message: message
         }, function(response) {
-          return console.log(response);
+          return _this.invitedList(response);
         });
+        if (response && callback) {
+          return callback(response);
+        }
       };
       if (!this.isLinked()) {
         return this.linkPlayer(doRequest);
@@ -62938,10 +62941,7 @@ window.require.register("helpers/facebook-helper", function(exports, require, mo
           to: friend
         }, function(response) {
           if (response && callback) {
-            callback(response);
-          }
-          if (response) {
-            return console.log(response);
+            return callback(response);
           }
         });
       };
@@ -63048,6 +63048,17 @@ window.require.register("helpers/facebook-helper", function(exports, require, mo
       } else {
         return callback([]);
       }
+    };
+
+    FacebookHelper.invitedList = function(response) {
+      var friend, friends, _i, _len, _ref;
+
+      _ref = response.to;
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        friend = _ref[_i];
+        friends = friend;
+      }
+      return console.log(friends);
     };
 
     return FacebookHelper;
