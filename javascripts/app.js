@@ -3635,10 +3635,10 @@ Handlebars.template = Handlebars.VM.template;
 ;;
 var BuildVersion = {
   version     : '',
-  commit      : '5b8c28f975f963474b6d89aba8dbfc56c65773a5',
-  shortCommit : '5b8c28f',
+  commit      : 'ca144c0d386f47ea766205f08ebf4059adbc385f',
+  shortCommit : 'ca144c0',
   branch      : 'feature/hall-of-fame',
-  time        : '2013-04-10 16:31',
+  time        : '2013-04-11 10:31',
   author      : 'Louis',
 
   getCommitLink: function() {
@@ -23845,27 +23845,27 @@ window.require.register("config/bonus-config", function(exports, require, module
   
 });
 window.require.register("config/environment-config", function(exports, require, module) {
-  var Parent, PreprodConfig, _ref,
+  var LocalConfig, Parent, _ref,
     __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-  Parent = require('config/prod-config');
+  Parent = require('config/preprod-config');
 
-  PreprodConfig = (function(_super) {
-    __extends(PreprodConfig, _super);
+  LocalConfig = (function(_super) {
+    __extends(LocalConfig, _super);
 
-    function PreprodConfig() {
-      _ref = PreprodConfig.__super__.constructor.apply(this, arguments);
+    function LocalConfig() {
+      _ref = LocalConfig.__super__.constructor.apply(this, arguments);
       return _ref;
     }
 
-    PreprodConfig.log = true;
+    LocalConfig.analytics = {
+      enabled: false
+    };
 
-    PreprodConfig.long_version_format = true;
+    LocalConfig.pay_game = false;
 
-    PreprodConfig.pay_game = false;
-
-    PreprodConfig.services = {
+    LocalConfig.services = {
       parse: {
         app_id: 'ixxjIFjdYTjOeKSZycsaPw8DHndujhvHFX2rNW10',
         js_key: 'XQMt26dlAXV32EmVVEQYwhSK2yYuvD6qDA3HaFqS',
@@ -23892,11 +23892,11 @@ window.require.register("config/environment-config", function(exports, require, 
       }
     };
 
-    return PreprodConfig;
+    return LocalConfig;
 
   })(Parent);
 
-  module.exports = PreprodConfig;
+  module.exports = LocalConfig;
   
 });
 window.require.register("config/local-config", function(exports, require, module) {
@@ -61458,6 +61458,7 @@ window.require.register("controllers/outgame/home-controller", function(exports,
         navigator.splashscreen.hide();
       }
       return FacebookHelper.getFriends(function(friends) {
+        console.log(friends);
         _this.getJournalView(friends);
         _this.view.delegate('click', '#equipe-btn', function() {
           return _this.view.toggleJournal();
