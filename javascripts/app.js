@@ -66020,13 +66020,12 @@ window.require.register("views/outgame/hall-of-fame-view", function(exports, req
     };
 
     HallOfFameView.prototype.suggestFriends = function(friends) {
-      var friend, moreFriends, _i, _len, _ref1;
+      var friend, moreFriends, _i, _len;
 
       console.log('friends ' + friends);
       moreFriends = '';
-      _ref1 = this.options.friends;
-      for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
-        friend = _ref1[_i];
+      for (_i = 0, _len = friends.length; _i < _len; _i++) {
+        friend = friends[_i];
         if (friend !== void 0) {
           moreFriends += "<div class='moreFriends'><img class='profilepic' src='" + friend.profilepic + "'/><span class='username'>" + friend.username + "</span><div class='infite-btn'></div></div>";
         }
