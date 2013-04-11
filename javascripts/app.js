@@ -61481,6 +61481,7 @@ window.require.register("controllers/outgame/home-controller", function(exports,
     };
 
     HomeController.prototype.getJournalView = function(friends) {
+      console.log(friends);
       switch (friends.length) {
         case 0:
           return this.getSmallLeaderboard(this.getNoFriendsJournalView);
