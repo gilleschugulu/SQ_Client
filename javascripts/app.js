@@ -61214,7 +61214,6 @@ window.require.register("controllers/outgame/hall-of-fame-controller", function(
     __extends(HallOfFameController, _super);
 
     function HallOfFameController() {
-      this.getFriendsDatas = __bind(this.getFriendsDatas, this);
       this.friendsToInvite = __bind(this.friendsToInvite, this);
       this.connectFacebook = __bind(this.connectFacebook, this);
       this.addFriends = __bind(this.addFriends, this);
@@ -61264,16 +61263,15 @@ window.require.register("controllers/outgame/hall-of-fame-controller", function(
       this.user = Parse.User.current();
       this.friendsArray = [];
       this.globalArray = [];
-      FacebookHelper.getOtherFriends(friends)(function() {
-        return _this.getFriendsDatas(friends);
+      FacebookHelper.getOtherFriends(function(friends) {
+        return friendsToInvite(friends);
       });
       Parse.Cloud.run('getAllScore', {
         rank: this.user.get('rank'),
         userId: this.user.id
       }, {
         success: function(players) {
-          _this.globalArray = players;
-          return console.log(players);
+          return _this.globalArray = players;
         },
         error: function() {
           return console.log('toto s dead');
@@ -61376,11 +61374,8 @@ window.require.register("controllers/outgame/hall-of-fame-controller", function(
 
       tmp = _.shuffle(friends);
       tmp = tmp.slice(0, 3);
-      console.log(tmp);
       return this.friendsToInvite = tmp;
     };
-
-    HallOfFameController.prototype.getFriendsDatas = function(friends) {};
 
     return HallOfFameController;
 
@@ -63006,6 +63001,7 @@ window.require.register("helpers/facebook-helper", function(exports, require, mo
             }
             return _results;
           })();
+          console.log(friends);
           return callback(friends);
         });
       } else {
@@ -65949,7 +65945,6 @@ window.require.register("views/outgame/hall-of-fame-view", function(exports, req
     HallOfFameView.prototype.updateRankingList = function(players, playerPosition, noFriends, fbConnected, withFriends, friendsToInvite) {
       var el, player, _i, _len;
 
-      console.log('friends2 ' + friendsToInvite);
       this.i = 0;
       this.color = 'pink';
       el = $('.ranking-container', this.$el).empty();
@@ -66027,7 +66022,6 @@ window.require.register("views/outgame/hall-of-fame-view", function(exports, req
     HallOfFameView.prototype.suggestFriends = function(friends) {
       var friend, moreFriends, _i, _len;
 
-      console.log('friends ' + friends);
       moreFriends = '';
       for (_i = 0, _len = friends.length; _i < _len; _i++) {
         friend = friends[_i];
