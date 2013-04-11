@@ -62951,7 +62951,6 @@ window.require.register("helpers/facebook-helper", function(exports, require, mo
     FacebookHelper.getFriends = function(callback) {
       var _this = this;
 
-      return callback(['100003164482205', '100002541700523']);
       if (this.isLinked()) {
         return FB.api('/me/friends?fields=installed', function(response) {
           var friend, friends;
@@ -62969,6 +62968,10 @@ window.require.register("helpers/facebook-helper", function(exports, require, mo
             }
             return _results;
           })();
+          console.log(friends);
+          if (!!friends) {
+            friends = [];
+          }
           return callback(friends);
         });
       } else {
