@@ -61383,7 +61383,7 @@ window.require.register("controllers/outgame/hall-of-fame-controller", function(
         for (_i = 0, _len = tmp.length; _i < _len; _i++) {
           elem = tmp[_i];
           if (_.indexOf(user.get('fb_invited'), elem.id) === -1) {
-            a = true;
+            a = false;
           }
           console.log(_.indexOf(user.get('fb_invited'), elem.id));
           console.log(user.get('fb_invited'));
