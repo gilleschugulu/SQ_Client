@@ -61385,6 +61385,9 @@ window.require.register("controllers/outgame/hall-of-fame-controller", function(
             a = false;
           }
         }
+        if (_.indexOf(user.get('fb_invited'), elem.id) !== -1) {
+          console.log;
+        }
         if (a) {
           break;
         }
