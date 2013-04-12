@@ -61489,7 +61489,7 @@ window.require.register("controllers/outgame/home-controller", function(exports,
     };
 
     HomeController.prototype.onClickFacebook = function() {
-      return FacebookHelper.friendRequest(i18n.t('controller.home.facebook_invite_message'), FacebookHelper.invitedList);
+      return FacebookHelper.friendRequest(i18n.t('controller.home.facebook_invite_message'));
     };
 
     HomeController.prototype.getJournalView = function(friends) {
@@ -62907,6 +62907,7 @@ window.require.register("helpers/facebook-helper", function(exports, require, mo
           method: 'apprequests',
           message: message
         }, function(response) {
+          Parse.User.current().set9("fb_invited", response.to);
           if (callback && response) {
             return callback(response);
           }
@@ -63061,7 +63062,7 @@ window.require.register("helpers/facebook-helper", function(exports, require, mo
       }
       console.log(friends);
       console.log(response.to);
-      return Parse.User.current().set("fb_invited", friends).save();
+      return Parse.User.current().set("fb_invited", reso).save();
     };
 
     return FacebookHelper;
