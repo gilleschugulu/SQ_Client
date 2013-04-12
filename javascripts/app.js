@@ -62908,6 +62908,7 @@ window.require.register("helpers/facebook-helper", function(exports, require, mo
           message: message
         }, function(response) {
           if (response && callback) {
+            console.log(response);
             return callback(response);
           }
         });
@@ -63052,7 +63053,6 @@ window.require.register("helpers/facebook-helper", function(exports, require, mo
     FacebookHelper.invitedList = function(response) {
       var friend, friends, _i, _len, _ref;
 
-      console.log(response);
       _ref = response.to;
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         friend = _ref[_i];
