@@ -63054,13 +63054,19 @@ window.require.register("helpers/facebook-helper", function(exports, require, mo
     FacebookHelper.invitedList = function(response) {
       var friend, friends, _i, _len, _ref;
 
-      console.log(response);
       _ref = response.to;
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         friend = _ref[_i];
         friends = friend;
       }
-      return console.log(friends);
+      return Parse.Cloud.run('addInvitedlIST', {
+        newInvited: friends,
+        userId: Parse.User.current().id
+      }, {
+        success: function(invited) {
+          return console.log(invited);
+        }
+      });
     };
 
     return FacebookHelper;
