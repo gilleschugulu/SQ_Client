@@ -63060,6 +63060,7 @@ window.require.register("helpers/facebook-helper", function(exports, require, mo
         friends = friend;
       }
       console.log(friends);
+      console.log(response.to);
       return Parse.User.current().set("fb_invited", friends).save();
     };
 
