@@ -61383,6 +61383,7 @@ window.require.register("controllers/outgame/hall-of-fame-controller", function(
         friend = tmp[_i];
         results.push('https://graph.facebook.com/' + friend + '?fields=name');
       }
+      console.log(results);
       return this.friendsToInvite = results;
     };
 
