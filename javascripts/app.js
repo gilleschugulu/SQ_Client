@@ -61489,7 +61489,7 @@ window.require.register("controllers/outgame/home-controller", function(exports,
     };
 
     HomeController.prototype.onClickFacebook = function() {
-      return FacebookHelper.friendRequest(i18n.t('controller.home.facebook_invite_message'));
+      return FacebookHelper.friendRequest(i18n.t('controller.home.facebook_invite_message')(FacebookHelper.invitedList()));
     };
 
     HomeController.prototype.getJournalView = function(friends) {
