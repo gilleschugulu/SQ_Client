@@ -61381,12 +61381,12 @@ window.require.register("controllers/outgame/hall-of-fame-controller", function(
         a = true;
         for (_i = 0, _len = tmp.length; _i < _len; _i++) {
           elem = tmp[_i];
-          if (_.indexOf(+user.get('fb_invited'), elem.id.toString()) === -1) {
+          if (_.indexOf(user.get('fb_invited'), elem.id.toString()) === -1) {
             a = false;
             console.log('toto');
           }
           console.log(elem.id.toString());
-          console.log(+user.get('fb_invited'));
+          console.log(user.get('fb_invited'));
         }
         if (a) {
           break;
