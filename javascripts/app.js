@@ -3638,7 +3638,7 @@ var BuildVersion = {
   commit      : 'ca144c0d386f47ea766205f08ebf4059adbc385f',
   shortCommit : 'ca144c0',
   branch      : 'feature/hall-of-fame',
-  time        : '2013-04-11 10:31',
+  time        : '2013-04-12 10:08',
   author      : 'Louis',
 
   getCommitLink: function() {
@@ -23845,27 +23845,27 @@ window.require.register("config/bonus-config", function(exports, require, module
   
 });
 window.require.register("config/environment-config", function(exports, require, module) {
-  var LocalConfig, Parent, _ref,
+  var Parent, PreprodConfig, _ref,
     __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-  Parent = require('config/preprod-config');
+  Parent = require('config/prod-config');
 
-  LocalConfig = (function(_super) {
-    __extends(LocalConfig, _super);
+  PreprodConfig = (function(_super) {
+    __extends(PreprodConfig, _super);
 
-    function LocalConfig() {
-      _ref = LocalConfig.__super__.constructor.apply(this, arguments);
+    function PreprodConfig() {
+      _ref = PreprodConfig.__super__.constructor.apply(this, arguments);
       return _ref;
     }
 
-    LocalConfig.analytics = {
-      enabled: false
-    };
+    PreprodConfig.log = true;
 
-    LocalConfig.pay_game = false;
+    PreprodConfig.long_version_format = true;
 
-    LocalConfig.services = {
+    PreprodConfig.pay_game = false;
+
+    PreprodConfig.services = {
       parse: {
         app_id: 'ixxjIFjdYTjOeKSZycsaPw8DHndujhvHFX2rNW10',
         js_key: 'XQMt26dlAXV32EmVVEQYwhSK2yYuvD6qDA3HaFqS',
@@ -23892,11 +23892,11 @@ window.require.register("config/environment-config", function(exports, require, 
       }
     };
 
-    return LocalConfig;
+    return PreprodConfig;
 
   })(Parent);
 
-  module.exports = LocalConfig;
+  module.exports = PreprodConfig;
   
 });
 window.require.register("config/local-config", function(exports, require, module) {
@@ -61489,7 +61489,7 @@ window.require.register("controllers/outgame/home-controller", function(exports,
     };
 
     HomeController.prototype.onClickFacebook = function() {
-      return FacebookHelper.friendRequest(i18n.t('controller.home.facebook_invite_message'));
+      return FacebookHelper.friendRequest(i18n.t('controller.home.facebook_invite_message')(FacebookHelper.invitedList));
     };
 
     HomeController.prototype.getJournalView = function(friends) {
@@ -62907,7 +62907,6 @@ window.require.register("helpers/facebook-helper", function(exports, require, mo
           method: 'apprequests',
           message: message
         }, function(response) {
-          _this.invitedList(response);
           if (response && callback) {
             return callback(response);
           }
