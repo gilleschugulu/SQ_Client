@@ -61381,7 +61381,9 @@ window.require.register("controllers/outgame/hall-of-fame-controller", function(
       results = [];
       for (_i = 0, _len = tmp.length; _i < _len; _i++) {
         friend = tmp[_i];
-        results.push('https://graph.facebook.com/' + friend + '?fields=name');
+        FB.api('/' + friend + '?fields=name', function(response) {
+          return results.push(response);
+        });
       }
       console.log(results);
       return this.friendsToInvite = results;
