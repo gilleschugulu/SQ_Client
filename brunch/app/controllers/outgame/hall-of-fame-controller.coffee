@@ -33,10 +33,13 @@ module.exports = class HallOfFameController extends Controller
     @user = Parse.User.current()
     @friendsArray = []
     @globalArray = []
-    FacebookHelper.getOtherFriends(@friendsToInvite)
+    FacebookHelper.getOtherFriends (friends) =>
+      @friendsToInvite(friends)
     Parse.Cloud.run 'getAllScore' , {rank : @user.get('rank'), userId : @user.id},
       success: (players) =>
         @globalArray = players
+      error: =>
+        console.log 'toto s dead'
     FacebookHelper.getFriends (friends) =>
       friendsId = _.pluck(friends, 'id')
       Parse.Cloud.run 'getFriendsScore' , {friendsId: friendsId},
@@ -55,7 +58,6 @@ module.exports = class HallOfFameController extends Controller
         rank   : mediator.user.get('rank')
         credits: mediator.user.get('credits')
         health : mediator.user.get('health')
-        friendsToInvite : @friendsToInvite
       new HallOfFameView params
     , (view) =>
       view.delegate 'click', '#btn-friends', @onClickFriends
@@ -63,11 +65,12 @@ module.exports = class HallOfFameController extends Controller
       view.delegate 'click', '.ask-friend', @askFriend
       view.delegate 'click', '#no-friends', @addFriends
       view.delegate 'click', '#no-fb-connected', @connectFacebook
+      view.delegate 'click', '.invite-btn',@FacebookInvite
       @updateRanking() if @collection
     , {viewTransition: yes, music: 'outgame'}
 
   updateRanking: (i, noFriends, fbConnected, withFriends) =>
-    @view?.updateRankingList @collection, i, noFriends, fbConnected, withFriends
+    @view?.updateRankingList @collection, i, noFriends, fbConnected, withFriends, @friendsToInvite
 
   onClickFriends: (e) =>
     if !$(e.target).hasClass('active')
@@ -103,8 +106,19 @@ module.exports = class HallOfFameController extends Controller
     FacebookHelper.linkPlayer() unless FacebookHelper.isLinked()
 
   friendsToInvite:(friends) =>
-    tmp = _.shuffle(friends)
-    tmp = tmp[0..2]
+    friends2 = _.pluck(friends, 'id')
+    user = Parse.User.current()
+    tmp = _.first(_.shuffle(_.difference(friends2, user.get('fb_invited'))), 3)
     console.log tmp
-    @friendsToInvite  = tmp
+    results = []
+    for friend in tmp
+      FB.api '/'+friend+'?fields=name', (response)->
+        results.push(response)
+    console.log results
+    #TODO: Use the id from tmp tab to get the friend name
+    @friendsToInvite  = results
+
+  FacebookInvite: (event) =>
+    id = $(event.currentTarget).data 'id'
+    FacebookHelper.friendRequestTo i18n.t('controller.home.facebook_invite_message') id
 

@@ -70,13 +70,11 @@ module.exports = class HomeController extends Controller
       username    : Parse.User.current().get('username')
       fb_id       : Parse.User.current().get('fb_id')
       participants: people
-    console.log people
     return new NoFriendsJournalView options
 
 
   getFriendsScore: (friends, callback) ->
     friendsId = _.pluck(friends, 'id')
-
     Parse.Cloud.run 'getFriendsScore', { friendsId: friendsId },
       success: (players) =>
         players.push Parse.User.current().attributes

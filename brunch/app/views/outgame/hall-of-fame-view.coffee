@@ -33,28 +33,28 @@ module.exports = class HallOfFameView extends View
       @color = 'pink'
     #medialles
     rank = '<span class="rank">'+player.rank+'</span>'
-    if player.rank == 1
+    if player.rank is 1
       rank = '<div class="rank first"></div>'
-    else if player.rank == 2
+    else if player.rank is 2
       rank = '<div class="rank second"></div>'
-    else if player.rank == 3
+    else if player.rank is 3
       rank = '<div class="rank third"></div>'
     @i++
     pic = if player.profilepic then player.profilepic else 'http://profile.ak.fbcdn.net/static-ak/rsrc.php/v2/yo/r/UlIqmHJn-SK.gif'
     separator+'<div class="div-ranking '+@color+'">'+rank+'<img class="profilepic" src="'+pic+'" width="'+picSize+'" height="'+picSize+'"/><span class="username">'+player.username+'</span><span class="money">'+player.jackpot+'</span>'+friend+'</div>'
 
 
-  updateRankingList: (players, playerPosition, noFriends, fbConnected, withFriends) ->
+  updateRankingList: (players, playerPosition, noFriends, fbConnected, withFriends, friendsToInvite) ->
     @i = 0
     @color= 'pink'
     el = $('.ranking-container', @$el).empty()
-    if !fbConnected
+    if !fbConnected and withFriends
       el.append '<a id="no-fb-connected"></a>'
-    else if noFriends
+    else if noFriends and withFriends
       el.append '<a id="no-friends"></a>'
     else
       el.append @newPlayerHTML(player, 40, players) for player in players
-      el.append @suggestFriends() if withFriends
+      el.append @suggestFriends(friendsToInvite) if withFriends
       @scrollTo(playerPosition)
 
   chooseList: (eventTargetEl) ->
@@ -97,10 +97,8 @@ module.exports = class HallOfFameView extends View
     clearInterval @interval if @interval?
     super
 
-  suggestFriends: ->
-    console.log @options.friendsToInvite
+  suggestFriends: (friends) =>
     moreFriends = ''
-    for friend in @options.friendsToInvite
-      if(friend isnt undefined)
-        moreFriends+="<div class='moreFriends'><img class='profilepic' src='"+friend.profilepic+"'/><span class='username'>"+friend.username+"</span><div class='infite-btn'></div></div>"
-    return moreFriends
+    for friend in friends
+      moreFriends+="<div class='div-ranking moreFriends'><img class='profilepic' src='https://graph.facebook.com/#{friend.id}/picture'/><span class='username'>#{friend.name}</span><div data-id='#{friend.id}' class='invite-btn'></div></div>"
+    moreFriends

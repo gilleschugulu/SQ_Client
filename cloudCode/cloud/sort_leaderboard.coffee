@@ -1,3 +1,4 @@
+_ = require("underscore")
 exports.task = (request, response) ->
   userRank = request.params.rank
   userId = request.params.userId
@@ -6,9 +7,10 @@ exports.task = (request, response) ->
   query.descending('score')
   query.find
     success: (results) ->
-      i = 0
-      while results[i].id isnt userId
-        i++
+      #i = 0
+      #while results[i].id isnt userId
+      #  i++
+      i= 7
       if i < 8
         response.success(fetchUsers(results, 0, 9))
       else if i > results.length-5
