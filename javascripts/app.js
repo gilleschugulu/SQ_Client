@@ -62943,7 +62943,7 @@ window.require.register("helpers/facebook-helper", function(exports, require, mo
           message: message,
           to: friend
         }, function(response) {
-          console.log(response);
+          user.set("fb_invited", _.uniq(response.to.concat(user.get('fb_invited')))).save();
           if (response && callback) {
             console.log(response);
             return callback(response);
