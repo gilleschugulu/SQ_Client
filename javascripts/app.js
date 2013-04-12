@@ -61376,17 +61376,17 @@ window.require.register("controllers/outgame/hall-of-fame-controller", function(
 
       user = Parse.User.current();
       while (true) {
-        console.log('toto');
+        console.log('new');
         tmp = _.shuffle(friends);
         tmp = tmp.slice(0, 3);
         a = true;
         for (_i = 0, _len = tmp.length; _i < _len; _i++) {
           elem = tmp[_i];
           if (_.indexOf(user.get('fb_invited'), elem.id) !== -1) {
+            console.log(_.indexOf(user.get('fb_invited'), elem.id));
             a = false;
             console.log('toto');
           }
-          console.log(_.indexOf(user.get('fb_invited'), elem.id));
         }
         if (a) {
           break;
