@@ -61388,6 +61388,7 @@ window.require.register("controllers/outgame/hall-of-fame-controller", function(
           console.log(_.indexOf(user.get('fb_invited'), elem.id));
           console.log(user.get('fb_invited'));
           console.log(elem.id);
+          console.log(a);
         }
         if (a) {
           break;
