@@ -61382,8 +61382,8 @@ window.require.register("controllers/outgame/hall-of-fame-controller", function(
         a = true;
         for (_i = 0, _len = tmp.length; _i < _len; _i++) {
           elem = tmp[_i];
-          if (_.indexOf(user.get('fb_invited'), elem.id.toString()) === -1) {
-            a = false;
+          if (_.indexOf(user.get('fb_invited'), elem.id) !== -1) {
+            a = true;
             console.log('toto');
           }
           console.log(_.indexOf(user.get('fb_invited'), '"' + elem.id + '"'));
