@@ -61385,8 +61385,8 @@ window.require.register("controllers/outgame/hall-of-fame-controller", function(
             a = false;
             console.log('toto');
           }
-          console.log('"' + elem.id + '"');
-          console.log(user.get('fb_invited'));
+          console.log(_.indexOf(user.get('fb_invited'), '"' + elem.id + '"'));
+          console.log(_.indexOf(user.get('fb_invited'), elem.id));
         }
         if (a) {
           break;
