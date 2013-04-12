@@ -63059,7 +63059,7 @@ window.require.register("helpers/facebook-helper", function(exports, require, mo
         friend = _ref[_i];
         friends = friend;
       }
-      return Parse.Cloud.run('addInvitedlIST', {
+      return Parse.Cloud.run('addInvitedList', {
         newInvited: friends,
         userId: Parse.User.current().id
       }, {
