@@ -61372,13 +61372,21 @@ window.require.register("controllers/outgame/hall-of-fame-controller", function(
     };
 
     HallOfFameController.prototype.friendsToInvite = function(friends) {
-      var friendArray, tmp, user;
+      var a, elem, tmp, user, _i, _len;
 
-      friendArray = _.pluck(friends, "id");
       user = Parse.User.current();
-      tmp = _.first(_.shuffle(_.difference(friendArray, user.get('fb_invited'))), 4);
-      console.log(tmp);
-      console.log(friends);
+      while (true) {
+        tmp = _.shuffle(friends);
+        tmp = tmp.slice(0, 3);
+        a = false;
+        for (_i = 0, _len = tmp.length; _i < _len; _i++) {
+          elem = tmp[_i];
+          if (_.indexOf(user.get('fb_invited'), elem.id) === -1) {
+            a = true;
+            break;
+          }
+        }
+      }
       return this.friendsToInvite = tmp;
     };
 
