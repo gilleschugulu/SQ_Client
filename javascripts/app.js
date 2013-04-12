@@ -61376,6 +61376,8 @@ window.require.register("controllers/outgame/hall-of-fame-controller", function(
 
       user = Parse.User.current();
       tmp = _.first(_.shuffle(_.difference(friends, user.get('fb_invited'))), 3);
+      console.log(tmp);
+      console.log(_.difference(friends, user.get('fb_invited')));
       return this.friendsToInvite = tmp;
     };
 
