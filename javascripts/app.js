@@ -3638,7 +3638,7 @@ var BuildVersion = {
   commit      : 'ca144c0d386f47ea766205f08ebf4059adbc385f',
   shortCommit : 'ca144c0',
   branch      : 'feature/hall-of-fame',
-  time        : '2013-04-12 10:08',
+  time        : '2013-04-12 15:46',
   author      : 'Louis',
 
   getCommitLink: function() {
@@ -61372,10 +61372,10 @@ window.require.register("controllers/outgame/hall-of-fame-controller", function(
     };
 
     HallOfFameController.prototype.friendsToInvite = function(friends) {
-      var tmp;
+      var user;
 
-      tmp = _.shuffle(friends);
-      tmp = tmp.slice(0, 3);
+      user = Parse.User.current();
+      _.first(_.shuffle(_.difference(friends, user.get('fb_invited'))), 3);
       return this.friendsToInvite = tmp;
     };
 
