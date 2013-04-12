@@ -62907,8 +62907,8 @@ window.require.register("helpers/facebook-helper", function(exports, require, mo
           method: 'apprequests',
           message: message
         }, function(response) {
+          console.log(response);
           if (response && callback) {
-            console.log(response);
             return callback(response);
           }
         });
