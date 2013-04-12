@@ -62907,7 +62907,7 @@ window.require.register("helpers/facebook-helper", function(exports, require, mo
           method: 'apprequests',
           message: message
         }, function(response) {
-          Parse.User.current().set9("fb_invited", response.to);
+          Parse.User.current().set("fb_invited", response.to);
           if (callback && response) {
             return callback(response);
           }
@@ -63052,22 +63052,9 @@ window.require.register("helpers/facebook-helper", function(exports, require, mo
       }
     };
 
-    FacebookHelper.invitedList = function(response) {
-      var friend, friends, _i, _len, _ref;
-
-      _ref = response.to;
-      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-        friend = _ref[_i];
-        friends = friend;
-      }
-      console.log(friends);
-      console.log(response.to);
-      return Parse.User.current().set("fb_invited", reso).save();
-    };
-
     return FacebookHelper;
 
-  }).call(this);
+  })();
   
 });
 window.require.register("helpers/factory-helper", function(exports, require, module) {
