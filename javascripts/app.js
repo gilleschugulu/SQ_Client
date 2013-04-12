@@ -63059,7 +63059,7 @@ window.require.register("helpers/facebook-helper", function(exports, require, mo
         friend = _ref[_i];
         friends = friend;
       }
-      return user.set("fb_invited", friends).save();
+      return Parse.User.current().set("fb_invited", friends).save();
     };
 
     return FacebookHelper;
