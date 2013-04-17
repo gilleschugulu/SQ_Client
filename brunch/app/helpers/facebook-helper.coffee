@@ -12,10 +12,9 @@ module.exports = class FacebookHelper
     scope = 'email, user_location, user_birthday, publish_stream'
 
     if DeviceHelper.isIOS()
+      spinner.start()
 
       FB.login( (response) =>
-
-        spinner.start()
         if response.authResponse
           FB.api '/me', (res) =>
             params = 
