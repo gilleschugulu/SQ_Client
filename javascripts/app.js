@@ -61392,8 +61392,10 @@ window.require.define({"controllers/outgame/home-controller": function(exports, 
       if ((typeof navigator !== "undefined" && navigator !== null ? (_ref = navigator.splashscreen) != null ? _ref.hide : void 0 : void 0) != null) {
         navigator.splashscreen.hide();
       }
+      this.view.setJournalMessage('loading');
       return FacebookHelper.getFriends(function(friends) {
         _this.getJournalView(friends);
+        _this.view.setJournalMessage('touch');
         _this.view.delegate('click', '#equipe-btn', function() {
           return _this.view.toggleJournal();
         });
@@ -61408,6 +61410,8 @@ window.require.define({"controllers/outgame/home-controller": function(exports, 
             return _this.redirectTo('game');
           });
         });
+      }, function() {
+        return _this.view.setJournalMessage('error');
       });
     };
 
@@ -62947,24 +62951,28 @@ window.require.define({"helpers/facebook-helper": function(exports, require, mod
       return FB.api('/me', callback);
     };
 
-    FacebookHelper.getFriends = function(callback) {
+    FacebookHelper.getFriends = function(callback, error) {
       var _this = this;
       if (this.isLinked()) {
         return FB.api('/me/friends?fields=installed', function(response) {
           var friend, friends;
-          friends = (function() {
-            var _i, _len, _ref, _results;
-            _ref = response.data;
-            _results = [];
-            for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-              friend = _ref[_i];
-              if (friend.installed) {
-                _results.push(friend);
+          if (response.data) {
+            friends = (function() {
+              var _i, _len, _ref, _results;
+              _ref = response.data;
+              _results = [];
+              for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+                friend = _ref[_i];
+                if (friend.installed) {
+                  _results.push(friend);
+                }
               }
-            }
-            return _results;
-          })();
-          return callback(friends);
+              return _results;
+            })();
+            return callback(friends);
+          } else {
+            return error();
+          }
         });
       } else {
         return callback([]);
@@ -64577,6 +64585,11 @@ window.require.define({"locale/fr": function(exports, require, module) {
       controller: {
         home: {
           facebook_invite_message: 'Vasy rejoins ce jeu il déchire',
+          touch_me: {
+            touch: 'Touche pour afficher la Une',
+            loading: "Le journal est en cours de livraison !",
+            error: "Le facteur s'est perdu."
+          },
           journal: {
             twoplus: {
               rank_1: '{0} est numero uno',
@@ -65913,13 +65926,15 @@ window.require.define({"views/outgame/hall-of-fame-view": function(exports, requ
 }});
 
 window.require.define({"views/outgame/home-page-view": function(exports, require, module) {
-  var HomePageView, View, template,
+  var HomePageView, I18n, View, template,
     __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
   template = require('views/templates/outgame/home');
 
   View = require('views/base/view');
+
+  I18n = require('lib/i18n');
 
   module.exports = HomePageView = (function(_super) {
 
@@ -65948,6 +65963,10 @@ window.require.define({"views/outgame/home-page-view": function(exports, require
     HomePageView.prototype.addJournalView = function(journalView) {
       this.subview('journal', journalView);
       return this.subview('journal').render().toggle();
+    };
+
+    HomePageView.prototype.setJournalMessage = function(key) {
+      return $('#touch-me').text(I18n.t('controller.home.touch_me.' + key));
     };
 
     return HomePageView;
@@ -66596,7 +66615,7 @@ window.require.define({"views/templates/outgame/home": function(exports, require
     foundHelper = helpers.credits;
     if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
     else { stack1 = depth0.credits; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
-    buffer += escapeExpression(stack1) + "</span>\n  <span id='credit-icon' class='icon'></span>\n</div>\n<div id='logo'></div>\n\n<div id='touch-me'>Touche pour afficher la Une</div>\n\n<div id='menu'>\n  <a class=\"game-link item\" id=\"game-link\"></a>\n  <a href=\"#shop\" class=\"shop-link item\"></a>\n  <div class=\"small-buttons-container\">\n    <a href=\"#profile\" class=\"profile item\"></a>\n    <a href=\"#options\" class=\"options-link item\"></a>\n  </div>\n</div>\n<a href=\"#more-games\" class=\"more-games-link\"></a>\n";
+    buffer += escapeExpression(stack1) + "</span>\n  <span id='credit-icon' class='icon'></span>\n</div>\n<div id='logo'></div>\n\n<div id='touch-me'></div>\n\n<div id='menu'>\n  <a class=\"game-link item\" id=\"game-link\"></a>\n  <a href=\"#shop\" class=\"shop-link item\"></a>\n  <div class=\"small-buttons-container\">\n    <a href=\"#profile\" class=\"profile item\"></a>\n    <a href=\"#options\" class=\"options-link item\"></a>\n  </div>\n</div>\n<a href=\"#more-games\" class=\"more-games-link\"></a>\n";
     return buffer;});
 }});
 
