@@ -3,6 +3,10 @@ module.exports =
     controller:
       home:
         facebook_invite_message: 'Vasy rejoins ce jeu il déchire'
+        touch_me:
+          touch: 'Touche pour afficher la Une'
+          loading: "Le journal est en cours de livraison !"
+          error: "Le facteur s'est perdu."
         journal:
           twoplus:
             rank_1 : '{0} est numero uno'
