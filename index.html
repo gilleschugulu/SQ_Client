@@ -51,7 +51,7 @@
       // if (typeof FB == 'undefined') alert('FB variable does not exist. Check that you have included the Facebook JS SDK file.');
       document.addEventListener('deviceready',
         function() {
-          Parse.FacebookUtils.init({
+          FB.init({
             appId             : ConfigHelper.config.services.facebook.app_id,
             nativeInterface   : CDV.FB,
             useCachedDialogs  : false

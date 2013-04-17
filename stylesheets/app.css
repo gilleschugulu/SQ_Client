@@ -3660,7 +3660,7 @@ table {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
-  -webkit-font-smoothing: antialiased;
+  font-smoothing: antialiased;
   -webkit-font-smoothing: antialiased;
   -webkit-tap-highlight-color: rgba(0,0,0,0);
 }
@@ -3998,30 +3998,6 @@ body.box-align {
   background-image: url("../images/hall-of-fame/box_classements.png");
   padding-top: 1%;
 }
-.hall-of-fame .content-container .ranking-container #no-friends {
-  width: 40%;
-  height: 20%;
-  background-image: url("../images/hall-of-fame/invite.png");
-  -webkit-background-size: contain;
-  -moz-background-size: contain;
-  background-size: contain;
-  background-repeat: no-repeat;
-  position: absolute;
-  left: 40%;
-  top: 40%;
-}
-.hall-of-fame .content-container .ranking-container #no-fb-connected {
-  width: 40%;
-  height: 20%;
-  background-image: url("../images/hall-of-fame/linkfb.png");
-  -webkit-background-size: contain;
-  -moz-background-size: contain;
-  background-size: contain;
-  background-repeat: no-repeat;
-  position: absolute;
-  left: 30%;
-  top: 40%;
-}
 .hall-of-fame .content-container .ranking-container .separator {
   width: 98%;
   height: 2%;
@@ -4041,28 +4017,11 @@ body.box-align {
   -moz-background-size: 100%;
   background-size: 100%;
 }
-.hall-of-fame .content-container .ranking-container .div-ranking.moreFriends {
-  background-color: #b5b5b5;
-}
 .hall-of-fame .content-container .ranking-container .div-ranking.pink {
   background-image: url("../images/hall-of-fame/pink.png");
 }
 .hall-of-fame .content-container .ranking-container .div-ranking.white {
   background-image: url("../images/hall-of-fame/white.png");
-}
-.hall-of-fame .content-container .ranking-container .div-ranking .invite-btn {
-  cursor: pointer;
-  margin-top: 1%;
-  position: absolute;
-  right: 1%;
-  ((null)): 0;
-  width: 9%;
-  height: 9%;
-  background-image: url("../images/hall-of-fame/invite.png");
-  -webkit-background-size: contain;
-  -moz-background-size: contain;
-  background-size: contain;
-  background-repeat: no-repeat;
 }
 .hall-of-fame .content-container .ranking-container .div-ranking .rank {
   width: 14%;
@@ -4113,8 +4072,6 @@ body.box-align {
   left: 13%;
   ((null)): 0;
   margin-top: 1%;
-  height: 8%;
-  width: 7%;
 }
 .hall-of-fame .content-container .ranking-container .div-ranking .username {
   display: inline-block;
@@ -5920,12 +5877,15 @@ body.box-align {
   margin-top: 4.5%;
 }
 .profile-page .background .picture-container .picture {
-  margin-left: 13%;
-  height: 75%;
-  width: 76%;
-  -webkit-background-size: 100%;
-  -moz-background-size: 100%;
-  background-size: 100%;
+  position: relative;
+  top: 0.6%;
+  left: 14.2%;
+  height: 73.8%;
+  width: 73.3%;
+  -webkit-background-size: contain;
+  -moz-background-size: contain;
+  background-size: contain;
+  background-repeat: no-repeat;
 }
 .profile-page .background .picture-container .name {
   padding-top: 4%;
@@ -6464,8 +6424,8 @@ body.box-align {
 }
 .shop-page .tab-container #credits .paid-offers .unavailable {
   opacity: 0.6;
+  -ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=60);
   filter: alpha(opacity=60);
-  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=60)";
 }
 .shop-page .tab-container #credits .free-offers {
   position: absolute;
@@ -6589,8 +6549,8 @@ body.box-align {
   -webkit-border-radius: 15px;
   border-radius: 15px;
   opacity: 0.7;
+  -ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=70);
   filter: alpha(opacity=70);
-  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=70)";
 }
 .spinner-container.partial {
   width: 17%;

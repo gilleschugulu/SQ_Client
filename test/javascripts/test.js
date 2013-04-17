@@ -61,25 +61,20 @@
     throw new Error('Cannot find module "' + name + '"');
   };
 
-  var define = function(bundle, fn) {
-    if (typeof bundle === 'object') {
-      for (var key in bundle) {
-        if (has(bundle, key)) {
-          modules[key] = bundle[key];
-        }
+  var define = function(bundle) {
+    for (var key in bundle) {
+      if (has(bundle, key)) {
+        modules[key] = bundle[key];
       }
-    } else {
-      modules[bundle] = fn;
     }
-  };
+  }
 
   globals.require = require;
   globals.require.define = define;
-  globals.require.register = define;
   globals.require.brunch = true;
 })();
 
-window.require.register("test/controllers/login-controller-test", function(exports, require, module) {
+window.require.define({"test/controllers/login-controller-test": function(exports, require, module) {
   var Login;
 
   Login = require('controllers/login-controller');
@@ -90,8 +85,9 @@ window.require.register("test/controllers/login-controller-test", function(expor
     });
   });
   
-});
-window.require.register("test/controllers/more-games-controller-test", function(exports, require, module) {
+}});
+
+window.require.define({"test/controllers/more-games-controller-test": function(exports, require, module) {
   var MoreGames;
 
   MoreGames = require('controllers/more-games-controller');
@@ -102,8 +98,9 @@ window.require.register("test/controllers/more-games-controller-test", function(
     });
   });
   
-});
-window.require.register("test/controllers/player-controller-test", function(exports, require, module) {
+}});
+
+window.require.define({"test/controllers/player-controller-test": function(exports, require, module) {
   var Player;
 
   Player = require('controllers/player-controller');
@@ -114,8 +111,9 @@ window.require.register("test/controllers/player-controller-test", function(expo
     });
   });
   
-});
-window.require.register("test/controllers/profile-controller-test", function(exports, require, module) {
+}});
+
+window.require.define({"test/controllers/profile-controller-test": function(exports, require, module) {
   var Profile;
 
   Profile = require('controllers/profile-controller');
@@ -126,8 +124,9 @@ window.require.register("test/controllers/profile-controller-test", function(exp
     });
   });
   
-});
-window.require.register("test/models/player-test", function(exports, require, module) {
+}});
+
+window.require.define({"test/models/player-test": function(exports, require, module) {
   var Player;
 
   Player = require('models/player');
@@ -138,8 +137,9 @@ window.require.register("test/models/player-test", function(exports, require, mo
     });
   });
   
-});
-window.require.register("test/test-helpers", function(exports, require, module) {
+}});
+
+window.require.define({"test/test-helpers": function(exports, require, module) {
   var chai, sinonChai;
 
   chai = require('chai');
@@ -153,9 +153,10 @@ window.require.register("test/test-helpers", function(exports, require, module) 
     sinon: require('sinon')
   };
   
-});
-window.require.register("test/views/header-view-test", function(exports, require, module) {
-  var HeaderView, HeaderViewTest, mediator, _ref,
+}});
+
+window.require.define({"test/views/header-view-test": function(exports, require, module) {
+  var HeaderView, HeaderViewTest, mediator,
     __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
@@ -164,11 +165,11 @@ window.require.register("test/views/header-view-test", function(exports, require
   mediator = require('mediator');
 
   HeaderViewTest = (function(_super) {
+
     __extends(HeaderViewTest, _super);
 
     function HeaderViewTest() {
-      _ref = HeaderViewTest.__super__.constructor.apply(this, arguments);
-      return _ref;
+      return HeaderViewTest.__super__.constructor.apply(this, arguments);
     }
 
     HeaderViewTest.prototype.renderTimes = 0;
@@ -194,8 +195,9 @@ window.require.register("test/views/header-view-test", function(exports, require
     });
   });
   
-});
-window.require.register("test/views/home-page-view-test", function(exports, require, module) {
+}});
+
+window.require.define({"test/views/home-page-view-test": function(exports, require, module) {
   var HomePageView;
 
   HomePageView = require('views/home-page-view');
@@ -212,8 +214,9 @@ window.require.register("test/views/home-page-view-test", function(exports, requ
     });
   });
   
-});
-window.require.register("test/views/login-view-test", function(exports, require, module) {
+}});
+
+window.require.define({"test/views/login-view-test": function(exports, require, module) {
   var LoginView;
 
   LoginView = require('views/login-view');
@@ -224,8 +227,9 @@ window.require.register("test/views/login-view-test", function(exports, require,
     });
   });
   
-});
-window.require.register("test/views/more-games-view-test", function(exports, require, module) {
+}});
+
+window.require.define({"test/views/more-games-view-test": function(exports, require, module) {
   var MoreGamesView;
 
   MoreGamesView = require('views/more-games-view');
@@ -236,8 +240,9 @@ window.require.register("test/views/more-games-view-test", function(exports, req
     });
   });
   
-});
-window.require.register("test/views/profile-view-test", function(exports, require, module) {
+}});
+
+window.require.define({"test/views/profile-view-test": function(exports, require, module) {
   var ProfileView;
 
   ProfileView = require('views/profile-view');
@@ -248,8 +253,9 @@ window.require.register("test/views/profile-view-test", function(exports, requir
     });
   });
   
-});
-window.require.register("test/views/tutorial-view-test", function(exports, require, module) {
+}});
+
+window.require.define({"test/views/tutorial-view-test": function(exports, require, module) {
   var TutorialView;
 
   TutorialView = require('views/tutorial-view');
@@ -260,15 +266,6 @@ window.require.register("test/views/tutorial-view-test", function(exports, requi
     });
   });
   
-});
-window.require('test/controllers/login-controller-test');
-window.require('test/controllers/more-games-controller-test');
-window.require('test/controllers/player-controller-test');
-window.require('test/controllers/profile-controller-test');
-window.require('test/models/player-test');
-window.require('test/views/header-view-test');
-window.require('test/views/home-page-view-test');
-window.require('test/views/login-view-test');
-window.require('test/views/more-games-view-test');
-window.require('test/views/profile-view-test');
-window.require('test/views/tutorial-view-test');
+}});
+
+
