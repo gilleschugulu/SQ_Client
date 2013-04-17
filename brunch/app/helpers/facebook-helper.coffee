@@ -14,6 +14,8 @@ module.exports = class FacebookHelper
     if DeviceHelper.isIOS()
 
       FB.login( (response) =>
+
+        spinner.start()
         if response.authResponse
           FB.api '/me', (res) =>
             params = 

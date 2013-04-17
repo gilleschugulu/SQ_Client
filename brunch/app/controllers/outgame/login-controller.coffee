@@ -86,6 +86,7 @@ module.exports = class LoginController extends Controller
         @bindPlayer()
 
     error = (response) =>
+      SpinnerHelper.stop()
       if config.services.facebook.createAnyway
         console.log 'Forced creation of player even if Facebook fail (local)'
         # We don't have a nickname to use (must be uniq), so we must generate one
@@ -208,6 +209,7 @@ module.exports = class LoginController extends Controller
 
         # Save or update uuid in LocalStorage
         @initPushNotifications()
+        SpinnerHelper.stop()
         @redirectHome()
 
 
