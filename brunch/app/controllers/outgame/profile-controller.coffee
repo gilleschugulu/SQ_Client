@@ -32,7 +32,7 @@ module.exports = class ProfilesController extends Controller
           text: val.name
           name: key
 
-        new ProfileView({ user : @user.attributes, stats: stats_stats, sports: stats_sports, bonus: @user.getBonuses(), avatar})
+        new ProfileView({ user : @user.attributes, stats: stats_stats, sports: stats_sports, bonus: @user.getBonuses(), avatar, is_linked: Parse.FacebookUtils.isLinked(Parse.User.current()) })
 
       , (view) =>
         view.delegate 'click', '.facebook-link', @linkFacebook
@@ -40,11 +40,13 @@ module.exports = class ProfilesController extends Controller
       , {viewTransition: yes, music: 'outgame'}
 
   linkFacebook: ->
+    return if Parse.FacebookUtils.isLinked(Parse.User.current())
     # Track Event
     AnalyticsHelper.trackEvent 'Profil', 'Liaison facebook'
 
     # Call Facebook for linking
     FacebookHelper.getLoginStatus(false, true)
+    @view.activateFbButton()
 
   onClickGameCenter: =>
     # Track Event

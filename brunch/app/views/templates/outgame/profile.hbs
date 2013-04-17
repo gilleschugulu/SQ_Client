@@ -7,7 +7,11 @@
   <div class='personal-info'>
     <div class='level'>{{user.rank}}</div>
     <div class='score'>{{niceNumber user.score}}</div>
-    <div class='facebook-link'></div>
+    {{#if is_linked }}
+      <div class='facebook-link done'></div>
+    {{else}}
+      <div class='facebook-link'></div>
+    {{/if}}
   </div>
   <div class='buttons'>
     <a href="#hall-of-fame"class='hall-of-fame'></a>
