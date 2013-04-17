@@ -1,11 +1,37 @@
 mediator      = require 'mediator'
 utils         = require 'lib/utils'
 PopUpHelper   = require 'helpers/pop-up-helper'
+DeviceHelper  = require 'helpers/device-helper'
 i18n          = require 'lib/i18n'
 spinner       = require 'helpers/spinner-helper'
 
 module.exports = class FacebookHelper
   self = @
+
+  @logIn: (success, error) ->
+    scope = 'email, user_location, user_birthday, publish_stream'
+
+    if DeviceHelper.isIOS()
+
+      FB.login( (response) =>
+        if response.authResponse
+          FB.api '/me', (res) =>
+            params = 
+              id: res.id
+              access_token: response.authResponse.accessToken
+              expiration_date: new Date(response.authResponse.expirationTime).toISOString()
+
+            Parse.FacebookUtils.logIn params,
+              success: =>
+                success()
+              error: =>
+                error(response)
+        else
+          error(response)
+      , {scope})
+
+    else
+      Parse.FacebookUtils.logIn(scope, {success, error})
 
   # Friends invite request
   # ----------------------

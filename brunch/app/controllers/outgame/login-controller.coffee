@@ -72,6 +72,35 @@ module.exports = class LoginController extends Controller
     #   console.log "LOGIN ERROR", status, error
     # no
 
+  loginWithFacebook: =>
+    console.log 'loginWithFacebook'
+    AnalyticsHelper.trackEvent 'Login', 'Login with facebook'
+
+    success = (response) =>
+      FacebookHelper.getPersonalInfo (fb_attributes) =>
+        parse_attributes = User.prototype.defaults
+        parse_attributes.username = fb_attributes.name
+        parse_attributes.fb_id = fb_attributes.id
+
+        Parse.User.current().set(parse_attributes).save()
+        @bindPlayer()
+
+    error = (response) =>
+      if config.services.facebook.createAnyway
+        console.log 'Forced creation of player even if Facebook fail (local)'
+        # We don't have a nickname to use (must be uniq), so we must generate one
+        Parse.User.signUp(Math.random() * 56056105 + '', 'password', (new User).attributes,
+          success: =>
+            user = Parse.User.current()
+            console.log(user, user?.get('username'))
+            @bindPlayer()
+        )
+      else
+        PopUpHelper.initialize {message: 'Erreur avec Facebook', title: 400, key: 'api-error'}
+
+
+    FacebookHelper.logIn success, error
+
   loginWithSSO: =>
     console.log "LOGIN YO"
     unless @validateForm('#sso-login-form')
@@ -153,6 +182,7 @@ module.exports = class LoginController extends Controller
       view.animateFacebook()
       navigator.splashscreen.hide() if navigator?.splashscreen?.hide?
       view.delegate 'click', '#register-btn', @registerWithSSO
+      view.delegate 'click', "#facebook-login", @loginWithFacebook
       view.delegate 'click', '#login-btn', @loginWithSSO
       view.delegate 'click', '#temp-btn', @loginWithTemp
       view.delegate 'keyup', '#sso-register-form input[name=email]', @checkAvailabilityWithSSO
@@ -163,33 +193,6 @@ module.exports = class LoginController extends Controller
         view.openForms()
       view.delegate 'click', '#temp-login', ->
         view.openTempForm()
-      view.delegate "click", "#facebook-login", =>
-        AnalyticsHelper.trackEvent 'Login', 'Login with facebook'
-
-        # Note : logIn automatically creates a Parse.User in case of success \o/
-        Parse.FacebookUtils.logIn('email, user_location, user_birthday, publish_stream',
-          success: =>
-            FacebookHelper.getPersonalInfo (fb_attributes) =>
-              parse_attributes = User.prototype.defaults
-              parse_attributes.username = fb_attributes.name
-              parse_attributes.fb_id = fb_attributes.id
-
-              Parse.User.current().set(parse_attributes).save()
-              @bindPlayer()
-
-          , error: (response) =>
-            if config.services.facebook.createAnyway
-              console.log 'Forced creation of player even if Facebook fail (local)'
-              # We don't have a nickname to use (must be uniq), so we must generate one
-              Parse.User.signUp(Math.random() * 56056105 + '', 'password', (new User).attributes,
-                success: =>
-                  user = Parse.User.current()
-                  console.log(user, user?.get('username'))
-                  @bindPlayer()
-              )
-            else
-              PopUpHelper.initialize {message: 'Erreur avec Facebook', title: 400, key: 'api-error'}
-        )
     , {viewTransition: yes}
 
 
