@@ -61394,8 +61394,9 @@ window.require.define({"controllers/outgame/home-controller": function(exports, 
       }
       this.view.setJournalMessage('loading');
       return FacebookHelper.getFriends(function(friends) {
-        _this.getJournalView(friends);
-        _this.view.setJournalMessage('touch');
+        _this.getJournalView(friends, function() {
+          return _this.view.setJournalMessage('touch');
+        });
         _this.view.delegate('click', '#equipe-btn', function() {
           return _this.view.toggleJournal();
         });
@@ -61419,16 +61420,16 @@ window.require.define({"controllers/outgame/home-controller": function(exports, 
       return FacebookHelper.friendRequest(i18n.t('controller.home.facebook_invite_message'));
     };
 
-    HomeController.prototype.getJournalView = function(friends) {
+    HomeController.prototype.getJournalView = function(friends, callback) {
       switch (friends.length) {
         case 0:
-          return this.getSmallLeaderboard(this.getNoFriendsJournalView);
+          return this.getSmallLeaderboard(callback, this.getNoFriendsJournalView);
         case 1:
-          return this.getFriendsScore(friends, this.getOneFriendJournalView);
+          return this.getFriendsScore(friends, callback, this.getOneFriendJournalView);
         case 2:
-          return this.getFriendsScore(friends, this.getTwoFriendsJournalView);
+          return this.getFriendsScore(friends, callback, this.getTwoFriendsJournalView);
         default:
-          return this.getFriendsScore(friends, this.getTwoplusFriendsJournalView);
+          return this.getFriendsScore(friends, callback, this.getTwoplusFriendsJournalView);
       }
     };
 
@@ -61449,7 +61450,7 @@ window.require.define({"controllers/outgame/home-controller": function(exports, 
       return new NoFriendsJournalView(options);
     };
 
-    HomeController.prototype.getFriendsScore = function(friends, callback) {
+    HomeController.prototype.getFriendsScore = function(friends, callback, journalView) {
       var friendsId,
         _this = this;
       friendsId = _.pluck(friends, 'id');
@@ -61461,7 +61462,8 @@ window.require.define({"controllers/outgame/home-controller": function(exports, 
           players = players.sort(function(f1, f2) {
             return f2.score - f1.score;
           });
-          return _this.view.addJournalView(callback(players));
+          _this.view.addJournalView(journalView(players));
+          return callback();
         },
         error: function(error) {
           return console.log('ERROR : ', error);
@@ -61469,7 +61471,7 @@ window.require.define({"controllers/outgame/home-controller": function(exports, 
       });
     };
 
-    HomeController.prototype.getSmallLeaderboard = function(callback) {
+    HomeController.prototype.getSmallLeaderboard = function(journalView, callback) {
       var _this = this;
       return Parse.Cloud.run('smallLeaderboard', {
         size: 3
@@ -61478,7 +61480,8 @@ window.require.define({"controllers/outgame/home-controller": function(exports, 
           players = players.sort(function(f1, f2) {
             return f2.score - f1.score;
           });
-          return _this.view.addJournalView(callback(players));
+          _this.view.addJournalView(journalView(players));
+          return callback();
         },
         error: function(error) {
           return console.log('ERROR : ', error);
