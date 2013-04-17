@@ -37,9 +37,8 @@ module.exports = class HomeController extends Controller
     @view.setJournalMessage('loading')
 
     FacebookHelper.getFriends (friends) =>
-      @getJournalView(friends)
-
-      @view.setJournalMessage('touch')
+      @getJournalView friends, =>
+        @view.setJournalMessage('touch')
 
       # All these links are present on the journal
       @view.delegate 'click', '#equipe-btn', =>
@@ -58,12 +57,12 @@ module.exports = class HomeController extends Controller
   onClickFacebook: =>
     FacebookHelper.friendRequest i18n.t('controller.home.facebook_invite_message')
 
-  getJournalView: (friends) ->
+  getJournalView: (friends, callback) ->
     switch friends.length
-      when 0 then @getSmallLeaderboard @getNoFriendsJournalView
-      when 1 then @getFriendsScore friends, @getOneFriendJournalView
-      when 2 then @getFriendsScore friends, @getTwoFriendsJournalView
-      else @getFriendsScore friends, @getTwoplusFriendsJournalView
+      when 0 then @getSmallLeaderboard callback, @getNoFriendsJournalView
+      when 1 then @getFriendsScore friends, callback, @getOneFriendJournalView
+      when 2 then @getFriendsScore friends, callback, @getTwoFriendsJournalView
+      else        @getFriendsScore friends, callback, @getTwoplusFriendsJournalView
 
   getNoFriendsJournalView: (people) ->
     targetDate = new Date()
@@ -81,7 +80,7 @@ module.exports = class HomeController extends Controller
     return new NoFriendsJournalView options
 
 
-  getFriendsScore: (friends, callback) ->
+  getFriendsScore: (friends, callback, journalView) ->
     friendsId = _.pluck(friends, 'id')
 
     Parse.Cloud.run 'getFriendsScore', { friendsId: friendsId },
@@ -89,17 +88,18 @@ module.exports = class HomeController extends Controller
         players.push Parse.User.current().attributes
         players = players.sort (f1, f2) ->
           f2.score - f1.score
-        @view.addJournalView callback(players)
-        # callback(friends)
+        @view.addJournalView journalView(players)
+        callback()
       error: (error) ->
         console.log 'ERROR : ', error
 
-  getSmallLeaderboard: (callback) ->
+  getSmallLeaderboard: (journalView, callback) ->
     Parse.Cloud.run 'smallLeaderboard', {size : 3},
       success: (players) =>
         players = players.sort (f1, f2) ->
           f2.score - f1.score
-        @view.addJournalView callback(players)
+        @view.addJournalView journalView(players)
+        callback()
       error: (error) ->
         console.log 'ERROR : ', error
 
