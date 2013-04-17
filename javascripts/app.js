@@ -62844,8 +62844,8 @@ window.require.define({"helpers/facebook-helper": function(exports, require, mod
         _this = this;
       scope = 'email, user_location, user_birthday, publish_stream';
       if (DeviceHelper.isIOS()) {
+        spinner.start();
         return FB.login(function(response) {
-          spinner.start();
           if (response.authResponse) {
             return FB.api('/me', function(res) {
               var params;
