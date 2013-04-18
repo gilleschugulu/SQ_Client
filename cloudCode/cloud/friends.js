@@ -20,7 +20,8 @@ exports.task = function(request, response) {
             fb_id: user.get('fb_id'),
             username: user.get('username'),
             object_id: user.id,
-            score: user.get('score') | 0
+            score: user.get('score') | 0,
+            rank: user.get('rank') | 0
           });
         }
         return _results;

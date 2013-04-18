@@ -16,6 +16,7 @@ module.exports = class ProfilesController extends Controller
   index: =>
     @user = new User(Parse.User.current().attributes)
     if fb_id = @user.get('fb_id')
+      # TODO : Size must be dynamic
       avatar = 'https://graph.facebook.com/' + fb_id + '/picture?width=150&height=170'
     else
       avatar = 'images/common/facebook-default.jpg'

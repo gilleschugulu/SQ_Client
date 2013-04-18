@@ -3,9 +3,10 @@ Parse.Cloud.define('getFriendsScore', function(request, response) {
   return require('cloud/friends.js').task(request, response);
 });
 
-Parse.Cloud.define('sortLeaderboard', function(request, response) {
+Parse.Cloud.define('getAllScore', function(request, response) {
   return require('cloud/sort_leaderboard.js').task(request, response);
 });
 
 Parse.Cloud.define('smallLeaderboard', function(request, response) {
   return require('cloud/small_leaderboard.js').task(request, response);
+});

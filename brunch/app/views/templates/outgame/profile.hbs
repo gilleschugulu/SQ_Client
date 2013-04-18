@@ -1,5 +1,19 @@
 <!--MAIN BLOCK-->
 <div class='background'>
+<!--HEADER BLOCK-->
+  <div class="header">
+    <a href="#home" class="home-btn"></a>
+    <div class="informations">
+      <div class="cash">
+        <div class='cash-value'>{{user.credits}}</div>
+        <div class="cash-icone"></div>
+      </div>
+      <div class="lifes">
+        <div class="lifes-value">{{user.health}}</div>
+        <div class="lifes-icone"></div>
+      </div>
+    </div>
+  </div>
   <div class='picture-container'>
     <div class='picture' style='background-image: url({{avatar}})'></div>
     <div class='name'>{{user.username}}</div>
@@ -56,32 +70,6 @@
   {{/each}}
 </div>
 
-<!--HEADER BLOCK-->
-<div class="header">
-  <a href="#home" class="home-btn"></a>
-  <div class="informations">
-    <div class="cash">
-      <div class='cash-value'>{{user.credits}}</div>
-      <div class="cash-icone"></div>
-    </div>
-    <div class="lifes">
-      <div class="lifes-value">{{user.health}}</div>
-      <div class="lifes-icone"></div>
-    </div>
-  </div>
-</div>
-
-<!-- HEADER BLOCK BEGIN
-<div class="header-container">
-  <a href="#home" class="home-btn"></a>
-  <div class="title"></div>
-  <div class="cash-container">
-    <div class="token"></div>
-    <p>Solde <span class="cash-value">{{credits}}</span></p>
-    <div class="clearfix"></div>
-  </div>
-  <div class="clearfix"></div>
-</div>
 <!-- CONTENT BLOCK BEGIN
 <div class="content-container">
   <div class="left-block">

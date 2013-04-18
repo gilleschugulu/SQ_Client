@@ -49,7 +49,31 @@ module.exports = class FacebookHelper
       # Checking FB is existant
       FB.ui {method: 'apprequests', message: message}, (response) =>
         # if we have a callback for this method, then use it (for exemple avoid rewarding?)
+        user = Parse.User.current()
+        user.set("fb_invited", _.uniq(response.to.concat(user.get('fb_invited')))).save()
+        if(callback and response)
+          callback(response)
+    unless @isLinked()
+      @linkPlayer doRequest
+    else
+      doRequest()
+
+  @friendRequestTo: (message, friend, callback = null) ->
+    doRequest = ->
+      # if no message is no provided, return
+      unless !!message
+        return alert "FB.request: pas de message :("
+
+      # if message is incorrect, return
+      if message.length < 1 or message.length > 255
+        return alert "FB.request: message doit faire entre 1 et 255 characteres (" + message.length + " actuellement)"
+
+      # Checking FB is existant
+      FB.ui {method: 'apprequests', message: message, to: friend}, (response) =>
+        # if we have a callback for this method, then use it (for exemple avoid rewarding?)
+        user.set("fb_invited", _.uniq(response.to.concat(user.get('fb_invited')))).save()
         if response and callback
+          console.log response
           callback(response)
     unless @isLinked()
       @linkPlayer doRequest
@@ -100,13 +124,21 @@ module.exports = class FacebookHelper
       FB.api '/me/friends?fields=installed', (response) => 
         if response.data
           friends = (friend for friend in response.data when friend.installed)
+          if !friends?
+            friends = []
           callback(friends)
         else
           error()
     else
       callback([])
 
-
+  @getOtherFriends:(callback) ->
+    if @isLinked()
+      FB.api '/me/friends?fields=id,name,installed', (response) =>
+        friends = (friend for friend in response.data when !friend.installed )
+        callback(friends)
+    else
+      callback([])
   # # Like the appli
   # # HAHA, like an Open Graph object. Not usable now, maybe later
   # # -------------------------------------------------
@@ -116,3 +148,6 @@ module.exports = class FacebookHelper
   #       object: "http://samples.ogp.me/226075010839791"
   #     (response) ->
   #       callback?(response)
+
+
+

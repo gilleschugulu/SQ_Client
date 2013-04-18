@@ -18,10 +18,12 @@ module.exports = class HallOfFameView extends View
 
   newPlayerHTML: (player, picSize, players) ->
     #separators
-    separator = ''
+    separator = '<div class="separator"></div>'
     if @i > 0
-      if players[@i-1].rank+1 != player.rank
-        separator = '<div class="separator"></div>'
+      if players[@i-1].rank+1 is player.rank or players[@i-1].rank is player.rank
+        separator = ''
+    else
+      separator = ''
     #friend request button
     friend = if player.friend then '<div class="ask-friend"></div>' else ''
     #pyjama
@@ -31,23 +33,29 @@ module.exports = class HallOfFameView extends View
       @color = 'pink'
     #medialles
     rank = '<span class="rank">'+player.rank+'</span>'
-    if player.rank == 1
+    if player.rank is 1
       rank = '<div class="rank first"></div>'
-    else if player.rank == 2
+    else if player.rank is 2
       rank = '<div class="rank second"></div>'
-    else if player.rank == 3
+    else if player.rank is 3
       rank = '<div class="rank third"></div>'
     @i++
     pic = if player.profilepic then player.profilepic else 'http://profile.ak.fbcdn.net/static-ak/rsrc.php/v2/yo/r/UlIqmHJn-SK.gif'
-    separator+
-    '<div class="div-ranking '+@color+'">'+rank+'<div class="profilepic"><img src="'+pic+'" width="'+picSize+'" height="'+picSize+'"/></div><span class="username">'+player.username+'</span><span class="money">'+player.jackpot+'</span>'+friend+'</div>'
+    separator+'<div class="div-ranking '+@color+'">'+rank+'<img class="profilepic" src="'+pic+'" width="'+picSize+'" height="'+picSize+'"/><span class="username">'+player.username+'</span><span class="money">'+player.jackpot+'</span>'+friend+'</div>'
 
 
-  updateRankingList: (players) ->
+  updateRankingList: (players, playerPosition, noFriends, fbConnected, withFriends, friendsToInvite) ->
     @i = 0
     @color= 'pink'
     el = $('.ranking-container', @$el).empty()
-    el.append @newPlayerHTML(player, 40, players) for player in players
+    if !fbConnected and withFriends
+      el.append '<a id="no-fb-connected"></a>'
+    else if noFriends and withFriends
+      el.append '<a id="no-friends"></a>'
+    else
+      el.append @newPlayerHTML(player, 40, players) for player in players
+      el.append @suggestFriends(friendsToInvite) if withFriends
+      @scrollTo(playerPosition)
 
   chooseList: (eventTargetEl) ->
     $('div' ,'#btn_HoF').removeClass('active')
@@ -80,3 +88,17 @@ module.exports = class HallOfFameView extends View
   askFriend: (el) ->
     $(el).addClass('asked')
 
+  scrollTo: (i) ->
+    el = $('.ranking-container')[0]
+    height = $('.div-ranking').height()
+    if i>3 then el.scrollTop = (i-4)*height
+
+  dispose: ->
+    clearInterval @interval if @interval?
+    super
+
+  suggestFriends: (friends) =>
+    moreFriends = ''
+    for friend in friends
+      moreFriends+="<div class='div-ranking moreFriends'><img class='profilepic' src='https://graph.facebook.com/#{friend.id}/picture'/><span class='username'>#{friend.name}</span><div data-id='#{friend.id}' class='invite-btn'></div></div>"
+    moreFriends
