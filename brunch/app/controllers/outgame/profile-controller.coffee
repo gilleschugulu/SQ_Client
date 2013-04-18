@@ -14,6 +14,7 @@ module.exports = class ProfilesController extends Controller
   stats : null
 
   index: =>
+
     @user = new User(Parse.User.current().attributes)
     if fb_id = @user.get('fb_id')
       # TODO : Size must be dynamic
@@ -24,11 +25,12 @@ module.exports = class ProfilesController extends Controller
     @loadView 'profile'
       , =>
         stats = GameStatHelper.getProfileStat()
-        stats_stats = _.map _.omit(stats, 'all_sports'), (val, key) ->
+        stats_stats = _.map stats.stats, (val, key) ->
           name: key
           number: val
           text: I18n.t('controller.profile.stats.' + key)
-        stats_sports = _.map stats.all_sports, (val, key) ->
+        stats_stats.game_week_score = stats.score
+        stats_sports = _.map stats.sports, (val, key) ->
           number: val.percent
           text: val.name
           name: key
@@ -57,5 +59,4 @@ module.exports = class ProfilesController extends Controller
     if lb
       GameCenter?.showLeaderboard lb
     else
-      alert('pas de leaderboard')
-
+      alert('Pas de leaderboard')
