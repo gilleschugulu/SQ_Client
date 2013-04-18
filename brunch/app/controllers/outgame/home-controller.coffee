@@ -36,6 +36,9 @@ module.exports = class HomeController extends Controller
     navigator.splashscreen.hide() if navigator?.splashscreen?.hide?
     @view?.setJournalMessage('loading')
 
+    @view.delegate 'click', '#game-link', =>
+      @view.dim => @redirectTo 'game'
+
     FacebookHelper.getFriends (friends) =>
       @getJournalView friends, =>
         @view?.setJournalMessage('touch')
@@ -46,9 +49,6 @@ module.exports = class HomeController extends Controller
       @view.delegate 'click', '#invite-btn', @onClickFacebook
       @view.delegate 'click', '#hall-of-fame', =>
         @view.dim => @redirectTo 'hall-of-fame'
-
-      @view.delegate 'click', '#game-link', =>
-        @view.dim => @redirectTo 'game'
     , =>
       # Error callback, if facebook fail. Nothing to display. Retry ?
       @view?.setJournalMessage('error')
