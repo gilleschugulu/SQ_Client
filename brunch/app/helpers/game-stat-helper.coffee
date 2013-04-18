@@ -1,3 +1,5 @@
+I18n = require 'lib/i18n'
+
 module.exports = class GameStatHelper
 
   @_stats = {}
@@ -38,13 +40,12 @@ module.exports = class GameStatHelper
     stats.sports[sport].good += 1 if success
     stats.sports[sport].total += 1
 
-    # stats.sports[sport].total will never be 0, since += 1
+    # stats.sports[sport].total will never be 0, since += 1. So no / 0
     percent = (stats.sports[sport].good / stats.sports[sport].total) * 100
     stats.sports[sport].percent = parseFloat(percent.toFixed(2))
 
-    user.set('stats', stats).save()
+    user.set('stats', stats)
     @
-
 
   @getStats: ->
     @_stats
@@ -64,7 +65,7 @@ module.exports = class GameStatHelper
     {
       best_score: @_getStat('best_score')
       avg_score: parseFloat((@_getStat('sum_score') / (@_getStat('games_played_count') | 1)).toFixed(2))
-      percent_answer: parseFloat(((@_getStat('good_answers_count') / (@_getStat('wrong_answers_count') + @_getStat('good_answers_count'))) * 100).toFixed(2)) + '%'
+      percent_answer: @getPercentAnswer() + '%'
       average_time: parseInt(@_getStat('sum_time_question') / answers_count, 10) + ' ms'
       games_played_count: @_getStat('games_played_count')
       best_row: @_getStat('best_row')
@@ -74,13 +75,17 @@ module.exports = class GameStatHelper
 
 
   @getBestSport: ->
-    best_sport = _.max @getAllSports(), (sport) -> 
+    return I18n.t('helper.stats.no_best_sport') if _.keys(sports = @getAllSports()).length == 0
+
+    best_sport = _.max sports, (sport) ->
       sport.percent
     best_sport.name
 
   @getAllSports: ->
     @getStats().sports
 
+  @getPercentAnswer: ->
+    parseFloat(((@_getStat('good_answers_count') / (@_getStat('wrong_answers_count') + @_getStat('good_answers_count'))) * 100).toFixed(2)) | 0
 
   @reset: ->
     @_stats = {
@@ -89,6 +94,9 @@ module.exports = class GameStatHelper
       game_best_row:            0
     }
 
+
+  # Will save stats on Parse. 
+  # Only use this at the end of a game to avoid sending to many call to Parse.
   @saveStats: ->
     user = Parse.User.current()
     stats = $.extend(user.get('stats'), @_stats)
@@ -103,6 +111,8 @@ module.exports = class GameStatHelper
 
     user.set('stats', real_stats).save()
 
+
+  # Internal methods used to dry logic to update stats
   @_incrementStat: (key, value = 1) ->
     value = parseInt(value)
     @_setStat(key, (@_getStat(key) | 0) + value)

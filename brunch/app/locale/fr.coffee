@@ -6,7 +6,7 @@ module.exports =
         touch_me:
           touch: 'Touche pour afficher la Une'
           loading: "Le journal est en cours de livraison !"
-          error: "Le facteur s'est perdu."
+          error: "Le facteur s'est perdu"
         journal:
           twoplus:
             rank_1 : '{0} est numero uno'
@@ -86,6 +86,8 @@ module.exports =
           invitation:
             text: 'accepte'
             reward : "Youpi ! tu as des credits en plus...ou pas"
+      stats:
+        no_best_sport: 'Aucun'
     view:
       outgame:
         login:
