@@ -87,17 +87,7 @@ module.exports = class LoginController extends Controller
 
     error = (response) =>
       SpinnerHelper.stop()
-      if config.services.facebook.createAnyway
-        console.log 'Forced creation of player even if Facebook fail (local)'
-        # We don't have a nickname to use (must be uniq), so we must generate one
-        Parse.User.signUp(Math.random() * 56056105 + '', 'password', (new User).attributes,
-          success: =>
-            user = Parse.User.current()
-            console.log(user, user?.get('username'))
-            @bindPlayer()
-        )
-      else
-        PopUpHelper.initialize {message: 'Erreur avec Facebook', title: 400, key: 'api-error'}
+      PopUpHelper.initialize {message: 'Erreur avec Facebook', title: 400, key: 'api-error'}
 
 
     FacebookHelper.logIn success, error
