@@ -34,11 +34,11 @@ module.exports = class HomeController extends Controller
 
   viewLoaded: (view) =>
     navigator.splashscreen.hide() if navigator?.splashscreen?.hide?
-    @view.setJournalMessage('loading')
+    @view?.setJournalMessage('loading')
 
     FacebookHelper.getFriends (friends) =>
       @getJournalView friends, =>
-        @view.setJournalMessage('touch')
+        @view?.setJournalMessage('touch')
 
       # All these links are present on the journal
       @view.delegate 'click', '#equipe-btn', =>
@@ -51,7 +51,7 @@ module.exports = class HomeController extends Controller
         @view.dim => @redirectTo 'game'
     , =>
       # Error callback, if facebook fail. Nothing to display. Retry ?
-      @view.setJournalMessage('error')
+      @view?.setJournalMessage('error')
 
 
   onClickFacebook: =>
