@@ -62939,7 +62939,8 @@ window.require.register("helpers/device-helper", function(exports, require, modu
   
 });
 window.require.register("helpers/facebook-helper", function(exports, require, module) {
-  var DeviceHelper, FacebookHelper, PopUpHelper, i18n, mediator, spinner, utils;
+  var DeviceHelper, FacebookHelper, PopUpHelper, i18n, mediator, spinner, utils,
+    __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
   mediator = require('mediator');
 
@@ -62956,7 +62957,9 @@ window.require.register("helpers/facebook-helper", function(exports, require, mo
   module.exports = FacebookHelper = (function() {
     var self;
 
-    function FacebookHelper() {}
+    function FacebookHelper() {
+      this.toto = __bind(this.toto, this);
+    }
 
     self = FacebookHelper;
 
@@ -63017,10 +63020,7 @@ window.require.register("helpers/facebook-helper", function(exports, require, mo
           return alert("FB.request: message doit faire entre 1 et 255 characteres (" + message.length + " actuellement)");
         }
         user = Parse.User.current();
-        FacebookHelper.getOtherFriends(function(friends) {
-          return _this.toto(friends);
-        });
-        console.log(this.titi);
+        console.log(FacebookHelper.getOtherFriends(function(friends) {}));
         return FB.ui({
           method: 'apprequests',
           message: message,
@@ -63061,10 +63061,7 @@ window.require.register("helpers/facebook-helper", function(exports, require, mo
           return alert("FB.request: message doit faire entre 1 et 255 characteres (" + message.length + " actuellement)");
         }
         user = Parse.User.current();
-        FacebookHelper.getOtherFriends(function(friends) {
-          return _this.toto(friends);
-        });
-        console.log(this.titi);
+        console.log(FacebookHelper.getOtherFriends(function(friends) {}));
         return FB.ui({
           method: 'apprequests',
           message: message,
@@ -63167,6 +63164,9 @@ window.require.register("helpers/facebook-helper", function(exports, require, mo
     FacebookHelper.getOtherFriends = function(callback) {
       var _this = this;
 
+      if (callback == null) {
+        callback = null;
+      }
       if (this.isLinked()) {
         return FB.api('/me/friends?fields=id,name,installed', function(response) {
           var friend, friends;
