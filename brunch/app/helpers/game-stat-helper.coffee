@@ -93,7 +93,17 @@ module.exports = class GameStatHelper
     best_sport.name
 
   @getAllSports: ->
-    @getStats().sports
+    sports = @getStats().sports
+
+    real_sports = {}
+    for sport in ['Football fr.', 'Football int.', 'Rugby', 'Cyclisme', 'Sports Auto', 'Tennis', 'Tous Sports']
+      if sports[sport]
+        real_sports[sport] = sports[sport]
+      else
+        real_sports[sport] = 
+          name: sport
+          percent: 'Joue plus !'
+    real_sports
 
   @getPercentAnswer: ->
     parseFloat(((@_getStat('good_answers_count') / (@_getStat('wrong_answers_count') + @_getStat('good_answers_count'))) * 100).toFixed(2)) | 0
