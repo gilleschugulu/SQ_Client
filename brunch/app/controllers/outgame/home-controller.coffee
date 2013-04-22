@@ -34,9 +34,14 @@ module.exports = class HomeController extends Controller
 
   viewLoaded: (view) =>
     navigator.splashscreen.hide() if navigator?.splashscreen?.hide?
+    @view?.setJournalMessage('loading')
+
+    @view.delegate 'click', '#game-link', =>
+      @view.dim => @redirectTo 'game'
 
     FacebookHelper.getFriends (friends) =>
-      @getJournalView(friends)
+      @getJournalView friends, =>
+        @view?.setJournalMessage('touch')
 
       # All these links are present on the journal
       @view.delegate 'click', '#equipe-btn', =>
@@ -44,19 +49,20 @@ module.exports = class HomeController extends Controller
       @view.delegate 'click', '#invite-btn', @onClickFacebook
       @view.delegate 'click', '#hall-of-fame', =>
         @view.dim => @redirectTo 'hall-of-fame'
+    , =>
+      # Error callback, if facebook fail. Nothing to display. Retry ?
+      @view?.setJournalMessage('error')
 
-      @view.delegate 'click', '#game-link', =>
-        @view.dim => @redirectTo 'game'
 
   onClickFacebook: =>
     FacebookHelper.friendRequest i18n.t('controller.home.facebook_invite_message')
 
-  getJournalView: (friends) ->
+  getJournalView: (friends, callback) ->
     switch friends.length
-      when 0 then @getSmallLeaderboard @getNoFriendsJournalView
-      when 1 then @getFriendsScore friends, @getOneFriendJournalView
-      when 2 then @getFriendsScore friends, @getTwoFriendsJournalView
-      else @getFriendsScore friends, @getTwoplusFriendsJournalView
+      when 0 then @getSmallLeaderboard @getNoFriendsJournalView, callback
+      when 1 then @getFriendsScore friends, @getOneFriendJournalView, callback
+      when 2 then @getFriendsScore friends, @getTwoFriendsJournalView, callback
+      else        @getFriendsScore friends, @getTwoplusFriendsJournalView, callback
 
   getNoFriendsJournalView: (people) ->
     targetDate = new Date()
@@ -73,24 +79,25 @@ module.exports = class HomeController extends Controller
     return new NoFriendsJournalView options
 
 
-  getFriendsScore: (friends, callback) ->
+  getFriendsScore: (friends, journalView, callback) ->
     friendsId = _.pluck(friends, 'id')
     Parse.Cloud.run 'getFriendsScore', { friendsId: friendsId },
       success: (players) =>
         players.push Parse.User.current().attributes
         players = players.sort (f1, f2) ->
           f2.score - f1.score
-        @view.addJournalView callback(players)
-        # callback(friends)
+        callback()
+        @view.addJournalView journalView(players)
       error: (error) ->
         console.log 'ERROR : ', error
 
-  getSmallLeaderboard: (callback) ->
+  getSmallLeaderboard: (journalView, callback) ->
     Parse.Cloud.run 'smallLeaderboard', {size : 3},
       success: (players) =>
         players = players.sort (f1, f2) ->
           f2.score - f1.score
-        @view.addJournalView callback(players)
+        @view.addJournalView journalView(players)
+        callback()
       error: (error) ->
         console.log 'ERROR : ', error
 

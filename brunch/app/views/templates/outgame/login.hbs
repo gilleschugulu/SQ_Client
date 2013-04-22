@@ -16,14 +16,15 @@
     <form name='sso-login' id='sso-login-form' action='#'>
       <input type='text' name='username' placeholder='username' required /><br />
       <input type='password' name='password' placeholder='password' required /><br />
-      <input type='submit' value='login' name='submit' id='login-btn' />
+      <input type='image' value='login' name='submit' id='login-btn' src='images/login/connect_button.png'/>
     </form>
-    <p>or</p>
+    <div class='or'></div>
+    {{! <p>or</p> }}
     <form name='sso-register' id='sso-register-form' action='#'>
       <input type='email' name='email' placeholder='email' required /><br />
       <input type='text' name='username' placeholder='username' required /><br />
       <input type='password' name='password' placeholder='password' required /><br />
-      <input type='submit' value='register' name='submit' id='register-btn' />
+      <input type='image' value='register' name='submit' id='register-btn' src='/images/login/subscription.png'/>
     </form>
   </div>
 </div>

@@ -23,7 +23,6 @@ class LocalConfig extends Parent
     facebook:
       app_id : '321070437995692'
       like_page_url: 'http://www.facebook.com/'
-      createAnyway: false
     adcolony:
       zones:
         SHOP : "vz8cfb94951aa34d79bbf0b2"

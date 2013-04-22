@@ -156,6 +156,12 @@ module.exports = class ShopController extends Controller
 
     if Parse.User.current().get('credits') >= pack.price
       PurchaseHelper.purchaseLife pack, @onSuccessfulTransaction
+      PopUpHelper.initialize
+        title: i18n.t 'controller.shop.life_pack_bought.title'
+        message: i18n.t 'controller.shop.life_pack_bought.message'
+        info: true
+        confirmation: false
+        key: 'life-pack-ok'
     else
       PopUpHelper.initialize
         title  : i18n.t 'controller.shop.not_enough_credits.title'
@@ -168,6 +174,12 @@ module.exports = class ShopController extends Controller
 
     if Parse.User.current().get('credits') >= pack.price
       PurchaseHelper.purchaseBonus pack, @onSuccessfulTransaction
+      PopUpHelper.initialize
+        title: i18n.t 'controller.shop.bonus_pack_bought.title'
+        message: i18n.t 'controller.shop.bonus_pack_bought.message'
+        info: true
+        confirmation: false
+        key: 'bonus-pack-ok'
     else
       PopUpHelper.initialize
         title  : i18n.t 'controller.shop.not_enough_credits.title'

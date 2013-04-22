@@ -24,6 +24,8 @@ module.exports = class User extends Parse.User
       sum_time_question:    0
       good_answers_count:   0
       wrong_answers_count:  0
+      week_score:           0
+      game_week_score:      0
       sports:               {}
 
   getBonuses: ->

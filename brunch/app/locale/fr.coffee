@@ -3,6 +3,10 @@ module.exports =
     controller:
       home:
         facebook_invite_message: 'Vasy rejoins ce jeu il déchire'
+        touch_me:
+          touch: 'Touche pour afficher la Une'
+          loading: "Le journal est en cours de livraison !"
+          error: "Le facteur s'est perdu"
         journal:
           twoplus:
             rank_1 : '{0} est numero uno'
@@ -14,8 +18,14 @@ module.exports =
           title: 'erreur'
           message: 'pack indisponible'
         not_enough_credits:
-          title: 'erreur'
+          title: 'Erreur'
           message: 'pas assez de crédits'
+        bonus_pack_bought:
+          title: 'Achat confirmé'
+          message: "Tout c'est bien passé, bon jeu !"
+        life_pack_bought:
+          title: 'Achat confirmé'
+          message: "Tout c'est bien passé, bon jeu !"
       game_over:
         stats:
           nb_questions: 'Nombre de questions'
@@ -76,6 +86,8 @@ module.exports =
           invitation:
             text: 'accepte'
             reward : "Youpi ! tu as des credits en plus...ou pas"
+      stats:
+        no_best_sport: 'Aucun'
     view:
       outgame:
         login:

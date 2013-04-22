@@ -24,7 +24,7 @@ module.exports = class DupaStageController extends StageController
     @view.unDim =>
       @timer.schedule @model.getConfigValue('answerTime'), 0, =>
         setTimeout =>
-          @finishStage()
+          @beforeFinishStage()
         , 200
       @view.updateJackpot(0, @model.getCurrentThreshold())
       @view.welcome @askNextQuestion
@@ -70,10 +70,10 @@ module.exports = class DupaStageController extends StageController
     @view.updateJackpot player.get('jackpot'), @model.getCurrentThreshold(), result
     @askNextQuestion()
 
-  beforeFinishStage: (player) ->
+  beforeFinishStage: (player) =>
     GameStatHelper.setBestRow(@row) if @row > 0
+    @finishStage()
 
-    @view.finishMessage textKey, [null, player.get('jackpot') + '', player.get('hp') + ''], @finishStage
 
   ### Bonus handling ###
 

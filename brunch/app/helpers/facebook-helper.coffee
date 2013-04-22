@@ -1,11 +1,38 @@
 mediator      = require 'mediator'
 utils         = require 'lib/utils'
 PopUpHelper   = require 'helpers/pop-up-helper'
+DeviceHelper  = require 'helpers/device-helper'
 i18n          = require 'lib/i18n'
 spinner       = require 'helpers/spinner-helper'
 
 module.exports = class FacebookHelper
   self = @
+
+  @logIn: (success, error) ->
+    scope = 'email, user_location, user_birthday, publish_stream'
+
+    if DeviceHelper.isIOS()
+      spinner.start()
+
+      FB.login( (response) =>
+        if response.authResponse
+          FB.api '/me', (res) =>
+            params = 
+              id: res.id
+              access_token: response.authResponse.accessToken
+              expiration_date: new Date(response.authResponse.expirationTime).toISOString()
+
+            Parse.FacebookUtils.logIn params,
+              success: =>
+                success()
+              error: =>
+                error(response)
+        else
+          error(response)
+      , {scope})
+
+    else
+      Parse.FacebookUtils.logIn(scope, {success, error})
 
   # Friends invite request
   # ----------------------
@@ -91,14 +118,16 @@ module.exports = class FacebookHelper
 
   # Get friends
   # -----------------
-  @getFriends: (callback) ->
-    #return callback([{id : '1509669172'}, {id : '599526180'}, {id : '100001321941779'}])
+  @getFriends: (callback, error) ->
     if @isLinked()
-      FB.api '/me/friends?fields=installed', (response) =>
-        friends = (friend for friend in response.data when friend.installed)
-        if !friends?
-          friends = []
-        callback(friends)
+      FB.api '/me/friends?fields=installed', (response) => 
+        if response.data
+          friends = (friend for friend in response.data when friend.installed)
+          if !friends?
+            friends = []
+          callback(friends)
+        else
+          error()
     else
       callback([])
 
