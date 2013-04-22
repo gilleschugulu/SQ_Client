@@ -1,6 +1,6 @@
 <div id='equipe-btn'></div>
 <div id='date'>EDITION DU {{date}}</div>
-<div id='title'>{{title}}</div>
+<div id='title' class='resize'>{{title}}</div>
 <div id='leaderboard-container'>
   <table id='leaderboard'>
     {{#each_with_index participants}}
@@ -13,7 +13,7 @@
         <div style='background-image:url(images/common/facebook-default.jpg)'></div>
       {{/if}}
       </td>
-      <td class='blaze'>{{username}}</td>
+      <td class='blaze resize'>{{username}}</td>
       <td class='score'>{{score}}</td>
     </tr>
     {{/each_with_index}}
