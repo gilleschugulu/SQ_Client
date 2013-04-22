@@ -61240,7 +61240,6 @@ window.require.register("controllers/outgame/hall-of-fame-controller", function(
 
       this.friend = withFriends ? true : false;
       ranking = withFriends ? this.friendsArray : this.globalArray;
-      console.log(ranking);
       this.collection = [];
       for (i = _i = 0, _ref1 = ranking.length; 0 <= _ref1 ? _i < _ref1 : _i > _ref1; i = 0 <= _ref1 ? ++_i : --_i) {
         this.collection[i] = {
@@ -61379,6 +61378,7 @@ window.require.register("controllers/outgame/hall-of-fame-controller", function(
       user = Parse.User.current();
       tmp = _.first(_.shuffle(_.difference(friends2, user.get('fb_invited'))), 3);
       console.log(_.difference(friends2, user.get('fb_invited')));
+      console.log(friends2, user.get('fb_invited'));
       results = [];
       for (_i = 0, _len = tmp.length; _i < _len; _i++) {
         friend = tmp[_i];
@@ -61386,7 +61386,6 @@ window.require.register("controllers/outgame/hall-of-fame-controller", function(
           return results.push(response);
         });
       }
-      console.log(results);
       return this.friendsToInvite = results;
     };
 
