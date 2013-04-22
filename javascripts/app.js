@@ -3313,7 +3313,7 @@ var AssetsList = {
 'login/': ["images/login/bg_login.png", "images/login/compteequipe.png", "images/login/connect_button.png", "images/login/connexionfb.png", "images/login/or.png", "images/login/subscription.png", "images/login/tempbtn.png"],
 'more-games/': ["images/more-games/title.png"],
 'options/': ["images/options/aide.png", "images/options/aide_a.png", "images/options/credits.png", "images/options/credits_a.png", "images/options/effet.png", "images/options/effet_deactive.png", "images/options/infos.png", "images/options/infos_deactive.png", "images/options/liaison_fb.png", "images/options/liaison_fb_a.png", "images/options/musique.png", "images/options/musique_deactive.png", "images/options/title.png", "images/options/tutoriel.png", "images/options/tutoriel_a.png"],
-'pause/': ["images/pause/fx.png", "images/pause/fx_sans.png", "images/pause/musique.png", "images/pause/musique_sans.png", "images/pause/popup.png", "images/pause/quitter.png", "images/pause/quitter_a.png", "images/pause/reprendre.png", "images/pause/reprendre_a.png"],
+'pause/': ["images/pause/fx.png", "images/pause/fx_sans.png", "images/pause/musique.png", "images/pause/musique_sans.png", "images/pause/ok.png", "images/pause/ok_a.png", "images/pause/popup.png", "images/pause/quitter.png", "images/pause/quitter_a.png", "images/pause/reprendre.png", "images/pause/reprendre_a.png"],
 'profile/': ["images/profile/bg_profil.png", "images/profile/bloc_infos.png", "images/profile/box_info.png", "images/profile/bt_gamecenter.png", "images/profile/bt_home.png", "images/profile/bt_ranking.png", "images/profile/cagnottecourante.png", "images/profile/classement.png", "images/profile/eoile.png", "images/profile/etoile.png", "images/profile/framephoto.png", "images/profile/jeton.png", "images/profile/levelscore.png", "images/profile/liaison_fb.png", "images/profile/linkfb.png", "images/profile/linkfb_done.png", "images/profile/niveaucourant.png", "images/profile/photo_m.png", "images/profile/photo_pseudo.png", "images/profile/photo_w.png", "images/profile/pseudo.png", "images/profile/title.png"],
 'profile/bonus/': ["images/profile/bonus/50-50.png", "images/profile/bonus/credit.png", "images/profile/bonus/divide.png", "images/profile/bonus/freeze_10s.png", "images/profile/bonus/heart.png", "images/profile/bonus/pass.png", "images/profile/bonus/x2.png"],
 'profile/box/': ["images/profile/box/etoilemysterieure.png", "images/profile/box/meileurniveau.png", "images/profile/box/meilleurecagnotte.png", "images/profile/box/partiesgagnees.png", "images/profile/box/partiesjouees.png"],
@@ -62307,7 +62307,8 @@ window.require.register("controllers/outgame/profile-controller", function(expor
         });
       }, function(view) {
         view.delegate('click', '.facebook-link', _this.linkFacebook);
-        return view.delegate('click', '.game-center', _this.onClickGameCenter);
+        view.delegate('click', '.game-center', _this.onClickGameCenter);
+        return view.autoSizeText();
       }, {
         viewTransition: true,
         music: 'outgame'
@@ -62416,7 +62417,6 @@ window.require.register("controllers/outgame/shop-controller", function(exports,
       user = Parse.User.current();
       PurchaseHelper.initTapPoints();
       return this.loadView('shop', function() {
-        console.log(_this.packs);
         return new ShopView({
           packs: _this.packs,
           bonuses: _this.bonuses,
@@ -62668,7 +62668,6 @@ window.require.register("controllers/outgame/tutorial-controller", function(expo
     };
 
     TutorialController.prototype.onClickNext = function() {
-      console.log("NEXT SCREEN");
       this.currentIndex++;
       if (this.currentIndex > this.maxIndex) {
         return this.redirectTo('options');
@@ -63291,12 +63290,9 @@ window.require.register("helpers/game-stat-helper", function(exports, require, m
       var current_week;
 
       current_week = (new Date).getWeek();
-      console.log('setBestWeekScore', value, current_week);
       if (this._getStat('week_score') === current_week) {
-        console.log('same week, so best set');
         return this._setBest('game_week_score', value);
       } else {
-        console.log('different week, so set score and date', value, current_week);
         this._setStat('week_score', current_week);
         return this._setStat('game_week_score', value);
       }
@@ -63334,10 +63330,14 @@ window.require.register("helpers/game-stat-helper", function(exports, require, m
     };
 
     GameStatHelper._incrementSportAnswersCount = function(success, sport) {
-      var percent, stats, user;
+      var percent, stats, user,
+        _this = this;
 
       user = Parse.User.current();
       stats = user.get('stats');
+      sport = sport.replace(/\w\S*/g, function(txt) {
+        return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+      });
       if (!stats.sports[sport]) {
         stats.sports[sport] = {
           percent: 0,
@@ -63402,7 +63402,23 @@ window.require.register("helpers/game-stat-helper", function(exports, require, m
     };
 
     GameStatHelper.getAllSports = function() {
-      return this.getStats().sports;
+      var real_sports, sport, sports, _i, _len, _ref;
+
+      sports = this.getStats().sports;
+      real_sports = {};
+      _ref = ['Football fr.', 'Football int.', 'Rugby', 'Cyclisme', 'Sports Auto', 'Tennis', 'Tous Sports'];
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        sport = _ref[_i];
+        if (sports[sport]) {
+          real_sports[sport] = sports[sport];
+        } else {
+          real_sports[sport] = {
+            name: sport,
+            percent: 'Joue plus !'
+          };
+        }
+      }
+      return real_sports;
     };
 
     GameStatHelper.getPercentAnswer = function() {
@@ -63410,11 +63426,7 @@ window.require.register("helpers/game-stat-helper", function(exports, require, m
     };
 
     GameStatHelper.reset = function() {
-      return this._stats = {
-        game_good_answers_count: 0,
-        game_wrong_answers_count: 0,
-        game_best_row: 0
-      };
+      return this._stats = Parse.User.current().get('stats');
     };
 
     GameStatHelper.saveStats = function() {
@@ -63456,9 +63468,7 @@ window.require.register("helpers/game-stat-helper", function(exports, require, m
     };
 
     GameStatHelper._setStat = function(key, value) {
-      console.log('_setStat', key, value);
       this._stats[key] = value;
-      console.log(this._stats);
       return this._stats[key];
     };
 
@@ -64868,7 +64878,7 @@ window.require.register("locale/fr", function(exports, require, module) {
       controller: {
         home: {
           facebook_invite_message: 'Vasy rejoins ce jeu il déchire',
-          app_request_error: 'D&eacutesol&eacute vous avez d&eacutej&agrave invitt&eacute tous vos amis',
+          app_request_error: 'Désolé vous avez déjà invité tous vos amis',
           touch_me: {
             touch: 'Touche pour afficher la Une',
             loading: "Le journal est en cours de livraison !",
@@ -65218,7 +65228,7 @@ window.require.register("models/ingame/question-model", function(exports, requir
     };
 
     Question.prototype.getPropositions = function() {
-      return this.get('propositions').shuffle();
+      return _.shuffle(this.get('propositions'));
     };
 
     return Question;
@@ -65349,7 +65359,7 @@ window.require.register("models/ingame/stage-model", function(exports, require, 
         q[question_difficulty] = (function() {
           var _i, _len, _ref1, _results;
 
-          _ref1 = questions_data.shuffle();
+          _ref1 = _.shuffle(questions_data);
           _results = [];
           for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
             question_data = _ref1[_i];
@@ -66316,7 +66326,8 @@ window.require.register("views/outgame/home-page-view", function(exports, requir
 
     HomePageView.prototype.addJournalView = function(journalView) {
       this.subview('journal', journalView);
-      return this.subview('journal').render().toggle();
+      this.subview('journal').render().toggle();
+      return this.subview('journal').autoSizeText();
     };
 
     HomePageView.prototype.setJournalMessage = function(key) {
@@ -67024,11 +67035,11 @@ window.require.register("views/templates/outgame/journal/no-friends-journal", fu
     if (stack1 = helpers.date) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
     else { stack1 = depth0.date; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
     buffer += escapeExpression(stack1)
-      + "</div>\n<div id='title'><span id='exculsive'>exclusif !</span> ";
+      + "</div>\n<div id='title'><span id='exculsive'>exclusif !</span> <span id='username' class='resize'>";
     if (stack1 = helpers.username) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
     else { stack1 = depth0.username; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
     buffer += escapeExpression(stack1)
-      + "</div>\n<div id='photo-container'>\n  ";
+      + "</span></div>\n<div id='photo-container'>\n  ";
     stack1 = helpers['if'].call(depth0, depth0.fb_id, {hash:{},inverse:self.program(3, program3, data),fn:self.program(1, program1, data),data:data});
     if(stack1 || stack1 === 0) { buffer += stack1; }
     buffer += "\n</div>\n<div id='message'>joue a sport quiz mais n'a toujours pas d'amis !</div>\n<a id='invite-btn'></a>\n<div id='countdown'>\n  <span id='days' class='number'>00</span>\n  <span id='hours' class='number'>00</span>\n  <span id='minutes' class='number'>00</span>\n</div>\n<div id='ranking'>\n  ";
@@ -67050,7 +67061,7 @@ window.require.register("views/templates/outgame/journal/one-friend-journal", fu
     buffer += "\n  <div class='participant'>\n    ";
     stack1 = helpers['if'].call(depth0, depth0.fb_id, {hash:{},inverse:self.program(4, program4, data),fn:self.program(2, program2, data),data:data});
     if(stack1 || stack1 === 0) { buffer += stack1; }
-    buffer += "\n    <div class='blaze'>";
+    buffer += "\n    <div class='blaze resize'>";
     if (stack1 = helpers.username) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
     else { stack1 = depth0.username; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
     buffer += escapeExpression(stack1)
@@ -67082,7 +67093,7 @@ window.require.register("views/templates/outgame/journal/one-friend-journal", fu
     if (stack1 = helpers.date) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
     else { stack1 = depth0.date; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
     buffer += escapeExpression(stack1)
-      + "</div>\n<div id='title'>";
+      + "</div>\n<div id='title' class='resize'>";
     if (stack1 = helpers.winner) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
     else { stack1 = depth0.winner; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
     buffer += escapeExpression(stack1)
@@ -67117,7 +67128,7 @@ window.require.register("views/templates/outgame/journal/two-friends-journal", f
     if (stack1 = helpers.rank) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
     else { stack1 = depth0.rank; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
     buffer += escapeExpression(stack1)
-      + "</div>\n    <div class='blaze'>";
+      + "</div>\n    <div class='blaze resize'>";
     if (stack1 = helpers.username) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
     else { stack1 = depth0.username; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
     buffer += escapeExpression(stack1)
@@ -67149,7 +67160,7 @@ window.require.register("views/templates/outgame/journal/two-friends-journal", f
     if (stack1 = helpers.date) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
     else { stack1 = depth0.date; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
     buffer += escapeExpression(stack1)
-      + "</div>\n<div id='title'>";
+      + "</div>\n<div id='title' class='resize'>";
     if (stack1 = helpers.master) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
     else { stack1 = depth0.master; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
     buffer += escapeExpression(stack1)
@@ -67176,7 +67187,7 @@ window.require.register("views/templates/outgame/journal/twoplus-friends-journal
       + "</td>\n      <td class='photo'>\n      ";
     stack1 = helpers['if'].call(depth0, depth0.fb_id, {hash:{},inverse:self.program(4, program4, data),fn:self.program(2, program2, data),data:data});
     if(stack1 || stack1 === 0) { buffer += stack1; }
-    buffer += "\n      </td>\n      <td class='blaze'>";
+    buffer += "\n      </td>\n      <td class='blaze resize'>";
     if (stack1 = helpers.username) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
     else { stack1 = depth0.username; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
     buffer += escapeExpression(stack1)
@@ -67208,7 +67219,7 @@ window.require.register("views/templates/outgame/journal/twoplus-friends-journal
     if (stack1 = helpers.date) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
     else { stack1 = depth0.date; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
     buffer += escapeExpression(stack1)
-      + "</div>\n<div id='title'>";
+      + "</div>\n<div id='title' class='resize'>";
     if (stack1 = helpers.title) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
     else { stack1 = depth0.title; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
     buffer += escapeExpression(stack1)
@@ -67344,7 +67355,7 @@ window.require.register("views/templates/outgame/profile", function(exports, req
     if (stack2 = helpers.avatar) { stack2 = stack2.call(depth0, {hash:{},data:data}); }
     else { stack2 = depth0.avatar; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; }
     buffer += escapeExpression(stack2)
-      + ")'></div>\n    <div class='name'>"
+      + ")'></div>\n    <div class='name resize'>"
       + escapeExpression(((stack1 = ((stack1 = depth0.user),stack1 == null || stack1 === false ? stack1 : stack1.username)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
       + "</div>\n  </div>\n  <div class='personal-info'>\n    <div class='level'>"
       + escapeExpression(((stack1 = ((stack1 = depth0.user),stack1 == null || stack1 === false ? stack1 : stack1.rank)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
@@ -67501,7 +67512,7 @@ window.require.register("views/templates/pause", function(exports, require, modu
     if (stack1 = helpers.key) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
     else { stack1 = depth0.key; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
     buffer += escapeExpression(stack1)
-      + "\">\n  <h1 class='title'>Attention!</h1>\n  <p class='text-container'>\n    Le chrono tourne... reprends vite pour ne pas perdre la partie !\n  </p>\n  <div class=\"btn-container\">\n    <a class=\"ok resume btn remove\"></a>\n    <a href=\"#home\" class=\"quit btn remove\"></a>\n    <div class=\"clearfix\"></div>\n    <div class=\"music btn ";
+      + "\">\n  <h1 class='title'>Attention !</h1>\n  <p class='text-container'>\n    Le chrono tourne... reprends vite pour ne pas perdre la partie !\n  </p>\n  <div class=\"btn-container\">\n    <a class=\"ok resume btn remove\"></a>\n    <a href=\"#home\" class=\"quit btn remove\"></a>\n    <div class=\"clearfix\"></div>\n    <div class=\"music btn ";
     if (stack1 = helpers.music) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
     else { stack1 = depth0.music; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
     buffer += escapeExpression(stack1)
@@ -67531,7 +67542,7 @@ window.require.register("views/templates/popup", function(exports, require, modu
   function program3(depth0,data) {
     
     
-    return "\n      <div class=\"ok btn remove\">ok</div>\n    ";
+    return "\n      <div class=\"ok btn remove\"></div>\n    ";
     }
 
   function program5(depth0,data) {
