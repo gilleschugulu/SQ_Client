@@ -62939,8 +62939,7 @@ window.require.register("helpers/device-helper", function(exports, require, modu
   
 });
 window.require.register("helpers/facebook-helper", function(exports, require, module) {
-  var DeviceHelper, FacebookHelper, PopUpHelper, i18n, mediator, spinner, utils,
-    __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
+  var DeviceHelper, FacebookHelper, PopUpHelper, i18n, mediator, spinner, utils;
 
   mediator = require('mediator');
 
@@ -62957,9 +62956,7 @@ window.require.register("helpers/facebook-helper", function(exports, require, mo
   module.exports = FacebookHelper = (function() {
     var self;
 
-    function FacebookHelper() {
-      this.toto = __bind(this.toto, this);
-    }
+    function FacebookHelper() {}
 
     self = FacebookHelper;
 
