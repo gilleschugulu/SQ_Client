@@ -63017,7 +63017,7 @@ window.require.register("helpers/facebook-helper", function(exports, require, mo
           return alert("FB.request: message doit faire entre 1 et 255 characteres (" + message.length + " actuellement)");
         }
         user = Parse.User.current();
-        console.log(FacebookHelper.getOtherFriends);
+        console.log(FacebookHelper.getOtherFriends(friends));
         return FB.ui({
           method: 'apprequests',
           message: message,
@@ -63058,7 +63058,7 @@ window.require.register("helpers/facebook-helper", function(exports, require, mo
           return alert("FB.request: message doit faire entre 1 et 255 characteres (" + message.length + " actuellement)");
         }
         user = Parse.User.current();
-        console.log(FacebookHelper.getOtherFriends);
+        console.log(FacebookHelper.getOtherFriends(friends));
         return FB.ui({
           method: 'apprequests',
           message: message,
