@@ -3635,10 +3635,10 @@ Handlebars.template = Handlebars.VM.template;
 ;;
 var BuildVersion = {
   version     : '',
-  commit      : 'deac1962de8ae07128d1ca45c27a6b72cdc5f421',
-  shortCommit : 'deac196',
+  commit      : 'ec9e372a0d3bfb19e4e2bd155c8f7bbe0c97347f',
+  shortCommit : 'ec9e372',
   branch      : 'feature/hall-of-fame',
-  time        : '2013-04-22 17:06',
+  time        : '2013-04-22 18:12',
   author      : 'Louis',
 
   getCommitLink: function() {
@@ -61537,7 +61537,7 @@ window.require.register("controllers/outgame/home-controller", function(exports,
       var _this = this;
 
       return FacebookHelper.getOtherFriends(function(friends) {
-        if (_.difference(_.pluck(friends, 'id'), Parse.User.current().get('fb_invited')).length < 1) {
+        if (_.difference(_.pluck(friends, 'id'), Parse.User.current().get('fb_invited')).length < 1 && FacebookHelper.isLinked()) {
           return popUp.initialize({
             message: i18n.t('controller.home.app_request_error'),
             title: 'Action impossible',
@@ -63078,6 +63078,7 @@ window.require.register("helpers/facebook-helper", function(exports, require, mo
           to: friend
         }, function(response) {
           user.set("fb_invited", _.uniq(response.to.concat(user.get('fb_invited')))).save();
+          user.set("health", user.get("health") + 1).save();
           if (response && callback) {
             return callback(response);
           }
