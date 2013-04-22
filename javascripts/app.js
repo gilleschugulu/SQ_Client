@@ -61539,9 +61539,9 @@ window.require.register("controllers/outgame/home-controller", function(exports,
       return FacebookHelper.getOtherFriends(function(friends) {
         if (_.difference(_.pluck(friends, 'id'), Parse.User.current().get('fb_invited')).length < 1) {
           return popUp.initialize({
-            message: 'desole vous avez deja invite tous vos amnis',
-            title: 400,
-            key: 'pack-error'
+            message: i18n.t('controller.home.app_request_error'),
+            title: 'Action impossible',
+            key: 'appRequest-error'
           });
         } else {
           return FacebookHelper.friendRequest(i18n.t('controller.home.facebook_invite_message'));
@@ -64868,6 +64868,7 @@ window.require.register("locale/fr", function(exports, require, module) {
       controller: {
         home: {
           facebook_invite_message: 'Vasy rejoins ce jeu il déchire',
+          app_request_error: 'D&eacutesol&eacute vous avez d&eacutej&agrave invitt&eacute tous vos amis',
           touch_me: {
             touch: 'Touche pour afficher la Une',
             loading: "Le journal est en cours de livraison !",
