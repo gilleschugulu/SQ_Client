@@ -110,8 +110,6 @@ module.exports = class HallOfFameController extends Controller
     friends2 = _.pluck(friends, 'id')
     user = Parse.User.current()
     tmp = _.first(_.shuffle(_.difference(friends2, user.get('fb_invited'))), 3)
-    console.log   _.difference(friends2, user.get('fb_invited'))
-    console.log friends2, user.get('fb_invited')
     results = []
     for friend in tmp
       FB.api '/'+friend+'?fields=name', (response)->

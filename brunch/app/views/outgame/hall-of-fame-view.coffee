@@ -101,4 +101,5 @@ module.exports = class HallOfFameView extends View
     moreFriends = ''
     for friend in friends
       moreFriends+="<div class='div-ranking moreFriends'><img class='profilepic' src='https://graph.facebook.com/#{friend.id}/picture'/><span class='username'>#{friend.name}</span><div data-id='#{friend.id}' class='invite-btn'></div></div>"
+    $(".spinner").css('display','none')
     moreFriends

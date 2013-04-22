@@ -141,7 +141,6 @@ module.exports = class FacebookHelper
         if callback
           callback(friends)
         else
-          console.log 'toto'
           friends
     else
       callback([])

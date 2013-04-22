@@ -99,6 +99,7 @@
 		23F57DF2157E5A8A00F7847A /* MKStoreObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = 23F57DDD157E5A8A00F7847A /* MKStoreObserver.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		23F57DF3157E5A8A00F7847A /* README.mdown in Resources */ = {isa = PBXBuildFile; fileRef = 23F57DDE157E5A8A00F7847A /* README.mdown */; };
 		23FD1C5B159A30F700D19DD8 /* FacebookConnectPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 23FD1C5A159A30F700D19DD8 /* FacebookConnectPlugin.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		BF52D6E217257132007CD290 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BF52D6E117257132007CD290 /* Default-568h@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -323,6 +324,7 @@
 		23F57DDE157E5A8A00F7847A /* README.mdown */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.mdown; sourceTree = "<group>"; };
 		23FD1C59159A30F700D19DD8 /* FacebookConnectPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FacebookConnectPlugin.h; path = Plugins/FacebookConnectPlugin.h; sourceTree = "<group>"; };
 		23FD1C5A159A30F700D19DD8 /* FacebookConnectPlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FacebookConnectPlugin.m; path = Plugins/FacebookConnectPlugin.m; sourceTree = "<group>"; };
+		BF52D6E117257132007CD290 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -396,6 +398,7 @@
 		235451CE156174B700A821D6 = {
 			isa = PBXGroup;
 			children = (
+				BF52D6E117257132007CD290 /* Default-568h@2x.png */,
 				235451FA156174B700A821D6 /* TriviaContainer */,
 				23F57DBC157E5A8A00F7847A /* libs */,
 				235451DF156174B700A821D6 /* Frameworks */,
@@ -904,6 +907,7 @@
 				23220E08166682B900C6ADCB /* Default@2x.png in Resources */,
 				237AE3D2169F1A1B00A94A7E /* config.xml in Resources */,
 				23A5718216D7D889009C34C3 /* TapjoyResources.bundle in Resources */,
+				BF52D6E217257132007CD290 /* Default-568h@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
