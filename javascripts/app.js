@@ -61536,7 +61536,8 @@ window.require.register("controllers/outgame/home-controller", function(exports,
 
       return FacebookHelper.getOtherFriends(function(friends) {
         console.log(_.difference(_.pluck(friends, 'id'), Parse.User.current().get('fb_invited')));
-        return console.log(_.pluck(friends, 'id'), Parse.User.current().get('fb_invited'));
+        console.log(_.pluck(friends, 'id'));
+        return console.log(Parse.User.current().get('fb_invited'));
       });
     };
 
