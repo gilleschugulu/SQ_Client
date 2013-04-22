@@ -59,10 +59,10 @@ module.exports = class HomeController extends Controller
 
   getJournalView: (friends, callback) ->
     switch friends.length
-      when 0 then @getSmallLeaderboard callback, @getNoFriendsJournalView
-      when 1 then @getFriendsScore friends, callback, @getOneFriendJournalView
-      when 2 then @getFriendsScore friends, callback, @getTwoFriendsJournalView
-      else        @getFriendsScore friends, callback, @getTwoplusFriendsJournalView
+      when 0 then @getSmallLeaderboard @getNoFriendsJournalView, callback
+      when 1 then @getFriendsScore friends, @getOneFriendJournalView, callback
+      when 2 then @getFriendsScore friends, @getTwoFriendsJournalView, callback
+      else        @getFriendsScore friends, @getTwoplusFriendsJournalView, callback
 
   getNoFriendsJournalView: (people) ->
     targetDate = new Date()
@@ -79,15 +79,15 @@ module.exports = class HomeController extends Controller
     return new NoFriendsJournalView options
 
 
-  getFriendsScore: (friends, callback, journalView) ->
+  getFriendsScore: (friends, journalView, callback) ->
     friendsId = _.pluck(friends, 'id')
     Parse.Cloud.run 'getFriendsScore', { friendsId: friendsId },
       success: (players) =>
         players.push Parse.User.current().attributes
         players = players.sort (f1, f2) ->
           f2.score - f1.score
-        @view.addJournalView journalView(players)
         callback()
+        @view.addJournalView journalView(players)
       error: (error) ->
         console.log 'ERROR : ', error
 
