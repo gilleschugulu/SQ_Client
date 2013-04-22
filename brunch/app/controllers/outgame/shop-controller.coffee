@@ -30,7 +30,6 @@ module.exports = class ShopController extends Controller
 
     @loadView 'shop'
     , =>
-      console.log @packs
       new ShopView {@packs, @bonuses, health: user.get('health'), credits: user.get('credits'), like_page_url: ConfigHelper.config.services.facebook.like_page_url}
     , (view) =>
       view.delegate 'click', '#bonuses.inactive', @onToggleTab
