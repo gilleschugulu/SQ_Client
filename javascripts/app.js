@@ -61,16 +61,21 @@
     throw new Error('Cannot find module "' + name + '"');
   };
 
-  var define = function(bundle) {
-    for (var key in bundle) {
-      if (has(bundle, key)) {
-        modules[key] = bundle[key];
+  var define = function(bundle, fn) {
+    if (typeof bundle === 'object') {
+      for (var key in bundle) {
+        if (has(bundle, key)) {
+          modules[key] = bundle[key];
+        }
       }
+    } else {
+      modules[bundle] = fn;
     }
-  }
+  };
 
   globals.require = require;
   globals.require.define = define;
+  globals.require.register = define;
   globals.require.brunch = true;
 })();
 
@@ -88,10 +93,8 @@
   }
 })(window.console = window.console || {});
 ;
-
 /* Zepto v1.0-1-ga3cab6c - polyfill zepto detect event ajax form fx - zeptojs.com/license */
 (function(a){String.prototype.trim===a&&(String.prototype.trim=function(){return this.replace(/^\s+|\s+$/g,"")}),Array.prototype.reduce===a&&(Array.prototype.reduce=function(b){if(this===void 0||this===null)throw new TypeError;var c=Object(this),d=c.length>>>0,e=0,f;if(typeof b!="function")throw new TypeError;if(d==0&&arguments.length==1)throw new TypeError;if(arguments.length>=2)f=arguments[1];else do{if(e in c){f=c[e++];break}if(++e>=d)throw new TypeError}while(!0);while(e<d)e in c&&(f=b.call(a,f,c[e],e,c)),e++;return f})})();var Zepto=function(){function E(a){return a==null?String(a):y[z.call(a)]||"object"}function F(a){return E(a)=="function"}function G(a){return a!=null&&a==a.window}function H(a){return a!=null&&a.nodeType==a.DOCUMENT_NODE}function I(a){return E(a)=="object"}function J(a){return I(a)&&!G(a)&&a.__proto__==Object.prototype}function K(a){return a instanceof Array}function L(a){return typeof a.length=="number"}function M(a){return g.call(a,function(a){return a!=null})}function N(a){return a.length>0?c.fn.concat.apply([],a):a}function O(a){return a.replace(/::/g,"/").replace(/([A-Z]+)([A-Z][a-z])/g,"$1_$2").replace(/([a-z\d])([A-Z])/g,"$1_$2").replace(/_/g,"-").toLowerCase()}function P(a){return a in j?j[a]:j[a]=new RegExp("(^|\\s)"+a+"(\\s|$)")}function Q(a,b){return typeof b=="number"&&!l[O(a)]?b+"px":b}function R(a){var b,c;return i[a]||(b=h.createElement(a),h.body.appendChild(b),c=k(b,"").getPropertyValue("display"),b.parentNode.removeChild(b),c=="none"&&(c="block"),i[a]=c),i[a]}function S(a){return"children"in a?f.call(a.children):c.map(a.childNodes,function(a){if(a.nodeType==1)return a})}function T(c,d,e){for(b in d)e&&(J(d[b])||K(d[b]))?(J(d[b])&&!J(c[b])&&(c[b]={}),K(d[b])&&!K(c[b])&&(c[b]=[]),T(c[b],d[b],e)):d[b]!==a&&(c[b]=d[b])}function U(b,d){return d===a?c(b):c(b).filter(d)}function V(a,b,c,d){return F(b)?b.call(a,c,d):b}function W(a,b,c){c==null?a.removeAttribute(b):a.setAttribute(b,c)}function X(b,c){var d=b.className,e=d&&d.baseVal!==a;if(c===a)return e?d.baseVal:d;e?d.baseVal=c:b.className=c}function Y(a){var b;try{return a?a=="true"||(a=="false"?!1:a=="null"?null:isNaN(b=Number(a))?/^[\[\{]/.test(a)?c.parseJSON(a):a:b):a}catch(d){return a}}function Z(a,b){b(a);for(var c in a.childNodes)Z(a.childNodes[c],b)}var a,b,c,d,e=[],f=e.slice,g=e.filter,h=window.document,i={},j={},k=h.defaultView.getComputedStyle,l={"column-count":1,columns:1,"font-weight":1,"line-height":1,opacity:1,"z-index":1,zoom:1},m=/^\s*<(\w+|!)[^>]*>/,n=/<(?!area|br|col|embed|hr|img|input|link|meta|param)(([\w:]+)[^>]*)\/>/ig,o=/^(?:body|html)$/i,p=["val","css","html","text","data","width","height","offset"],q=["after","prepend","before","append"],r=h.createElement("table"),s=h.createElement("tr"),t={tr:h.createElement("tbody"),tbody:r,thead:r,tfoot:r,td:s,th:s,"*":h.createElement("div")},u=/complete|loaded|interactive/,v=/^\.([\w-]+)$/,w=/^#([\w-]*)$/,x=/^[\w-]+$/,y={},z=y.toString,A={},B,C,D=h.createElement("div");return A.matches=function(a,b){if(!a||a.nodeType!==1)return!1;var c=a.webkitMatchesSelector||a.mozMatchesSelector||a.oMatchesSelector||a.matchesSelector;if(c)return c.call(a,b);var d,e=a.parentNode,f=!e;return f&&(e=D).appendChild(a),d=~A.qsa(e,b).indexOf(a),f&&D.removeChild(a),d},B=function(a){return a.replace(/-+(.)?/g,function(a,b){return b?b.toUpperCase():""})},C=function(a){return g.call(a,function(b,c){return a.indexOf(b)==c})},A.fragment=function(b,d,e){b.replace&&(b=b.replace(n,"<$1></$2>")),d===a&&(d=m.test(b)&&RegExp.$1),d in t||(d="*");var g,h,i=t[d];return i.innerHTML=""+b,h=c.each(f.call(i.childNodes),function(){i.removeChild(this)}),J(e)&&(g=c(h),c.each(e,function(a,b){p.indexOf(a)>-1?g[a](b):g.attr(a,b)})),h},A.Z=function(a,b){return a=a||[],a.__proto__=c.fn,a.selector=b||"",a},A.isZ=function(a){return a instanceof A.Z},A.init=function(b,d){if(!b)return A.Z();if(F(b))return c(h).ready(b);if(A.isZ(b))return b;var e;if(K(b))e=M(b);else if(I(b))e=[J(b)?c.extend({},b):b],b=null;else if(m.test(b))e=A.fragment(b.trim(),RegExp.$1,d),b=null;else{if(d!==a)return c(d).find(b);e=A.qsa(h,b)}return A.Z(e,b)},c=function(a,b){return A.init(a,b)},c.extend=function(a){var b,c=f.call(arguments,1);return typeof a=="boolean"&&(b=a,a=c.shift()),c.forEach(function(c){T(a,c,b)}),a},A.qsa=function(a,b){var c;return H(a)&&w.test(b)?(c=a.getElementById(RegExp.$1))?[c]:[]:a.nodeType!==1&&a.nodeType!==9?[]:f.call(v.test(b)?a.getElementsByClassName(RegExp.$1):x.test(b)?a.getElementsByTagName(b):a.querySelectorAll(b))},c.contains=function(a,b){return a!==b&&a.contains(b)},c.type=E,c.isFunction=F,c.isWindow=G,c.isArray=K,c.isPlainObject=J,c.isEmptyObject=function(a){var b;for(b in a)return!1;return!0},c.inArray=function(a,b,c){return e.indexOf.call(b,a,c)},c.camelCase=B,c.trim=function(a){return a.trim()},c.uuid=0,c.support={},c.expr={},c.map=function(a,b){var c,d=[],e,f;if(L(a))for(e=0;e<a.length;e++)c=b(a[e],e),c!=null&&d.push(c);else for(f in a)c=b(a[f],f),c!=null&&d.push(c);return N(d)},c.each=function(a,b){var c,d;if(L(a)){for(c=0;c<a.length;c++)if(b.call(a[c],c,a[c])===!1)return a}else for(d in a)if(b.call(a[d],d,a[d])===!1)return a;return a},c.grep=function(a,b){return g.call(a,b)},window.JSON&&(c.parseJSON=JSON.parse),c.each("Boolean Number String Function Array Date RegExp Object Error".split(" "),function(a,b){y["[object "+b+"]"]=b.toLowerCase()}),c.fn={forEach:e.forEach,reduce:e.reduce,push:e.push,sort:e.sort,indexOf:e.indexOf,concat:e.concat,map:function(a){return c(c.map(this,function(b,c){return a.call(b,c,b)}))},slice:function(){return c(f.apply(this,arguments))},ready:function(a){return u.test(h.readyState)?a(c):h.addEventListener("DOMContentLoaded",function(){a(c)},!1),this},get:function(b){return b===a?f.call(this):this[b>=0?b:b+this.length]},toArray:function(){return this.get()},size:function(){return this.length},remove:function(){return this.each(function(){this.parentNode!=null&&this.parentNode.removeChild(this)})},each:function(a){return e.every.call(this,function(b,c){return a.call(b,c,b)!==!1}),this},filter:function(a){return F(a)?this.not(this.not(a)):c(g.call(this,function(b){return A.matches(b,a)}))},add:function(a,b){return c(C(this.concat(c(a,b))))},is:function(a){return this.length>0&&A.matches(this[0],a)},not:function(b){var d=[];if(F(b)&&b.call!==a)this.each(function(a){b.call(this,a)||d.push(this)});else{var e=typeof b=="string"?this.filter(b):L(b)&&F(b.item)?f.call(b):c(b);this.forEach(function(a){e.indexOf(a)<0&&d.push(a)})}return c(d)},has:function(a){return this.filter(function(){return I(a)?c.contains(this,a):c(this).find(a).size()})},eq:function(a){return a===-1?this.slice(a):this.slice(a,+a+1)},first:function(){var a=this[0];return a&&!I(a)?a:c(a)},last:function(){var a=this[this.length-1];return a&&!I(a)?a:c(a)},find:function(a){var b,d=this;return typeof a=="object"?b=c(a).filter(function(){var a=this;return e.some.call(d,function(b){return c.contains(b,a)})}):this.length==1?b=c(A.qsa(this[0],a)):b=this.map(function(){return A.qsa(this,a)}),b},closest:function(a,b){var d=this[0],e=!1;typeof a=="object"&&(e=c(a));while(d&&!(e?e.indexOf(d)>=0:A.matches(d,a)))d=d!==b&&!H(d)&&d.parentNode;return c(d)},parents:function(a){var b=[],d=this;while(d.length>0)d=c.map(d,function(a){if((a=a.parentNode)&&!H(a)&&b.indexOf(a)<0)return b.push(a),a});return U(b,a)},parent:function(a){return U(C(this.pluck("parentNode")),a)},children:function(a){return U(this.map(function(){return S(this)}),a)},contents:function(){return this.map(function(){return f.call(this.childNodes)})},siblings:function(a){return U(this.map(function(a,b){return g.call(S(b.parentNode),function(a){return a!==b})}),a)},empty:function(){return this.each(function(){this.innerHTML=""})},pluck:function(a){return c.map(this,function(b){return b[a]})},show:function(){return this.each(function(){this.style.display=="none"&&(this.style.display=null),k(this,"").getPropertyValue("display")=="none"&&(this.style.display=R(this.nodeName))})},replaceWith:function(a){return this.before(a).remove()},wrap:function(a){var b=F(a);if(this[0]&&!b)var d=c(a).get(0),e=d.parentNode||this.length>1;return this.each(function(f){c(this).wrapAll(b?a.call(this,f):e?d.cloneNode(!0):d)})},wrapAll:function(a){if(this[0]){c(this[0]).before(a=c(a));var b;while((b=a.children()).length)a=b.first();c(a).append(this)}return this},wrapInner:function(a){var b=F(a);return this.each(function(d){var e=c(this),f=e.contents(),g=b?a.call(this,d):a;f.length?f.wrapAll(g):e.append(g)})},unwrap:function(){return this.parent().each(function(){c(this).replaceWith(c(this).children())}),this},clone:function(){return this.map(function(){return this.cloneNode(!0)})},hide:function(){return this.css("display","none")},toggle:function(b){return this.each(function(){var d=c(this);(b===a?d.css("display")=="none":b)?d.show():d.hide()})},prev:function(a){return c(this.pluck("previousElementSibling")).filter(a||"*")},next:function(a){return c(this.pluck("nextElementSibling")).filter(a||"*")},html:function(b){return b===a?this.length>0?this[0].innerHTML:null:this.each(function(a){var d=this.innerHTML;c(this).empty().append(V(this,b,a,d))})},text:function(b){return b===a?this.length>0?this[0].textContent:null:this.each(function(){this.textContent=b})},attr:function(c,d){var e;return typeof c=="string"&&d===a?this.length==0||this[0].nodeType!==1?a:c=="value"&&this[0].nodeName=="INPUT"?this.val():!(e=this[0].getAttribute(c))&&c in this[0]?this[0][c]:e:this.each(function(a){if(this.nodeType!==1)return;if(I(c))for(b in c)W(this,b,c[b]);else W(this,c,V(this,d,a,this.getAttribute(c)))})},removeAttr:function(a){return this.each(function(){this.nodeType===1&&W(this,a)})},prop:function(b,c){return c===a?this[0]&&this[0][b]:this.each(function(a){this[b]=V(this,c,a,this[b])})},data:function(b,c){var d=this.attr("data-"+O(b),c);return d!==null?Y(d):a},val:function(b){return b===a?this[0]&&(this[0].multiple?c(this[0]).find("option").filter(function(a){return this.selected}).pluck("value"):this[0].value):this.each(function(a){this.value=V(this,b,a,this.value)})},offset:function(a){if(a)return this.each(function(b){var d=c(this),e=V(this,a,b,d.offset()),f=d.offsetParent().offset(),g={top:e.top-f.top,left:e.left-f.left};d.css("position")=="static"&&(g.position="relative"),d.css(g)});if(this.length==0)return null;var b=this[0].getBoundingClientRect();return{left:b.left+window.pageXOffset,top:b.top+window.pageYOffset,width:Math.round(b.width),height:Math.round(b.height)}},css:function(a,c){if(arguments.length<2&&typeof a=="string")return this[0]&&(this[0].style[B(a)]||k(this[0],"").getPropertyValue(a));var d="";if(E(a)=="string")!c&&c!==0?this.each(function(){this.style.removeProperty(O(a))}):d=O(a)+":"+Q(a,c);else for(b in a)!a[b]&&a[b]!==0?this.each(function(){this.style.removeProperty(O(b))}):d+=O(b)+":"+Q(b,a[b])+";";return this.each(function(){this.style.cssText+=";"+d})},index:function(a){return a?this.indexOf(c(a)[0]):this.parent().children().indexOf(this[0])},hasClass:function(a){return e.some.call(this,function(a){return this.test(X(a))},P(a))},addClass:function(a){return this.each(function(b){d=[];var e=X(this),f=V(this,a,b,e);f.split(/\s+/g).forEach(function(a){c(this).hasClass(a)||d.push(a)},this),d.length&&X(this,e+(e?" ":"")+d.join(" "))})},removeClass:function(b){return this.each(function(c){if(b===a)return X(this,"");d=X(this),V(this,b,c,d).split(/\s+/g).forEach(function(a){d=d.replace(P(a)," ")}),X(this,d.trim())})},toggleClass:function(b,d){return this.each(function(e){var f=c(this),g=V(this,b,e,X(this));g.split(/\s+/g).forEach(function(b){(d===a?!f.hasClass(b):d)?f.addClass(b):f.removeClass(b)})})},scrollTop:function(){if(!this.length)return;return"scrollTop"in this[0]?this[0].scrollTop:this[0].scrollY},position:function(){if(!this.length)return;var a=this[0],b=this.offsetParent(),d=this.offset(),e=o.test(b[0].nodeName)?{top:0,left:0}:b.offset();return d.top-=parseFloat(c(a).css("margin-top"))||0,d.left-=parseFloat(c(a).css("margin-left"))||0,e.top+=parseFloat(c(b[0]).css("border-top-width"))||0,e.left+=parseFloat(c(b[0]).css("border-left-width"))||0,{top:d.top-e.top,left:d.left-e.left}},offsetParent:function(){return this.map(function(){var a=this.offsetParent||h.body;while(a&&!o.test(a.nodeName)&&c(a).css("position")=="static")a=a.offsetParent;return a})}},c.fn.detach=c.fn.remove,["width","height"].forEach(function(b){c.fn[b]=function(d){var e,f=this[0],g=b.replace(/./,function(a){return a[0].toUpperCase()});return d===a?G(f)?f["inner"+g]:H(f)?f.documentElement["offset"+g]:(e=this.offset())&&e[b]:this.each(function(a){f=c(this),f.css(b,V(this,d,a,f[b]()))})}}),q.forEach(function(a,b){var d=b%2;c.fn[a]=function(){var a,e=c.map(arguments,function(b){return a=E(b),a=="object"||a=="array"||b==null?b:A.fragment(b)}),f,g=this.length>1;return e.length<1?this:this.each(function(a,h){f=d?h:h.parentNode,h=b==0?h.nextSibling:b==1?h.firstChild:b==2?h:null,e.forEach(function(a){if(g)a=a.cloneNode(!0);else if(!f)return c(a).remove();Z(f.insertBefore(a,h),function(a){a.nodeName!=null&&a.nodeName.toUpperCase()==="SCRIPT"&&(!a.type||a.type==="text/javascript")&&!a.src&&window.eval.call(window,a.innerHTML)})})})},c.fn[d?a+"To":"insert"+(b?"Before":"After")]=function(b){return c(b)[a](this),this}}),A.Z.prototype=c.fn,A.uniq=C,A.deserializeValue=Y,c.zepto=A,c}();window.Zepto=Zepto,"$"in window||(window.$=Zepto),function(a){function b(a){var b=this.os={},c=this.browser={},d=a.match(/WebKit\/([\d.]+)/),e=a.match(/(Android)\s+([\d.]+)/),f=a.match(/(iPad).*OS\s([\d_]+)/),g=!f&&a.match(/(iPhone\sOS)\s([\d_]+)/),h=a.match(/(webOS|hpwOS)[\s\/]([\d.]+)/),i=h&&a.match(/TouchPad/),j=a.match(/Kindle\/([\d.]+)/),k=a.match(/Silk\/([\d._]+)/),l=a.match(/(BlackBerry).*Version\/([\d.]+)/),m=a.match(/(BB10).*Version\/([\d.]+)/),n=a.match(/(RIM\sTablet\sOS)\s([\d.]+)/),o=a.match(/PlayBook/),p=a.match(/Chrome\/([\d.]+)/)||a.match(/CriOS\/([\d.]+)/),q=a.match(/Firefox\/([\d.]+)/);if(c.webkit=!!d)c.version=d[1];e&&(b.android=!0,b.version=e[2]),g&&(b.ios=b.iphone=!0,b.version=g[2].replace(/_/g,".")),f&&(b.ios=b.ipad=!0,b.version=f[2].replace(/_/g,".")),h&&(b.webos=!0,b.version=h[2]),i&&(b.touchpad=!0),l&&(b.blackberry=!0,b.version=l[2]),m&&(b.bb10=!0,b.version=m[2]),n&&(b.rimtabletos=!0,b.version=n[2]),o&&(c.playbook=!0),j&&(b.kindle=!0,b.version=j[1]),k&&(c.silk=!0,c.version=k[1]),!k&&b.android&&a.match(/Kindle Fire/)&&(c.silk=!0),p&&(c.chrome=!0,c.version=p[1]),q&&(c.firefox=!0,c.version=q[1]),b.tablet=!!(f||o||e&&!a.match(/Mobile/)||q&&a.match(/Tablet/)),b.phone=!b.tablet&&!!(e||g||h||l||m||p&&a.match(/Android/)||p&&a.match(/CriOS\/([\d.]+)/)||q&&a.match(/Mobile/))}b.call(a,navigator.userAgent),a.__detect=b}(Zepto),function(a){function g(a){return a._zid||(a._zid=d++)}function h(a,b,d,e){b=i(b);if(b.ns)var f=j(b.ns);return(c[g(a)]||[]).filter(function(a){return a&&(!b.e||a.e==b.e)&&(!b.ns||f.test(a.ns))&&(!d||g(a.fn)===g(d))&&(!e||a.sel==e)})}function i(a){var b=(""+a).split(".");return{e:b[0],ns:b.slice(1).sort().join(" ")}}function j(a){return new RegExp("(?:^| )"+a.replace(" "," .* ?")+"(?: |$)")}function k(b,c,d){a.type(b)!="string"?a.each(b,d):b.split(/\s/).forEach(function(a){d(a,c)})}function l(a,b){return a.del&&(a.e=="focus"||a.e=="blur")||!!b}function m(a){return f[a]||a}function n(b,d,e,h,j,n){var o=g(b),p=c[o]||(c[o]=[]);k(d,e,function(c,d){var e=i(c);e.fn=d,e.sel=h,e.e in f&&(d=function(b){var c=b.relatedTarget;if(!c||c!==this&&!a.contains(this,c))return e.fn.apply(this,arguments)}),e.del=j&&j(d,c);var g=e.del||d;e.proxy=function(a){var c=g.apply(b,[a].concat(a.data));return c===!1&&(a.preventDefault(),a.stopPropagation()),c},e.i=p.length,p.push(e),b.addEventListener(m(e.e),e.proxy,l(e,n))})}function o(a,b,d,e,f){var i=g(a);k(b||"",d,function(b,d){h(a,b,d,e).forEach(function(b){delete c[i][b.i],a.removeEventListener(m(b.e),b.proxy,l(b,f))})})}function t(b){var c,d={originalEvent:b};for(c in b)!r.test(c)&&b[c]!==undefined&&(d[c]=b[c]);return a.each(s,function(a,c){d[a]=function(){return this[c]=p,b[a].apply(b,arguments)},d[c]=q}),d}function u(a){if(!("defaultPrevented"in a)){a.defaultPrevented=!1;var b=a.preventDefault;a.preventDefault=function(){this.defaultPrevented=!0,b.call(this)}}}var b=a.zepto.qsa,c={},d=1,e={},f={mouseenter:"mouseover",mouseleave:"mouseout"};e.click=e.mousedown=e.mouseup=e.mousemove="MouseEvents",a.event={add:n,remove:o},a.proxy=function(b,c){if(a.isFunction(b)){var d=function(){return b.apply(c,arguments)};return d._zid=g(b),d}if(typeof c=="string")return a.proxy(b[c],b);throw new TypeError("expected function")},a.fn.bind=function(a,b){return this.each(function(){n(this,a,b)})},a.fn.unbind=function(a,b){return this.each(function(){o(this,a,b)})},a.fn.one=function(a,b){return this.each(function(c,d){n(this,a,b,null,function(a,b){return function(){var c=a.apply(d,arguments);return o(d,b,a),c}})})};var p=function(){return!0},q=function(){return!1},r=/^([A-Z]|layer[XY]$)/,s={preventDefault:"isDefaultPrevented",stopImmediatePropagation:"isImmediatePropagationStopped",stopPropagation:"isPropagationStopped"};a.fn.delegate=function(b,c,d){return this.each(function(e,f){n(f,c,d,b,function(c){return function(d){var e,g=a(d.target).closest(b,f).get(0);if(g)return e=a.extend(t(d),{currentTarget:g,liveFired:f}),c.apply(g,[e].concat([].slice.call(arguments,1)))}})})},a.fn.undelegate=function(a,b,c){return this.each(function(){o(this,b,c,a)})},a.fn.live=function(b,c){return a(document.body).delegate(this.selector,b,c),this},a.fn.die=function(b,c){return a(document.body).undelegate(this.selector,b,c),this},a.fn.on=function(b,c,d){return!c||a.isFunction(c)?this.bind(b,c||d):this.delegate(c,b,d)},a.fn.off=function(b,c,d){return!c||a.isFunction(c)?this.unbind(b,c||d):this.undelegate(c,b,d)},a.fn.trigger=function(b,c){if(typeof b=="string"||a.isPlainObject(b))b=a.Event(b);return u(b),b.data=c,this.each(function(){"dispatchEvent"in this&&this.dispatchEvent(b)})},a.fn.triggerHandler=function(b,c){var d,e;return this.each(function(f,g){d=t(typeof b=="string"?a.Event(b):b),d.data=c,d.target=g,a.each(h(g,b.type||b),function(a,b){e=b.proxy(d);if(d.isImmediatePropagationStopped())return!1})}),e},"focusin focusout load resize scroll unload click dblclick mousedown mouseup mousemove mouseover mouseout mouseenter mouseleave change select keydown keypress keyup error".split(" ").forEach(function(b){a.fn[b]=function(a){return a?this.bind(b,a):this.trigger(b)}}),["focus","blur"].forEach(function(b){a.fn[b]=function(a){return a?this.bind(b,a):this.each(function(){try{this[b]()}catch(a){}}),this}}),a.Event=function(a,b){typeof a!="string"&&(b=a,a=b.type);var c=document.createEvent(e[a]||"Events"),d=!0;if(b)for(var f in b)f=="bubbles"?d=!!b[f]:c[f]=b[f];return c.initEvent(a,d,!0,null,null,null,null,null,null,null,null,null,null,null,null),c.isDefaultPrevented=function(){return this.defaultPrevented},c}}(Zepto),function($){function triggerAndReturn(a,b,c){var d=$.Event(b);return $(a).trigger(d,c),!d.defaultPrevented}function triggerGlobal(a,b,c,d){if(a.global)return triggerAndReturn(b||document,c,d)}function ajaxStart(a){a.global&&$.active++===0&&triggerGlobal(a,null,"ajaxStart")}function ajaxStop(a){a.global&&!--$.active&&triggerGlobal(a,null,"ajaxStop")}function ajaxBeforeSend(a,b){var c=b.context;if(b.beforeSend.call(c,a,b)===!1||triggerGlobal(b,c,"ajaxBeforeSend",[a,b])===!1)return!1;triggerGlobal(b,c,"ajaxSend",[a,b])}function ajaxSuccess(a,b,c){var d=c.context,e="success";c.success.call(d,a,e,b),triggerGlobal(c,d,"ajaxSuccess",[b,c,a]),ajaxComplete(e,b,c)}function ajaxError(a,b,c,d){var e=d.context;d.error.call(e,c,b,a),triggerGlobal(d,e,"ajaxError",[c,d,a]),ajaxComplete(b,c,d)}function ajaxComplete(a,b,c){var d=c.context;c.complete.call(d,b,a),triggerGlobal(c,d,"ajaxComplete",[b,c]),ajaxStop(c)}function empty(){}function mimeToDataType(a){return a&&(a=a.split(";",2)[0]),a&&(a==htmlType?"html":a==jsonType?"json":scriptTypeRE.test(a)?"script":xmlTypeRE.test(a)&&"xml")||"text"}function appendQuery(a,b){return(a+"&"+b).replace(/[&?]{1,2}/,"?")}function serializeData(a){a.processData&&a.data&&$.type(a.data)!="string"&&(a.data=$.param(a.data,a.traditional)),a.data&&(!a.type||a.type.toUpperCase()=="GET")&&(a.url=appendQuery(a.url,a.data))}function parseArguments(a,b,c,d){var e=!$.isFunction(b);return{url:a,data:e?b:undefined,success:e?$.isFunction(c)?c:undefined:b,dataType:e?d||c:c}}function serialize(a,b,c,d){var e,f=$.isArray(b);$.each(b,function(b,g){e=$.type(g),d&&(b=c?d:d+"["+(f?"":b)+"]"),!d&&f?a.add(g.name,g.value):e=="array"||!c&&e=="object"?serialize(a,g,c,b):a.add(b,g)})}var jsonpID=0,document=window.document,key,name,rscript=/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi,scriptTypeRE=/^(?:text|application)\/javascript/i,xmlTypeRE=/^(?:text|application)\/xml/i,jsonType="application/json",htmlType="text/html",blankRE=/^\s*$/;$.active=0,$.ajaxJSONP=function(a){if("type"in a){var b="jsonp"+ ++jsonpID,c=document.createElement("script"),d=function(){clearTimeout(g),$(c).remove(),delete window[b]},e=function(c){d();if(!c||c=="timeout")window[b]=empty;ajaxError(null,c||"abort",f,a)},f={abort:e},g;return ajaxBeforeSend(f,a)===!1?(e("abort"),!1):(window[b]=function(b){d(),ajaxSuccess(b,f,a)},c.onerror=function(){e("error")},c.src=a.url.replace(/=\?/,"="+b),$("head").append(c),a.timeout>0&&(g=setTimeout(function(){e("timeout")},a.timeout)),f)}return $.ajax(a)},$.ajaxSettings={type:"GET",beforeSend:empty,success:empty,error:empty,complete:empty,context:null,global:!0,xhr:function(){return new window.XMLHttpRequest},accepts:{script:"text/javascript, application/javascript",json:jsonType,xml:"application/xml, text/xml",html:htmlType,text:"text/plain"},crossDomain:!1,timeout:0,processData:!0,cache:!0},$.ajax=function(options){var settings=$.extend({},options||{});for(key in $.ajaxSettings)settings[key]===undefined&&(settings[key]=$.ajaxSettings[key]);ajaxStart(settings),settings.crossDomain||(settings.crossDomain=/^([\w-]+:)?\/\/([^\/]+)/.test(settings.url)&&RegExp.$2!=window.location.host),settings.url||(settings.url=window.location.toString()),serializeData(settings),settings.cache===!1&&(settings.url=appendQuery(settings.url,"_="+Date.now()));var dataType=settings.dataType,hasPlaceholder=/=\?/.test(settings.url);if(dataType=="jsonp"||hasPlaceholder)return hasPlaceholder||(settings.url=appendQuery(settings.url,"callback=?")),$.ajaxJSONP(settings);var mime=settings.accepts[dataType],baseHeaders={},protocol=/^([\w-]+:)\/\//.test(settings.url)?RegExp.$1:window.location.protocol,xhr=settings.xhr(),abortTimeout;settings.crossDomain||(baseHeaders["X-Requested-With"]="XMLHttpRequest"),mime&&(baseHeaders.Accept=mime,mime.indexOf(",")>-1&&(mime=mime.split(",",2)[0]),xhr.overrideMimeType&&xhr.overrideMimeType(mime));if(settings.contentType||settings.contentType!==!1&&settings.data&&settings.type.toUpperCase()!="GET")baseHeaders["Content-Type"]=settings.contentType||"application/x-www-form-urlencoded";settings.headers=$.extend(baseHeaders,settings.headers||{}),xhr.onreadystatechange=function(){if(xhr.readyState==4){xhr.onreadystatechange=empty,clearTimeout(abortTimeout);var result,error=!1;if(xhr.status>=200&&xhr.status<300||xhr.status==304||xhr.status==0&&protocol=="file:"){dataType=dataType||mimeToDataType(xhr.getResponseHeader("content-type")),result=xhr.responseText;try{dataType=="script"?(1,eval)(result):dataType=="xml"?result=xhr.responseXML:dataType=="json"&&(result=blankRE.test(result)?null:$.parseJSON(result))}catch(e){error=e}error?ajaxError(error,"parsererror",xhr,settings):ajaxSuccess(result,xhr,settings)}else ajaxError(null,xhr.status?"error":"abort",xhr,settings)}};var async="async"in settings?settings.async:!0;xhr.open(settings.type,settings.url,async);for(name in settings.headers)xhr.setRequestHeader(name,settings.headers[name]);return ajaxBeforeSend(xhr,settings)===!1?(xhr.abort(),!1):(settings.timeout>0&&(abortTimeout=setTimeout(function(){xhr.onreadystatechange=empty,xhr.abort(),ajaxError(null,"timeout",xhr,settings)},settings.timeout)),xhr.send(settings.data?settings.data:null),xhr)},$.get=function(a,b,c,d){return $.ajax(parseArguments.apply(null,arguments))},$.post=function(a,b,c,d){var e=parseArguments.apply(null,arguments);return e.type="POST",$.ajax(e)},$.getJSON=function(a,b,c){var d=parseArguments.apply(null,arguments);return d.dataType="json",$.ajax(d)},$.fn.load=function(a,b,c){if(!this.length)return this;var d=this,e=a.split(/\s/),f,g=parseArguments(a,b,c),h=g.success;return e.length>1&&(g.url=e[0],f=e[1]),g.success=function(a){d.html(f?$("<div>").html(a.replace(rscript,"")).find(f):a),h&&h.apply(d,arguments)},$.ajax(g),this};var escape=encodeURIComponent;$.param=function(a,b){var c=[];return c.add=function(a,b){this.push(escape(a)+"="+escape(b))},serialize(c,a,b),c.join("&").replace(/%20/g,"+")}}(Zepto),function(a){a.fn.serializeArray=function(){var b=[],c;return a(Array.prototype.slice.call(this.get(0).elements)).each(function(){c=a(this);var d=c.attr("type");this.nodeName.toLowerCase()!="fieldset"&&!this.disabled&&d!="submit"&&d!="reset"&&d!="button"&&(d!="radio"&&d!="checkbox"||this.checked)&&b.push({name:c.attr("name"),value:c.val()})}),b},a.fn.serialize=function(){var a=[];return this.serializeArray().forEach(function(b){a.push(encodeURIComponent(b.name)+"="+encodeURIComponent(b.value))}),a.join("&")},a.fn.submit=function(b){if(b)this.bind("submit",b);else if(this.length){var c=a.Event("submit");this.eq(0).trigger(c),c.defaultPrevented||this.get(0).submit()}return this}}(Zepto),function(a,b){function s(a){return t(a.replace(/([a-z])([A-Z])/,"$1-$2"))}function t(a){return a.toLowerCase()}function u(a){return d?d+a:t(a)}var c="",d,e,f,g={Webkit:"webkit",Moz:"",O:"o",ms:"MS"},h=window.document,i=h.createElement("div"),j=/^((translate|rotate|scale)(X|Y|Z|3d)?|matrix(3d)?|perspective|skew(X|Y)?)$/i,k,l,m,n,o,p,q,r={};a.each(g,function(a,e){if(i.style[a+"TransitionProperty"]!==b)return c="-"+t(a)+"-",d=e,!1}),k=c+"transform",r[l=c+"transition-property"]=r[m=c+"transition-duration"]=r[n=c+"transition-timing-function"]=r[o=c+"animation-name"]=r[p=c+"animation-duration"]=r[q=c+"animation-timing-function"]="",a.fx={off:d===b&&i.style.transitionProperty===b,speeds:{_default:400,fast:200,slow:600},cssPrefix:c,transitionEnd:u("TransitionEnd"),animationEnd:u("AnimationEnd")},a.fn.animate=function(b,c,d,e){return a.isPlainObject(c)&&(d=c.easing,e=c.complete,c=c.duration),c&&(c=(typeof c=="number"?c:a.fx.speeds[c]||a.fx.speeds._default)/1e3),this.anim(b,c,d,e)},a.fn.anim=function(c,d,e,f){var g,h={},i,t="",u=this,v,w=a.fx.transitionEnd;d===b&&(d=.4),a.fx.off&&(d=0);if(typeof c=="string")h[o]=c,h[p]=d+"s",h[q]=e||"linear",w=a.fx.animationEnd;else{i=[];for(g in c)j.test(g)?t+=g+"("+c[g]+") ":(h[g]=c[g],i.push(s(g)));t&&(h[k]=t,i.push(k)),d>0&&typeof c=="object"&&(h[l]=i.join(", "),h[m]=d+"s",h[n]=e||"linear")}return v=function(b){if(typeof b!="undefined"){if(b.target!==b.currentTarget)return;a(b.target).unbind(w,v)}a(this).css(r),f&&f.call(this)},d>0&&this.bind(w,v),this.size()&&this.get(0).clientLeft,this.css(h),d<=0&&setTimeout(function(){u.each(function(){v.call(this)})},0),this},i=null}(Zepto);
-
 //     Underscore.js 1.4.4
 //     http://underscorejs.org
 //     (c) 2009-2013 Jeremy Ashkenas, DocumentCloud Inc.
@@ -1319,7 +1322,6 @@
 
 }).call(this);
 ;
-
 //     Backbone.js 0.9.10
 
 //     (c) 2010-2012 Jeremy Ashkenas, DocumentCloud Inc.
@@ -2819,7 +2821,6 @@
 
 }).call(this);
 ;
-
 /**
  * PixelLab Resource Loader
  * Loads resources while providing progress updates.
@@ -3197,7 +3198,6 @@ if (!Array.isArray) {
         return Object.prototype.toString.call(arg) == '[object Array]';
     };
 };
-
 // @depends PxLoader.js
 /**
  * PxLoader plugin to load images
@@ -3300,11 +3300,10 @@ PxLoader.prototype.addImage = function(url, tags, priority) {
     // return the img element to the caller
     return imageLoader.img;
 };;
-
 var AssetsList = {
   assets: { 'common/': ["images/common/background.png", "images/common/close.png", "images/common/close_a.png", "images/common/facebook-default.jpg", "images/common/home.png"],
 'game-over/': ["images/game-over/replay.png", "images/game-over/score.png", "images/game-over/small-background.png", "images/game-over/title.png"],
-'hall-of-fame/': ["images/hall-of-fame/adversaire.png", "images/hall-of-fame/adversaires_deactive.png", "images/hall-of-fame/amis.png", "images/hall-of-fame/amis_deactive.png", "images/hall-of-fame/amis_inactive.png", "images/hall-of-fame/background.jpg", "images/hall-of-fame/background.png", "images/hall-of-fame/box_classements.png", "images/hall-of-fame/fond_classement.png", "images/hall-of-fame/gamecenter.png", "images/hall-of-fame/global.png", "images/hall-of-fame/global_inactive.png", "images/hall-of-fame/jeton.png", "images/hall-of-fame/line.png", "images/hall-of-fame/pink.png", "images/hall-of-fame/precedent.png", "images/hall-of-fame/rank1.png", "images/hall-of-fame/rank2.png", "images/hall-of-fame/rank3.png", "images/hall-of-fame/rank_1.png", "images/hall-of-fame/rank_2.png", "images/hall-of-fame/rank_3.png", "images/hall-of-fame/rankadversaire.png", "images/hall-of-fame/title.png", "images/hall-of-fame/tournoi.png", "images/hall-of-fame/vie_asked.png", "images/hall-of-fame/vie_toask.png", "images/hall-of-fame/white.png"],
+'hall-of-fame/': ["images/hall-of-fame/amis.png", "images/hall-of-fame/amis_inactive.png", "images/hall-of-fame/background.png", "images/hall-of-fame/box_classements.png", "images/hall-of-fame/global.png", "images/hall-of-fame/global_inactive.png", "images/hall-of-fame/invite.png", "images/hall-of-fame/line.png", "images/hall-of-fame/linkfb.png", "images/hall-of-fame/pink.png", "images/hall-of-fame/rank1.png", "images/hall-of-fame/rank2.png", "images/hall-of-fame/rank3.png", "images/hall-of-fame/rank_1.png", "images/hall-of-fame/rank_2.png", "images/hall-of-fame/rank_3.png", "images/hall-of-fame/rankadversaire.png", "images/hall-of-fame/tournoi.png", "images/hall-of-fame/vie_asked.png", "images/hall-of-fame/vie_toask.png", "images/hall-of-fame/white.png"],
 'home/+2amis/': ["images/home/+2amis/inviter.png", "images/home/+2amis/inviter_a.png", "images/home/+2amis/ranking.png", "images/home/+2amis/ranking_a.png", "images/home/+2amis/title.png"],
 'home/1ami/': ["images/home/1ami/invite.png", "images/home/1ami/invite_a.png", "images/home/1ami/player_VS.png", "images/home/1ami/ranking.png", "images/home/1ami/ranking_a.png", "images/home/1ami/title.png"],
 'home/2amis/': ["images/home/2amis/invite.png", "images/home/2amis/invite_a.png", "images/home/2amis/podium_rank_bronze.png", "images/home/2amis/podium_rank_gold.png", "images/home/2amis/podium_rank_silver.png", "images/home/2amis/rank_3players.png", "images/home/2amis/ranking.png", "images/home/2amis/ranking_a.png", "images/home/2amis/title.png"],
@@ -3337,7 +3336,6 @@ var AssetsList = {
   }
 };
 ;
-
 // lib/handlebars/base.js
 
 /*jshint eqnull:true*/
@@ -3345,7 +3343,13 @@ this.Handlebars = {};
 
 (function(Handlebars) {
 
-Handlebars.VERSION = "1.0.rc.1";
+Handlebars.VERSION = "1.0.0-rc.3";
+Handlebars.COMPILER_REVISION = 2;
+
+Handlebars.REVISION_CHANGES = {
+  1: '<= 1.0.rc.2', // 1.0.rc.2 is actually rev2 but doesn't report it
+  2: '>= 1.0.0-rc.3'
+};
 
 Handlebars.helpers  = {};
 Handlebars.partials = {};
@@ -3402,22 +3406,53 @@ Handlebars.createFrame = Object.create || function(object) {
   return obj;
 };
 
+Handlebars.logger = {
+  DEBUG: 0, INFO: 1, WARN: 2, ERROR: 3, level: 3,
+
+  methodMap: {0: 'debug', 1: 'info', 2: 'warn', 3: 'error'},
+
+  // can be overridden in the host environment
+  log: function(level, obj) {
+    if (Handlebars.logger.level <= level) {
+      var method = Handlebars.logger.methodMap[level];
+      if (typeof console !== 'undefined' && console[method]) {
+        console[method].call(console, obj);
+      }
+    }
+  }
+};
+
+Handlebars.log = function(level, obj) { Handlebars.logger.log(level, obj); };
+
 Handlebars.registerHelper('each', function(context, options) {
   var fn = options.fn, inverse = options.inverse;
-  var ret = "", data;
+  var i = 0, ret = "", data;
 
   if (options.data) {
     data = Handlebars.createFrame(options.data);
   }
 
-  if(context && context.length > 0) {
-    for(var i=0, j=context.length; i<j; i++) {
-      if (data) { data.index = i; }
-      ret = ret + fn(context[i], { data: data });
+  if(context && typeof context === 'object') {
+    if(context instanceof Array){
+      for(var j = context.length; i<j; i++) {
+        if (data) { data.index = i; }
+        ret = ret + fn(context[i], { data: data });
+      }
+    } else {
+      for(var key in context) {
+        if(context.hasOwnProperty(key)) {
+          if(data) { data.key = key; }
+          ret = ret + fn(context[key], {data: data});
+          i++;
+        }
+      }
     }
-  } else {
+  }
+
+  if(i === 0){
     ret = inverse(this);
   }
+
   return ret;
 });
 
@@ -3444,21 +3479,24 @@ Handlebars.registerHelper('with', function(context, options) {
   return options.fn(context);
 });
 
-Handlebars.registerHelper('log', function(context) {
-  Handlebars.log(context);
+Handlebars.registerHelper('log', function(context, options) {
+  var level = options.data && options.data.level != null ? parseInt(options.data.level, 10) : 1;
+  Handlebars.log(level, context);
 });
 
 }(this.Handlebars));
 ;
 // lib/handlebars/utils.js
+
+var errorProps = ['description', 'fileName', 'lineNumber', 'message', 'name', 'number', 'stack'];
+
 Handlebars.Exception = function(message) {
   var tmp = Error.prototype.constructor.apply(this, arguments);
 
-  for (var p in tmp) {
-    if (tmp.hasOwnProperty(p)) { this[p] = tmp[p]; }
+  // Unfortunately errors are not enumerable in Chrome (at least), so `for prop in tmp` doesn't work.
+  for (var idx = 0; idx < errorProps.length; idx++) {
+    this[errorProps[idx]] = tmp[errorProps[idx]];
   }
-
-  this.message = tmp.message;
 };
 Handlebars.Exception.prototype = new Error();
 
@@ -3501,11 +3539,7 @@ Handlebars.SafeString.prototype.toString = function() {
     },
 
     isEmpty: function(value) {
-      if (typeof value === "undefined") {
-        return true;
-      } else if (value === null) {
-        return true;
-      } else if (value === false) {
+      if (!value && value !== 0) {
         return true;
       } else if(Object.prototype.toString.call(value) === "[object Array]" && value.length === 0) {
         return true;
@@ -3535,12 +3569,32 @@ Handlebars.VM = {
         }
       },
       programWithDepth: Handlebars.VM.programWithDepth,
-      noop: Handlebars.VM.noop
+      noop: Handlebars.VM.noop,
+      compilerInfo: null
     };
 
     return function(context, options) {
       options = options || {};
-      return templateSpec.call(container, Handlebars, context, options.helpers, options.partials, options.data);
+      var result = templateSpec.call(container, Handlebars, context, options.helpers, options.partials, options.data);
+
+      var compilerInfo = container.compilerInfo || [],
+          compilerRevision = compilerInfo[0] || 1,
+          currentRevision = Handlebars.COMPILER_REVISION;
+
+      if (compilerRevision !== currentRevision) {
+        if (compilerRevision < currentRevision) {
+          var runtimeVersions = Handlebars.REVISION_CHANGES[currentRevision],
+              compilerVersions = Handlebars.REVISION_CHANGES[compilerRevision];
+          throw "Template was precompiled with an older version of Handlebars than the current runtime. "+
+                "Please update your precompiler to a newer version ("+runtimeVersions+") or downgrade your runtime to an older version ("+compilerVersions+").";
+        } else {
+          // Use the embedded version info since the runtime doesn't know about this revision yet
+          throw "Template was precompiled with a newer version of Handlebars than the current runtime. "+
+                "Please update your runtime to a newer version ("+compilerInfo[1]+").";
+        }
+      }
+
+      return result;
     };
   },
 
@@ -3578,16 +3632,14 @@ Handlebars.VM = {
 };
 
 Handlebars.template = Handlebars.VM.template;
-;
-;
-
+;;
 var BuildVersion = {
   version     : '',
-  commit      : '781d817a3e683d094bb2202d922736b3e35146ee',
-  shortCommit : '781d817',
-  branch      : 'develop',
-  time        : '2013-04-17 10:40',
-  author      : 'Pierre Boutbel',
+  commit      : 'a49d7c96419cbbb69371eacf16a439e57fccfebf',
+  shortCommit : 'a49d7c9',
+  branch      : 'feature/hall-of-fame',
+  time        : '2013-04-22 10:58',
+  author      : 'Louis',
 
   getCommitLink: function() {
     return 'https://github.com/ChuguluGames/triviasports-client/tree/'+BuildVersion.commit;
@@ -3603,7 +3655,6 @@ var BuildVersion = {
   }
 };
 ;
-
 // ----------------------------------------------------------------------------
 // Buzz, a Javascript HTML5 Audio library
 // v 1.0.6
@@ -4455,7 +4506,6 @@ var buzz = {
     }
 };
 ;
-
 /*!
  * Chaplin 0.7.0
  *
@@ -6949,7 +6999,6 @@ module.exports = {
 
 }});
 ;
-
 /**
  * @preserve FastClick: polyfill to remove click delays on browsers with touch UIs.
  *
@@ -7487,7 +7536,6 @@ if (typeof module !== 'undefined' && module.exports) {
 
   module.exports.FastClick = FastClick;
 };
-
 /*!
  * iScroll v4.2.5 ~ Copyright (c) 2012 Matteo Spinelli, http://cubiq.org
  * Released under MIT license, http://cubiq.org/license
@@ -8593,7 +8641,6 @@ else window.iScroll = iScroll;
 
 })(window, document);
 ;
-
 function levenshtein(a, b) {
   if(a.length === 0) return b.length;
   if(b.length === 0) return a.length;
@@ -8627,7 +8674,6 @@ function levenshtein(a, b) {
 
   return matrix[b.length][a.length];
 };
-
 /*
 CryptoJS v3.1.2
 code.google.com/p/crypto-js
@@ -8648,7 +8694,6 @@ d,e,j,9,a[29]),e=m(e,f,c,d,u,14,a[30]),d=m(d,e,f,c,A,20,a[31]),c=l(c,d,e,f,s,4,a
 C,15,a[50]),d=n(d,e,f,c,s,21,a[51]),c=n(c,d,e,f,A,6,a[52]),f=n(f,c,d,e,q,10,a[53]),e=n(e,f,c,d,y,15,a[54]),d=n(d,e,f,c,w,21,a[55]),c=n(c,d,e,f,v,6,a[56]),f=n(f,c,d,e,D,10,a[57]),e=n(e,f,c,d,t,15,a[58]),d=n(d,e,f,c,B,21,a[59]),c=n(c,d,e,f,r,6,a[60]),f=n(f,c,d,e,z,10,a[61]),e=n(e,f,c,d,j,15,a[62]),d=n(d,e,f,c,x,21,a[63]);b[0]=b[0]+c|0;b[1]=b[1]+d|0;b[2]=b[2]+e|0;b[3]=b[3]+f|0},_doFinalize:function(){var a=this._data,k=a.words,b=8*this._nDataBytes,h=8*a.sigBytes;k[h>>>5]|=128<<24-h%32;var l=s.floor(b/
 4294967296);k[(h+64>>>9<<4)+15]=(l<<8|l>>>24)&16711935|(l<<24|l>>>8)&4278255360;k[(h+64>>>9<<4)+14]=(b<<8|b>>>24)&16711935|(b<<24|b>>>8)&4278255360;a.sigBytes=4*(k.length+1);this._process();a=this._hash;k=a.words;for(b=0;4>b;b++)h=k[b],k[b]=(h<<8|h>>>24)&16711935|(h<<24|h>>>8)&4278255360;return a},clone:function(){var a=t.clone.call(this);a._hash=this._hash.clone();return a}});r.MD5=t._createHelper(q);r.HmacMD5=t._createHmacHelper(q)})(Math);
 ;
-
 (function() {
   var $, Morris, minutesSpecHelper, secondsSpecHelper,
     __slice = [].slice,
@@ -10172,7 +10217,6 @@ C,15,a[50]),d=n(d,e,f,c,s,21,a[51]),c=n(c,d,e,f,A,6,a[52]),f=n(f,c,d,e,q,10,a[53
   })(Morris.EventEmitter);
 
 }).call(this);;
-
 /*!
  * Parse JavaScript SDK
  * Version: 1.2.2
@@ -17824,7 +17868,6 @@ C,15,a[50]),d=n(d,e,f,c,s,21,a[51]),c=n(c,d,e,f,A,6,a[52]),f=n(f,c,d,e,q,10,a[53
   };
 }(this));
 ;
-
 // ┌────────────────────────────────────────────────────────────────────┐ \\
 // │ Raphaël 2.1.0 - JavaScript Vector Library                          │ \\
 // ├────────────────────────────────────────────────────────────────────┤ \\
@@ -23640,7 +23683,6 @@ window.Raphael.vml && function (R) {
         })(method);
     }
 }(window.Raphael);;
-
 Array.prototype.unique = function () {
     var r = [];
     o:for(var i = 0, n = this.length; i < n; i++)
@@ -23657,9 +23699,8 @@ Array.prototype.unique = function () {
     return r;
 };
 ;
-
-window.require.define({"application": function(exports, require, module) {
-  var Application, Chaplin, Layout, config, mediator, routes,
+window.require.register("application", function(exports, require, module) {
+  var Application, Chaplin, Layout, config, mediator, routes, _ref,
     __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
@@ -23674,11 +23715,11 @@ window.require.define({"application": function(exports, require, module) {
   config = require('config/environment-config');
 
   module.exports = Application = (function(_super) {
-
     __extends(Application, _super);
 
     function Application() {
-      return Application.__super__.constructor.apply(this, arguments);
+      _ref = Application.__super__.constructor.apply(this, arguments);
+      return _ref;
     }
 
     Application.prototype.title = config.app_name;
@@ -23719,6 +23760,7 @@ window.require.define({"application": function(exports, require, module) {
 
     Application.prototype.initHelpers = function() {
       var SoundHelper, i18n;
+
       SoundHelper = require('helpers/sound-helper');
       SoundHelper.initialize();
       i18n = require('lib/i18n');
@@ -23766,10 +23808,8 @@ window.require.define({"application": function(exports, require, module) {
 
   })(Chaplin.Application);
   
-}});
-
-window.require.define({"config/bonus-config": function(exports, require, module) {
-  
+});
+window.require.register("config/bonus-config", function(exports, require, module) {
   module.exports = {
     life_packs: [
       {
@@ -23803,136 +23843,20 @@ window.require.define({"config/bonus-config": function(exports, require, module)
     ]
   };
   
-}});
-
-window.require.define({"config/environment-config": function(exports, require, module) {
-  var ProdConfig;
-
-  ProdConfig = (function() {
-
-    function ProdConfig() {}
-
-    ProdConfig.app_name = 'Sport Quiz 2';
-
-    ProdConfig.log = true;
-
-    ProdConfig.long_version_format = false;
-
-    ProdConfig.analytics = {
-      enabled: false,
-      google: ['']
-    };
-
-    ProdConfig.pay_game = true;
-
-    ProdConfig.services = {
-      parse: {
-        app_id: 'ixxjIFjdYTjOeKSZycsaPw8DHndujhvHFX2rNW10',
-        js_key: 'XQMt26dlAXV32EmVVEQYwhSK2yYuvD6qDA3HaFqS',
-        headers: {
-          "X-Parse-Application-Id": "ixxjIFjdYTjOeKSZycsaPw8DHndujhvHFX2rNW10",
-          "X-Parse-REST-API-Key": "gkhPen92iMBY4ZAkjZDtR5lRDmZZ3mM04hjHp3Bg"
-        }
-      },
-      tapjoy: {
-        currency: '2948f4c1-5a8d-4090-beb1-725c617477c8'
-      },
-      facebook: {
-        app_id: '321070437995692',
-        like_page_url: 'http://www.facebook.com/',
-        createAnyway: false
-      },
-      adcolony: {
-        zones: {
-          SHOP: "vz8cfb94951aa34d79bbf0b2"
-        }
-      },
-      allopass: {
-        app_id: 297830
-      }
-    };
-
-    ProdConfig.gamecenter = {
-      leaderboard: 'total_jackpot'
-    };
-
-    return ProdConfig;
-
-  })();
-
-  module.exports = ProdConfig;
-  
-}});
-
-window.require.define({"config/local-config": function(exports, require, module) {
-  var LocalConfig, Parent,
-    __hasProp = {}.hasOwnProperty,
-    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
-
-  Parent = require('config/preprod-config');
-
-  LocalConfig = (function(_super) {
-
-    __extends(LocalConfig, _super);
-
-    function LocalConfig() {
-      return LocalConfig.__super__.constructor.apply(this, arguments);
-    }
-
-    LocalConfig.analytics = {
-      enabled: false
-    };
-
-    LocalConfig.pay_game = false;
-
-    LocalConfig.services = {
-      parse: {
-        app_id: 'ixxjIFjdYTjOeKSZycsaPw8DHndujhvHFX2rNW10',
-        js_key: 'XQMt26dlAXV32EmVVEQYwhSK2yYuvD6qDA3HaFqS',
-        headers: {
-          "X-Parse-Application-Id": "ixxjIFjdYTjOeKSZycsaPw8DHndujhvHFX2rNW10",
-          "X-Parse-REST-API-Key": "gkhPen92iMBY4ZAkjZDtR5lRDmZZ3mM04hjHp3Bg"
-        }
-      },
-      tapjoy: {
-        currency: '2948f4c1-5a8d-4090-beb1-725c617477c8'
-      },
-      facebook: {
-        app_id: '321070437995692',
-        like_page_url: 'http://www.facebook.com/',
-        createAnyway: false
-      },
-      adcolony: {
-        zones: {
-          SHOP: "vz8cfb94951aa34d79bbf0b2"
-        }
-      },
-      allopass: {
-        app_id: 297830
-      }
-    };
-
-    return LocalConfig;
-
-  })(Parent);
-
-  module.exports = LocalConfig;
-  
-}});
-
-window.require.define({"config/preprod-config": function(exports, require, module) {
-  var Parent, PreprodConfig,
+});
+window.require.register("config/environment-config", function(exports, require, module) {
+  var Parent, PreprodConfig, _ref,
     __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
   Parent = require('config/prod-config');
 
   PreprodConfig = (function(_super) {
-
     __extends(PreprodConfig, _super);
 
     function PreprodConfig() {
-      return PreprodConfig.__super__.constructor.apply(this, arguments);
+      _ref = PreprodConfig.__super__.constructor.apply(this, arguments);
+      return _ref;
     }
 
     PreprodConfig.log = true;
@@ -23974,18 +23898,126 @@ window.require.define({"config/preprod-config": function(exports, require, modul
 
   module.exports = PreprodConfig;
   
-}});
+});
+window.require.register("config/local-config", function(exports, require, module) {
+  var LocalConfig, Parent, _ref,
+    __hasProp = {}.hasOwnProperty,
+    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-window.require.define({"config/prod-config": function(exports, require, module) {
+  Parent = require('config/preprod-config');
+
+  LocalConfig = (function(_super) {
+    __extends(LocalConfig, _super);
+
+    function LocalConfig() {
+      _ref = LocalConfig.__super__.constructor.apply(this, arguments);
+      return _ref;
+    }
+
+    LocalConfig.analytics = {
+      enabled: false
+    };
+
+    LocalConfig.pay_game = false;
+
+    LocalConfig.services = {
+      parse: {
+        app_id: 'ixxjIFjdYTjOeKSZycsaPw8DHndujhvHFX2rNW10',
+        js_key: 'XQMt26dlAXV32EmVVEQYwhSK2yYuvD6qDA3HaFqS',
+        headers: {
+          "X-Parse-Application-Id": "ixxjIFjdYTjOeKSZycsaPw8DHndujhvHFX2rNW10",
+          "X-Parse-REST-API-Key": "gkhPen92iMBY4ZAkjZDtR5lRDmZZ3mM04hjHp3Bg"
+        }
+      },
+      tapjoy: {
+        currency: '2948f4c1-5a8d-4090-beb1-725c617477c8'
+      },
+      facebook: {
+        app_id: '321070437995692',
+        like_page_url: 'http://www.facebook.com/',
+        createAnyway: false
+      },
+      adcolony: {
+        zones: {
+          SHOP: "vz8cfb94951aa34d79bbf0b2"
+        }
+      },
+      allopass: {
+        app_id: 297830
+      }
+    };
+
+    return LocalConfig;
+
+  })(Parent);
+
+  module.exports = LocalConfig;
+  
+});
+window.require.register("config/preprod-config", function(exports, require, module) {
+  var Parent, PreprodConfig, _ref,
+    __hasProp = {}.hasOwnProperty,
+    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
+
+  Parent = require('config/prod-config');
+
+  PreprodConfig = (function(_super) {
+    __extends(PreprodConfig, _super);
+
+    function PreprodConfig() {
+      _ref = PreprodConfig.__super__.constructor.apply(this, arguments);
+      return _ref;
+    }
+
+    PreprodConfig.log = true;
+
+    PreprodConfig.long_version_format = true;
+
+    PreprodConfig.pay_game = false;
+
+    PreprodConfig.services = {
+      parse: {
+        app_id: 'ixxjIFjdYTjOeKSZycsaPw8DHndujhvHFX2rNW10',
+        js_key: 'XQMt26dlAXV32EmVVEQYwhSK2yYuvD6qDA3HaFqS',
+        headers: {
+          "X-Parse-Application-Id": "ixxjIFjdYTjOeKSZycsaPw8DHndujhvHFX2rNW10",
+          "X-Parse-REST-API-Key": "gkhPen92iMBY4ZAkjZDtR5lRDmZZ3mM04hjHp3Bg"
+        }
+      },
+      tapjoy: {
+        currency: '2948f4c1-5a8d-4090-beb1-725c617477c8'
+      },
+      facebook: {
+        app_id: '321070437995692',
+        like_page_url: 'http://www.facebook.com/',
+        createAnyway: false
+      },
+      adcolony: {
+        zones: {
+          SHOP: "vz8cfb94951aa34d79bbf0b2"
+        }
+      },
+      allopass: {
+        app_id: 297830
+      }
+    };
+
+    return PreprodConfig;
+
+  })(Parent);
+
+  module.exports = PreprodConfig;
+  
+});
+window.require.register("config/prod-config", function(exports, require, module) {
   var ProdConfig;
 
   ProdConfig = (function() {
-
     function ProdConfig() {}
 
     ProdConfig.app_name = 'Sport Quiz 2';
 
-    ProdConfig.log = true;
+    ProdConfig.log = false;
 
     ProdConfig.long_version_format = false;
 
@@ -24033,10 +24065,8 @@ window.require.define({"config/prod-config": function(exports, require, module) 
 
   module.exports = ProdConfig;
   
-}});
-
-window.require.define({"config/purchase-config": function(exports, require, module) {
-  
+});
+window.require.register("config/purchase-config", function(exports, require, module) {
   module.exports = {
     credit_packs: [
       {
@@ -24098,10 +24128,8 @@ window.require.define({"config/purchase-config": function(exports, require, modu
     }
   };
   
-}});
-
-window.require.define({"config/questions/questions": function(exports, require, module) {
-  
+});
+window.require.register("config/questions/questions", function(exports, require, module) {
   module.exports = [
     {
       "id": 2,
@@ -60480,32 +60508,27 @@ window.require.define({"config/questions/questions": function(exports, require, 
     }
   ];
   
-}});
-
-window.require.define({"config/sound-config": function(exports, require, module) {
-  
+});
+window.require.register("config/sound-config", function(exports, require, module) {
   module.exports = {
     assetPath: 'sounds',
     sounds: []
   };
   
-}});
-
-window.require.define({"config/stages/dupa-stage-config": function(exports, require, module) {
-  
+});
+window.require.register("config/stages/dupa-stage-config", function(exports, require, module) {
   module.exports = {
     stage: {
-      answerTime: 600,
+      answerTime: 60,
       thresholds: [100, 200, 300, 400, 500, 1000, 2000, 3000, 4000, 5000],
       timeBonus: 10
     },
     player: {}
   };
   
-}});
-
-window.require.define({"controllers/base/controller": function(exports, require, module) {
-  var Chaplin, Controller, PreloadHelper, SoundHelper, mediator,
+});
+window.require.register("controllers/base/controller", function(exports, require, module) {
+  var Chaplin, Controller, PreloadHelper, SoundHelper, mediator, _ref,
     __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
     __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
@@ -60519,12 +60542,11 @@ window.require.define({"controllers/base/controller": function(exports, require,
   mediator = require('mediator');
 
   module.exports = Controller = (function(_super) {
-
     __extends(Controller, _super);
 
     function Controller() {
-      this.loadView = __bind(this.loadView, this);
-      return Controller.__super__.constructor.apply(this, arguments);
+      this.loadView = __bind(this.loadView, this);    _ref = Controller.__super__.constructor.apply(this, arguments);
+      return _ref;
     }
 
     Controller.prototype.assetKey = null;
@@ -60532,25 +60554,26 @@ window.require.define({"controllers/base/controller": function(exports, require,
     Controller.prototype.historyURL = null;
 
     Controller.prototype.loadView = function(assetKey, createView, callback, options) {
-      var loaded, _ref, _ref1, _ref2, _ref3, _ref4,
+      var loaded, _ref1, _ref2, _ref3, _ref4, _ref5,
         _this = this;
+
       this.assetKey = assetKey;
       if (options == null) {
         options = {};
       }
-      if ((_ref = options.tracked) == null) {
+      if ((_ref1 = options.tracked) == null) {
         options.tracked = true;
       }
-      if ((_ref1 = options.spinner) == null) {
+      if ((_ref2 = options.spinner) == null) {
         options.spinner = true;
       }
-      if ((_ref2 = options.viewTransition) == null) {
+      if ((_ref3 = options.viewTransition) == null) {
         options.viewTransition = false;
       }
-      if ((_ref3 = options.music) == null) {
+      if ((_ref4 = options.music) == null) {
         options.music = false;
       }
-      if ((_ref4 = this.assetKey) == null) {
+      if ((_ref5 = this.assetKey) == null) {
         this.assetKey = this.historyURL;
       }
       loaded = function() {
@@ -60590,10 +60613,9 @@ window.require.define({"controllers/base/controller": function(exports, require,
 
   })(Chaplin.Controller);
   
-}});
-
-window.require.define({"controllers/ingame/game-controller": function(exports, require, module) {
-  var AnalyticsHelper, ConfigHelper, Controller, FacebookHelper, Factory, GameController, GameStatHelper, Player, PopUpHelper, QuestionsList, config, i18n, mediator,
+});
+window.require.register("controllers/ingame/game-controller", function(exports, require, module) {
+  var AnalyticsHelper, ConfigHelper, Controller, FacebookHelper, Factory, GameController, GameStatHelper, Player, PopUpHelper, QuestionsList, config, i18n, mediator, _ref,
     __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
     __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
@@ -60623,20 +60645,15 @@ window.require.define({"controllers/ingame/game-controller": function(exports, r
   GameStatHelper = require('helpers/game-stat-helper');
 
   module.exports = GameController = (function(_super) {
-
     __extends(GameController, _super);
 
     function GameController() {
       this.initQuestions = __bind(this.initQuestions, this);
-
       this.initPlayers = __bind(this.initPlayers, this);
-
       this.loadNextStage = __bind(this.loadNextStage, this);
-
       this.finishGame = __bind(this.finishGame, this);
-
-      this.index = __bind(this.index, this);
-      return GameController.__super__.constructor.apply(this, arguments);
+      this.index = __bind(this.index, this);    _ref = GameController.__super__.constructor.apply(this, arguments);
+      return _ref;
     }
 
     GameController.prototype.historyURL = 'game';
@@ -60667,6 +60684,7 @@ window.require.define({"controllers/ingame/game-controller": function(exports, r
 
     GameController.prototype.index = function() {
       var _this = this;
+
       if (typeof PushNotifications !== "undefined" && PushNotifications !== null) {
         PushNotifications.block();
       }
@@ -60681,6 +60699,7 @@ window.require.define({"controllers/ingame/game-controller": function(exports, r
 
     GameController.prototype.payGame = function() {
       var user;
+
       if (!config.pay_game) {
         return true;
       }
@@ -60693,6 +60712,7 @@ window.require.define({"controllers/ingame/game-controller": function(exports, r
 
     GameController.prototype.loadGame = function(callback) {
       var response;
+
       if (!this.payGame()) {
         return;
       }
@@ -60713,6 +60733,7 @@ window.require.define({"controllers/ingame/game-controller": function(exports, r
 
     GameController.prototype.finishGame = function() {
       var data, human;
+
       human = this.players[0];
       AnalyticsHelper.trackPageView("EndGame - " + this.i18nStageName);
       data = {
@@ -60727,7 +60748,8 @@ window.require.define({"controllers/ingame/game-controller": function(exports, r
     };
 
     GameController.prototype.loadNextStage = function() {
-      var stage, _ref;
+      var stage, _ref1;
+
       if (!this.loaded) {
         return;
       }
@@ -60737,8 +60759,8 @@ window.require.define({"controllers/ingame/game-controller": function(exports, r
       if (!/duel/.test(stage.name)) {
         this.stageName = stage.name;
       }
-      if ((_ref = this.currentController) != null) {
-        _ref.dispose();
+      if ((_ref1 = this.currentController) != null) {
+        _ref1.dispose();
       }
       this.currentController = Factory.stageController(stage, this.players, this.game.stages[stage.name]);
       this.currentController.start();
@@ -60756,9 +60778,10 @@ window.require.define({"controllers/ingame/game-controller": function(exports, r
     };
 
     GameController.prototype.dispose = function() {
-      var _ref;
-      if ((_ref = this.currentController) != null) {
-        _ref.dispose();
+      var _ref1;
+
+      if ((_ref1 = this.currentController) != null) {
+        _ref1.dispose();
       }
       return GameController.__super__.dispose.apply(this, arguments);
     };
@@ -60767,10 +60790,9 @@ window.require.define({"controllers/ingame/game-controller": function(exports, r
 
   })(Controller);
   
-}});
-
-window.require.define({"controllers/ingame/game-over-controller": function(exports, require, module) {
-  var Controller, GameOverController, GameOverView, GameStatHelper, I18n, PlayerModel, SoundHelper,
+});
+window.require.register("controllers/ingame/game-over-controller", function(exports, require, module) {
+  var Controller, GameOverController, GameOverView, GameStatHelper, I18n, PlayerModel, SoundHelper, _ref,
     __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
@@ -60787,17 +60809,19 @@ window.require.define({"controllers/ingame/game-over-controller": function(expor
   GameStatHelper = require('helpers/game-stat-helper');
 
   module.exports = GameOverController = (function(_super) {
-
     __extends(GameOverController, _super);
 
     function GameOverController() {
-      return GameOverController.__super__.constructor.apply(this, arguments);
+      _ref = GameOverController.__super__.constructor.apply(this, arguments);
+      return _ref;
     }
 
     GameOverController.prototype.index = function(success, params) {
       var _this = this;
+
       return this.loadView('game-over', function() {
         var user;
+
         GameStatHelper.setBestScore(params.jackpot);
         GameStatHelper.incrementSumScore(params.jackpot);
         GameStatHelper.saveStats();
@@ -60840,10 +60864,9 @@ window.require.define({"controllers/ingame/game-over-controller": function(expor
 
   })(Controller);
   
-}});
-
-window.require.define({"controllers/ingame/player-controller": function(exports, require, module) {
-  var Controller, Model, PlayersController, mediator,
+});
+window.require.register("controllers/ingame/player-controller", function(exports, require, module) {
+  var Controller, Model, PlayersController, mediator, _ref,
     __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
@@ -60854,11 +60877,11 @@ window.require.define({"controllers/ingame/player-controller": function(exports,
   mediator = require('mediator');
 
   module.exports = PlayersController = (function(_super) {
-
     __extends(PlayersController, _super);
 
     function PlayersController() {
-      return PlayersController.__super__.constructor.apply(this, arguments);
+      _ref = PlayersController.__super__.constructor.apply(this, arguments);
+      return _ref;
     }
 
     PlayersController.prototype.initialize = function(data) {
@@ -60869,10 +60892,9 @@ window.require.define({"controllers/ingame/player-controller": function(exports,
 
   })(Controller);
   
-}});
-
-window.require.define({"controllers/ingame/stage-controller": function(exports, require, module) {
-  var Controller, PopUpHelper, SoundHelper, StageController,
+});
+window.require.register("controllers/ingame/stage-controller", function(exports, require, module) {
+  var Controller, PopUpHelper, SoundHelper, StageController, _ref,
     __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
     __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
@@ -60884,18 +60906,14 @@ window.require.define({"controllers/ingame/stage-controller": function(exports, 
   SoundHelper = require('helpers/sound-helper');
 
   module.exports = StageController = (function(_super) {
-
     __extends(StageController, _super);
 
     function StageController() {
       this.onResignActive = __bind(this.onResignActive, this);
-
       this.resume = __bind(this.resume, this);
-
       this.pause = __bind(this.pause, this);
-
-      this.finishStage = __bind(this.finishStage, this);
-      return StageController.__super__.constructor.apply(this, arguments);
+      this.finishStage = __bind(this.finishStage, this);    _ref = StageController.__super__.constructor.apply(this, arguments);
+      return _ref;
     }
 
     StageController.prototype.model = null;
@@ -60931,15 +60949,17 @@ window.require.define({"controllers/ingame/stage-controller": function(exports, 
     };
 
     StageController.prototype.start = function() {
-      var _ref;
-      if ((_ref = this.view) != null) {
-        _ref.delegate('click', '.btn-menu', this.pause);
+      var _ref1;
+
+      if ((_ref1 = this.view) != null) {
+        _ref1.delegate('click', '.btn-menu', this.pause);
       }
       return SoundHelper.play(this.name);
     };
 
     StageController.prototype.pause = function() {
       var templateData;
+
       if (this.paused) {
         return;
       }
@@ -60972,9 +60992,10 @@ window.require.define({"controllers/ingame/stage-controller": function(exports, 
     };
 
     StageController.prototype.dispose = function() {
-      var _ref;
-      if ((_ref = this.timer) != null) {
-        _ref.destroy();
+      var _ref1;
+
+      if ((_ref1 = this.timer) != null) {
+        _ref1.destroy();
       }
       document.removeEventListener('pause', this.onResignActive, false);
       return StageController.__super__.dispose.apply(this, arguments);
@@ -60984,10 +61005,9 @@ window.require.define({"controllers/ingame/stage-controller": function(exports, 
 
   })(Controller);
   
-}});
-
-window.require.define({"controllers/ingame/stages/dupa-stage-controller": function(exports, require, module) {
-  var DupaStageController, DupaStageView, GameStatHelper, StageController, Timer, i18n, utils,
+});
+window.require.register("controllers/ingame/stages/dupa-stage-controller", function(exports, require, module) {
+  var DupaStageController, DupaStageView, GameStatHelper, StageController, Timer, i18n, utils, _ref,
     __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
     __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
@@ -61005,14 +61025,12 @@ window.require.define({"controllers/ingame/stages/dupa-stage-controller": functi
   GameStatHelper = require('helpers/game-stat-helper');
 
   module.exports = DupaStageController = (function(_super) {
-
     __extends(DupaStageController, _super);
 
     function DupaStageController() {
       this.playerDidAnswer = __bind(this.playerDidAnswer, this);
-
-      this.askNextQuestion = __bind(this.askNextQuestion, this);
-      return DupaStageController.__super__.constructor.apply(this, arguments);
+      this.askNextQuestion = __bind(this.askNextQuestion, this);    _ref = DupaStageController.__super__.constructor.apply(this, arguments);
+      return _ref;
     }
 
     DupaStageController.prototype.timer = null;
@@ -61030,6 +61048,7 @@ window.require.define({"controllers/ingame/stages/dupa-stage-controller": functi
     DupaStageController.prototype.start = function() {
       var t,
         _this = this;
+
       t = this.model.getConfigValue('thresholds').slice(0).reverse();
       this.view = new DupaStageView({
         stage: {
@@ -61067,6 +61086,7 @@ window.require.define({"controllers/ingame/stages/dupa-stage-controller": functi
     DupaStageController.prototype.askNextQuestion = function() {
       var player, question,
         _this = this;
+
       this.startTime = new Date().getTime();
       if (this.bonusDoubleUsed) {
         this.view.doubleScoreDeactivated();
@@ -61082,6 +61102,7 @@ window.require.define({"controllers/ingame/stages/dupa-stage-controller": functi
         return _this.view.delegateSingleOnce('click', '.proposition', function(event) {
           return _this.view.chooseProposition(event.currentTarget, function(propositionId) {
             var result;
+
             result = question.isCorrectAnswer(propositionId);
             return _this.view.updateAnswerButton(propositionId, result, function() {
               return _this.playerDidAnswer(player, question, result);
@@ -61137,6 +61158,7 @@ window.require.define({"controllers/ingame/stages/dupa-stage-controller": functi
 
     DupaStageController.prototype.executeBonus = function(bonusName) {
       var _name;
+
       return typeof this[_name = $.camelCase('executeBonus-' + utils.dasherize(bonusName))] === "function" ? this[_name]() : void 0;
     };
 
@@ -61167,10 +61189,9 @@ window.require.define({"controllers/ingame/stages/dupa-stage-controller": functi
 
   })(StageController);
   
-}});
-
-window.require.define({"controllers/outgame/hall-of-fame-controller": function(exports, require, module) {
-  var AnalyticsHelper, ConfigHelper, Controller, HallOfFameController, HallOfFameView, mediator,
+});
+window.require.register("controllers/outgame/hall-of-fame-controller", function(exports, require, module) {
+  var AnalyticsHelper, ConfigHelper, Controller, FacebookHelper, HallOfFameController, HallOfFameView, i18n, mediator, _ref,
     __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
     __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
@@ -61185,23 +61206,25 @@ window.require.define({"controllers/outgame/hall-of-fame-controller": function(e
 
   AnalyticsHelper = require('helpers/analytics-helper');
 
-  module.exports = HallOfFameController = (function(_super) {
+  FacebookHelper = require('helpers/facebook-helper');
 
+  i18n = require('lib/i18n');
+
+  module.exports = HallOfFameController = (function(_super) {
     __extends(HallOfFameController, _super);
 
     function HallOfFameController() {
+      this.FacebookInvite = __bind(this.FacebookInvite, this);
+      this.friendsToInvite = __bind(this.friendsToInvite, this);
+      this.connectFacebook = __bind(this.connectFacebook, this);
+      this.addFriends = __bind(this.addFriends, this);
       this.askFriend = __bind(this.askFriend, this);
-
       this.getDate = __bind(this.getDate, this);
-
       this.onClickGlobal = __bind(this.onClickGlobal, this);
-
       this.onClickFriends = __bind(this.onClickFriends, this);
-
       this.updateRanking = __bind(this.updateRanking, this);
-
-      this.fetchPlayers = __bind(this.fetchPlayers, this);
-      return HallOfFameController.__super__.constructor.apply(this, arguments);
+      this.fetchPlayers = __bind(this.fetchPlayers, this);    _ref = HallOfFameController.__super__.constructor.apply(this, arguments);
+      return _ref;
     }
 
     HallOfFameController.prototype.historyURL = 'hall-of-fame';
@@ -61213,45 +61236,70 @@ window.require.define({"controllers/outgame/hall-of-fame-controller": function(e
     HallOfFameController.prototype.request = null;
 
     HallOfFameController.prototype.fetchPlayers = function(withFriends) {
-      var i, ranking, _i, _ref;
+      var fbConnected, i, noFriends, position, ranking, _i, _ref1;
+
       this.friend = withFriends ? true : false;
       ranking = withFriends ? this.friendsArray : this.globalArray;
+      console.log(ranking);
       this.collection = [];
-      for (i = _i = 0, _ref = ranking.length - 1; 0 <= _ref ? _i <= _ref : _i >= _ref; i = 0 <= _ref ? ++_i : --_i) {
+      for (i = _i = 0, _ref1 = ranking.length; 0 <= _ref1 ? _i < _ref1 : _i > _ref1; i = 0 <= _ref1 ? ++_i : --_i) {
         this.collection[i] = {
           friend: this.friend,
-          rank: ranking[i].attributes.order,
-          username: ranking[i].attributes.username,
-          jackpot: ranking[i].attributes.score,
-          profilepic: Math.random() > 0.49 ? 'https://graph.facebook.com/sergio.chugulu/picture' : null
+          rank: ranking[i].rank,
+          username: ranking[i].username,
+          jackpot: ranking[i].score,
+          profilepic: !!ranking[i].fb_id ? 'https://graph.facebook.com/' + ranking[i].fb_id + '/picture' : null
         };
+        if (ranking[i].username === this.user.get('username')) {
+          position = i;
+        }
       }
-      return this.updateRanking();
+      fbConnected = FacebookHelper.isLinked();
+      noFriends = this.collection.length <= 1;
+      return this.updateRanking(position, noFriends, fbConnected, withFriends);
     };
 
     HallOfFameController.prototype.index = function() {
-      var user,
-        _this = this;
-      user = Parse.User.current();
-      this.friendsArray = new Array();
-      this.globalArray = new Array();
-      Parse.Cloud.run('getGlobalScores', {
-        id: user.id,
-        rank: user.get('rank')
+      var _this = this;
+
+      this.user = Parse.User.current();
+      this.friendsArray = [];
+      this.globalArray = [];
+      FacebookHelper.getOtherFriends(function(friends) {
+        return _this.friendsToInvite(friends);
+      });
+      Parse.Cloud.run('getAllScore', {
+        rank: this.user.get('rank'),
+        userId: this.user.id
       }, {
-        success: function(result) {
-          _this.globalArray = result;
-          _this.friendsArray = result;
-          return _this.fetchPlayers(true);
+        success: function(players) {
+          return _this.globalArray = players;
         },
-        error: function(error) {
-          return console.log(error);
+        error: function() {
+          return console.log('toto s dead');
         }
       });
-      this.fetchPlayers(true);
+      FacebookHelper.getFriends(function(friends) {
+        var friendsId;
+
+        friendsId = _.pluck(friends, 'id');
+        return Parse.Cloud.run('getFriendsScore', {
+          friendsId: friendsId
+        }, {
+          success: function(players) {
+            players.push(Parse.User.current().attributes);
+            players = players.sort(function(f1, f2) {
+              return f2.score - f1.score;
+            });
+            _this.friendsArray = players;
+            return _this.fetchPlayers(true);
+          }
+        });
+      });
       this.targetDate = this.getDate();
       return this.loadView(null, function() {
         var params;
+
         params = {
           targetDate: _this.targetDate,
           rank: mediator.user.get('rank'),
@@ -61263,6 +61311,9 @@ window.require.define({"controllers/outgame/hall-of-fame-controller": function(e
         view.delegate('click', '#btn-friends', _this.onClickFriends);
         view.delegate('click', '#btn-global', _this.onClickGlobal);
         view.delegate('click', '.ask-friend', _this.askFriend);
+        view.delegate('click', '#no-friends', _this.addFriends);
+        view.delegate('click', '#no-fb-connected', _this.connectFacebook);
+        view.delegate('click', '.invite-btn', _this.FacebookInvite);
         if (_this.collection) {
           return _this.updateRanking();
         }
@@ -61272,9 +61323,10 @@ window.require.define({"controllers/outgame/hall-of-fame-controller": function(e
       });
     };
 
-    HallOfFameController.prototype.updateRanking = function() {
-      var _ref;
-      return (_ref = this.view) != null ? _ref.updateRankingList(this.collection) : void 0;
+    HallOfFameController.prototype.updateRanking = function(i, noFriends, fbConnected, withFriends) {
+      var _ref1;
+
+      return (_ref1 = this.view) != null ? _ref1.updateRankingList(this.collection, i, noFriends, fbConnected, withFriends, this.friendsToInvite) : void 0;
     };
 
     HallOfFameController.prototype.onClickFriends = function(e) {
@@ -61295,6 +61347,7 @@ window.require.define({"controllers/outgame/hall-of-fame-controller": function(e
 
     HallOfFameController.prototype.getDate = function() {
       var targetDate;
+
       targetDate = new Date();
       targetDate.setHours(0);
       targetDate.setMinutes(0);
@@ -61309,14 +61362,48 @@ window.require.define({"controllers/outgame/hall-of-fame-controller": function(e
       }
     };
 
+    HallOfFameController.prototype.addFriends = function() {
+      return FacebookHelper.friendRequest(i18n.t('controller.home.facebook_invite_message'));
+    };
+
+    HallOfFameController.prototype.connectFacebook = function() {
+      if (!FacebookHelper.isLinked()) {
+        return FacebookHelper.linkPlayer();
+      }
+    };
+
+    HallOfFameController.prototype.friendsToInvite = function(friends) {
+      var friend, friends2, results, tmp, user, _i, _len;
+
+      friends2 = _.pluck(friends, 'id');
+      user = Parse.User.current();
+      tmp = _.first(_.shuffle(_.difference(friends2, user.get('fb_invited'))), 3);
+      console.log(tmp);
+      results = [];
+      for (_i = 0, _len = tmp.length; _i < _len; _i++) {
+        friend = tmp[_i];
+        FB.api('/' + friend + '?fields=name', function(response) {
+          return results.push(response);
+        });
+      }
+      console.log(results);
+      return this.friendsToInvite = results;
+    };
+
+    HallOfFameController.prototype.FacebookInvite = function(event) {
+      var id;
+
+      id = $(event.currentTarget).data('id');
+      return FacebookHelper.friendRequestTo(i18n.t('controller.home.facebook_invite_message')(id));
+    };
+
     return HallOfFameController;
 
   })(Controller);
   
-}});
-
-window.require.define({"controllers/outgame/home-controller": function(exports, require, module) {
-  var AnalyticsHelper, Controller, FacebookHelper, HomeController, HomePageView, NoFriendsJournalView, OneFriendJournalView, TwoFriendsJournalView, TwoplusFriendsJournalView, i18n, mediator,
+});
+window.require.register("controllers/outgame/home-controller", function(exports, require, module) {
+  var AnalyticsHelper, Controller, FacebookHelper, HomeController, HomePageView, NoFriendsJournalView, OneFriendJournalView, TwoFriendsJournalView, TwoplusFriendsJournalView, i18n, mediator, _ref,
     __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
     __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
@@ -61342,14 +61429,12 @@ window.require.define({"controllers/outgame/home-controller": function(exports, 
   TwoplusFriendsJournalView = require('views/outgame/journal/twoplus-friends-journal-view');
 
   module.exports = HomeController = (function(_super) {
-
     __extends(HomeController, _super);
 
     function HomeController() {
       this.onClickFacebook = __bind(this.onClickFacebook, this);
-
-      this.viewLoaded = __bind(this.viewLoaded, this);
-      return HomeController.__super__.constructor.apply(this, arguments);
+      this.viewLoaded = __bind(this.viewLoaded, this);    _ref = HomeController.__super__.constructor.apply(this, arguments);
+      return _ref;
     }
 
     HomeController.prototype.historyURL = 'home';
@@ -61358,11 +61443,13 @@ window.require.define({"controllers/outgame/home-controller": function(exports, 
 
     HomeController.prototype.index = function() {
       var _this = this;
+
       if (typeof PushNotifications !== "undefined" && PushNotifications !== null) {
         PushNotifications.unblock();
       }
       return this.loadView('home', function() {
         var user;
+
         user = Parse.User.current();
         return new HomePageView({
           hearts: user.get('health'),
@@ -61387,16 +61474,14 @@ window.require.define({"controllers/outgame/home-controller": function(exports, 
     };
 
     HomeController.prototype.viewLoaded = function(view) {
-      var _ref,
+      var _ref1,
         _this = this;
-      if ((typeof navigator !== "undefined" && navigator !== null ? (_ref = navigator.splashscreen) != null ? _ref.hide : void 0 : void 0) != null) {
+
+      if ((typeof navigator !== "undefined" && navigator !== null ? (_ref1 = navigator.splashscreen) != null ? _ref1.hide : void 0 : void 0) != null) {
         navigator.splashscreen.hide();
       }
-      this.view.setJournalMessage('loading');
       return FacebookHelper.getFriends(function(friends) {
-        _this.getJournalView(friends, function() {
-          return _this.view.setJournalMessage('touch');
-        });
+        _this.getJournalView(friends);
         _this.view.delegate('click', '#equipe-btn', function() {
           return _this.view.toggleJournal();
         });
@@ -61411,8 +61496,6 @@ window.require.define({"controllers/outgame/home-controller": function(exports, 
             return _this.redirectTo('game');
           });
         });
-      }, function() {
-        return _this.view.setJournalMessage('error');
       });
     };
 
@@ -61420,21 +61503,22 @@ window.require.define({"controllers/outgame/home-controller": function(exports, 
       return FacebookHelper.friendRequest(i18n.t('controller.home.facebook_invite_message'));
     };
 
-    HomeController.prototype.getJournalView = function(friends, callback) {
+    HomeController.prototype.getJournalView = function(friends) {
       switch (friends.length) {
         case 0:
-          return this.getSmallLeaderboard(callback, this.getNoFriendsJournalView);
+          return this.getSmallLeaderboard(this.getNoFriendsJournalView);
         case 1:
-          return this.getFriendsScore(friends, callback, this.getOneFriendJournalView);
+          return this.getFriendsScore(friends, this.getOneFriendJournalView);
         case 2:
-          return this.getFriendsScore(friends, callback, this.getTwoFriendsJournalView);
+          return this.getFriendsScore(friends, this.getTwoFriendsJournalView);
         default:
-          return this.getFriendsScore(friends, callback, this.getTwoplusFriendsJournalView);
+          return this.getFriendsScore(friends, this.getTwoplusFriendsJournalView);
       }
     };
 
     HomeController.prototype.getNoFriendsJournalView = function(people) {
       var options, targetDate;
+
       targetDate = new Date();
       targetDate.setHours(0);
       targetDate.setMinutes(0);
@@ -61446,13 +61530,13 @@ window.require.define({"controllers/outgame/home-controller": function(exports, 
         fb_id: Parse.User.current().get('fb_id'),
         participants: people
       };
-      console.log(people);
       return new NoFriendsJournalView(options);
     };
 
-    HomeController.prototype.getFriendsScore = function(friends, callback, journalView) {
+    HomeController.prototype.getFriendsScore = function(friends, callback) {
       var friendsId,
         _this = this;
+
       friendsId = _.pluck(friends, 'id');
       return Parse.Cloud.run('getFriendsScore', {
         friendsId: friendsId
@@ -61462,8 +61546,7 @@ window.require.define({"controllers/outgame/home-controller": function(exports, 
           players = players.sort(function(f1, f2) {
             return f2.score - f1.score;
           });
-          _this.view.addJournalView(journalView(players));
-          return callback();
+          return _this.view.addJournalView(callback(players));
         },
         error: function(error) {
           return console.log('ERROR : ', error);
@@ -61471,8 +61554,9 @@ window.require.define({"controllers/outgame/home-controller": function(exports, 
       });
     };
 
-    HomeController.prototype.getSmallLeaderboard = function(journalView, callback) {
+    HomeController.prototype.getSmallLeaderboard = function(callback) {
       var _this = this;
+
       return Parse.Cloud.run('smallLeaderboard', {
         size: 3
       }, {
@@ -61480,8 +61564,7 @@ window.require.define({"controllers/outgame/home-controller": function(exports, 
           players = players.sort(function(f1, f2) {
             return f2.score - f1.score;
           });
-          _this.view.addJournalView(journalView(players));
-          return callback();
+          return _this.view.addJournalView(callback(players));
         },
         error: function(error) {
           return console.log('ERROR : ', error);
@@ -61491,6 +61574,7 @@ window.require.define({"controllers/outgame/home-controller": function(exports, 
 
     HomeController.prototype.getOneFriendJournalView = function(players) {
       var options;
+
       options = {
         winner: players[0].username,
         loser: players[1].username,
@@ -61501,6 +61585,7 @@ window.require.define({"controllers/outgame/home-controller": function(exports, 
 
     HomeController.prototype.getTwoFriendsJournalView = function(players) {
       var options;
+
       options = {
         master: players[0].username,
         participants: players
@@ -61510,6 +61595,7 @@ window.require.define({"controllers/outgame/home-controller": function(exports, 
 
     HomeController.prototype.getTwoplusFriendsJournalView = function(players) {
       var name, options, rank, title;
+
       rank = _.indexOf(players, Parse.User.current().attributes) + 1;
       name = Parse.User.current().get('username');
       if (rank < 4) {
@@ -61528,10 +61614,9 @@ window.require.define({"controllers/outgame/home-controller": function(exports, 
 
   })(Controller);
   
-}});
-
-window.require.define({"controllers/outgame/login-controller": function(exports, require, module) {
-  var AnalyticsHelper, ConfigHelper, Controller, FacebookHelper, LequipeSSOHelper, LocalStorageHelper, LoginController, LoginView, PopUpHelper, SpinnerHelper, User, config, i18n, mediator, utils,
+});
+window.require.register("controllers/outgame/login-controller", function(exports, require, module) {
+  var AnalyticsHelper, ConfigHelper, Controller, FacebookHelper, LequipeSSOHelper, LocalStorageHelper, LoginController, LoginView, PopUpHelper, SpinnerHelper, User, config, i18n, mediator, utils, _ref,
     __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
     __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
@@ -61571,27 +61656,16 @@ window.require.define({"controllers/outgame/login-controller": function(exports,
 
     function LoginController() {
       this.redirectHome = __bind(this.redirectHome, this);
-
       this.bindPlayer = __bind(this.bindPlayer, this);
-
       this.showLoginView = __bind(this.showLoginView, this);
-
       this.validateForm = __bind(this.validateForm, this);
-
       this.checkAvailabilityWithSSO = __bind(this.checkAvailabilityWithSSO, this);
-
       this.registerWithSSO = __bind(this.registerWithSSO, this);
-
       this.loginWithSSO = __bind(this.loginWithSSO, this);
-
-      this.loginWithFacebook = __bind(this.loginWithFacebook, this);
-
       this.loginWithTemp = __bind(this.loginWithTemp, this);
-
       this.loginToParse = __bind(this.loginToParse, this);
-
-      this.index = __bind(this.index, this);
-      return LoginController.__super__.constructor.apply(this, arguments);
+      this.index = __bind(this.index, this);    _ref = LoginController.__super__.constructor.apply(this, arguments);
+      return _ref;
     }
 
     LoginController.prototype.historyURL = '';
@@ -61610,6 +61684,7 @@ window.require.define({"controllers/outgame/login-controller": function(exports,
     LoginController.prototype.loginToParse = function(user, params) {
       var manageError,
         _this = this;
+
       manageError = function(child, error, opts) {
         console.log("PARSE ERROR");
         return console.log(error);
@@ -61620,6 +61695,7 @@ window.require.define({"controllers/outgame/login-controller": function(exports,
         },
         error: function(child, error, opts) {
           var options, u;
+
           if (error.code === Parse.Error.OBJECT_NOT_FOUND) {
             delete user.id;
             u = new User(user);
@@ -61642,6 +61718,7 @@ window.require.define({"controllers/outgame/login-controller": function(exports,
     LoginController.prototype.loginWithTemp = function() {
       var username,
         _this = this;
+
       username = $('#temp-login-form input[name=username]', this.view.$el)[0].value;
       SpinnerHelper.start();
       Parse.User.signUp(username, '123456', (new User).attributes, {
@@ -61657,47 +61734,10 @@ window.require.define({"controllers/outgame/login-controller": function(exports,
       return false;
     };
 
-    LoginController.prototype.loginWithFacebook = function() {
-      var error, success,
-        _this = this;
-      console.log('loginWithFacebook');
-      AnalyticsHelper.trackEvent('Login', 'Login with facebook');
-      success = function(response) {
-        return FacebookHelper.getPersonalInfo(function(fb_attributes) {
-          var parse_attributes;
-          parse_attributes = User.prototype.defaults;
-          parse_attributes.username = fb_attributes.name;
-          parse_attributes.fb_id = fb_attributes.id;
-          Parse.User.current().set(parse_attributes).save();
-          return _this.bindPlayer();
-        });
-      };
-      error = function(response) {
-        SpinnerHelper.stop();
-        if (config.services.facebook.createAnyway) {
-          console.log('Forced creation of player even if Facebook fail (local)');
-          return Parse.User.signUp(Math.random() * 56056105 + '', 'password', (new User).attributes, {
-            success: function() {
-              var user;
-              user = Parse.User.current();
-              console.log(user, user != null ? user.get('username') : void 0);
-              return _this.bindPlayer();
-            }
-          });
-        } else {
-          return PopUpHelper.initialize({
-            message: 'Erreur avec Facebook',
-            title: 400,
-            key: 'api-error'
-          });
-        }
-      };
-      return FacebookHelper.logIn(success, error);
-    };
-
     LoginController.prototype.loginWithSSO = function() {
       var f, form, _i, _len,
         _this = this;
+
       console.log("LOGIN YO");
       if (!this.validateForm('#sso-login-form')) {
         return false;
@@ -61721,6 +61761,7 @@ window.require.define({"controllers/outgame/login-controller": function(exports,
     LoginController.prototype.registerWithSSO = function() {
       var f, form, _i, _len,
         _this = this;
+
       console.log("REGISTER YO");
       if (!this.validateForm('#sso-register-form')) {
         return false;
@@ -61744,6 +61785,7 @@ window.require.define({"controllers/outgame/login-controller": function(exports,
     LoginController.prototype.checkAvailabilityWithSSO = function() {
       var f, form, _i, _len,
         _this = this;
+
       console.log("CHECING AVAILABILITY YO");
       form = $('#sso-register-form', this.view.$el).serializeArray();
       params = {};
@@ -61769,6 +61811,7 @@ window.require.define({"controllers/outgame/login-controller": function(exports,
 
     LoginController.prototype.validateForm = function(formId) {
       var f, form, invalidFields, validationRules, _i, _len;
+
       validationRules = {
         email: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$/,
         username: /^[a-zA-Z0-9_\-\.àáâãäçèéêëìíîïñòóõöûüúù@?£%€\(\)°\[\]\}\{\*~\\'"]{6,}$/
@@ -61796,16 +61839,17 @@ window.require.define({"controllers/outgame/login-controller": function(exports,
 
     LoginController.prototype.showLoginView = function() {
       var _this = this;
+
       return this.loadView('login', function() {
         return new LoginView();
       }, function(view) {
-        var _ref;
+        var _ref1;
+
         view.animateFacebook();
-        if ((typeof navigator !== "undefined" && navigator !== null ? (_ref = navigator.splashscreen) != null ? _ref.hide : void 0 : void 0) != null) {
+        if ((typeof navigator !== "undefined" && navigator !== null ? (_ref1 = navigator.splashscreen) != null ? _ref1.hide : void 0 : void 0) != null) {
           navigator.splashscreen.hide();
         }
         view.delegate('click', '#register-btn', _this.registerWithSSO);
-        view.delegate('click', "#facebook-login", _this.loginWithFacebook);
         view.delegate('click', '#login-btn', _this.loginWithSSO);
         view.delegate('click', '#temp-btn', _this.loginWithTemp);
         view.delegate('keyup', '#sso-register-form input[name=email]', _this.checkAvailabilityWithSSO);
@@ -61816,8 +61860,44 @@ window.require.define({"controllers/outgame/login-controller": function(exports,
         view.delegate('click', '#equipe-login', function() {
           return view.openForms();
         });
-        return view.delegate('click', '#temp-login', function() {
+        view.delegate('click', '#temp-login', function() {
           return view.openTempForm();
+        });
+        return view.delegate("click", "#facebook-login", function() {
+          AnalyticsHelper.trackEvent('Login', 'Login with facebook');
+          return Parse.FacebookUtils.logIn('email, user_location, user_birthday, publish_stream', {
+            success: function() {
+              return FacebookHelper.getPersonalInfo(function(fb_attributes) {
+                var parse_attributes;
+
+                parse_attributes = User.prototype.defaults;
+                parse_attributes.username = fb_attributes.name;
+                parse_attributes.fb_id = fb_attributes.id;
+                Parse.User.current().set(parse_attributes).save();
+                return _this.bindPlayer();
+              });
+            },
+            error: function(response) {
+              if (config.services.facebook.createAnyway) {
+                console.log('Forced creation of player even if Facebook fail (local)');
+                return Parse.User.signUp(Math.random() * 56056105 + '', 'password', (new User).attributes, {
+                  success: function() {
+                    var user;
+
+                    user = Parse.User.current();
+                    console.log(user, user != null ? user.get('username') : void 0);
+                    return _this.bindPlayer();
+                  }
+                });
+              } else {
+                return PopUpHelper.initialize({
+                  message: 'Erreur avec Facebook',
+                  title: 400,
+                  key: 'api-error'
+                });
+              }
+            }
+          });
         });
       }, {
         viewTransition: true
@@ -61826,12 +61906,12 @@ window.require.define({"controllers/outgame/login-controller": function(exports,
 
     LoginController.prototype.bindPlayer = function() {
       var _this = this;
+
       return Parse.User.current().fetch({
         success: function(user, user_attributes) {
           console.log('BindPlayer with user', user.get('username'));
           mediator.setUser(user);
           _this.initPushNotifications();
-          SpinnerHelper.stop();
           return _this.redirectHome();
         }
       });
@@ -61849,6 +61929,7 @@ window.require.define({"controllers/outgame/login-controller": function(exports,
         });
         return PushNotifications.register(function(pushData) {
           var data;
+
           console.log("GOT TOKEN");
           console.log(pushData);
           data = {
@@ -61881,10 +61962,9 @@ window.require.define({"controllers/outgame/login-controller": function(exports,
 
   })(Controller);
   
-}});
-
-window.require.define({"controllers/outgame/more-games-controller": function(exports, require, module) {
-  var ConfigHelper, Controller, MoreGamesController, MoreGamesView, SpinnerHelper,
+});
+window.require.register("controllers/outgame/more-games-controller", function(exports, require, module) {
+  var ConfigHelper, Controller, MoreGamesController, MoreGamesView, SpinnerHelper, _ref,
     __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
     __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
@@ -61898,12 +61978,11 @@ window.require.define({"controllers/outgame/more-games-controller": function(exp
   SpinnerHelper = require('helpers/spinner-helper');
 
   module.exports = MoreGamesController = (function(_super) {
-
     __extends(MoreGamesController, _super);
 
     function MoreGamesController() {
-      this.loadContent = __bind(this.loadContent, this);
-      return MoreGamesController.__super__.constructor.apply(this, arguments);
+      this.loadContent = __bind(this.loadContent, this);    _ref = MoreGamesController.__super__.constructor.apply(this, arguments);
+      return _ref;
     }
 
     MoreGamesController.prototype.historyURL = 'more-games';
@@ -61919,6 +61998,7 @@ window.require.define({"controllers/outgame/more-games-controller": function(exp
 
     MoreGamesController.prototype.index = function() {
       var _this = this;
+
       this.loadContent();
       return this.loadView('more-games', function() {
         return new MoreGamesView();
@@ -61933,14 +62013,16 @@ window.require.define({"controllers/outgame/more-games-controller": function(exp
 
     MoreGamesController.prototype.loadContent = function() {
       var _this = this;
+
       SpinnerHelper.start();
       return $.ajax({
         url: 'http://www.google.com',
         dataType: 'html',
         success: function(content) {
-          var _ref;
+          var _ref1;
+
           _this.content = content;
-          return (_ref = _this.view) != null ? _ref.setContent(_this.content) : void 0;
+          return (_ref1 = _this.view) != null ? _ref1.setContent(_this.content) : void 0;
         },
         complete: function() {
           return SpinnerHelper.stop();
@@ -61952,10 +62034,9 @@ window.require.define({"controllers/outgame/more-games-controller": function(exp
 
   })(Controller);
   
-}});
-
-window.require.define({"controllers/outgame/options-controller": function(exports, require, module) {
-  var AnalyticsHelper, Controller, DeviceHelper, FacebookHelper, LocalStorageHelper, OptionsController, OptionsView, SoundHelper, SpinnerHelper, mediator,
+});
+window.require.register("controllers/outgame/options-controller", function(exports, require, module) {
+  var AnalyticsHelper, Controller, DeviceHelper, FacebookHelper, LocalStorageHelper, OptionsController, OptionsView, SoundHelper, SpinnerHelper, mediator, _ref,
     __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
     __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
@@ -61979,26 +62060,18 @@ window.require.define({"controllers/outgame/options-controller": function(export
   FacebookHelper = require('helpers/facebook-helper');
 
   module.exports = OptionsController = (function(_super) {
-
     __extends(OptionsController, _super);
 
     function OptionsController() {
       this.onClickToggleInfoNotif = __bind(this.onClickToggleInfoNotif, this);
-
       this.onClickToggleMusic = __bind(this.onClickToggleMusic, this);
-
       this.onClickToggleFX = __bind(this.onClickToggleFX, this);
-
       this.onClickFacebookConnect = __bind(this.onClickFacebookConnect, this);
-
       this.onClickHelp = __bind(this.onClickHelp, this);
-
       this.setLocalOption = __bind(this.setLocalOption, this);
-
       this.getLocalOption = __bind(this.getLocalOption, this);
-
-      this.index = __bind(this.index, this);
-      return OptionsController.__super__.constructor.apply(this, arguments);
+      this.index = __bind(this.index, this);    _ref = OptionsController.__super__.constructor.apply(this, arguments);
+      return _ref;
     }
 
     OptionsController.prototype.historyURL = 'options';
@@ -62007,9 +62080,11 @@ window.require.define({"controllers/outgame/options-controller": function(export
 
     OptionsController.prototype.index = function() {
       var _this = this;
+
       this.setLocalOption('option-info-notif', Parse.User.current().get('notifications'));
       return this.loadView(null, function() {
         var templateData;
+
         templateData = {
           music: SoundHelper.musicMuted ? 'off' : '',
           fx: SoundHelper.sfxMuted ? 'off' : '',
@@ -62041,6 +62116,7 @@ window.require.define({"controllers/outgame/options-controller": function(export
 
     OptionsController.prototype.onClickHelp = function() {
       var mail, uvData;
+
       AnalyticsHelper.trackEvent('Options', "Demander de l'aide");
       ({
         rawurlencode: function(str) {
@@ -62088,6 +62164,7 @@ window.require.define({"controllers/outgame/options-controller": function(export
     OptionsController.prototype.onClickToggleInfoNotif = function() {
       var newVal, user,
         _this = this;
+
       user = Parse.User.current();
       newVal = !user.get('notifications');
       user.set('notifications', newVal);
@@ -62108,10 +62185,9 @@ window.require.define({"controllers/outgame/options-controller": function(export
 
   })(Controller);
   
-}});
-
-window.require.define({"controllers/outgame/profile-controller": function(exports, require, module) {
-  var AnalyticsHelper, ConfigHelper, Controller, FacebookHelper, GameStatHelper, I18n, ProfileView, ProfilesController, User, mediator,
+});
+window.require.register("controllers/outgame/profile-controller", function(exports, require, module) {
+  var AnalyticsHelper, ConfigHelper, Controller, FacebookHelper, GameStatHelper, I18n, ProfileView, ProfilesController, User, mediator, _ref,
     __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
     __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
@@ -62135,14 +62211,12 @@ window.require.define({"controllers/outgame/profile-controller": function(export
   User = require('models/outgame/user-model');
 
   module.exports = ProfilesController = (function(_super) {
-
     __extends(ProfilesController, _super);
 
     function ProfilesController() {
       this.onClickGameCenter = __bind(this.onClickGameCenter, this);
-
-      this.index = __bind(this.index, this);
-      return ProfilesController.__super__.constructor.apply(this, arguments);
+      this.index = __bind(this.index, this);    _ref = ProfilesController.__super__.constructor.apply(this, arguments);
+      return _ref;
     }
 
     ProfilesController.prototype.title = 'Profile';
@@ -62152,16 +62226,12 @@ window.require.define({"controllers/outgame/profile-controller": function(export
     ProfilesController.prototype.stats = null;
 
     ProfilesController.prototype.index = function() {
-      var avatar, fb_id,
-        _this = this;
+      var _this = this;
+
       this.user = new User(Parse.User.current().attributes);
-      if (fb_id = this.user.get('fb_id')) {
-        avatar = 'https://graph.facebook.com/' + fb_id + '/picture?width=150&height=170';
-      } else {
-        avatar = 'images/common/facebook-default.jpg';
-      }
       return this.loadView('profile', function() {
         var stats, stats_sports, stats_stats;
+
         stats = GameStatHelper.getProfileStat();
         stats_stats = _.map(_.omit(stats, 'all_sports'), function(val, key) {
           return {
@@ -62181,9 +62251,7 @@ window.require.define({"controllers/outgame/profile-controller": function(export
           user: _this.user.attributes,
           stats: stats_stats,
           sports: stats_sports,
-          bonus: _this.user.getBonuses(),
-          avatar: avatar,
-          is_linked: Parse.FacebookUtils.isLinked(Parse.User.current())
+          bonus: _this.user.getBonuses()
         });
       }, function(view) {
         view.delegate('click', '.facebook-link', _this.linkFacebook);
@@ -62195,16 +62263,13 @@ window.require.define({"controllers/outgame/profile-controller": function(export
     };
 
     ProfilesController.prototype.linkFacebook = function() {
-      if (Parse.FacebookUtils.isLinked(Parse.User.current())) {
-        return;
-      }
       AnalyticsHelper.trackEvent('Profil', 'Liaison facebook');
-      FacebookHelper.getLoginStatus(false, true);
-      return this.view.activateFbButton();
+      return FacebookHelper.getLoginStatus(false, true);
     };
 
     ProfilesController.prototype.onClickGameCenter = function() {
       var lb;
+
       AnalyticsHelper.trackEvent('Profil', 'Affichage de Game Center');
       lb = ConfigHelper.config.gamecenter.leaderboard;
       if (lb) {
@@ -62218,10 +62283,9 @@ window.require.define({"controllers/outgame/profile-controller": function(export
 
   })(Controller);
   
-}});
-
-window.require.define({"controllers/outgame/shop-controller": function(exports, require, module) {
-  var AnalyticsHelper, BonusPacks, ConfigHelper, Controller, DeviceHelper, LocalStorageHelper, PopUpHelper, PurchaseHelper, PurchasePacks, ShopController, ShopView, i18n, mediator,
+});
+window.require.register("controllers/outgame/shop-controller", function(exports, require, module) {
+  var AnalyticsHelper, BonusPacks, ConfigHelper, Controller, DeviceHelper, LocalStorageHelper, PopUpHelper, PurchaseHelper, PurchasePacks, ShopController, ShopView, i18n, mediator, _ref,
     __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
     __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
@@ -62251,36 +62315,23 @@ window.require.define({"controllers/outgame/shop-controller": function(exports, 
   BonusPacks = require('config/bonus-config');
 
   module.exports = ShopController = (function(_super) {
-
     __extends(ShopController, _super);
 
     function ShopController() {
       this.onClickBonusPack = __bind(this.onClickBonusPack, this);
-
       this.onClickLifePack = __bind(this.onClickLifePack, this);
-
       this.onToggleTab = __bind(this.onToggleTab, this);
-
       this.onClickFacebookLike = __bind(this.onClickFacebookLike, this);
-
       this.onClickAppStoreRating = __bind(this.onClickAppStoreRating, this);
-
       this.onClickInviteFriends = __bind(this.onClickInviteFriends, this);
-
       this.onClickTapjoy = __bind(this.onClickTapjoy, this);
-
       this.onClickTwitter = __bind(this.onClickTwitter, this);
-
       this.onClickAdcolony = __bind(this.onClickAdcolony, this);
-
       this.onClickFreePack = __bind(this.onClickFreePack, this);
-
       this.onClickApplePack = __bind(this.onClickApplePack, this);
-
       this.onSuccessfulTransaction = __bind(this.onSuccessfulTransaction, this);
-
-      this.index = __bind(this.index, this);
-      return ShopController.__super__.constructor.apply(this, arguments);
+      this.index = __bind(this.index, this);    _ref = ShopController.__super__.constructor.apply(this, arguments);
+      return _ref;
     }
 
     ShopController.prototype.historyURL = 'shop';
@@ -62292,15 +62343,16 @@ window.require.define({"controllers/outgame/shop-controller": function(exports, 
     ShopController.prototype.availableProducts = {};
 
     ShopController.prototype.index = function() {
-      var fp, index, p, user, _i, _len, _ref,
+      var fp, index, p, user, _i, _len, _ref1,
         _this = this;
+
       this.packs = PurchasePacks;
       this.packs.type = (DeviceHelper.isIOS() ? 'ios' : 'web');
       if (fp = this.packs.free_packs[this.packs.type]) {
         this.packs.free_packs = fp;
-        _ref = this.packs.free_packs;
-        for (index = _i = 0, _len = _ref.length; _i < _len; index = ++_i) {
-          p = _ref[index];
+        _ref1 = this.packs.free_packs;
+        for (index = _i = 0, _len = _ref1.length; _i < _len; index = ++_i) {
+          p = _ref1[index];
           this.packs.free_packs[index].disabled = LocalStorageHelper.exists("store_pack_" + p.name);
         }
       }
@@ -62326,13 +62378,15 @@ window.require.define({"controllers/outgame/shop-controller": function(exports, 
         view.delegate('click', '.bonus-pack', _this.onClickBonusPack);
         return PurchaseHelper.fetchAppleProducts(_this.packs.credit_packs, function(availableProducts) {
           var pack;
+
           _this.availableProducts = availableProducts;
           return view.disableUnavailablePacks((function() {
-            var _j, _len1, _ref1, _results;
-            _ref1 = this.packs.credit_packs;
+            var _j, _len1, _ref2, _results;
+
+            _ref2 = this.packs.credit_packs;
             _results = [];
-            for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
-              pack = _ref1[_j];
+            for (_j = 0, _len1 = _ref2.length; _j < _len1; _j++) {
+              pack = _ref2[_j];
               if (!this.availableProducts[pack.product_id]) {
                 _results.push(pack.id);
               }
@@ -62351,20 +62405,22 @@ window.require.define({"controllers/outgame/shop-controller": function(exports, 
     };
 
     ShopController.prototype.onClickApplePack = function(e) {
-      var p, pack, packId, _ref;
+      var p, pack, packId, _ref1;
+
       packId = this.view.chooseApplePack(e.currentTarget);
-      pack = (_ref = (function() {
-        var _i, _len, _ref1, _results;
-        _ref1 = this.packs.credit_packs;
+      pack = (_ref1 = (function() {
+        var _i, _len, _ref2, _results;
+
+        _ref2 = this.packs.credit_packs;
         _results = [];
-        for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
-          p = _ref1[_i];
+        for (_i = 0, _len = _ref2.length; _i < _len; _i++) {
+          p = _ref2[_i];
           if (p.product_id === packId) {
             _results.push(p);
           }
         }
         return _results;
-      }).call(this)) != null ? _ref[0] : void 0;
+      }).call(this)) != null ? _ref1[0] : void 0;
       if (this.availableProducts[pack.product_id] != null) {
         return PurchaseHelper.purchaseApple(pack, this.onSuccessfulTransaction);
       } else {
@@ -62382,14 +62438,16 @@ window.require.define({"controllers/outgame/shop-controller": function(exports, 
 
     ShopController.prototype.onClickFreePack = function(e) {
       var methodName, pack, provider;
+
       provider = this.view.chooseFreePack(e.currentTarget);
       methodName = $.camelCase('on-click-' + provider.replace(/_/g, '-'));
       pack = ((function() {
-        var _i, _len, _ref, _results;
-        _ref = this.packs.free_packs;
+        var _i, _len, _ref1, _results;
+
+        _ref1 = this.packs.free_packs;
         _results = [];
-        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-          pack = _ref[_i];
+        for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
+          pack = _ref1[_i];
           if (pack.name === provider) {
             _results.push(pack);
           }
@@ -62410,6 +62468,7 @@ window.require.define({"controllers/outgame/shop-controller": function(exports, 
 
     ShopController.prototype.onClickTwitter = function(pack) {
       var _this = this;
+
       AnalyticsHelper.trackEvent('Boutique', 'Suis Nous sur Twitter');
       return PurchaseHelper.purchaseTwitter(pack, ConfigHelper.config.services.twitter, function(credits) {
         _this.onSuccessfulTransaction(credits);
@@ -62430,6 +62489,7 @@ window.require.define({"controllers/outgame/shop-controller": function(exports, 
 
     ShopController.prototype.onClickAppStoreRating = function(pack) {
       var _this = this;
+
       AnalyticsHelper.trackEvent('Boutique', 'Achat du pack AppStoreRating');
       return PurchaseHelper.purchaseAppstoreRating(pack, function(credits) {
         _this.onSuccessfulTransaction(credits);
@@ -62439,6 +62499,7 @@ window.require.define({"controllers/outgame/shop-controller": function(exports, 
 
     ShopController.prototype.onClickFacebookLike = function(pack) {
       var _this = this;
+
       AnalyticsHelper.trackEvent('Boutique', 'Achat du pack FacebookLike');
       console.log("facebook like");
       return PurchaseHelper.purchaseFacebookLike(pack, function(credits) {
@@ -62458,19 +62519,13 @@ window.require.define({"controllers/outgame/shop-controller": function(exports, 
 
     ShopController.prototype.onClickLifePack = function(e) {
       var pack;
+
       pack = BonusPacks.life_packs[this.view.chooseLifePackIndex(e.currentTarget)];
       if (!pack) {
         return;
       }
       if (Parse.User.current().get('credits') >= pack.price) {
-        PurchaseHelper.purchaseLife(pack, this.onSuccessfulTransaction);
-        return PopUpHelper.initialize({
-          title: i18n.t('controller.shop.life_pack_bought.title'),
-          message: i18n.t('controller.shop.life_pack_bought.message'),
-          info: true,
-          confirmation: false,
-          key: 'life-pack-ok'
-        });
+        return PurchaseHelper.purchaseLife(pack, this.onSuccessfulTransaction);
       } else {
         return PopUpHelper.initialize({
           title: i18n.t('controller.shop.not_enough_credits.title'),
@@ -62482,19 +62537,13 @@ window.require.define({"controllers/outgame/shop-controller": function(exports, 
 
     ShopController.prototype.onClickBonusPack = function(e) {
       var pack;
+
       pack = BonusPacks.bonus_packs[this.view.chooseBonusPackIndex(e.currentTarget)];
       if (!pack) {
         return;
       }
       if (Parse.User.current().get('credits') >= pack.price) {
-        PurchaseHelper.purchaseBonus(pack, this.onSuccessfulTransaction);
-        return PopUpHelper.initialize({
-          title: i18n.t('controller.shop.bonus_pack_bought.title'),
-          message: i18n.t('controller.shop.bonus_pack_bought.message'),
-          info: true,
-          confirmation: false,
-          key: 'bonus-pack-ok'
-        });
+        return PurchaseHelper.purchaseBonus(pack, this.onSuccessfulTransaction);
       } else {
         return PopUpHelper.initialize({
           title: i18n.t('controller.shop.not_enough_credits.title'),
@@ -62508,10 +62557,9 @@ window.require.define({"controllers/outgame/shop-controller": function(exports, 
 
   })(Controller);
   
-}});
-
-window.require.define({"controllers/outgame/tutorial-controller": function(exports, require, module) {
-  var Controller, TutorialController, TutorialView,
+});
+window.require.register("controllers/outgame/tutorial-controller", function(exports, require, module) {
+  var Controller, TutorialController, TutorialView, _ref,
     __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
     __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
@@ -62521,14 +62569,12 @@ window.require.define({"controllers/outgame/tutorial-controller": function(expor
   TutorialView = require('views/outgame/tutorial-view');
 
   module.exports = TutorialController = (function(_super) {
-
     __extends(TutorialController, _super);
 
     function TutorialController() {
       this.onClickNext = __bind(this.onClickNext, this);
-
-      this.index = __bind(this.index, this);
-      return TutorialController.__super__.constructor.apply(this, arguments);
+      this.index = __bind(this.index, this);    _ref = TutorialController.__super__.constructor.apply(this, arguments);
+      return _ref;
     }
 
     TutorialController.prototype.title = 'Tutorial';
@@ -62541,6 +62587,7 @@ window.require.define({"controllers/outgame/tutorial-controller": function(expor
 
     TutorialController.prototype.index = function() {
       var _this = this;
+
       return this.loadView('tutorial', function() {
         return new TutorialView({
           currentIndex: _this.currentIndex
@@ -62564,15 +62611,13 @@ window.require.define({"controllers/outgame/tutorial-controller": function(expor
 
   })(Controller);
   
-}});
-
-window.require.define({"helpers/analytics-helper": function(exports, require, module) {
+});
+window.require.register("helpers/analytics-helper", function(exports, require, module) {
   var AnalyticsHelper, config;
 
   config = require('config/environment-config');
 
   module.exports = AnalyticsHelper = (function() {
-
     function AnalyticsHelper() {}
 
     AnalyticsHelper.init = function() {
@@ -62615,9 +62660,8 @@ window.require.define({"helpers/analytics-helper": function(exports, require, mo
 
   })();
   
-}});
-
-window.require.define({"helpers/config-helper": function(exports, require, module) {
+});
+window.require.register("helpers/config-helper", function(exports, require, module) {
   var ConfigHelper, config, utils;
 
   config = require('config/environment-config');
@@ -62625,7 +62669,6 @@ window.require.define({"helpers/config-helper": function(exports, require, modul
   utils = require('lib/utils');
 
   module.exports = ConfigHelper = (function() {
-
     function ConfigHelper() {}
 
     ConfigHelper.config = config;
@@ -62643,6 +62686,7 @@ window.require.define({"helpers/config-helper": function(exports, require, modul
 
     ConfigHelper.getAPIHeaders = function(apiVersion, locale) {
       var headers;
+
       headers = {};
       headers[this.config.api.headers.version] = apiVersion;
       headers[this.config.api.headers.locale] = locale;
@@ -62653,13 +62697,11 @@ window.require.define({"helpers/config-helper": function(exports, require, modul
 
   })();
   
-}});
-
-window.require.define({"helpers/device-helper": function(exports, require, module) {
+});
+window.require.register("helpers/device-helper", function(exports, require, module) {
   var DeviceHelper;
 
   module.exports = DeviceHelper = (function() {
-
     function DeviceHelper() {}
 
     DeviceHelper.tag = "DeviceHelper";
@@ -62690,6 +62732,7 @@ window.require.define({"helpers/device-helper": function(exports, require, modul
 
     DeviceHelper.getWindowSize = function() {
       var _ref;
+
       return (_ref = this._windowSize) != null ? _ref : this._windowSize = {
         width: $(window).width(),
         height: $(window).height()
@@ -62705,6 +62748,7 @@ window.require.define({"helpers/device-helper": function(exports, require, modul
 
     DeviceHelper.getAppSizeCategory = function() {
       var width;
+
       width = this.getAppSize().width;
       if (width > 1023) {
         return 'ipad';
@@ -62725,51 +62769,61 @@ window.require.define({"helpers/device-helper": function(exports, require, modul
 
     DeviceHelper.isMobile = function() {
       var _ref;
+
       return (_ref = this._isMobile) != null ? _ref : this._isMobile = this.isAndroid() || this.isIOS();
     };
 
     DeviceHelper.isAndroid = function() {
       var _ref;
+
       return (_ref = this._isAndroid) != null ? _ref : this._isAndroid = this.userAgentMatch("android");
     };
 
     DeviceHelper.isIOS = function() {
       var _ref;
+
       return (_ref = this._isIOS) != null ? _ref : this._isIOS = this.isIPad() || this.isIPhone() || this.isIPod();
     };
 
     DeviceHelper.isIPad = function() {
       var _ref;
+
       return (_ref = this._isIPad) != null ? _ref : this._isIPad = this.userAgentMatch("ipad");
     };
 
     DeviceHelper.isIPhone = function() {
       var _ref;
+
       return (_ref = this._isIPhone) != null ? _ref : this._isIPhone = this.userAgentMatch("iphone");
     };
 
     DeviceHelper.isIPod = function() {
       var _ref;
+
       return (_ref = this._isIPod) != null ? _ref : this._isIPod = this.userAgentMatch("ipod");
     };
 
     DeviceHelper.isIOS = function() {
       var _ref;
+
       return (_ref = this._isIOS) != null ? _ref : this._isIOS = this.isIPad() || this.isIPhone() || this.isIPod();
     };
 
     DeviceHelper.isRetina = function() {
       var _ref;
+
       return (_ref = this._isRetina) != null ? _ref : this._isRetina = this.getResolution() === 2;
     };
 
     DeviceHelper.getResolution = function() {
       var _ref;
+
       return (_ref = this._resolution) != null ? _ref : this._resolution = window.devicePixelRatio || 1;
     };
 
     DeviceHelper.getLocalization = function() {
       var _ref, _ref1;
+
       if (navigator.language != null) {
         if ((_ref = this._localization) == null) {
           this._localization = navigator.language.substr(0, 2);
@@ -62788,15 +62842,17 @@ window.require.define({"helpers/device-helper": function(exports, require, modul
 
     DeviceHelper.getUserAgent = function() {
       var _ref;
+
       return (_ref = this._userAgent) != null ? _ref : this._userAgent = navigator.userAgent.toLowerCase();
     };
 
     DeviceHelper.getAnimationGrade = function(callback) {
       var _restoreGrade,
         _this = this;
-      if (!(this._animationGrade != null)) {
+
+      if (this._animationGrade == null) {
         _restoreGrade = localStorage.getItem('device_animation_grade');
-        if (!(_restoreGrade != null)) {
+        if (_restoreGrade == null) {
           return BenchmarkHelper.test(function(grade) {
             _this._animationGrade = grade;
             localStorage.setItem('device_animation_grade', grade);
@@ -62822,18 +62878,15 @@ window.require.define({"helpers/device-helper": function(exports, require, modul
 
   })();
   
-}});
-
-window.require.define({"helpers/facebook-helper": function(exports, require, module) {
-  var DeviceHelper, FacebookHelper, PopUpHelper, i18n, mediator, spinner, utils;
+});
+window.require.register("helpers/facebook-helper", function(exports, require, module) {
+  var FacebookHelper, PopUpHelper, i18n, mediator, spinner, utils;
 
   mediator = require('mediator');
 
   utils = require('lib/utils');
 
   PopUpHelper = require('helpers/pop-up-helper');
-
-  DeviceHelper = require('helpers/device-helper');
 
   i18n = require('lib/i18n');
 
@@ -62846,51 +62899,15 @@ window.require.define({"helpers/facebook-helper": function(exports, require, mod
 
     self = FacebookHelper;
 
-    FacebookHelper.logIn = function(success, error) {
-      var scope,
-        _this = this;
-      scope = 'email, user_location, user_birthday, publish_stream';
-      if (DeviceHelper.isIOS()) {
-        spinner.start();
-        return FB.login(function(response) {
-          if (response.authResponse) {
-            return FB.api('/me', function(res) {
-              var params;
-              params = {
-                id: res.id,
-                access_token: response.authResponse.accessToken,
-                expiration_date: new Date(response.authResponse.expirationTime).toISOString()
-              };
-              return Parse.FacebookUtils.logIn(params, {
-                success: function() {
-                  return success();
-                },
-                error: function() {
-                  return error(response);
-                }
-              });
-            });
-          } else {
-            return error(response);
-          }
-        }, {
-          scope: scope
-        });
-      } else {
-        return Parse.FacebookUtils.logIn(scope, {
-          success: success,
-          error: error
-        });
-      }
-    };
-
     FacebookHelper.friendRequest = function(message, callback) {
       var doRequest;
+
       if (callback == null) {
         callback = null;
       }
       doRequest = function() {
         var _this = this;
+
         if (!message) {
           return alert("FB.request: pas de message :(");
         }
@@ -62901,7 +62918,45 @@ window.require.define({"helpers/facebook-helper": function(exports, require, mod
           method: 'apprequests',
           message: message
         }, function(response) {
+          var user;
+
+          user = Parse.User.current();
+          user.set("fb_invited", _.uniq(response.to.concat(user.get('fb_invited')))).save();
+          if (callback && response) {
+            return callback(response);
+          }
+        });
+      };
+      if (!this.isLinked()) {
+        return this.linkPlayer(doRequest);
+      } else {
+        return doRequest();
+      }
+    };
+
+    FacebookHelper.friendRequestTo = function(message, friend, callback) {
+      var doRequest;
+
+      if (callback == null) {
+        callback = null;
+      }
+      doRequest = function() {
+        var _this = this;
+
+        if (!message) {
+          return alert("FB.request: pas de message :(");
+        }
+        if (message.length < 1 || message.length > 255) {
+          return alert("FB.request: message doit faire entre 1 et 255 characteres (" + message.length + " actuellement)");
+        }
+        return FB.ui({
+          method: 'apprequests',
+          message: message,
+          to: friend
+        }, function(response) {
+          user.set("fb_invited", _.uniq(response.to.concat(user.get('fb_invited')))).save();
           if (response && callback) {
+            console.log(response);
             return callback(response);
           }
         });
@@ -62954,28 +63009,57 @@ window.require.define({"helpers/facebook-helper": function(exports, require, mod
       return FB.api('/me', callback);
     };
 
-    FacebookHelper.getFriends = function(callback, error) {
+    FacebookHelper.getFriends = function(callback) {
       var _this = this;
+
       if (this.isLinked()) {
         return FB.api('/me/friends?fields=installed', function(response) {
           var friend, friends;
-          if (response.data) {
-            friends = (function() {
-              var _i, _len, _ref, _results;
-              _ref = response.data;
-              _results = [];
-              for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-                friend = _ref[_i];
-                if (friend.installed) {
-                  _results.push(friend);
-                }
+
+          friends = (function() {
+            var _i, _len, _ref, _results;
+
+            _ref = response.data;
+            _results = [];
+            for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+              friend = _ref[_i];
+              if (friend.installed) {
+                _results.push(friend);
               }
-              return _results;
-            })();
-            return callback(friends);
-          } else {
-            return error();
+            }
+            return _results;
+          })();
+          if (friends == null) {
+            friends = [];
           }
+          return callback(friends);
+        });
+      } else {
+        return callback([]);
+      }
+    };
+
+    FacebookHelper.getOtherFriends = function(callback) {
+      var _this = this;
+
+      if (this.isLinked()) {
+        return FB.api('/me/friends?fields=id,name,installed', function(response) {
+          var friend, friends;
+
+          friends = (function() {
+            var _i, _len, _ref, _results;
+
+            _ref = response.data;
+            _results = [];
+            for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+              friend = _ref[_i];
+              if (!friend.installed) {
+                _results.push(friend);
+              }
+            }
+            return _results;
+          })();
+          return callback(friends);
         });
       } else {
         return callback([]);
@@ -62986,23 +63070,23 @@ window.require.define({"helpers/facebook-helper": function(exports, require, mod
 
   })();
   
-}});
-
-window.require.define({"helpers/factory-helper": function(exports, require, module) {
+});
+window.require.register("helpers/factory-helper", function(exports, require, module) {
   var Factory, utils;
 
   utils = require('lib/utils');
 
   module.exports = Factory = (function() {
-
     function Factory() {}
 
     Factory.questionModel = function(data) {
-      var model, type;
+      var e, model, type;
+
       type = 'photo-mcq';
       try {
         model = require("models/ingame/questions/" + type + "-question-model");
-      } catch (e) {
+      } catch (_error) {
+        e = _error;
         console.error("Question type not known : " + type + " (" + data.type + "). Error :", e);
         return null;
       }
@@ -63010,20 +63094,25 @@ window.require.define({"helpers/factory-helper": function(exports, require, modu
     };
 
     Factory.stageConfig = function(type) {
+      var e;
+
       try {
         return require("config/stages/" + type + "-stage-config");
-      } catch (e) {
+      } catch (_error) {
+        e = _error;
         console.error("Stage Config type not known : " + type + ". Error :", e);
       }
       return null;
     };
 
     Factory.stageModel = function(type, players, data) {
-      var config, model;
+      var config, e, model;
+
       config = this.stageConfig(type);
       try {
         model = require("models/ingame/stages/" + type + "-stage-model");
-      } catch (e) {
+      } catch (_error) {
+        e = _error;
         console.error("Stage Model type not known : " + type + ". Error :", e);
         return null;
       }
@@ -63031,11 +63120,13 @@ window.require.define({"helpers/factory-helper": function(exports, require, modu
     };
 
     Factory.stageController = function(stage, players, data) {
-      var controller, model;
+      var controller, e, model;
+
       model = this.stageModel(stage.type, players, data);
       try {
         controller = require("controllers/ingame/stages/" + stage.type + "-stage-controller");
-      } catch (e) {
+      } catch (_error) {
+        e = _error;
         console.error("Stage Controller type not known : " + stage.type + ". Error :", e);
         return null;
       }
@@ -63046,13 +63137,11 @@ window.require.define({"helpers/factory-helper": function(exports, require, modu
 
   })();
   
-}});
-
-window.require.define({"helpers/game-stat-helper": function(exports, require, module) {
+});
+window.require.register("helpers/game-stat-helper", function(exports, require, module) {
   var GameStatHelper;
 
   module.exports = GameStatHelper = (function() {
-
     function GameStatHelper() {}
 
     GameStatHelper._stats = {};
@@ -63081,6 +63170,7 @@ window.require.define({"helpers/game-stat-helper": function(exports, require, mo
 
     GameStatHelper.incrementAnswersCount = function(success, sport) {
       var key;
+
       if (sport == null) {
         sport = null;
       }
@@ -63093,6 +63183,7 @@ window.require.define({"helpers/game-stat-helper": function(exports, require, mo
 
     GameStatHelper._incrementSportAnswersCount = function(success, sport) {
       var percent, stats, user;
+
       user = Parse.User.current();
       stats = user.get('stats');
       if (!stats.sports[sport]) {
@@ -63128,7 +63219,9 @@ window.require.define({"helpers/game-stat-helper": function(exports, require, mo
 
     GameStatHelper.getProfileStat = function() {
       var answers_count;
+
       this._stats = Parse.User.current().get('stats');
+      console.log(this._stats);
       answers_count = (this._getStat('wrong_answers_count') + this._getStat('good_answers_count')) | 1;
       return {
         best_score: this._getStat('best_score'),
@@ -63144,6 +63237,7 @@ window.require.define({"helpers/game-stat-helper": function(exports, require, mo
 
     GameStatHelper.getBestSport = function() {
       var best_sport;
+
       best_sport = _.max(this.getAllSports(), function(sport) {
         return sport.percent;
       });
@@ -63164,6 +63258,7 @@ window.require.define({"helpers/game-stat-helper": function(exports, require, mo
 
     GameStatHelper.saveStats = function() {
       var real_stats, stat_name, stats, user, _i, _len, _ref;
+
       user = Parse.User.current();
       stats = $.extend(user.get('stats'), this._stats);
       real_stats = {};
@@ -63208,13 +63303,11 @@ window.require.define({"helpers/game-stat-helper": function(exports, require, mo
 
   })();
   
-}});
-
-window.require.define({"helpers/lequipe-sso-helper": function(exports, require, module) {
+});
+window.require.register("helpers/lequipe-sso-helper", function(exports, require, module) {
   var LequipeSSOHelper;
 
   module.exports = LequipeSSOHelper = (function() {
-
     function LequipeSSOHelper() {}
 
     LequipeSSOHelper.error = {};
@@ -63222,9 +63315,11 @@ window.require.define({"helpers/lequipe-sso-helper": function(exports, require, 
     LequipeSSOHelper.login = function(params, success, error) {
       var callback, order,
         _this = this;
+
       order = ['username', 'password'];
       callback = function(response) {
         var mapping, user;
+
         mapping = {
           nom: 'last_name',
           prenom: 'first_name'
@@ -63244,6 +63339,7 @@ window.require.define({"helpers/lequipe-sso-helper": function(exports, require, 
 
     LequipeSSOHelper.register = function(params, success, error) {
       var callback, k, order, user, v, _ref, _ref1;
+
       order = ['email', 'username', 'password', 'gender', 'first_name', 'last_name', 'dateofbirth', 'opt_in_1', 'opt_in_2'];
       if ((_ref = params['opt_in_1']) == null) {
         params['opt_in_1'] = 0;
@@ -63270,9 +63366,11 @@ window.require.define({"helpers/lequipe-sso-helper": function(exports, require, 
     LequipeSSOHelper.alreadyUsed = function(params, success, error) {
       var callback, order,
         _this = this;
+
       order = ['email', 'username'];
       callback = function(response) {
         var mapping, user;
+
         mapping = {
           email: 'email',
           pseudo: 'username',
@@ -63295,6 +63393,7 @@ window.require.define({"helpers/lequipe-sso-helper": function(exports, require, 
 
     LequipeSSOHelper.calculateChecksum = function(params, order) {
       var f, values, _i, _len;
+
       values = '';
       for (_i = 0, _len = order.length; _i < _len; _i++) {
         f = order[_i];
@@ -63308,6 +63407,7 @@ window.require.define({"helpers/lequipe-sso-helper": function(exports, require, 
     LequipeSSOHelper.request = function(fn, params, encode, order, success, error) {
       var k, url, v,
         _this = this;
+
       params.checksum = this.calculateChecksum(params, order);
       if (encode) {
         for (k in params) {
@@ -63324,6 +63424,7 @@ window.require.define({"helpers/lequipe-sso-helper": function(exports, require, 
         success: success,
         error: function(xhr, errorType, err) {
           var response;
+
           response = /<\?xml/.test(xhr.responseText) ? _this.xmlResponse2JSON(xhr.responseText) : xhr.responseText;
           return error(xhr.status, response);
         }
@@ -63332,6 +63433,7 @@ window.require.define({"helpers/lequipe-sso-helper": function(exports, require, 
 
     LequipeSSOHelper.remap = function(object, mapping) {
       var k, remaped, v;
+
       remaped = {};
       for (k in object) {
         v = object[k];
@@ -63346,6 +63448,7 @@ window.require.define({"helpers/lequipe-sso-helper": function(exports, require, 
 
     LequipeSSOHelper.xmlResponse2JSON = function(xml) {
       var object, responseEl;
+
       object = {};
       if (!(xml instanceof Document)) {
         responseEl = $(xml.replace(/\s*<\?[^\?]+\?>\s*/, ''));
@@ -63354,6 +63457,7 @@ window.require.define({"helpers/lequipe-sso-helper": function(exports, require, 
       }
       responseEl.children().each(function(index, item) {
         var el, tag, value;
+
         el = $(item);
         tag = el.prop('tagName').toLowerCase();
         value = LequipeSSOHelper.utf8_decode(el.text());
@@ -63368,6 +63472,7 @@ window.require.define({"helpers/lequipe-sso-helper": function(exports, require, 
 
     LequipeSSOHelper.utf8_decode = function(str_data) {
       var c, c1, c2, c3, i, string;
+
       string = "";
       i = 0;
       c = c1 = c2 = 0;
@@ -63394,13 +63499,11 @@ window.require.define({"helpers/lequipe-sso-helper": function(exports, require, 
 
   }).call(this);
   
-}});
-
-window.require.define({"helpers/local-storage-helper": function(exports, require, module) {
+});
+window.require.register("helpers/local-storage-helper", function(exports, require, module) {
   var LocalStorageHelper;
 
   module.exports = LocalStorageHelper = (function() {
-
     function LocalStorageHelper() {}
 
     LocalStorageHelper.get = function(name) {
@@ -63423,9 +63526,8 @@ window.require.define({"helpers/local-storage-helper": function(exports, require
 
   })();
   
-}});
-
-window.require.define({"helpers/pop-up-helper": function(exports, require, module) {
+});
+window.require.register("helpers/pop-up-helper", function(exports, require, module) {
   var PopUpHelper, SoundHelper, mediator;
 
   mediator = require('mediator');
@@ -63442,6 +63544,7 @@ window.require.define({"helpers/pop-up-helper": function(exports, require, modul
     PopUpHelper.initialize = function(data, callback) {
       var template,
         _this = this;
+
       data = this.validate(data);
       template = require("views/templates/" + data.template);
       $(container).addClass('active backgroundTransition');
@@ -63542,9 +63645,8 @@ window.require.define({"helpers/pop-up-helper": function(exports, require, modul
 
   })();
   
-}});
-
-window.require.define({"helpers/preload-helper": function(exports, require, module) {
+});
+window.require.register("helpers/preload-helper", function(exports, require, module) {
   var PreloadHelper, mediator, spinner;
 
   spinner = require('helpers/spinner-helper');
@@ -63552,7 +63654,6 @@ window.require.define({"helpers/preload-helper": function(exports, require, modu
   mediator = require('mediator');
 
   module.exports = PreloadHelper = (function() {
-
     function PreloadHelper() {}
 
     PreloadHelper.images = {};
@@ -63562,6 +63663,7 @@ window.require.define({"helpers/preload-helper": function(exports, require, modu
     PreloadHelper.preloadObjectImages = function(objectType, objects, imageField, callback) {
       var image, images, imgArray, loader, object, pxImage, _i, _len, _ref,
         _this = this;
+
       if (!(objects instanceof Array && objects.length > 0 && imageField && objectType)) {
         return;
       }
@@ -63569,6 +63671,7 @@ window.require.define({"helpers/preload-helper": function(exports, require, modu
       loader = new PxLoader();
       images = (function() {
         var _i, _len, _results;
+
         _results = [];
         for (_i = 0, _len = objects.length; _i < _len; _i++) {
           object = objects[_i];
@@ -63603,6 +63706,7 @@ window.require.define({"helpers/preload-helper": function(exports, require, modu
     PreloadHelper.preloadAssets = function(key, loaded_callback, progress_callback) {
       var a, assetFolder, file, group, i, imgArray, loader, s, tags, _i, _j, _k, _len, _len1, _len2, _ref, _ref1, _ref2,
         _this = this;
+
       if (!(key && (AssetsList.keys[key] != null) && AssetsList.keys[key] instanceof Array && AssetsList.keys[key].length > 0)) {
         return typeof loaded_callback === "function" ? loaded_callback() : void 0;
       }
@@ -63655,6 +63759,7 @@ window.require.define({"helpers/preload-helper": function(exports, require, modu
 
     PreloadHelper.preloadAsset = function(url, callback) {
       var loader;
+
       loader = new PxLoader();
       loader.addImage(url);
       if (callback) {
@@ -63665,6 +63770,7 @@ window.require.define({"helpers/preload-helper": function(exports, require, modu
 
     PreloadHelper.removeImages = function(imgArray) {
       var file, _i, _len;
+
       if (!imgArray) {
         return;
       }
@@ -63690,9 +63796,8 @@ window.require.define({"helpers/preload-helper": function(exports, require, modu
 
   })();
   
-}});
-
-window.require.define({"helpers/purchase-helper": function(exports, require, module) {
+});
+window.require.register("helpers/purchase-helper", function(exports, require, module) {
   var AnalyticsHelper, ConfigHelper, FacebookHelper, PopUpHelper, PurchaseHelper, SpinnerHelper, i18n, mediator;
 
   mediator = require('mediator');
@@ -63710,13 +63815,13 @@ window.require.define({"helpers/purchase-helper": function(exports, require, mod
   AnalyticsHelper = require('helpers/analytics-helper');
 
   module.exports = PurchaseHelper = (function() {
-
     function PurchaseHelper() {}
 
     PurchaseHelper.tapPoints = 0;
 
     PurchaseHelper.purchaseAppstoreRating = function(pack, successCallback) {
       var user;
+
       user = Parse.User.current();
       return typeof AppStoreRating !== "undefined" && AppStoreRating !== null ? AppStoreRating.openRatingsPage(function(appVersion) {
         user.increment('credits', pack.value).save();
@@ -63731,6 +63836,7 @@ window.require.define({"helpers/purchase-helper": function(exports, require, mod
 
     PurchaseHelper.purchaseFacebookLike = function(pack, successCallback) {
       var user;
+
       window.open('http://facebook.com', '_blank');
       user = Parse.User.current();
       user.increment('credits', pack.value).save();
@@ -63740,9 +63846,11 @@ window.require.define({"helpers/purchase-helper": function(exports, require, mod
     PurchaseHelper.purchaseFacebookInvitation = function(pack, successCallback) {
       var user,
         _this = this;
+
       user = Parse.User.current();
       return FacebookHelper.friendRequest(i18n.t('helper.purchase.facebook.invitation.text'), function(response) {
         var friends_invited, id, to;
+
         delete response.request;
         friends_invited = [];
         for (to in response) {
@@ -63764,6 +63872,7 @@ window.require.define({"helpers/purchase-helper": function(exports, require, mod
     PurchaseHelper.purchaseTapjoy = function(pack, currency, successCallback) {
       var user,
         _this = this;
+
       user = Parse.User.current();
       if (typeof TapjoyConnect !== "undefined" && TapjoyConnect !== null) {
         TapjoyConnect.setUserID(Parse.User.current().id);
@@ -63783,6 +63892,7 @@ window.require.define({"helpers/purchase-helper": function(exports, require, mod
 
     PurchaseHelper.initTapPoints = function() {
       var _this = this;
+
       if (typeof TapjoyConnect !== "undefined" && TapjoyConnect !== null) {
         TapjoyConnect.setUserID(Parse.User.current().id);
       }
@@ -63794,6 +63904,7 @@ window.require.define({"helpers/purchase-helper": function(exports, require, mod
     PurchaseHelper.purchaseAdcolony = function(pack, zone, successCallback) {
       var options, user,
         _this = this;
+
       user = Parse.User.current();
       if (typeof AdColony !== "undefined" && AdColony !== null) {
         options = {
@@ -63809,6 +63920,7 @@ window.require.define({"helpers/purchase-helper": function(exports, require, mod
           return typeof successCallback === "function" ? successCallback(user.get('credits')) : void 0;
         }, function(error) {
           var popupStuff;
+
           console.log("AD COLO : fail");
           console.log(error);
           if (error.code === AdColonyError.REWARD_UNAVAILABLE) {
@@ -63831,6 +63943,7 @@ window.require.define({"helpers/purchase-helper": function(exports, require, mod
 
     PurchaseHelper.purchaseLife = function(pack, successCallback) {
       var user;
+
       user = Parse.User.current();
       user.increment('health', pack.value).increment('credits', -pack.price).save();
       return typeof successCallback === "function" ? successCallback(user.get('credits'), user.get('health')) : void 0;
@@ -63838,6 +63951,7 @@ window.require.define({"helpers/purchase-helper": function(exports, require, mod
 
     PurchaseHelper.purchaseBonus = function(pack, successCallback) {
       var bonus_added, bonuses, name, user, value, _ref;
+
       user = Parse.User.current();
       bonus_added = pack.value;
       bonuses = {};
@@ -63852,6 +63966,7 @@ window.require.define({"helpers/purchase-helper": function(exports, require, mod
 
     PurchaseHelper.purchaseApple = function(pack, successCallback) {
       var _this = this;
+
       if (pack.product_id && (typeof MKStore !== "undefined" && MKStore !== null) && MKStore.gotProducts) {
         SpinnerHelper.start();
         console.log(pack.product_id);
@@ -63890,6 +64005,7 @@ window.require.define({"helpers/purchase-helper": function(exports, require, mod
     PurchaseHelper.fetchAppleProducts = function(packs, callback) {
       var pack, products, _i, _len,
         _this = this;
+
       if (typeof MKStore === "undefined" || MKStore === null) {
         return typeof callback === "function" ? callback({}) : void 0;
       }
@@ -63917,15 +64033,13 @@ window.require.define({"helpers/purchase-helper": function(exports, require, mod
 
   })();
   
-}});
-
-window.require.define({"helpers/rank-helper": function(exports, require, module) {
+});
+window.require.register("helpers/rank-helper", function(exports, require, module) {
   var RankHelper, i18n;
 
   i18n = require('lib/i18n');
 
   module.exports = RankHelper = (function() {
-
     function RankHelper() {}
 
     RankHelper.getRankName = function(rankNumber) {
@@ -63947,9 +64061,8 @@ window.require.define({"helpers/rank-helper": function(exports, require, module)
 
   })();
   
-}});
-
-window.require.define({"helpers/sound-helper": function(exports, require, module) {
+});
+window.require.register("helpers/sound-helper", function(exports, require, module) {
   var AnalyticsHelper, LocalStorageHelper, SoundHelper;
 
   LocalStorageHelper = require('helpers/local-storage-helper');
@@ -63957,7 +64070,6 @@ window.require.define({"helpers/sound-helper": function(exports, require, module
   AnalyticsHelper = require('helpers/analytics-helper');
 
   module.exports = SoundHelper = (function() {
-
     function SoundHelper() {}
 
     SoundHelper.sounds = {};
@@ -63970,6 +64082,7 @@ window.require.define({"helpers/sound-helper": function(exports, require, module
 
     SoundHelper.initialize = function() {
       var SoundConfig, s, _i, _len, _ref, _results;
+
       this.musicMuted = LocalStorageHelper.get('musicMuted') === 'true';
       this.sfxMuted = LocalStorageHelper.get('sfxMuted') === 'true';
       SoundConfig = require('config/sound-config');
@@ -63987,6 +64100,7 @@ window.require.define({"helpers/sound-helper": function(exports, require, module
 
     SoundHelper.play = function(key, initializeIfNeeded) {
       var sound;
+
       if (initializeIfNeeded == null) {
         initializeIfNeeded = true;
       }
@@ -64034,6 +64148,7 @@ window.require.define({"helpers/sound-helper": function(exports, require, module
 
     SoundHelper.toggleMusic = function() {
       var key, sound, _ref;
+
       this.musicMuted = !this.musicMuted;
       AnalyticsHelper.trackEvent('Options', "Musique = " + this.musicMuted);
       LocalStorageHelper.set('musicMuted', this.musicMuted);
@@ -64053,6 +64168,7 @@ window.require.define({"helpers/sound-helper": function(exports, require, module
 
     SoundHelper.toggleSFX = function() {
       var key, sound, _ref, _results;
+
       this.sfxMuted = !this.sfxMuted;
       AnalyticsHelper.trackEvent('Options', "SoundFX = " + this.sfxMuted);
       LocalStorageHelper.set('sfxMuted', this.sfxMuted);
@@ -64075,9 +64191,8 @@ window.require.define({"helpers/sound-helper": function(exports, require, module
 
   })();
   
-}});
-
-window.require.define({"helpers/spinner-helper": function(exports, require, module) {
+});
+window.require.register("helpers/spinner-helper", function(exports, require, module) {
   var SpinnerHelper, mediator;
 
   mediator = 'mediator';
@@ -64144,16 +64259,14 @@ window.require.define({"helpers/spinner-helper": function(exports, require, modu
 
   })();
   
-}});
-
-window.require.define({"helpers/timer-helper": function(exports, require, module) {
+});
+window.require.register("helpers/timer-helper", function(exports, require, module) {
   var TimerHelper, mediator,
     __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
   mediator = require('mediator');
 
   module.exports = TimerHelper = (function() {
-
     TimerHelper.prototype.durationPrecisionCoef = 1;
 
     TimerHelper.prototype.totalDuration = 0;
@@ -64181,21 +64294,13 @@ window.require.define({"helpers/timer-helper": function(exports, require, module
     function TimerHelper(onTick) {
       this.onTick = onTick;
       this.tick = __bind(this.tick, this);
-
       this.stop = __bind(this.stop, this);
-
       this.adjustDuration = __bind(this.adjustDuration, this);
-
       this.setDuration = __bind(this.setDuration, this);
-
       this.schedule = __bind(this.schedule, this);
-
       this.destroy = __bind(this.destroy, this);
-
       this.onBecomeActive = __bind(this.onBecomeActive, this);
-
       this.onResignActive = __bind(this.onResignActive, this);
-
       document.addEventListener('pause', this.onResignActive, false);
       document.addEventListener('resume', this.onBecomeActive, false);
     }
@@ -64206,6 +64311,7 @@ window.require.define({"helpers/timer-helper": function(exports, require, module
 
     TimerHelper.prototype.onBecomeActive = function(e) {
       var offset, resumeDate;
+
       if (this.interruptionDate) {
         resumeDate = new Date();
         offset = Math.round(this.startTime.getTime() - (new Date()).getTime()) / (1000 / this.durationPrecisionCoef);
@@ -64256,6 +64362,7 @@ window.require.define({"helpers/timer-helper": function(exports, require, module
 
     TimerHelper.prototype.tick = function() {
       var offset;
+
       offset = Math.round(this.startTime.getTime() - (new Date()).getTime()) / (1000 / this.durationPrecisionCoef);
       this.setDuration(this.remaining + offset);
       if (typeof this.onTick === "function") {
@@ -64292,15 +64399,15 @@ window.require.define({"helpers/timer-helper": function(exports, require, module
 
   })();
   
-}});
-
-window.require.define({"initialize": function(exports, require, module) {
+});
+window.require.register("initialize", function(exports, require, module) {
   var Application, waitForDeviceReadyEvent;
 
   Application = require('application');
 
   waitForDeviceReadyEvent = function(callback) {
     var _ref;
+
     if ((typeof Cordova !== "undefined" && Cordova !== null ? (_ref = Cordova.onDeviceReady) != null ? _ref.fired : void 0 : void 0) || navigator.userAgent.match(/iP((a|o)d|hone)/i) === null) {
       console.log("device ready already fired");
       return callback();
@@ -64312,6 +64419,7 @@ window.require.define({"initialize": function(exports, require, module) {
 
   $(function() {
     var app;
+
     app = new Application();
     waitForDeviceReadyEvent(function() {
       return app.initialize();
@@ -64319,9 +64427,8 @@ window.require.define({"initialize": function(exports, require, module) {
     return new FastClick(document.body);
   });
   
-}});
-
-window.require.define({"lib/i18n": function(exports, require, module) {
+});
+window.require.register("lib/i18n", function(exports, require, module) {
   var Chaplin, i18n, _;
 
   _ = require('underscore');
@@ -64330,6 +64437,7 @@ window.require.define({"lib/i18n": function(exports, require, module) {
 
   String.prototype.fillWith = function(strings) {
     var args;
+
     args = strings;
     return this.replace(/{(\d+)}/g, function(match, number) {
       if (typeof args[number] !== 'undefined') {
@@ -64350,6 +64458,7 @@ window.require.define({"lib/i18n": function(exports, require, module) {
     },
     setLocale: function(newLocale) {
       var locale;
+
       locale = newLocale || this.defaultLocale;
       if (locale !== this.__locale) {
         this.__locale = locale;
@@ -64363,7 +64472,8 @@ window.require.define({"lib/i18n": function(exports, require, module) {
       return this.defaultLocale = this.__locale = locale;
     },
     translate: function(id, vars) {
-      var self, template, _ref, _ref1;
+      var e, self, template, _ref, _ref1;
+
       if (vars == null) {
         vars = {};
       }
@@ -64372,8 +64482,8 @@ window.require.define({"lib/i18n": function(exports, require, module) {
         try {
           self = this;
           template = eval("self.localization[self.__locale]." + id);
-        } catch (e) {
-
+        } catch (_error) {
+          e = _error;
         }
         if (template == null) {
           template = this.__locale !== this.defaultLocale ? "(?) " + id : "" + id;
@@ -64383,6 +64493,7 @@ window.require.define({"lib/i18n": function(exports, require, module) {
     },
     t: function(i18n_key) {
       var args, result, _args;
+
       result = i18n.translate(i18n_key);
       args = Array.prototype.slice.call(arguments, 0);
       if (_.isArray(args[1])) {
@@ -64404,9 +64515,8 @@ window.require.define({"lib/i18n": function(exports, require, module) {
 
   module.exports = i18n;
   
-}});
-
-window.require.define({"lib/support": function(exports, require, module) {
+});
+window.require.register("lib/support", function(exports, require, module) {
   var Chaplin, support, utils;
 
   Chaplin = require('chaplin');
@@ -64417,9 +64527,8 @@ window.require.define({"lib/support": function(exports, require, module) {
 
   module.exports = support;
   
-}});
-
-window.require.define({"lib/utils": function(exports, require, module) {
+});
+window.require.register("lib/utils", function(exports, require, module) {
   var Chaplin, mediator, utils, _base, _ref;
 
   Chaplin = require('chaplin');
@@ -64431,6 +64540,7 @@ window.require.define({"lib/utils": function(exports, require, module) {
   _(utils).extend({
     addParams: function(string, params) {
       var i, new_param, params_to_change, _i, _len;
+
       params_to_change = string.match(/(?::|\*)(\w+)/g);
       for (_i = 0, _len = params_to_change.length; _i < _len; _i++) {
         i = params_to_change[_i];
@@ -64458,9 +64568,8 @@ window.require.define({"lib/utils": function(exports, require, module) {
     };
   }
   
-}});
-
-window.require.define({"lib/view-helper": function(exports, require, module) {
+});
+window.require.register("lib/view-helper", function(exports, require, module) {
   var RankHelper, i18n, mediator, utils,
     __slice = [].slice;
 
@@ -64490,6 +64599,7 @@ window.require.define({"lib/view-helper": function(exports, require, module) {
 
   Handlebars.registerHelper('without', function(context, options) {
     var inverse;
+
     inverse = options.inverse;
     options.inverse = options.fn;
     options.fn = inverse;
@@ -64498,12 +64608,14 @@ window.require.define({"lib/view-helper": function(exports, require, module) {
 
   Handlebars.registerHelper('with_user', function(options) {
     var context, _ref;
+
     context = ((_ref = mediator.user) != null ? _ref.serialize() : void 0) || {};
     return Handlebars.helpers["with"].call(this, context, options);
   });
 
   Handlebars.registerHelper('url', function() {
     var params, routeName, url;
+
     routeName = arguments[0], params = 2 <= arguments.length ? __slice.call(arguments, 1) : [];
     url = null;
     mediator.publish('!router:reverse', routeName, params, function(result) {
@@ -64514,6 +64626,7 @@ window.require.define({"lib/view-helper": function(exports, require, module) {
 
   Handlebars.registerHelper('t', function(i18n_key) {
     var args, result;
+
     args = Array.prototype.slice.call(arguments, 0);
     result = i18n.t(i18n_key, args);
     result = Handlebars.Utils.escapeExpression(result);
@@ -64522,6 +64635,7 @@ window.require.define({"lib/view-helper": function(exports, require, module) {
 
   Handlebars.registerHelper('niceNumber', function(value) {
     var result;
+
     result = value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
     result = Handlebars.Utils.escapeExpression(result);
     return new Handlebars.SafeString(result);
@@ -64529,6 +64643,7 @@ window.require.define({"lib/view-helper": function(exports, require, module) {
 
   Handlebars.registerHelper("each_with_index", function(context, options) {
     var fn, i, inverse, j, ret;
+
     fn = options.fn;
     inverse = options.inverse;
     ret = "";
@@ -64552,6 +64667,7 @@ window.require.define({"lib/view-helper": function(exports, require, module) {
 
   Handlebars.registerHelper("getRankImage", function(rankNumber) {
     var result;
+
     result = RankHelper.getRankImage(rankNumber);
     result = Handlebars.Utils.escapeExpression(result);
     return new Handlebars.SafeString(result);
@@ -64559,15 +64675,14 @@ window.require.define({"lib/view-helper": function(exports, require, module) {
 
   Handlebars.registerHelper("getRankName", function(rankNumber) {
     var result;
+
     result = RankHelper.getRankName(rankNumber);
     result = Handlebars.Utils.escapeExpression(result);
     return new Handlebars.SafeString(result);
   });
   
-}});
-
-window.require.define({"locale/en": function(exports, require, module) {
-  
+});
+window.require.register("locale/en", function(exports, require, module) {
   module.exports = {
     en: {
       view: {
@@ -64579,20 +64694,13 @@ window.require.define({"locale/en": function(exports, require, module) {
     }
   };
   
-}});
-
-window.require.define({"locale/fr": function(exports, require, module) {
-  
+});
+window.require.register("locale/fr", function(exports, require, module) {
   module.exports = {
     fr: {
       controller: {
         home: {
           facebook_invite_message: 'Vasy rejoins ce jeu il déchire',
-          touch_me: {
-            touch: 'Touche pour afficher la Une',
-            loading: "Le journal est en cours de livraison !",
-            error: "Le facteur s'est perdu."
-          },
           journal: {
             twoplus: {
               rank_1: '{0} est numero uno',
@@ -64608,16 +64716,8 @@ window.require.define({"locale/fr": function(exports, require, module) {
             message: 'pack indisponible'
           },
           not_enough_credits: {
-            title: 'Erreur',
+            title: 'erreur',
             message: 'pas assez de crédits'
-          },
-          bonus_pack_bought: {
-            title: 'Achat confirmé',
-            message: "Tout c'est bien passé, bon jeu !"
-          },
-          life_pack_bought: {
-            title: 'Achat confirmé',
-            message: "Tout c'est bien passé, bon jeu !"
           }
         },
         game_over: {
@@ -64752,16 +64852,13 @@ window.require.define({"locale/fr": function(exports, require, module) {
     }
   };
   
-}});
-
-window.require.define({"mediator": function(exports, require, module) {
-  
+});
+window.require.register("mediator", function(exports, require, module) {
   module.exports = require('chaplin').mediator;
   
-}});
-
-window.require.define({"models/base/collection": function(exports, require, module) {
-  var Chaplin, Collection, Model,
+});
+window.require.register("models/base/collection", function(exports, require, module) {
+  var Chaplin, Collection, Model, _ref,
     __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
@@ -64770,11 +64867,11 @@ window.require.define({"models/base/collection": function(exports, require, modu
   Model = require('models/base/model');
 
   module.exports = Collection = (function(_super) {
-
     __extends(Collection, _super);
 
     function Collection() {
-      return Collection.__super__.constructor.apply(this, arguments);
+      _ref = Collection.__super__.constructor.apply(this, arguments);
+      return _ref;
     }
 
     Collection.prototype.model = Model;
@@ -64783,42 +64880,40 @@ window.require.define({"models/base/collection": function(exports, require, modu
 
   })(Chaplin.Collection);
   
-}});
-
-window.require.define({"models/base/model": function(exports, require, module) {
-  var Chaplin, Model,
+});
+window.require.register("models/base/model", function(exports, require, module) {
+  var Chaplin, Model, _ref,
     __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
   Chaplin = require('chaplin');
 
   module.exports = Model = (function(_super) {
-
     __extends(Model, _super);
 
     function Model() {
-      return Model.__super__.constructor.apply(this, arguments);
+      _ref = Model.__super__.constructor.apply(this, arguments);
+      return _ref;
     }
 
     return Model;
 
   })(Chaplin.Model);
   
-}});
-
-window.require.define({"models/ingame/bonus-model": function(exports, require, module) {
-  var Bonus, Model,
+});
+window.require.register("models/ingame/bonus-model", function(exports, require, module) {
+  var Bonus, Model, _ref,
     __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
   Model = require('models/base/model');
 
   module.exports = Bonus = (function(_super) {
-
     __extends(Bonus, _super);
 
     function Bonus() {
-      return Bonus.__super__.constructor.apply(this, arguments);
+      _ref = Bonus.__super__.constructor.apply(this, arguments);
+      return _ref;
     }
 
     Bonus.prototype.defaults = {
@@ -64830,21 +64925,20 @@ window.require.define({"models/ingame/bonus-model": function(exports, require, m
 
   })(Model);
   
-}});
-
-window.require.define({"models/ingame/player-model": function(exports, require, module) {
-  var Model, Player,
+});
+window.require.register("models/ingame/player-model", function(exports, require, module) {
+  var Model, Player, _ref,
     __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
   Model = require('models/base/model');
 
   module.exports = Player = (function(_super) {
-
     __extends(Player, _super);
 
     function Player() {
-      return Player.__super__.constructor.apply(this, arguments);
+      _ref = Player.__super__.constructor.apply(this, arguments);
+      return _ref;
     }
 
     Player.prototype.defaults = {
@@ -64853,12 +64947,14 @@ window.require.define({"models/ingame/player-model": function(exports, require, 
 
     Player.prototype.addJackpot = function(someJackpot) {
       var amount;
+
       amount = this.get('jackpot') + someJackpot;
       return this.set('jackpot', amount);
     };
 
     Player.prototype.consumeBonus = function(bonus_consumed) {
       var qty;
+
       qty = this.get('bonus')[bonus_consumed];
       if (qty <= 0) {
         return false;
@@ -64869,16 +64965,18 @@ window.require.define({"models/ingame/player-model": function(exports, require, 
 
     Player.prototype.getBonusQuantity = function(bonus) {
       var a;
+
       a = this.get('bonus')[bonus];
       return a;
     };
 
     Player.prototype.getBonuses = function() {
-      var bonuses, name, qty, _ref;
+      var bonuses, name, qty, _ref1;
+
       bonuses = [];
-      _ref = this.get('bonus');
-      for (name in _ref) {
-        qty = _ref[name];
+      _ref1 = this.get('bonus');
+      for (name in _ref1) {
+        qty = _ref1[name];
         bonuses.push({
           name: name,
           quantity: qty
@@ -64896,27 +64994,24 @@ window.require.define({"models/ingame/player-model": function(exports, require, 
 
   })(Model);
   
-}});
-
-window.require.define({"models/ingame/proposition-model": function(exports, require, module) {
-  
+});
+window.require.register("models/ingame/proposition-model", function(exports, require, module) {
   proposition - model.coffee;
   
-}});
-
-window.require.define({"models/ingame/question-model": function(exports, require, module) {
-  var Model, Question,
+});
+window.require.register("models/ingame/question-model", function(exports, require, module) {
+  var Model, Question, _ref,
     __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
   Model = require('models/base/model');
 
   module.exports = Question = (function(_super) {
-
     __extends(Question, _super);
 
     function Question() {
-      return Question.__super__.constructor.apply(this, arguments);
+      _ref = Question.__super__.constructor.apply(this, arguments);
+      return _ref;
     }
 
     Question.prototype.defaults = {
@@ -64926,10 +65021,11 @@ window.require.define({"models/ingame/question-model": function(exports, require
     };
 
     Question.prototype.isCorrectAnswer = function(answerId) {
-      var proposition, _i, _len, _ref;
-      _ref = this.get('propositions');
-      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-        proposition = _ref[_i];
+      var proposition, _i, _len, _ref1;
+
+      _ref1 = this.get('propositions');
+      for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
+        proposition = _ref1[_i];
         if (parseInt(proposition.id) === parseInt(answerId)) {
           return proposition.is_valid;
         }
@@ -64945,31 +65041,32 @@ window.require.define({"models/ingame/question-model": function(exports, require
 
   })(Model);
   
-}});
-
-window.require.define({"models/ingame/questions/photo-mcq-question-model": function(exports, require, module) {
-  var PhotoMcqQuestion, Question,
+});
+window.require.register("models/ingame/questions/photo-mcq-question-model", function(exports, require, module) {
+  var PhotoMcqQuestion, Question, _ref,
     __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
   Question = require('models/ingame/question-model');
 
   module.exports = PhotoMcqQuestion = (function(_super) {
-
     __extends(PhotoMcqQuestion, _super);
 
     function PhotoMcqQuestion() {
-      return PhotoMcqQuestion.__super__.constructor.apply(this, arguments);
+      _ref = PhotoMcqQuestion.__super__.constructor.apply(this, arguments);
+      return _ref;
     }
 
     PhotoMcqQuestion.prototype.getWrongAnwers = function(limit) {
       var proposition;
+
       return ((function() {
-        var _i, _len, _ref, _results;
-        _ref = this.get('propositions');
+        var _i, _len, _ref1, _results;
+
+        _ref1 = this.get('propositions');
         _results = [];
-        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-          proposition = _ref[_i];
+        for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
+          proposition = _ref1[_i];
           if (!proposition.is_valid) {
             _results.push(proposition);
           }
@@ -64980,12 +65077,14 @@ window.require.define({"models/ingame/questions/photo-mcq-question-model": funct
 
     PhotoMcqQuestion.prototype.getGoodAnwer = function() {
       var proposition;
+
       return ((function() {
-        var _i, _len, _ref, _results;
-        _ref = this.get('propositions');
+        var _i, _len, _ref1, _results;
+
+        _ref1 = this.get('propositions');
         _results = [];
-        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-          proposition = _ref[_i];
+        for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
+          proposition = _ref1[_i];
           if (proposition.is_valid) {
             _results.push(proposition);
           }
@@ -64996,6 +65095,7 @@ window.require.define({"models/ingame/questions/photo-mcq-question-model": funct
 
     PhotoMcqQuestion.prototype.getPonderatedAnwers = function() {
       var max, min, offset, total;
+
       total = 100;
       offset = this.get('difficulty') * 3;
       min = offset + (5 - this.get('difficulty')) * 10;
@@ -65004,6 +65104,7 @@ window.require.define({"models/ingame/questions/photo-mcq-question-model": funct
         return !proposition.is_valid;
       }).map(function(proposition) {
         var value;
+
         if (proposition.is_valid) {
           value = Math.random() * max + min;
           total -= value;
@@ -65019,10 +65120,9 @@ window.require.define({"models/ingame/questions/photo-mcq-question-model": funct
 
   })(Question);
   
-}});
-
-window.require.define({"models/ingame/stage-model": function(exports, require, module) {
-  var Factory, Model, Stage, utils,
+});
+window.require.register("models/ingame/stage-model", function(exports, require, module) {
+  var Factory, Model, Stage, utils, _ref,
     __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
@@ -65033,11 +65133,11 @@ window.require.define({"models/ingame/stage-model": function(exports, require, m
   Factory = require('helpers/factory-helper');
 
   module.exports = Stage = (function(_super) {
-
     __extends(Stage, _super);
 
     function Stage() {
-      return Stage.__super__.constructor.apply(this, arguments);
+      _ref = Stage.__super__.constructor.apply(this, arguments);
+      return _ref;
     }
 
     Stage.prototype.questionIndex = -1;
@@ -65058,15 +65158,17 @@ window.require.define({"models/ingame/stage-model": function(exports, require, m
 
     Stage.prototype.setQuestions = function(questions) {
       var q, question_data, question_difficulty, questions_data;
+
       q = {};
       for (question_difficulty in questions) {
         questions_data = questions[question_difficulty];
         q[question_difficulty] = (function() {
-          var _i, _len, _ref, _results;
-          _ref = questions_data.shuffle();
+          var _i, _len, _ref1, _results;
+
+          _ref1 = questions_data.shuffle();
           _results = [];
-          for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-            question_data = _ref[_i];
+          for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
+            question_data = _ref1[_i];
             _results.push(Factory.questionModel(question_data));
           }
           return _results;
@@ -65078,11 +65180,13 @@ window.require.define({"models/ingame/stage-model": function(exports, require, m
 
     Stage.prototype.setPlayers = function(players) {
       var player;
+
       if (!this.get('config')) {
         throw "stage config should be set";
       }
       players = (function() {
         var _i, _len, _results;
+
         _results = [];
         for (_i = 0, _len = players.length; _i < _len; _i++) {
           player = players[_i];
@@ -65123,6 +65227,7 @@ window.require.define({"models/ingame/stage-model": function(exports, require, m
 
     Stage.prototype.incrementRound = function() {
       var c;
+
       c = this.get('roundCount') + 1;
       this.set('roundCount', c);
       return c;
@@ -65132,21 +65237,20 @@ window.require.define({"models/ingame/stage-model": function(exports, require, m
 
   })(Model);
   
-}});
-
-window.require.define({"models/ingame/stages/dupa-stage-model": function(exports, require, module) {
-  var DupaStage, Stage,
+});
+window.require.register("models/ingame/stages/dupa-stage-model", function(exports, require, module) {
+  var DupaStage, Stage, _ref,
     __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
   Stage = require('models/ingame/stage-model');
 
   module.exports = DupaStage = (function(_super) {
-
     __extends(DupaStage, _super);
 
     function DupaStage() {
-      return DupaStage.__super__.constructor.apply(this, arguments);
+      _ref = DupaStage.__super__.constructor.apply(this, arguments);
+      return _ref;
     }
 
     DupaStage.prototype.currentThresholdIndex = 0;
@@ -65159,8 +65263,10 @@ window.require.define({"models/ingame/stages/dupa-stage-model": function(exports
 
     DupaStage.prototype.setPlayers = function(players) {
       var player;
+
       players = (function() {
         var _i, _len, _results;
+
         _results = [];
         for (_i = 0, _len = players.length; _i < _len; _i++) {
           player = players[_i];
@@ -65180,6 +65286,7 @@ window.require.define({"models/ingame/stages/dupa-stage-model": function(exports
 
     DupaStage.prototype.playerMadeSuccess = function(player, doubleScore) {
       var jackpot;
+
       jackpot = this.getCurrentThreshold();
       if (doubleScore) {
         jackpot *= 2;
@@ -65210,6 +65317,7 @@ window.require.define({"models/ingame/stages/dupa-stage-model": function(exports
 
     DupaStage.prototype.getNextQuestion = function(reset) {
       var questions;
+
       if (reset == null) {
         reset = false;
       }
@@ -65223,6 +65331,7 @@ window.require.define({"models/ingame/stages/dupa-stage-model": function(exports
 
     DupaStage.prototype.getCurrentQuestion = function() {
       var questions;
+
       questions = this.get('questions')[this.questionDifficulty];
       return questions[this.questionIndex % questions.length];
     };
@@ -65231,19 +65340,18 @@ window.require.define({"models/ingame/stages/dupa-stage-model": function(exports
 
   })(Stage);
   
-}});
-
-window.require.define({"models/outgame/user-model": function(exports, require, module) {
-  var User,
+});
+window.require.register("models/outgame/user-model", function(exports, require, module) {
+  var User, _ref,
     __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
   module.exports = User = (function(_super) {
-
     __extends(User, _super);
 
     function User() {
-      return User.__super__.constructor.apply(this, arguments);
+      _ref = User.__super__.constructor.apply(this, arguments);
+      return _ref;
     }
 
     User.prototype.defaults = {
@@ -65278,11 +65386,12 @@ window.require.define({"models/outgame/user-model": function(exports, require, m
     };
 
     User.prototype.getBonuses = function() {
-      var bonuses, name, qty, _ref;
+      var bonuses, name, qty, _ref1;
+
       bonuses = [];
-      _ref = this.get('bonus');
-      for (name in _ref) {
-        qty = _ref[name];
+      _ref1 = this.get('bonus');
+      for (name in _ref1) {
+        qty = _ref1[name];
         bonuses.push({
           name: name,
           quantity: qty
@@ -65295,9 +65404,8 @@ window.require.define({"models/outgame/user-model": function(exports, require, m
 
   })(Parse.User);
   
-}});
-
-window.require.define({"routes": function(exports, require, module) {
+});
+window.require.register("routes", function(exports, require, module) {
   var routeList;
 
   routeList = {
@@ -65317,11 +65425,13 @@ window.require.define({"routes": function(exports, require, module) {
 
   module.exports = function(match) {
     var namespace, route, routes, _results;
+
     _results = [];
     for (namespace in routeList) {
       routes = routeList[namespace];
       _results.push((function() {
         var _i, _len, _results1;
+
         _results1 = [];
         for (_i = 0, _len = routes.length; _i < _len; _i++) {
           route = routes[_i];
@@ -65334,10 +65444,9 @@ window.require.define({"routes": function(exports, require, module) {
     return _results;
   };
   
-}});
-
-window.require.define({"views/base/collection-view": function(exports, require, module) {
-  var Chaplin, CollectionView, View,
+});
+window.require.register("views/base/collection-view", function(exports, require, module) {
+  var Chaplin, CollectionView, View, _ref,
     __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
@@ -65346,11 +65455,11 @@ window.require.define({"views/base/collection-view": function(exports, require, 
   View = require('views/base/view');
 
   module.exports = CollectionView = (function(_super) {
-
     __extends(CollectionView, _super);
 
     function CollectionView() {
-      return CollectionView.__super__.constructor.apply(this, arguments);
+      _ref = CollectionView.__super__.constructor.apply(this, arguments);
+      return _ref;
     }
 
     CollectionView.prototype.getTemplateFunction = View.prototype.getTemplateFunction;
@@ -65359,10 +65468,9 @@ window.require.define({"views/base/collection-view": function(exports, require, 
 
   })(Chaplin.CollectionView);
   
-}});
-
-window.require.define({"views/base/view": function(exports, require, module) {
-  var Chaplin, View, i18n,
+});
+window.require.register("views/base/view", function(exports, require, module) {
+  var Chaplin, View, i18n, _ref,
     __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
     __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
@@ -65374,17 +65482,17 @@ window.require.define({"views/base/view": function(exports, require, module) {
   require('lib/view-helper');
 
   module.exports = View = (function(_super) {
-
     __extends(View, _super);
 
     function View() {
-      this.displayMessage = __bind(this.displayMessage, this);
-      return View.__super__.constructor.apply(this, arguments);
+      this.displayMessage = __bind(this.displayMessage, this);    _ref = View.__super__.constructor.apply(this, arguments);
+      return _ref;
     }
 
     View.prototype.getTemplateFunction = function() {
       var template, templateFunc,
         _this = this;
+
       Handlebars.registerHelper('niceNumber', function(number, options) {
         return _this.niceNumber(number);
       });
@@ -65400,6 +65508,7 @@ window.require.define({"views/base/view": function(exports, require, module) {
 
     View.prototype.autoSizeText = function(domElement) {
       var el, elements, _i, _len, _results;
+
       if (domElement == null) {
         domElement = '.resize';
       }
@@ -65412,8 +65521,10 @@ window.require.define({"views/base/view": function(exports, require, module) {
         el = elements[_i];
         _results.push((function(el) {
           var resizeText, _results1;
+
           resizeText = function() {
             var elNewFontSize;
+
             elNewFontSize = parseInt($(el).css('font-size'), 10) - 1;
             return $(el).css('font-size', elNewFontSize);
           };
@@ -65440,6 +65551,7 @@ window.require.define({"views/base/view": function(exports, require, module) {
 
     View.prototype.unDim = function(callback) {
       var page;
+
       page = document.getElementById('page-container');
       page.style.webkitTransform = page.style.webkitTransform;
       return $('.fade-screen').addClass('animated fadeOut').one('webkitAnimationEnd', function() {
@@ -65455,6 +65567,7 @@ window.require.define({"views/base/view": function(exports, require, module) {
     View.prototype.delegateOnce = function(eventName, second, third) {
       var bound, events, handler, list, selector,
         _this = this;
+
       if (typeof eventName !== 'string') {
         throw new TypeError('View#delegate: first argument must be a string');
       }
@@ -65488,6 +65601,7 @@ window.require.define({"views/base/view": function(exports, require, module) {
     View.prototype.delegateSingleOnce = function(eventName, second, third) {
       var handler, selector, singleHandler,
         _this = this;
+
       if (typeof eventName !== 'string') {
         throw new TypeError('View#delegate: first argument must be a string');
       }
@@ -65516,10 +65630,9 @@ window.require.define({"views/base/view": function(exports, require, module) {
 
   })(Chaplin.View);
   
-}});
-
-window.require.define({"views/ingame/game-over-view": function(exports, require, module) {
-  var GameOverView, View, template,
+});
+window.require.register("views/ingame/game-over-view", function(exports, require, module) {
+  var GameOverView, View, template, _ref,
     __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
@@ -65528,11 +65641,11 @@ window.require.define({"views/ingame/game-over-view": function(exports, require,
   View = require('views/base/view');
 
   module.exports = GameOverView = (function(_super) {
-
     __extends(GameOverView, _super);
 
     function GameOverView() {
-      return GameOverView.__super__.constructor.apply(this, arguments);
+      _ref = GameOverView.__super__.constructor.apply(this, arguments);
+      return _ref;
     }
 
     GameOverView.prototype.autoRender = true;
@@ -65551,10 +65664,9 @@ window.require.define({"views/ingame/game-over-view": function(exports, require,
 
   })(View);
   
-}});
-
-window.require.define({"views/ingame/stages/dupa-stage-view": function(exports, require, module) {
-  var DupaView, View, i18n, template,
+});
+window.require.register("views/ingame/stages/dupa-stage-view", function(exports, require, module) {
+  var DupaView, View, i18n, template, _ref,
     __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
     __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
@@ -65566,12 +65678,11 @@ window.require.define({"views/ingame/stages/dupa-stage-view": function(exports, 
   i18n = require('lib/i18n');
 
   module.exports = DupaView = (function(_super) {
-
     __extends(DupaView, _super);
 
     function DupaView() {
-      this.updatePropositionsText = __bind(this.updatePropositionsText, this);
-      return DupaView.__super__.constructor.apply(this, arguments);
+      this.updatePropositionsText = __bind(this.updatePropositionsText, this);    _ref = DupaView.__super__.constructor.apply(this, arguments);
+      return _ref;
     }
 
     DupaView.prototype.propContainerInit = false;
@@ -65597,6 +65708,7 @@ window.require.define({"views/ingame/stages/dupa-stage-view": function(exports, 
 
     DupaView.prototype.updateTimer = function(duration) {
       var progress, progressEl;
+
       duration = parseInt(duration);
       if (duration > this.options.time) {
         duration = this.options.time;
@@ -65625,13 +65737,15 @@ window.require.define({"views/ingame/stages/dupa-stage-view": function(exports, 
 
     DupaView.prototype.showQuestion = function(question, callback) {
       var _this = this;
+
       return setTimeout(function() {
-        var proposition, propositionsEl, theme, _i, _len, _ref;
+        var proposition, propositionsEl, theme, _i, _len, _ref1;
+
         propositionsEl = $('.question-propositions-container', _this.$el);
         $('.proposition-container', propositionsEl).remove();
-        _ref = question.getPropositions();
-        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-          proposition = _ref[_i];
+        _ref1 = question.getPropositions();
+        for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
+          proposition = _ref1[_i];
           propositionsEl.prepend("<div class='proposition-container box-align' data-id='" + proposition.id + "'>            <span class='proposition resize' data-id='" + proposition.id + "'>" + proposition.text + "</span>            <div class='massOpinion'></div>          </div>");
         }
         $('.proposition-container', _this.$el).addClass('animated pulse').one('webkitAnimationEnd', function() {
@@ -65650,6 +65764,7 @@ window.require.define({"views/ingame/stages/dupa-stage-view": function(exports, 
 
     DupaView.prototype.chooseProposition = function(targetElement, callback) {
       var propositionEl;
+
       propositionEl = $(targetElement, this.$el);
       propositionEl.addClass('selected');
       return callback(propositionEl.data('id'));
@@ -65657,15 +65772,17 @@ window.require.define({"views/ingame/stages/dupa-stage-view": function(exports, 
 
     DupaView.prototype.chooseBonus = function(targetElement, callback) {
       var propositionEl;
+
       propositionEl = $(targetElement, this.$el);
       return callback(propositionEl.attr('id'));
     };
 
     DupaView.prototype.updatePropositionsText = function(question) {
-      var proposition, _i, _len, _ref;
-      _ref = question.getPropositions();
-      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-        proposition = _ref[_i];
+      var proposition, _i, _len, _ref1;
+
+      _ref1 = question.getPropositions();
+      for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
+        proposition = _ref1[_i];
         $(".proposition[data-id='" + proposition.id + "']").text(proposition.text);
       }
       return this.autoSizeText();
@@ -65674,6 +65791,7 @@ window.require.define({"views/ingame/stages/dupa-stage-view": function(exports, 
     DupaView.prototype.updateAnswerButton = function(propositionId, status, callback, question) {
       var klass, propositionEl,
         _this = this;
+
       this.updatePropositionsText(question);
       klass = status ? 'success' : 'error';
       if (propositionId) {
@@ -65691,6 +65809,7 @@ window.require.define({"views/ingame/stages/dupa-stage-view": function(exports, 
 
     DupaView.prototype.beforeNextQuestionMessage = function(textKey, jackpot, callback) {
       var _this = this;
+
       this.displayMessage(textKey, jackpot);
       return setTimeout(function() {
         return $('#question', _this.$el).addClass('animated fadeOut').one('webkitAnimationEnd', function() {
@@ -65702,6 +65821,7 @@ window.require.define({"views/ingame/stages/dupa-stage-view": function(exports, 
 
     DupaView.prototype.updateJackpot = function(jackpot, currentThresholdValue, result) {
       var blockEl, el;
+
       el = $('.jackpot-container', this.$el);
       $('#total-jackpot', el).text(jackpot);
       $(".threshold .highlighted", el).addClass('animated fadeOut').one('webkitAnimationEnd', function() {
@@ -65715,6 +65835,7 @@ window.require.define({"views/ingame/stages/dupa-stage-view": function(exports, 
 
     DupaView.prototype.updateJackpotMarker = function(currentThresholdValue, result) {
       var currentThresholdIndex, el, height, klass;
+
       if (result == null) {
         result = true;
       }
@@ -65737,6 +65858,7 @@ window.require.define({"views/ingame/stages/dupa-stage-view": function(exports, 
 
     DupaView.prototype.hideSomeAnswers = function(propositions, callback) {
       var proposition, _i, _len;
+
       for (_i = 0, _len = propositions.length; _i < _len; _i++) {
         proposition = propositions[_i];
         $(".proposition[data-id='" + proposition.id + "']").css('visibility', 'hidden');
@@ -65746,6 +65868,7 @@ window.require.define({"views/ingame/stages/dupa-stage-view": function(exports, 
 
     DupaView.prototype.displayMass = function(propositions, callback) {
       var proposition, _i, _len;
+
       for (_i = 0, _len = propositions.length; _i < _len; _i++) {
         proposition = propositions[_i];
         $(".proposition-container[data-id='" + proposition.id + "'] .massOpinion").html(proposition.massOpinion + '%').show();
@@ -65764,6 +65887,7 @@ window.require.define({"views/ingame/stages/dupa-stage-view": function(exports, 
 
     DupaView.prototype.finishMessage = function(textKey, params, callback) {
       var _this = this;
+
       this.displayMessage(textKey, params);
       return setTimeout(function() {
         return $('#question', _this.$el).addClass('animated fadeOut').one('webkitAnimationEnd', function() {
@@ -65783,31 +65907,30 @@ window.require.define({"views/ingame/stages/dupa-stage-view": function(exports, 
 
   })(View);
   
-}});
-
-window.require.define({"views/layout": function(exports, require, module) {
-  var Chaplin, Layout,
+});
+window.require.register("views/layout", function(exports, require, module) {
+  var Chaplin, Layout, _ref,
     __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
   Chaplin = require('chaplin');
 
   module.exports = Layout = (function(_super) {
-
     __extends(Layout, _super);
 
     function Layout() {
-      return Layout.__super__.constructor.apply(this, arguments);
+      _ref = Layout.__super__.constructor.apply(this, arguments);
+      return _ref;
     }
 
     return Layout;
 
   })(Chaplin.Layout);
   
-}});
-
-window.require.define({"views/outgame/hall-of-fame-view": function(exports, require, module) {
-  var HallOfFameView, View, template,
+});
+window.require.register("views/outgame/hall-of-fame-view", function(exports, require, module) {
+  var HallOfFameView, View, template, _ref,
+    __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
     __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
@@ -65816,11 +65939,11 @@ window.require.define({"views/outgame/hall-of-fame-view": function(exports, requ
   View = require('views/base/view');
 
   module.exports = HallOfFameView = (function(_super) {
-
     __extends(HallOfFameView, _super);
 
     function HallOfFameView() {
-      return HallOfFameView.__super__.constructor.apply(this, arguments);
+      this.suggestFriends = __bind(this.suggestFriends, this);    _ref = HallOfFameView.__super__.constructor.apply(this, arguments);
+      return _ref;
     }
 
     HallOfFameView.prototype.autoRender = true;
@@ -65834,24 +65957,28 @@ window.require.define({"views/outgame/hall-of-fame-view": function(exports, requ
     HallOfFameView.prototype.getTemplateData = function() {
       var s,
         _this = this;
+
       s = HallOfFameView.__super__.getTemplateData.apply(this, arguments);
       this.interval = setInterval(function() {
         var cd;
+
         cd = _this.calculateDateCount();
         return _this.setCountDown(cd.days, cd.hours, cd.minutes);
       }, 1000);
       s;
-
       return this.options;
     };
 
     HallOfFameView.prototype.newPlayerHTML = function(player, picSize, players) {
       var friend, pic, rank, separator;
-      separator = '';
+
+      separator = '<div class="separator"></div>';
       if (this.i > 0) {
-        if (players[this.i - 1].rank + 1 !== player.rank) {
-          separator = '<div class="separator"></div>';
+        if (players[this.i - 1].rank + 1 === player.rank || players[this.i - 1].rank === player.rank) {
+          separator = '';
         }
+      } else {
+        separator = '';
       }
       friend = player.friend ? '<div class="ask-friend"></div>' : '';
       if (this.color === 'pink') {
@@ -65869,20 +65996,29 @@ window.require.define({"views/outgame/hall-of-fame-view": function(exports, requ
       }
       this.i++;
       pic = player.profilepic ? player.profilepic : 'http://profile.ak.fbcdn.net/static-ak/rsrc.php/v2/yo/r/UlIqmHJn-SK.gif';
-      return separator + '<div class="div-ranking ' + this.color + '">' + rank + '<div class="profilepic"><img src="' + pic + '" width="' + picSize + '" height="' + picSize + '"/></div><span class="username">' + player.username + '</span><span class="money">' + player.jackpot + '</span>' + friend + '</div>';
+      return separator + '<div class="div-ranking ' + this.color + '">' + rank + '<img class="profilepic" src="' + pic + '" width="' + picSize + '" height="' + picSize + '"/><span class="username">' + player.username + '</span><span class="money">' + player.jackpot + '</span>' + friend + '</div>';
     };
 
-    HallOfFameView.prototype.updateRankingList = function(players) {
-      var el, player, _i, _len, _results;
+    HallOfFameView.prototype.updateRankingList = function(players, playerPosition, noFriends, fbConnected, withFriends, friendsToInvite) {
+      var el, player, _i, _len;
+
       this.i = 0;
       this.color = 'pink';
       el = $('.ranking-container', this.$el).empty();
-      _results = [];
-      for (_i = 0, _len = players.length; _i < _len; _i++) {
-        player = players[_i];
-        _results.push(el.append(this.newPlayerHTML(player, 40, players)));
+      if (!fbConnected && withFriends) {
+        return el.append('<a id="no-fb-connected"></a>');
+      } else if (noFriends && withFriends) {
+        return el.append('<a id="no-friends"></a>');
+      } else {
+        for (_i = 0, _len = players.length; _i < _len; _i++) {
+          player = players[_i];
+          el.append(this.newPlayerHTML(player, 40, players));
+        }
+        if (withFriends) {
+          el.append(this.suggestFriends(friendsToInvite));
+        }
+        return this.scrollTo(playerPosition);
       }
-      return _results;
     };
 
     HallOfFameView.prototype.chooseList = function(eventTargetEl) {
@@ -65892,6 +66028,7 @@ window.require.define({"views/outgame/hall-of-fame-view": function(exports, requ
 
     HallOfFameView.prototype.calculateDateCount = function() {
       var daysLeft, e_daysLeft, e_hrsLeft, hrsLeft, minsLeft, msPerDay, timeLeft, today, yearsLeft;
+
       today = new Date();
       msPerDay = 24 * 60 * 60 * 1000;
       timeLeft = this.options.targetDate.getTime() - today.getTime();
@@ -65922,14 +66059,41 @@ window.require.define({"views/outgame/hall-of-fame-view": function(exports, requ
       return $(el).addClass('asked');
     };
 
+    HallOfFameView.prototype.scrollTo = function(i) {
+      var el, height;
+
+      el = $('.ranking-container')[0];
+      height = $('.div-ranking').height();
+      if (i > 3) {
+        return el.scrollTop = (i - 4) * height;
+      }
+    };
+
+    HallOfFameView.prototype.dispose = function() {
+      if (this.interval != null) {
+        clearInterval(this.interval);
+      }
+      return HallOfFameView.__super__.dispose.apply(this, arguments);
+    };
+
+    HallOfFameView.prototype.suggestFriends = function(friends) {
+      var friend, moreFriends, _i, _len;
+
+      moreFriends = '';
+      for (_i = 0, _len = friends.length; _i < _len; _i++) {
+        friend = friends[_i];
+        moreFriends += "<div class='div-ranking moreFriends'><img class='profilepic' src='https://graph.facebook.com/" + friend.id + "/picture'/><span class='username'>" + friend.name + "</span><div data-id='" + friend.id + "' class='invite-btn'></div></div>";
+      }
+      return moreFriends;
+    };
+
     return HallOfFameView;
 
   })(View);
   
-}});
-
-window.require.define({"views/outgame/home-page-view": function(exports, require, module) {
-  var HomePageView, I18n, View, template,
+});
+window.require.register("views/outgame/home-page-view", function(exports, require, module) {
+  var HomePageView, View, template, _ref,
     __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
@@ -65937,14 +66101,12 @@ window.require.define({"views/outgame/home-page-view": function(exports, require
 
   View = require('views/base/view');
 
-  I18n = require('lib/i18n');
-
   module.exports = HomePageView = (function(_super) {
-
     __extends(HomePageView, _super);
 
     function HomePageView() {
-      return HomePageView.__super__.constructor.apply(this, arguments);
+      _ref = HomePageView.__super__.constructor.apply(this, arguments);
+      return _ref;
     }
 
     HomePageView.prototype.autoRender = true;
@@ -65968,29 +66130,24 @@ window.require.define({"views/outgame/home-page-view": function(exports, require
       return this.subview('journal').render().toggle();
     };
 
-    HomePageView.prototype.setJournalMessage = function(key) {
-      return $('#touch-me').text(I18n.t('controller.home.touch_me.' + key));
-    };
-
     return HomePageView;
 
   })(View);
   
-}});
-
-window.require.define({"views/outgame/journal/journal-view": function(exports, require, module) {
-  var JournalView, View,
+});
+window.require.register("views/outgame/journal/journal-view", function(exports, require, module) {
+  var JournalView, View, _ref,
     __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
   View = require('views/base/view');
 
   module.exports = JournalView = (function(_super) {
-
     __extends(JournalView, _super);
 
     function JournalView() {
-      return JournalView.__super__.constructor.apply(this, arguments);
+      _ref = JournalView.__super__.constructor.apply(this, arguments);
+      return _ref;
     }
 
     JournalView.prototype.autoRender = true;
@@ -66006,6 +66163,7 @@ window.require.define({"views/outgame/journal/journal-view": function(exports, r
 
     JournalView.prototype.getDate = function() {
       var d, date;
+
       date = new Date();
       d = date.getDate() < 10 ? '0' + date.getDate() : date.getDate();
       d += '/';
@@ -66022,9 +66180,8 @@ window.require.define({"views/outgame/journal/journal-view": function(exports, r
 
   })(View);
   
-}});
-
-window.require.define({"views/outgame/journal/no-friends-journal-view": function(exports, require, module) {
+});
+window.require.register("views/outgame/journal/no-friends-journal-view", function(exports, require, module) {
   var JournalView, NoFriendsJournalView, template,
     __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
@@ -66034,7 +66191,6 @@ window.require.define({"views/outgame/journal/no-friends-journal-view": function
   JournalView = require('views/outgame/journal/journal-view');
 
   module.exports = NoFriendsJournalView = (function(_super) {
-
     __extends(NoFriendsJournalView, _super);
 
     NoFriendsJournalView.prototype.template = template;
@@ -66049,9 +66205,11 @@ window.require.define({"views/outgame/journal/no-friends-journal-view": function
     NoFriendsJournalView.prototype.initialize = function() {
       var s,
         _this = this;
+
       s = NoFriendsJournalView.__super__.initialize.apply(this, arguments);
       this.interval = setInterval(function() {
         var cd;
+
         cd = _this.calculateDateCount();
         return _this.setCountDown(cd.days, cd.hours, cd.minutes);
       }, 1000);
@@ -66066,6 +66224,7 @@ window.require.define({"views/outgame/journal/no-friends-journal-view": function
 
     NoFriendsJournalView.prototype.calculateDateCount = function() {
       var daysLeft, e_daysLeft, e_hrsLeft, hrsLeft, minsLeft, msPerDay, timeLeft, today, yearsLeft;
+
       today = new Date();
       msPerDay = 24 * 60 * 60 * 1000;
       timeLeft = this.options.targetDate.getTime() - today.getTime();
@@ -66097,9 +66256,8 @@ window.require.define({"views/outgame/journal/no-friends-journal-view": function
 
   })(JournalView);
   
-}});
-
-window.require.define({"views/outgame/journal/one-friend-journal-view": function(exports, require, module) {
+});
+window.require.register("views/outgame/journal/one-friend-journal-view", function(exports, require, module) {
   var JournalView, OneFriendJournalView, template,
     __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
@@ -66109,7 +66267,6 @@ window.require.define({"views/outgame/journal/one-friend-journal-view": function
   JournalView = require('views/outgame/journal/journal-view');
 
   module.exports = OneFriendJournalView = (function(_super) {
-
     __extends(OneFriendJournalView, _super);
 
     OneFriendJournalView.prototype.template = template;
@@ -66123,9 +66280,8 @@ window.require.define({"views/outgame/journal/one-friend-journal-view": function
 
   })(JournalView);
   
-}});
-
-window.require.define({"views/outgame/journal/two-friends-journal-view": function(exports, require, module) {
+});
+window.require.register("views/outgame/journal/two-friends-journal-view", function(exports, require, module) {
   var JournalView, TwoFriendsJournalView, template,
     __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
@@ -66135,7 +66291,6 @@ window.require.define({"views/outgame/journal/two-friends-journal-view": functio
   JournalView = require('views/outgame/journal/journal-view');
 
   module.exports = TwoFriendsJournalView = (function(_super) {
-
     __extends(TwoFriendsJournalView, _super);
 
     TwoFriendsJournalView.prototype.template = template;
@@ -66147,6 +66302,7 @@ window.require.define({"views/outgame/journal/two-friends-journal-view": functio
 
     TwoFriendsJournalView.prototype.getTemplateData = function() {
       var data, i, medals, participant, _i, _len, _ref;
+
       data = TwoFriendsJournalView.__super__.getTemplateData.apply(this, arguments);
       medals = ['gold', 'silver', 'bronze'];
       _ref = data.participants;
@@ -66162,9 +66318,8 @@ window.require.define({"views/outgame/journal/two-friends-journal-view": functio
 
   })(JournalView);
   
-}});
-
-window.require.define({"views/outgame/journal/twoplus-friends-journal-view": function(exports, require, module) {
+});
+window.require.register("views/outgame/journal/twoplus-friends-journal-view", function(exports, require, module) {
   var JournalView, TwoplusFriendsJournalView, template,
     __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
@@ -66174,7 +66329,6 @@ window.require.define({"views/outgame/journal/twoplus-friends-journal-view": fun
   JournalView = require('views/outgame/journal/journal-view');
 
   module.exports = TwoplusFriendsJournalView = (function(_super) {
-
     __extends(TwoplusFriendsJournalView, _super);
 
     TwoplusFriendsJournalView.prototype.template = template;
@@ -66188,10 +66342,9 @@ window.require.define({"views/outgame/journal/twoplus-friends-journal-view": fun
 
   })(JournalView);
   
-}});
-
-window.require.define({"views/outgame/login-view": function(exports, require, module) {
-  var LoginView, View, template,
+});
+window.require.register("views/outgame/login-view", function(exports, require, module) {
+  var LoginView, View, template, _ref,
     __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
@@ -66200,11 +66353,11 @@ window.require.define({"views/outgame/login-view": function(exports, require, mo
   template = require('views/templates/outgame/login');
 
   module.exports = LoginView = (function(_super) {
-
     __extends(LoginView, _super);
 
     function LoginView() {
-      return LoginView.__super__.constructor.apply(this, arguments);
+      _ref = LoginView.__super__.constructor.apply(this, arguments);
+      return _ref;
     }
 
     LoginView.prototype.template = template;
@@ -66221,6 +66374,7 @@ window.require.define({"views/outgame/login-view": function(exports, require, mo
 
     LoginView.prototype.animateFacebook = function() {
       var _this = this;
+
       this.animInterval = setInterval(function() {
         return $('.facebook-login').addClass('animated tada').one('webkitAnimationEnd', function() {
           return $(this).removeClass('animated tada');
@@ -66253,10 +66407,9 @@ window.require.define({"views/outgame/login-view": function(exports, require, mo
 
   })(View);
   
-}});
-
-window.require.define({"views/outgame/more-games-view": function(exports, require, module) {
-  var MoreGamesView, View, template,
+});
+window.require.register("views/outgame/more-games-view", function(exports, require, module) {
+  var MoreGamesView, View, template, _ref,
     __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
@@ -66265,11 +66418,11 @@ window.require.define({"views/outgame/more-games-view": function(exports, requir
   template = require('views/templates/outgame/more-games');
 
   module.exports = MoreGamesView = (function(_super) {
-
     __extends(MoreGamesView, _super);
 
     function MoreGamesView() {
-      return MoreGamesView.__super__.constructor.apply(this, arguments);
+      _ref = MoreGamesView.__super__.constructor.apply(this, arguments);
+      return _ref;
     }
 
     MoreGamesView.prototype.autoRender = true;
@@ -66288,10 +66441,9 @@ window.require.define({"views/outgame/more-games-view": function(exports, requir
 
   })(View);
   
-}});
-
-window.require.define({"views/outgame/options-view": function(exports, require, module) {
-  var OptionsView, View, template,
+});
+window.require.register("views/outgame/options-view", function(exports, require, module) {
+  var OptionsView, View, template, _ref,
     __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
@@ -66300,11 +66452,11 @@ window.require.define({"views/outgame/options-view": function(exports, require, 
   template = require('views/templates/outgame/options');
 
   module.exports = OptionsView = (function(_super) {
-
     __extends(OptionsView, _super);
 
     function OptionsView() {
-      return OptionsView.__super__.constructor.apply(this, arguments);
+      _ref = OptionsView.__super__.constructor.apply(this, arguments);
+      return _ref;
     }
 
     OptionsView.prototype.template = template;
@@ -66327,10 +66479,9 @@ window.require.define({"views/outgame/options-view": function(exports, require, 
 
   })(View);
   
-}});
-
-window.require.define({"views/outgame/profile-view": function(exports, require, module) {
-  var ProfileView, View, mediator, template,
+});
+window.require.register("views/outgame/profile-view", function(exports, require, module) {
+  var ProfileView, View, mediator, template, _ref,
     __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
@@ -66341,11 +66492,11 @@ window.require.define({"views/outgame/profile-view": function(exports, require, 
   mediator = require('mediator');
 
   module.exports = ProfileView = (function(_super) {
-
     __extends(ProfileView, _super);
 
     function ProfileView() {
-      return ProfileView.__super__.constructor.apply(this, arguments);
+      _ref = ProfileView.__super__.constructor.apply(this, arguments);
+      return _ref;
     }
 
     ProfileView.prototype.template = template;
@@ -66360,18 +66511,13 @@ window.require.define({"views/outgame/profile-view": function(exports, require, 
       return this.options;
     };
 
-    ProfileView.prototype.activateFbButton = function() {
-      return $('.facebook-link').addClass('');
-    };
-
     return ProfileView;
 
   })(View);
   
-}});
-
-window.require.define({"views/outgame/shop-view": function(exports, require, module) {
-  var ShopView, View, mediator, template,
+});
+window.require.register("views/outgame/shop-view", function(exports, require, module) {
+  var ShopView, View, mediator, template, _ref,
     __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
@@ -66382,11 +66528,11 @@ window.require.define({"views/outgame/shop-view": function(exports, require, mod
   View = require('views/base/view');
 
   module.exports = ShopView = (function(_super) {
-
     __extends(ShopView, _super);
 
     function ShopView() {
-      return ShopView.__super__.constructor.apply(this, arguments);
+      _ref = ShopView.__super__.constructor.apply(this, arguments);
+      return _ref;
     }
 
     ShopView.prototype.autoRender = true;
@@ -66428,6 +66574,7 @@ window.require.define({"views/outgame/shop-view": function(exports, require, mod
 
     ShopView.prototype.disableUnavailablePacks = function(packIds) {
       var packId, _i, _len, _results;
+
       _results = [];
       for (_i = 0, _len = packIds.length; _i < _len; _i++) {
         packId = packIds[_i];
@@ -66450,10 +66597,9 @@ window.require.define({"views/outgame/shop-view": function(exports, require, mod
 
   })(View);
   
-}});
-
-window.require.define({"views/outgame/tutorial-view": function(exports, require, module) {
-  var TutorialView, View, template,
+});
+window.require.register("views/outgame/tutorial-view", function(exports, require, module) {
+  var TutorialView, View, template, _ref,
     __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
@@ -66462,11 +66608,11 @@ window.require.define({"views/outgame/tutorial-view": function(exports, require,
   template = require('views/templates/outgame/tutorial');
 
   module.exports = TutorialView = (function(_super) {
-
     __extends(TutorialView, _super);
 
     function TutorialView() {
-      return TutorialView.__super__.constructor.apply(this, arguments);
+      _ref = TutorialView.__super__.constructor.apply(this, arguments);
+      return _ref;
     }
 
     TutorialView.prototype.template = template;
@@ -66490,760 +66636,718 @@ window.require.define({"views/outgame/tutorial-view": function(exports, require,
 
   })(View);
   
-}});
-
-window.require.define({"views/templates/ingame/game-over": function(exports, require, module) {
+});
+window.require.register("views/templates/ingame/game-over", function(exports, require, module) {
   module.exports = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
-    helpers = helpers || Handlebars.helpers;
-    var buffer = "", stack1, foundHelper, functionType="function", escapeExpression=this.escapeExpression, helperMissing=helpers.helperMissing, self=this;
+    this.compilerInfo = [2,'>= 1.0.0-rc.3'];
+  helpers = helpers || Handlebars.helpers; data = data || {};
+    var buffer = "", stack1, stack2, options, functionType="function", escapeExpression=this.escapeExpression, helperMissing=helpers.helperMissing, self=this;
 
   function program1(depth0,data) {
     
-    var buffer = "", stack1, foundHelper;
+    var buffer = "", stack1;
     buffer += "\n        <tr>\n          <td class='name'>";
-    foundHelper = helpers.text;
-    if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
-    else { stack1 = depth0.text; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
-    buffer += escapeExpression(stack1) + "</td>\n          <td class='number'>";
-    foundHelper = helpers.number;
-    if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
-    else { stack1 = depth0.number; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
-    buffer += escapeExpression(stack1) + "</td>\n        </tr>\n        ";
-    return buffer;}
+    if (stack1 = helpers.text) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+    else { stack1 = depth0.text; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+    buffer += escapeExpression(stack1)
+      + "</td>\n          <td class='number'>";
+    if (stack1 = helpers.number) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+    else { stack1 = depth0.number; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+    buffer += escapeExpression(stack1)
+      + "</td>\n        </tr>\n        ";
+    return buffer;
+    }
 
-    buffer += "<div class=\"header-container\">\n  <a href=\"#home\" class=\"home-btn\"></a>\n  <div id=\"title\" class=\"title\"></div>\n</div>\n\n<div id='numbers'>\n  <span id='hearts' class='number'>";
-    stack1 = depth0.player;
-    stack1 = stack1 == null || stack1 === false ? stack1 : stack1.health;
-    stack1 = typeof stack1 === functionType ? stack1() : stack1;
-    buffer += escapeExpression(stack1) + "</span>\n  <span id='heart-icon' class='icon'></span>\n  <span id='credits' class='number'>";
-    stack1 = depth0.player;
-    stack1 = stack1 == null || stack1 === false ? stack1 : stack1.credits;
-    stack1 = typeof stack1 === functionType ? stack1() : stack1;
-    buffer += escapeExpression(stack1) + "</span>\n  <span id='credit-icon' class='icon'></span>\n</div>\n\n\n<div class=\"content-container\">\n  <h1 class=\"title box-align\">\n    Bravo, tu as gagné <span class=\"jetons-number\">";
-    stack1 = depth0.params;
-    stack1 = stack1 == null || stack1 === false ? stack1 : stack1.reward;
-    stack1 = typeof stack1 === functionType ? stack1() : stack1;
-    buffer += escapeExpression(stack1) + "</span> <span class=\"jetons\"></span> !\n  </h1>\n\n  <div class=\"blocks-container\">\n    <div class=\"block jackpot\">\n      <div class=\"title\"></div>\n      <div class=\"value\">";
-    stack1 = depth0.params;
-    stack1 = stack1 == null || stack1 === false ? stack1 : stack1.jackpot;
-    foundHelper = helpers.niceNumber;
-    stack1 = foundHelper ? foundHelper.call(depth0, stack1, {hash:{}}) : helperMissing.call(depth0, "niceNumber", stack1, {hash:{}});
-    buffer += escapeExpression(stack1) + "</div>\n    </div>\n\n    <div class='block stats'>\n\n\n      <table id='stats'>\n        ";
-    stack1 = depth0.params;
-    stack1 = stack1 == null || stack1 === false ? stack1 : stack1.stats;
-    stack1 = helpers.each.call(depth0, stack1, {hash:{},inverse:self.noop,fn:self.program(1, program1, data)});
-    if(stack1 || stack1 === 0) { buffer += stack1; }
+    buffer += "<div class=\"header-container\">\n  <a href=\"#home\" class=\"home-btn\"></a>\n  <div id=\"title\" class=\"title\"></div>\n</div>\n\n<div id='numbers'>\n  <span id='hearts' class='number'>"
+      + escapeExpression(((stack1 = ((stack1 = depth0.player),stack1 == null || stack1 === false ? stack1 : stack1.health)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+      + "</span>\n  <span id='heart-icon' class='icon'></span>\n  <span id='credits' class='number'>"
+      + escapeExpression(((stack1 = ((stack1 = depth0.player),stack1 == null || stack1 === false ? stack1 : stack1.credits)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+      + "</span>\n  <span id='credit-icon' class='icon'></span>\n</div>\n\n\n<div class=\"content-container\">\n  <h1 class=\"title box-align\">\n    Bravo, tu as gagné <span class=\"jetons-number\">"
+      + escapeExpression(((stack1 = ((stack1 = depth0.params),stack1 == null || stack1 === false ? stack1 : stack1.reward)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+      + "</span> <span class=\"jetons\"></span> !\n  </h1>\n\n  <div class=\"blocks-container\">\n    <div class=\"block jackpot\">\n      <div class=\"title\"></div>\n      <div class=\"value\">";
+    options = {hash:{},data:data};
+    buffer += escapeExpression(((stack1 = helpers.niceNumber),stack1 ? stack1.call(depth0, ((stack1 = depth0.params),stack1 == null || stack1 === false ? stack1 : stack1.jackpot), options) : helperMissing.call(depth0, "niceNumber", ((stack1 = depth0.params),stack1 == null || stack1 === false ? stack1 : stack1.jackpot), options)))
+      + "</div>\n    </div>\n\n    <div class='block stats'>\n\n\n      <table id='stats'>\n        ";
+    stack2 = helpers.each.call(depth0, ((stack1 = depth0.params),stack1 == null || stack1 === false ? stack1 : stack1.stats), {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
+    if(stack2 || stack2 === 0) { buffer += stack2; }
     buffer += "\n      </table>\n    </div>\n\n  </div>\n\n  <a href=\"#game\" class=\"replay-btn\"></a>\n</div>\n";
-    return buffer;});
-}});
-
-window.require.define({"views/templates/ingame/stages/dupa-stage": function(exports, require, module) {
+    return buffer;
+    });
+});
+window.require.register("views/templates/ingame/stages/dupa-stage", function(exports, require, module) {
   module.exports = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
-    helpers = helpers || Handlebars.helpers;
+    this.compilerInfo = [2,'>= 1.0.0-rc.3'];
+  helpers = helpers || Handlebars.helpers; data = data || {};
     var buffer = "", stack1, functionType="function", escapeExpression=this.escapeExpression, self=this;
 
   function program1(depth0,data) {
     
-    var buffer = "", stack1, foundHelper;
+    var buffer = "", stack1;
     buffer += "\n    <div class='bonus' id='";
-    foundHelper = helpers.name;
-    if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
-    else { stack1 = depth0.name; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
-    buffer += escapeExpression(stack1) + "' style=\"background-image: url('images/ingame/";
-    foundHelper = helpers.name;
-    if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
-    else { stack1 = depth0.name; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
-    buffer += escapeExpression(stack1) + ".png')\">\n      <div class='quantity'>";
-    foundHelper = helpers.quantity;
-    if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
-    else { stack1 = depth0.quantity; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
-    buffer += escapeExpression(stack1) + "</div>\n    </div>\n  ";
-    return buffer;}
+    if (stack1 = helpers.name) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+    else { stack1 = depth0.name; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+    buffer += escapeExpression(stack1)
+      + "' style='background-image: url(\"../images/ingame/";
+    if (stack1 = helpers.name) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+    else { stack1 = depth0.name; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+    buffer += escapeExpression(stack1)
+      + ".png\")'>\n      <div class='quantity'>";
+    if (stack1 = helpers.quantity) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+    else { stack1 = depth0.quantity; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+    buffer += escapeExpression(stack1)
+      + "</div>\n    </div>\n  ";
+    return buffer;
+    }
 
   function program3(depth0,data) {
     
     var buffer = "";
-    buffer += "\n    <div class='threshold' data-value=\"";
-    depth0 = typeof depth0 === functionType ? depth0() : depth0;
-    buffer += escapeExpression(depth0) + "\">";
-    depth0 = typeof depth0 === functionType ? depth0() : depth0;
-    buffer += escapeExpression(depth0) + "</div>\n  ";
-    return buffer;}
+    buffer += "\n    <div class='threshold' data-value=\""
+      + escapeExpression((typeof depth0 === functionType ? depth0.apply(depth0) : depth0))
+      + "\">"
+      + escapeExpression((typeof depth0 === functionType ? depth0.apply(depth0) : depth0))
+      + "</div>\n  ";
+    return buffer;
+    }
 
     buffer += "<div class=\"btn-menu\"></div>\n<div class='chrono-container'>\n  <div class='chrono-chrono'></div>\n  <div class='chrono-time'></div>\n  <div class='chrono-filler-container'>\n    <div class='chrono-filler'></div>\n  </div>\n</div>\n<div class='question-container'>\n  <div class='question-photo'></div>\n  <div class='question-theme-container'>\n    <div class='question-theme resize'></div>\n  </div>\n  <div class='question-content-container'>\n    <div class='question-content resize'></div>\n  </div>\n  <div class='question-propositions-container'>\n  </div>\n</div>\n<div class='bonus-container'>\n  ";
-    stack1 = depth0.bonus;
-    stack1 = helpers.each.call(depth0, stack1, {hash:{},inverse:self.noop,fn:self.program(1, program1, data)});
+    stack1 = helpers.each.call(depth0, depth0.bonus, {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
     if(stack1 || stack1 === 0) { buffer += stack1; }
     buffer += "\n</div>\n<div class='jackpot-container'>\n  <div id=\"total-jackpot\">0</div>\n  ";
-    stack1 = depth0.thresholds;
-    stack1 = helpers.each.call(depth0, stack1, {hash:{},inverse:self.noop,fn:self.program(3, program3, data)});
+    stack1 = helpers.each.call(depth0, depth0.thresholds, {hash:{},inverse:self.noop,fn:self.program(3, program3, data),data:data});
     if(stack1 || stack1 === 0) { buffer += stack1; }
     buffer += "\n  <div id='jackpot-marker'>\n</div>\n";
-    return buffer;});
-}});
-
-window.require.define({"views/templates/outgame/hall-of-fame": function(exports, require, module) {
+    return buffer;
+    });
+});
+window.require.register("views/templates/outgame/hall-of-fame", function(exports, require, module) {
   module.exports = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
-    helpers = helpers || Handlebars.helpers;
-    var buffer = "", stack1, foundHelper, functionType="function", escapeExpression=this.escapeExpression;
+    this.compilerInfo = [2,'>= 1.0.0-rc.3'];
+  helpers = helpers || Handlebars.helpers; data = data || {};
+    var buffer = "", stack1, functionType="function", escapeExpression=this.escapeExpression;
 
 
     buffer += "\n<!-- CONTENT BLOCK BEGIN -->\n<div class=\"content-container\">\n  <div class='tournament'>\n    <div id='HoF-days'></div>\n    <div id='HoF-hours'></div>\n    <div id='HoF-min'></div>\n  </div>\n  <div class=\"level\">niv.";
-    foundHelper = helpers.rank;
-    if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
-    else { stack1 = depth0.rank; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
-    buffer += escapeExpression(stack1) + "</div>\n  <div id=\"btn_HoF\">\n    <div class=\"friends active category\" id=\"btn-friends\"></div>\n    <div class=\"global category\" id=\"btn-global\"></div>\n  </div>\n  <div class=\"ranking-container\">\n  </div>\n</div>\n\n<!-- HEADER BLOCK BEGIN -->\n<div class=\"cash-container\">\n  <span class=\"life-value\">";
-    foundHelper = helpers.health;
-    if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
-    else { stack1 = depth0.health; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
-    buffer += escapeExpression(stack1) + "</span> <span id=\"life-icon\"></span>\n  <span class=\"cash-value\">";
-    foundHelper = helpers.credits;
-    if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
-    else { stack1 = depth0.credits; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
-    buffer += escapeExpression(stack1) + "</span> <span id=\"cash-icon\"></span>\n</div>\n<a href=\"#home\" class=\"home-btn\"></a>\n";
-    return buffer;});
-}});
-
-window.require.define({"views/templates/outgame/home": function(exports, require, module) {
+    if (stack1 = helpers.rank) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+    else { stack1 = depth0.rank; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+    buffer += escapeExpression(stack1)
+      + "</div>\n  <div id=\"btn_HoF\">\n    <div class=\"friends active category\" id=\"btn-friends\"></div>\n    <div class=\"global category\" id=\"btn-global\"></div>\n  </div>\n  <div class=\"ranking-container\" id=\"toto\">\n  </div>\n</div>\n\n<!-- HEADER BLOCK BEGIN -->\n<div class=\"cash-container\">\n  <span class=\"life-value\">";
+    if (stack1 = helpers.health) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+    else { stack1 = depth0.health; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+    buffer += escapeExpression(stack1)
+      + "</span> <span id=\"life-icon\"></span>\n  <span class=\"cash-value\">";
+    if (stack1 = helpers.credits) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+    else { stack1 = depth0.credits; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+    buffer += escapeExpression(stack1)
+      + "</span> <span id=\"cash-icon\"></span>\n</div>\n<a href=\"#profile\" class=\"home-btn\"></a>\n";
+    return buffer;
+    });
+});
+window.require.register("views/templates/outgame/home", function(exports, require, module) {
   module.exports = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
-    helpers = helpers || Handlebars.helpers;
-    var buffer = "", stack1, foundHelper, functionType="function", escapeExpression=this.escapeExpression;
+    this.compilerInfo = [2,'>= 1.0.0-rc.3'];
+  helpers = helpers || Handlebars.helpers; data = data || {};
+    var buffer = "", stack1, functionType="function", escapeExpression=this.escapeExpression;
 
 
     buffer += "<div id='numbers'>\n  <span id='hearts' class='number'>";
-    foundHelper = helpers.hearts;
-    if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
-    else { stack1 = depth0.hearts; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
-    buffer += escapeExpression(stack1) + "</span>\n  <span id='heart-icon' class='icon'></span>\n  <span id='credits' class='number'>";
-    foundHelper = helpers.credits;
-    if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
-    else { stack1 = depth0.credits; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
-    buffer += escapeExpression(stack1) + "</span>\n  <span id='credit-icon' class='icon'></span>\n</div>\n<div id='logo'></div>\n\n<div id='touch-me'></div>\n\n<div id='menu'>\n  <a class=\"game-link item\" id=\"game-link\"></a>\n  <a href=\"#shop\" class=\"shop-link item\"></a>\n  <div class=\"small-buttons-container\">\n    <a href=\"#profile\" class=\"profile item\"></a>\n    <a href=\"#options\" class=\"options-link item\"></a>\n  </div>\n</div>\n<a href=\"#more-games\" class=\"more-games-link\"></a>\n";
-    return buffer;});
-}});
-
-window.require.define({"views/templates/outgame/journal/no-friends-journal": function(exports, require, module) {
+    if (stack1 = helpers.hearts) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+    else { stack1 = depth0.hearts; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+    buffer += escapeExpression(stack1)
+      + "</span>\n  <span id='heart-icon' class='icon'></span>\n  <span id='credits' class='number'>";
+    if (stack1 = helpers.credits) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+    else { stack1 = depth0.credits; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+    buffer += escapeExpression(stack1)
+      + "</span>\n  <span id='credit-icon' class='icon'></span>\n</div>\n<div id='logo'></div>\n\n<div id='touch-me'>Touche pour afficher la Une</div>\n\n<div id='menu'>\n  <a class=\"game-link item\" id=\"game-link\"></a>\n  <a href=\"#shop\" class=\"shop-link item\"></a>\n  <div class=\"small-buttons-container\">\n    <a href=\"#profile\" class=\"profile item\"></a>\n    <a href=\"#options\" class=\"options-link item\"></a>\n  </div>\n</div>\n<a href=\"#more-games\" class=\"more-games-link\"></a>\n";
+    return buffer;
+    });
+});
+window.require.register("views/templates/outgame/journal/no-friends-journal", function(exports, require, module) {
   module.exports = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
-    helpers = helpers || Handlebars.helpers;
-    var buffer = "", stack1, foundHelper, functionType="function", escapeExpression=this.escapeExpression, self=this;
+    this.compilerInfo = [2,'>= 1.0.0-rc.3'];
+  helpers = helpers || Handlebars.helpers; data = data || {};
+    var buffer = "", stack1, functionType="function", escapeExpression=this.escapeExpression, self=this;
 
   function program1(depth0,data) {
     
-    var buffer = "", stack1, foundHelper;
+    var buffer = "", stack1;
     buffer += "\n    <div id='photo' style='background-image:url(https://graph.facebook.com/";
-    foundHelper = helpers.fb_id;
-    if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
-    else { stack1 = depth0.fb_id; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
-    buffer += escapeExpression(stack1) + "/picture?width=90&height=90)'></div>\n  ";
-    return buffer;}
+    if (stack1 = helpers.fb_id) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+    else { stack1 = depth0.fb_id; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+    buffer += escapeExpression(stack1)
+      + "/picture?width=90&height=90)'></div>\n  ";
+    return buffer;
+    }
 
   function program3(depth0,data) {
     
     
-    return "\n    <div id='photo' style='background-image:url(http://media.comicvine.com/uploads/7/77914/2109064-4char_forever_alone_guy_high_resolution_icon.png)'></div>\n  ";}
+    return "\n    <div id='photo' style='background-image:url(http://media.comicvine.com/uploads/7/77914/2109064-4char_forever_alone_guy_high_resolution_icon.png)'></div>\n  ";
+    }
 
   function program5(depth0,data) {
     
-    var buffer = "", stack1, foundHelper;
+    var buffer = "", stack1;
     buffer += "\n    <span class='participant'>\n      <div class='rank'>";
-    foundHelper = helpers.position;
-    if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
-    else { stack1 = depth0.position; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
-    buffer += escapeExpression(stack1) + "</div>\n      ";
-    stack1 = depth0.fb_id;
-    stack1 = helpers['if'].call(depth0, stack1, {hash:{},inverse:self.program(8, program8, data),fn:self.program(6, program6, data)});
+    if (stack1 = helpers.position) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+    else { stack1 = depth0.position; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+    buffer += escapeExpression(stack1)
+      + "</div>\n      ";
+    stack1 = helpers['if'].call(depth0, depth0.fb_id, {hash:{},inverse:self.program(8, program8, data),fn:self.program(6, program6, data),data:data});
     if(stack1 || stack1 === 0) { buffer += stack1; }
     buffer += "\n      <div class='blaze'>";
-    foundHelper = helpers.username;
-    if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
-    else { stack1 = depth0.username; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
-    buffer += escapeExpression(stack1) + "</div>\n      <div class='score'>";
-    foundHelper = helpers.score;
-    if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
-    else { stack1 = depth0.score; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
-    buffer += escapeExpression(stack1) + "</div>\n    </span>\n    <span class='spacer'></span>\n  ";
-    return buffer;}
+    if (stack1 = helpers.username) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+    else { stack1 = depth0.username; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+    buffer += escapeExpression(stack1)
+      + "</div>\n      <div class='score'>";
+    if (stack1 = helpers.score) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+    else { stack1 = depth0.score; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+    buffer += escapeExpression(stack1)
+      + "</div>\n    </span>\n    <span class='spacer'></span>\n  ";
+    return buffer;
+    }
   function program6(depth0,data) {
     
-    var buffer = "", stack1, foundHelper;
+    var buffer = "", stack1;
     buffer += "\n        <div class='photo' style='background-image:url(https://graph.facebook.com/";
-    foundHelper = helpers.fb_id;
-    if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
-    else { stack1 = depth0.fb_id; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
-    buffer += escapeExpression(stack1) + "/picture?width=90&height=90)'></div>\n      ";
-    return buffer;}
+    if (stack1 = helpers.fb_id) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+    else { stack1 = depth0.fb_id; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+    buffer += escapeExpression(stack1)
+      + "/picture?width=90&height=90)'></div>\n      ";
+    return buffer;
+    }
 
   function program8(depth0,data) {
     
     
-    return "\n        <div class='photo' style='background-image:url(images/common/facebook-default.jpg)'></div>\n      ";}
+    return "\n        <div class='photo' style='background-image:url(images/common/facebook-default.jpg)'></div>\n      ";
+    }
 
     buffer += "<div id='equipe-btn'></div>\n<div id='date'>EDITION DU ";
-    foundHelper = helpers.date;
-    if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
-    else { stack1 = depth0.date; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
-    buffer += escapeExpression(stack1) + "</div>\n<div id='title'><span id='exculsive'>exclusif !</span> ";
-    foundHelper = helpers.username;
-    if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
-    else { stack1 = depth0.username; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
-    buffer += escapeExpression(stack1) + "</div>\n<div id='photo-container'>\n  ";
-    stack1 = depth0.fb_id;
-    stack1 = helpers['if'].call(depth0, stack1, {hash:{},inverse:self.program(3, program3, data),fn:self.program(1, program1, data)});
+    if (stack1 = helpers.date) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+    else { stack1 = depth0.date; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+    buffer += escapeExpression(stack1)
+      + "</div>\n<div id='title'><span id='exculsive'>exclusif !</span> ";
+    if (stack1 = helpers.username) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+    else { stack1 = depth0.username; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+    buffer += escapeExpression(stack1)
+      + "</div>\n<div id='photo-container'>\n  ";
+    stack1 = helpers['if'].call(depth0, depth0.fb_id, {hash:{},inverse:self.program(3, program3, data),fn:self.program(1, program1, data),data:data});
     if(stack1 || stack1 === 0) { buffer += stack1; }
     buffer += "\n</div>\n<div id='message'>joue a sport quiz mais n'a toujours pas d'amis !</div>\n<a id='invite-btn'></a>\n<div id='countdown'>\n  <span id='days' class='number'>00</span>\n  <span id='hours' class='number'>00</span>\n  <span id='minutes' class='number'>00</span>\n</div>\n<div id='ranking'>\n  ";
-    stack1 = depth0.participants;
-    stack1 = helpers.each.call(depth0, stack1, {hash:{},inverse:self.noop,fn:self.program(5, program5, data)});
+    stack1 = helpers.each.call(depth0, depth0.participants, {hash:{},inverse:self.noop,fn:self.program(5, program5, data),data:data});
     if(stack1 || stack1 === 0) { buffer += stack1; }
     buffer += "\n</div>";
-    return buffer;});
-}});
-
-window.require.define({"views/templates/outgame/journal/one-friend-journal": function(exports, require, module) {
+    return buffer;
+    });
+});
+window.require.register("views/templates/outgame/journal/one-friend-journal", function(exports, require, module) {
   module.exports = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
-    helpers = helpers || Handlebars.helpers;
-    var buffer = "", stack1, foundHelper, functionType="function", escapeExpression=this.escapeExpression, self=this;
+    this.compilerInfo = [2,'>= 1.0.0-rc.3'];
+  helpers = helpers || Handlebars.helpers; data = data || {};
+    var buffer = "", stack1, functionType="function", escapeExpression=this.escapeExpression, self=this;
 
   function program1(depth0,data) {
     
-    var buffer = "", stack1, foundHelper;
+    var buffer = "", stack1;
     buffer += "\n  <div class='participant'>\n    ";
-    stack1 = depth0.fb_id;
-    stack1 = helpers['if'].call(depth0, stack1, {hash:{},inverse:self.program(4, program4, data),fn:self.program(2, program2, data)});
+    stack1 = helpers['if'].call(depth0, depth0.fb_id, {hash:{},inverse:self.program(4, program4, data),fn:self.program(2, program2, data),data:data});
     if(stack1 || stack1 === 0) { buffer += stack1; }
     buffer += "\n    <div class='blaze'>";
-    foundHelper = helpers.username;
-    if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
-    else { stack1 = depth0.username; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
-    buffer += escapeExpression(stack1) + "</div>\n    <div class='score'>";
-    foundHelper = helpers.score;
-    if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
-    else { stack1 = depth0.score; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
-    buffer += escapeExpression(stack1) + "</div>\n  </div>\n  ";
-    return buffer;}
+    if (stack1 = helpers.username) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+    else { stack1 = depth0.username; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+    buffer += escapeExpression(stack1)
+      + "</div>\n    <div class='score'>";
+    if (stack1 = helpers.score) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+    else { stack1 = depth0.score; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+    buffer += escapeExpression(stack1)
+      + "</div>\n  </div>\n  ";
+    return buffer;
+    }
   function program2(depth0,data) {
     
-    var buffer = "", stack1, foundHelper;
+    var buffer = "", stack1;
     buffer += "\n      <div class='photo' style='background-image:url(https://graph.facebook.com/";
-    foundHelper = helpers.fb_id;
-    if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
-    else { stack1 = depth0.fb_id; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
-    buffer += escapeExpression(stack1) + "/picture?width=90&height=90)'></div>\n    ";
-    return buffer;}
+    if (stack1 = helpers.fb_id) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+    else { stack1 = depth0.fb_id; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+    buffer += escapeExpression(stack1)
+      + "/picture?width=90&height=90)'></div>\n    ";
+    return buffer;
+    }
 
   function program4(depth0,data) {
     
     
-    return "\n      <div class='photo' style='background-image:url(images/common/facebook-default.jpg)'></div>\n    ";}
+    return "\n      <div class='photo' style='background-image:url(images/common/facebook-default.jpg)'></div>\n    ";
+    }
 
     buffer += "<div id='equipe-btn'></div>\n<div id='date'>EDITION DU ";
-    foundHelper = helpers.date;
-    if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
-    else { stack1 = depth0.date; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
-    buffer += escapeExpression(stack1) + "</div>\n<div id='title'>";
-    foundHelper = helpers.winner;
-    if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
-    else { stack1 = depth0.winner; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
-    buffer += escapeExpression(stack1) + " a mis sa patee a ";
-    foundHelper = helpers.loser;
-    if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
-    else { stack1 = depth0.loser; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
-    buffer += escapeExpression(stack1) + "</div>\n<div id='vs'>\n  ";
-    stack1 = depth0.participants;
-    stack1 = helpers.each.call(depth0, stack1, {hash:{},inverse:self.noop,fn:self.program(1, program1, data)});
+    if (stack1 = helpers.date) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+    else { stack1 = depth0.date; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+    buffer += escapeExpression(stack1)
+      + "</div>\n<div id='title'>";
+    if (stack1 = helpers.winner) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+    else { stack1 = depth0.winner; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+    buffer += escapeExpression(stack1)
+      + " a mis sa patee a ";
+    if (stack1 = helpers.loser) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+    else { stack1 = depth0.loser; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+    buffer += escapeExpression(stack1)
+      + "</div>\n<div id='vs'>\n  ";
+    stack1 = helpers.each.call(depth0, depth0.participants, {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
     if(stack1 || stack1 === 0) { buffer += stack1; }
     buffer += "\n</div>\n<div id='buttons'>\n  <a id='invite-btn'></a>\n  <a id='ranking-btn' href=\"#masters\"></a>\n</div>";
-    return buffer;});
-}});
-
-window.require.define({"views/templates/outgame/journal/two-friends-journal": function(exports, require, module) {
+    return buffer;
+    });
+});
+window.require.register("views/templates/outgame/journal/two-friends-journal", function(exports, require, module) {
   module.exports = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
-    helpers = helpers || Handlebars.helpers;
-    var buffer = "", stack1, foundHelper, functionType="function", escapeExpression=this.escapeExpression, self=this;
+    this.compilerInfo = [2,'>= 1.0.0-rc.3'];
+  helpers = helpers || Handlebars.helpers; data = data || {};
+    var buffer = "", stack1, functionType="function", escapeExpression=this.escapeExpression, self=this;
 
   function program1(depth0,data) {
     
-    var buffer = "", stack1, foundHelper;
+    var buffer = "", stack1;
     buffer += "\n  <div class='participant' id='";
-    foundHelper = helpers.medal;
-    if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
-    else { stack1 = depth0.medal; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
-    buffer += escapeExpression(stack1) + "'>\n    ";
-    stack1 = depth0.fb_id;
-    stack1 = helpers['if'].call(depth0, stack1, {hash:{},inverse:self.program(4, program4, data),fn:self.program(2, program2, data)});
+    if (stack1 = helpers.medal) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+    else { stack1 = depth0.medal; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+    buffer += escapeExpression(stack1)
+      + "'>\n    ";
+    stack1 = helpers['if'].call(depth0, depth0.fb_id, {hash:{},inverse:self.program(4, program4, data),fn:self.program(2, program2, data),data:data});
     if(stack1 || stack1 === 0) { buffer += stack1; }
     buffer += "\n    <div class='rank'>";
-    foundHelper = helpers.rank;
-    if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
-    else { stack1 = depth0.rank; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
-    buffer += escapeExpression(stack1) + "</div>\n    <div class='blaze'>";
-    foundHelper = helpers.username;
-    if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
-    else { stack1 = depth0.username; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
-    buffer += escapeExpression(stack1) + "</div>\n    <div class='score'>";
-    foundHelper = helpers.score;
-    if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
-    else { stack1 = depth0.score; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
-    buffer += escapeExpression(stack1) + "</div>\n  </div>\n  ";
-    return buffer;}
+    if (stack1 = helpers.rank) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+    else { stack1 = depth0.rank; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+    buffer += escapeExpression(stack1)
+      + "</div>\n    <div class='blaze'>";
+    if (stack1 = helpers.username) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+    else { stack1 = depth0.username; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+    buffer += escapeExpression(stack1)
+      + "</div>\n    <div class='score'>";
+    if (stack1 = helpers.score) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+    else { stack1 = depth0.score; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+    buffer += escapeExpression(stack1)
+      + "</div>\n  </div>\n  ";
+    return buffer;
+    }
   function program2(depth0,data) {
     
-    var buffer = "", stack1, foundHelper;
+    var buffer = "", stack1;
     buffer += "\n      <div class='photo' style='background-image:url(https://graph.facebook.com/";
-    foundHelper = helpers.fb_id;
-    if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
-    else { stack1 = depth0.fb_id; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
-    buffer += escapeExpression(stack1) + "/picture?width=90&height=90)'></div>\n    ";
-    return buffer;}
+    if (stack1 = helpers.fb_id) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+    else { stack1 = depth0.fb_id; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+    buffer += escapeExpression(stack1)
+      + "/picture?width=90&height=90)'></div>\n    ";
+    return buffer;
+    }
 
   function program4(depth0,data) {
     
     
-    return "\n      <div class='photo' style='background-image:url(images/common/facebook-default.jpg)'></div>\n    ";}
+    return "\n      <div class='photo' style='background-image:url(images/common/facebook-default.jpg)'></div>\n    ";
+    }
 
     buffer += "<div id='equipe-btn'></div>\n<div id='date'>EDITION DU ";
-    foundHelper = helpers.date;
-    if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
-    else { stack1 = depth0.date; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
-    buffer += escapeExpression(stack1) + "</div>\n<div id='title'>";
-    foundHelper = helpers.master;
-    if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
-    else { stack1 = depth0.master; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
-    buffer += escapeExpression(stack1) + " maitrise ses amis</div>\n<div id='podium'>\n  ";
-    stack1 = depth0.participants;
-    stack1 = helpers.each.call(depth0, stack1, {hash:{},inverse:self.noop,fn:self.program(1, program1, data)});
+    if (stack1 = helpers.date) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+    else { stack1 = depth0.date; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+    buffer += escapeExpression(stack1)
+      + "</div>\n<div id='title'>";
+    if (stack1 = helpers.master) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+    else { stack1 = depth0.master; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+    buffer += escapeExpression(stack1)
+      + " maitrise ses amis</div>\n<div id='podium'>\n  ";
+    stack1 = helpers.each.call(depth0, depth0.participants, {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
     if(stack1 || stack1 === 0) { buffer += stack1; }
     buffer += "\n</div>\n<div id='buttons'>\n  <a id='invite-btn'></a>\n  <a id='ranking-btn' href='#masters'></a>\n</div>";
-    return buffer;});
-}});
-
-window.require.define({"views/templates/outgame/journal/twoplus-friends-journal": function(exports, require, module) {
+    return buffer;
+    });
+});
+window.require.register("views/templates/outgame/journal/twoplus-friends-journal", function(exports, require, module) {
   module.exports = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
-    helpers = helpers || Handlebars.helpers;
-    var buffer = "", stack1, foundHelper, functionType="function", escapeExpression=this.escapeExpression, self=this, helperMissing=helpers.helperMissing;
+    this.compilerInfo = [2,'>= 1.0.0-rc.3'];
+  helpers = helpers || Handlebars.helpers; data = data || {};
+    var buffer = "", stack1, stack2, options, functionType="function", escapeExpression=this.escapeExpression, self=this, helperMissing=helpers.helperMissing;
 
   function program1(depth0,data) {
     
-    var buffer = "", stack1, foundHelper;
+    var buffer = "", stack1;
     buffer += "\n    <tr class='participant'>\n      <td class='rank'>";
-    foundHelper = helpers.iPlus1;
-    if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
-    else { stack1 = depth0.iPlus1; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
-    buffer += escapeExpression(stack1) + "</td>\n      <td class='photo'>\n      ";
-    stack1 = depth0.fb_id;
-    stack1 = helpers['if'].call(depth0, stack1, {hash:{},inverse:self.program(4, program4, data),fn:self.program(2, program2, data)});
+    if (stack1 = helpers.iPlus1) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+    else { stack1 = depth0.iPlus1; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+    buffer += escapeExpression(stack1)
+      + "</td>\n      <td class='photo'>\n      ";
+    stack1 = helpers['if'].call(depth0, depth0.fb_id, {hash:{},inverse:self.program(4, program4, data),fn:self.program(2, program2, data),data:data});
     if(stack1 || stack1 === 0) { buffer += stack1; }
     buffer += "\n      </td>\n      <td class='blaze'>";
-    foundHelper = helpers.username;
-    if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
-    else { stack1 = depth0.username; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
-    buffer += escapeExpression(stack1) + "</td>\n      <td class='score'>";
-    foundHelper = helpers.score;
-    if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
-    else { stack1 = depth0.score; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
-    buffer += escapeExpression(stack1) + "</td>\n    </tr>\n    ";
-    return buffer;}
+    if (stack1 = helpers.username) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+    else { stack1 = depth0.username; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+    buffer += escapeExpression(stack1)
+      + "</td>\n      <td class='score'>";
+    if (stack1 = helpers.score) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+    else { stack1 = depth0.score; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+    buffer += escapeExpression(stack1)
+      + "</td>\n    </tr>\n    ";
+    return buffer;
+    }
   function program2(depth0,data) {
     
-    var buffer = "", stack1, foundHelper;
+    var buffer = "", stack1;
     buffer += "\n        <div style='background-image:url(https://graph.facebook.com/";
-    foundHelper = helpers.fb_id;
-    if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
-    else { stack1 = depth0.fb_id; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
-    buffer += escapeExpression(stack1) + "/picture?width=90&height=90)'></div>\n      ";
-    return buffer;}
+    if (stack1 = helpers.fb_id) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+    else { stack1 = depth0.fb_id; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+    buffer += escapeExpression(stack1)
+      + "/picture?width=90&height=90)'></div>\n      ";
+    return buffer;
+    }
 
   function program4(depth0,data) {
     
     
-    return "\n        <div style='background-image:url(images/common/facebook-default.jpg)'></div>\n      ";}
+    return "\n        <div style='background-image:url(images/common/facebook-default.jpg)'></div>\n      ";
+    }
 
     buffer += "<div id='equipe-btn'></div>\n<div id='date'>EDITION DU ";
-    foundHelper = helpers.date;
-    if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
-    else { stack1 = depth0.date; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
-    buffer += escapeExpression(stack1) + "</div>\n<div id='title'>";
-    foundHelper = helpers.title;
-    if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
-    else { stack1 = depth0.title; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
-    buffer += escapeExpression(stack1) + "</div>\n<div id='leaderboard-container'>\n  <table id='leaderboard'>\n    ";
-    stack1 = depth0.participants;
-    foundHelper = helpers.each_with_index;
-    stack1 = foundHelper ? foundHelper.call(depth0, stack1, {hash:{},inverse:self.noop,fn:self.program(1, program1, data)}) : helperMissing.call(depth0, "each_with_index", stack1, {hash:{},inverse:self.noop,fn:self.program(1, program1, data)});
-    if(stack1 || stack1 === 0) { buffer += stack1; }
+    if (stack1 = helpers.date) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+    else { stack1 = depth0.date; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+    buffer += escapeExpression(stack1)
+      + "</div>\n<div id='title'>";
+    if (stack1 = helpers.title) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+    else { stack1 = depth0.title; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+    buffer += escapeExpression(stack1)
+      + "</div>\n<div id='leaderboard-container'>\n  <table id='leaderboard'>\n    ";
+    options = {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data};
+    stack2 = ((stack1 = helpers.each_with_index),stack1 ? stack1.call(depth0, depth0.participants, options) : helperMissing.call(depth0, "each_with_index", depth0.participants, options));
+    if(stack2 || stack2 === 0) { buffer += stack2; }
     buffer += "\n  </table>\n</div>\n<div id='buttons'>\n  <a id='invite-btn'></a>\n  <a id='ranking-btn' href='#masters'></a>\n</div>";
-    return buffer;});
-}});
-
-window.require.define({"views/templates/outgame/login": function(exports, require, module) {
+    return buffer;
+    });
+});
+window.require.register("views/templates/outgame/login", function(exports, require, module) {
   module.exports = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
-    helpers = helpers || Handlebars.helpers;
+    this.compilerInfo = [2,'>= 1.0.0-rc.3'];
+  helpers = helpers || Handlebars.helpers; data = data || {};
     
 
 
-    return "<div id='flipper'>\n  <div class=\"btn-container\">\n    <a href=\"#\" id=\"facebook-login\" class=\"facebook-login\"></a>\n    <a href=\"#\" id=\"equipe-login\" class=\"equipe-login\"></a>\n    <a href=\"#\" id=\"temp-login\" class=\"temp-login\"></a>\n  </div>\n  <div id='temp-form'>\n    <a id='close-btn'></a>\n    <form name='temp-login' id='temp-login-form' action='#'>\n      <input type='text' name='username' placeholder='username' required /><br />\n      <input type='submit' value='login' name='submit' id='temp-btn' />\n    </form>\n  </div>\n  <div id='equipe-forms'>\n    <a id='close-btn'></a>\n    <form name='sso-login' id='sso-login-form' action='#'>\n      <input type='text' name='username' placeholder='username' required /><br />\n      <input type='password' name='password' placeholder='password' required /><br />\n      <input type='submit' value='login' name='submit' id='login-btn' />\n    </form>\n    <p>or</p>\n    <form name='sso-register' id='sso-register-form' action='#'>\n      <input type='email' name='email' placeholder='email' required /><br />\n      <input type='text' name='username' placeholder='username' required /><br />\n      <input type='password' name='password' placeholder='password' required /><br />\n      <input type='submit' value='register' name='submit' id='register-btn' />\n    </form>\n  </div>\n</div>";});
-}});
-
-window.require.define({"views/templates/outgame/more-games": function(exports, require, module) {
+    return "<div id='flipper'>\n  <div class=\"btn-container\">\n    <a href=\"#\" id=\"facebook-login\" class=\"facebook-login\"></a>\n    <a href=\"#\" id=\"equipe-login\" class=\"equipe-login\"></a>\n    <a href=\"#\" id=\"temp-login\" class=\"temp-login\"></a>\n  </div>\n  <div id='temp-form'>\n    <a id='close-btn'></a>\n    <form name='temp-login' id='temp-login-form' action='#'>\n      <input type='text' name='username' placeholder='username' required /><br />\n      <input type='submit' value='login' name='submit' id='temp-btn' />\n    </form>\n  </div>\n  <div id='equipe-forms'>\n    <a id='close-btn'></a>\n    <form name='sso-login' id='sso-login-form' action='#'>\n      <input type='text' name='username' placeholder='username' required /><br />\n      <input type='password' name='password' placeholder='password' required /><br />\n      <input type='submit' value='login' name='submit' id='login-btn' />\n    </form>\n    <p>or</p>\n    <form name='sso-register' id='sso-register-form' action='#'>\n      <input type='email' name='email' placeholder='email' required /><br />\n      <input type='text' name='username' placeholder='username' required /><br />\n      <input type='password' name='password' placeholder='password' required /><br />\n      <input type='submit' value='register' name='submit' id='register-btn' />\n    </form>\n  </div>\n</div>";
+    });
+});
+window.require.register("views/templates/outgame/more-games", function(exports, require, module) {
   module.exports = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
-    helpers = helpers || Handlebars.helpers;
+    this.compilerInfo = [2,'>= 1.0.0-rc.3'];
+  helpers = helpers || Handlebars.helpers; data = data || {};
     
 
 
-    return "<a href=\"#home\" id=\"btn-home\"></a>\n<div id=\"title\"></div>\n<div id=\"more-games-content\"></div>";});
-}});
-
-window.require.define({"views/templates/outgame/options": function(exports, require, module) {
+    return "<a href=\"#home\" id=\"btn-home\"></a>\n<div id=\"title\"></div>\n<div id=\"more-games-content\"></div>";
+    });
+});
+window.require.register("views/templates/outgame/options", function(exports, require, module) {
   module.exports = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
-    helpers = helpers || Handlebars.helpers;
-    var buffer = "", stack1, foundHelper, functionType="function", escapeExpression=this.escapeExpression;
+    this.compilerInfo = [2,'>= 1.0.0-rc.3'];
+  helpers = helpers || Handlebars.helpers; data = data || {};
+    var buffer = "", stack1, functionType="function", escapeExpression=this.escapeExpression;
 
 
     buffer += "<a href=\"#home\" class=\"home-btn\"></a>\n<div class=\"title\"></div>\n\n\n<div class=\"content-container\">\n  <div class=\"button ";
-    foundHelper = helpers.music;
-    if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
-    else { stack1 = depth0.music; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
-    buffer += escapeExpression(stack1) + "\" id=\"option-music\"></div>\n  <div class=\"button ";
-    foundHelper = helpers.fx;
-    if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
-    else { stack1 = depth0.fx; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
-    buffer += escapeExpression(stack1) + "\" id=\"option-fx\"></div>\n  <br />\n\n  <div class=\"button ";
-    foundHelper = helpers.info_notif;
-    if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
-    else { stack1 = depth0.info_notif; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
-    buffer += escapeExpression(stack1) + "\" id=\"option-info-notif\"></div>\n  <div class=\"button ";
-    foundHelper = helpers.facebook;
-    if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
-    else { stack1 = depth0.facebook; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
-    buffer += escapeExpression(stack1) + "\" id=\"option-facebook-connect\"></div>\n  <br />\n\n  <a class=\"button\" id=\"option-tutorial\" href='#tutorial'></a>\n  <div class=\"button\" id=\"option-help\"></div>\n  <br />\n\n  <div class=\"button\" id=\"option-credits\"></div>\n</div>\n";
-    return buffer;});
-}});
-
-window.require.define({"views/templates/outgame/profile": function(exports, require, module) {
+    if (stack1 = helpers.music) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+    else { stack1 = depth0.music; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+    buffer += escapeExpression(stack1)
+      + "\" id=\"option-music\"></div>\n  <div class=\"button ";
+    if (stack1 = helpers.fx) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+    else { stack1 = depth0.fx; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+    buffer += escapeExpression(stack1)
+      + "\" id=\"option-fx\"></div>\n  <br />\n\n  <div class=\"button ";
+    if (stack1 = helpers.info_notif) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+    else { stack1 = depth0.info_notif; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+    buffer += escapeExpression(stack1)
+      + "\" id=\"option-info-notif\"></div>\n  <div class=\"button ";
+    if (stack1 = helpers.facebook) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+    else { stack1 = depth0.facebook; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+    buffer += escapeExpression(stack1)
+      + "\" id=\"option-facebook-connect\"></div>\n  <br />\n\n  <a class=\"button\" id=\"option-tutorial\" href='#tutorial'></a>\n  <div class=\"button\" id=\"option-help\"></div>\n  <br />\n\n  <div class=\"button\" id=\"option-credits\"></div>\n</div>\n";
+    return buffer;
+    });
+});
+window.require.register("views/templates/outgame/profile", function(exports, require, module) {
   module.exports = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
-    helpers = helpers || Handlebars.helpers;
-    var buffer = "", stack1, foundHelper, functionType="function", escapeExpression=this.escapeExpression, helperMissing=helpers.helperMissing, self=this;
+    this.compilerInfo = [2,'>= 1.0.0-rc.3'];
+  helpers = helpers || Handlebars.helpers; data = data || {};
+    var buffer = "", stack1, stack2, options, functionType="function", escapeExpression=this.escapeExpression, helperMissing=helpers.helperMissing, self=this;
 
   function program1(depth0,data) {
     
-    
-    return "\n      <div class='facebook-link done'></div>\n    ";}
+    var buffer = "", stack1;
+    buffer += "\n            <tr>\n              <td class='left'>";
+    if (stack1 = helpers.text) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+    else { stack1 = depth0.text; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+    buffer += escapeExpression(stack1)
+      + "</td>\n              <td>";
+    if (stack1 = helpers.number) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+    else { stack1 = depth0.number; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+    buffer += escapeExpression(stack1)
+      + "</td>\n            </tr>\n          ";
+    return buffer;
+    }
 
   function program3(depth0,data) {
     
-    
-    return "\n      <div class='facebook-link'></div>\n    ";}
+    var buffer = "", stack1;
+    buffer += "\n    <div class='elem ";
+    if (stack1 = helpers.name) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+    else { stack1 = depth0.name; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+    buffer += escapeExpression(stack1)
+      + "'>\n      <div class='number'>";
+    if (stack1 = helpers.quantity) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+    else { stack1 = depth0.quantity; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+    buffer += escapeExpression(stack1)
+      + "</div>\n    </div>\n  ";
+    return buffer;
+    }
 
   function program5(depth0,data) {
     
-    var buffer = "", stack1, foundHelper;
-    buffer += "\n            <tr>\n              <td class='left'>";
-    foundHelper = helpers.text;
-    if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
-    else { stack1 = depth0.text; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
-    buffer += escapeExpression(stack1) + "</td>\n              <td>";
-    foundHelper = helpers.number;
-    if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
-    else { stack1 = depth0.number; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
-    buffer += escapeExpression(stack1) + "</td>\n            </tr>\n          ";
-    return buffer;}
+    var stack1;
+    if (stack1 = helpers.avatar) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+    else { stack1 = depth0.avatar; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+    return escapeExpression(stack1);
+    }
 
   function program7(depth0,data) {
     
-    var buffer = "", stack1, foundHelper;
-    buffer += "\n            <tr>\n              <td class='left'>";
-    foundHelper = helpers.text;
-    if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
-    else { stack1 = depth0.text; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
-    buffer += escapeExpression(stack1) + "</td>\n              <td>";
-    foundHelper = helpers.number;
-    if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
-    else { stack1 = depth0.number; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
-    buffer += escapeExpression(stack1) + "</td>\n            </tr>\n          ";
-    return buffer;}
-
-  function program9(depth0,data) {
-    
-    var buffer = "", stack1, foundHelper;
-    buffer += "\n    <div class='elem ";
-    foundHelper = helpers.name;
-    if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
-    else { stack1 = depth0.name; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
-    buffer += escapeExpression(stack1) + "'>\n      <div class='number'>";
-    foundHelper = helpers.quantity;
-    if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
-    else { stack1 = depth0.quantity; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
-    buffer += escapeExpression(stack1) + "</div>\n    </div>\n  ";
-    return buffer;}
-
-  function program11(depth0,data) {
-    
-    var stack1, foundHelper;
-    foundHelper = helpers.avatar;
-    if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
-    else { stack1 = depth0.avatar; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
-    return escapeExpression(stack1);}
-
-  function program13(depth0,data) {
-    
-    var buffer = "", stack1, foundHelper;
+    var buffer = "", stack1;
     buffer += "images/avatar/";
-    foundHelper = helpers.gender;
-    if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
-    else { stack1 = depth0.gender; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
-    buffer += escapeExpression(stack1) + ".jpg";
-    return buffer;}
+    if (stack1 = helpers.gender) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+    else { stack1 = depth0.gender; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+    buffer += escapeExpression(stack1)
+      + ".jpg";
+    return buffer;
+    }
 
-    buffer += "<!--MAIN BLOCK-->\n<div class='background'>\n  <div class='picture-container'>\n    <div class='picture' style='background-image: url(";
-    foundHelper = helpers.avatar;
-    if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
-    else { stack1 = depth0.avatar; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
-    buffer += escapeExpression(stack1) + ")'></div>\n    <div class='name'>";
-    stack1 = depth0.user;
-    stack1 = stack1 == null || stack1 === false ? stack1 : stack1.username;
-    stack1 = typeof stack1 === functionType ? stack1() : stack1;
-    buffer += escapeExpression(stack1) + "</div>\n  </div>\n  <div class='personal-info'>\n    <div class='level'>";
-    stack1 = depth0.user;
-    stack1 = stack1 == null || stack1 === false ? stack1 : stack1.rank;
-    stack1 = typeof stack1 === functionType ? stack1() : stack1;
-    buffer += escapeExpression(stack1) + "</div>\n    <div class='score'>";
-    stack1 = depth0.user;
-    stack1 = stack1 == null || stack1 === false ? stack1 : stack1.score;
-    foundHelper = helpers.niceNumber;
-    stack1 = foundHelper ? foundHelper.call(depth0, stack1, {hash:{}}) : helperMissing.call(depth0, "niceNumber", stack1, {hash:{}});
-    buffer += escapeExpression(stack1) + "</div>\n    ";
-    stack1 = depth0.is_linked;
-    stack1 = helpers['if'].call(depth0, stack1, {hash:{},inverse:self.program(3, program3, data),fn:self.program(1, program1, data)});
-    if(stack1 || stack1 === 0) { buffer += stack1; }
-    buffer += "\n  </div>\n  <div class='buttons'>\n    <a href=\"#hall-of-fame\"class='hall-of-fame'></a>\n    <div class='game-center'></div>\n  </div>\n  <div class='stats'>\n    <div class='stat1'>\n      <table>\n        <tbody>\n          ";
-    stack1 = depth0.stats;
-    stack1 = helpers.each.call(depth0, stack1, {hash:{},inverse:self.noop,fn:self.program(5, program5, data)});
-    if(stack1 || stack1 === 0) { buffer += stack1; }
+    buffer += "<!--MAIN BLOCK-->\n<div class='background'>\n<!--HEADER BLOCK-->\n  <div class=\"header\">\n    <a href=\"#home\" class=\"home-btn\"></a>\n    <div class=\"informations\">\n      <div class=\"cash\">\n        <div class='cash-value'>"
+      + escapeExpression(((stack1 = ((stack1 = depth0.user),stack1 == null || stack1 === false ? stack1 : stack1.credits)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+      + "</div>\n        <div class=\"cash-icone\"></div>\n      </div>\n      <div class=\"lifes\">\n        <div class=\"lifes-value\">"
+      + escapeExpression(((stack1 = ((stack1 = depth0.user),stack1 == null || stack1 === false ? stack1 : stack1.health)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+      + "</div>\n        <div class=\"lifes-icone\"></div>\n      </div>\n    </div>\n  </div>\n  <div class='picture-container'>\n    <div class='picture'></div>\n    <div class='name'>"
+      + escapeExpression(((stack1 = ((stack1 = depth0.user),stack1 == null || stack1 === false ? stack1 : stack1.username)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+      + "</div>\n  </div>\n  <div class='personal-info'>\n    <div class='level'>"
+      + escapeExpression(((stack1 = ((stack1 = depth0.user),stack1 == null || stack1 === false ? stack1 : stack1.rank)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+      + "</div>\n    <div class='score'>";
+    options = {hash:{},data:data};
+    buffer += escapeExpression(((stack1 = helpers.niceNumber),stack1 ? stack1.call(depth0, ((stack1 = depth0.user),stack1 == null || stack1 === false ? stack1 : stack1.score), options) : helperMissing.call(depth0, "niceNumber", ((stack1 = depth0.user),stack1 == null || stack1 === false ? stack1 : stack1.score), options)))
+      + "</div>\n    <div class='facebook-link'></div>\n  </div>\n  <div class='buttons'>\n    <a href=\"#hall-of-fame\"class='hall-of-fame'></a>\n    <div class='game-center'></div>\n  </div>\n  <div class='stats'>\n    <div class='stat1'>\n      <table>\n        <tbody>\n          ";
+    stack2 = helpers.each.call(depth0, depth0.stats, {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
+    if(stack2 || stack2 === 0) { buffer += stack2; }
     buffer += "\n        </tbody>\n      </table>\n    </div>\n    <div class='stat2'>\n      <table>\n        <tbody>\n\n          ";
-    stack1 = depth0.sports;
-    stack1 = helpers.each.call(depth0, stack1, {hash:{},inverse:self.noop,fn:self.program(7, program7, data)});
-    if(stack1 || stack1 === 0) { buffer += stack1; }
+    stack2 = helpers.each.call(depth0, depth0.sports, {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
+    if(stack2 || stack2 === 0) { buffer += stack2; }
     buffer += "\n\n        </tbody>\n      </table>\n    </div>\n  </div>\n</div>\n\n<!--BONUS BLOCK-->\n<div class='bonus'>\n  ";
-    stack1 = depth0.bonus;
-    stack1 = helpers.each.call(depth0, stack1, {hash:{},inverse:self.noop,fn:self.program(9, program9, data)});
-    if(stack1 || stack1 === 0) { buffer += stack1; }
-    buffer += "\n</div>\n\n<!--HEADER BLOCK-->\n<div class=\"header\">\n  <a href=\"#home\" class=\"home-btn\"></a>\n  <div class=\"informations\">\n    <div class=\"cash\">\n      <div class='cash-value'>";
-    stack1 = depth0.user;
-    stack1 = stack1 == null || stack1 === false ? stack1 : stack1.credits;
-    stack1 = typeof stack1 === functionType ? stack1() : stack1;
-    buffer += escapeExpression(stack1) + "</div>\n      <div class=\"cash-icone\"></div>\n    </div>\n    <div class=\"lifes\">\n      <div class=\"lifes-value\">";
-    stack1 = depth0.user;
-    stack1 = stack1 == null || stack1 === false ? stack1 : stack1.health;
-    stack1 = typeof stack1 === functionType ? stack1() : stack1;
-    buffer += escapeExpression(stack1) + "</div>\n      <div class=\"lifes-icone\"></div>\n    </div>\n  </div>\n</div>\n\n<!-- HEADER BLOCK BEGIN\n<div class=\"header-container\">\n  <a href=\"#home\" class=\"home-btn\"></a>\n  <div class=\"title\"></div>\n  <div class=\"cash-container\">\n    <div class=\"token\"></div>\n    <p>Solde <span class=\"cash-value\">";
-    foundHelper = helpers.credits;
-    if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
-    else { stack1 = depth0.credits; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
-    buffer += escapeExpression(stack1) + "</span></p>\n    <div class=\"clearfix\"></div>\n  </div>\n  <div class=\"clearfix\"></div>\n</div>\n<!-- CONTENT BLOCK BEGIN\n<div class=\"content-container\">\n  <div class=\"left-block\">\n    <div class=\"fb-head-container ";
-    foundHelper = helpers.gender;
-    if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
-    else { stack1 = depth0.gender; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
-    buffer += escapeExpression(stack1) + "\">\n      <img src=\"";
-    stack1 = depth0.avatar;
-    stack1 = helpers['if'].call(depth0, stack1, {hash:{},inverse:self.program(13, program13, data),fn:self.program(11, program11, data)});
-    if(stack1 || stack1 === 0) { buffer += stack1; }
+    stack2 = helpers.each.call(depth0, depth0.bonus, {hash:{},inverse:self.noop,fn:self.program(3, program3, data),data:data});
+    if(stack2 || stack2 === 0) { buffer += stack2; }
+    buffer += "\n</div>\n\n<!-- CONTENT BLOCK BEGIN\n<div class=\"content-container\">\n  <div class=\"left-block\">\n    <div class=\"fb-head-container ";
+    if (stack2 = helpers.gender) { stack2 = stack2.call(depth0, {hash:{},data:data}); }
+    else { stack2 = depth0.gender; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; }
+    buffer += escapeExpression(stack2)
+      + "\">\n      <img src=\"";
+    stack2 = helpers['if'].call(depth0, depth0.avatar, {hash:{},inverse:self.program(7, program7, data),fn:self.program(5, program5, data),data:data});
+    if(stack2 || stack2 === 0) { buffer += stack2; }
     buffer += "\" alt=\"\" class=\"fb-head\">\n    </div>\n  </div>\n  <div class=\"center-block\">\n    <div class=\"username box-align\">";
-    foundHelper = helpers.username;
-    if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
-    else { stack1 = depth0.username; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
-    buffer += escapeExpression(stack1) + "</div>\n    <div class=\"current-cash\">";
-    foundHelper = helpers.jackpot;
-    if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
-    else { stack1 = depth0.jackpot; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
-    buffer += escapeExpression(stack1) + "</div>\n    <a class=\"rankings\"></a>\n  </div>\n  <div class=\"right-block\">\n    <a id=\"link-fb\" class=\"link-fb\"></a>\n    <a class=\"current-level\">";
-    foundHelper = helpers.rank;
-    if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
-    else { stack1 = depth0.rank; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
-    buffer += escapeExpression(stack1) + "</a>\n  </div>\n</div>\n<div class=\"clearfix\"></div>\n\n<div class=\"footer-container box-align\">\n  <div class=\"block played\">\n    <div class=\"score-container box-align\"></div>\n    <div class=\"text box-align\">Parties jouées</div>\n  </div>\n  <div class=\"block won\">\n    <div class=\"score-container box-align\"></div>\n    <div class=\"text box-align\">Parties gagnées</div>\n  </div>\n  <div class=\"block best-score\">\n    <div class=\"score-container box-align\"></div>\n    <div class=\"text box-align\">Meilleur niveau</div>\n  </div>\n  <div class=\"block best-cash\">\n    <div class=\"score-container box-align\"></div>\n    <div class=\"text box-align\">Meilleure cagnotte</div>\n  </div>\n  <div class=\"block stars\">\n    <div class=\"score-container box-align\"></div>\n    <div class=\"text box-align\">Etoiles Mystérieuses</div>\n  </div>\n</div>-->\n";
-    return buffer;});
-}});
-
-window.require.define({"views/templates/outgame/shop": function(exports, require, module) {
+    if (stack2 = helpers.username) { stack2 = stack2.call(depth0, {hash:{},data:data}); }
+    else { stack2 = depth0.username; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; }
+    buffer += escapeExpression(stack2)
+      + "</div>\n    <div class=\"current-cash\">";
+    if (stack2 = helpers.jackpot) { stack2 = stack2.call(depth0, {hash:{},data:data}); }
+    else { stack2 = depth0.jackpot; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; }
+    buffer += escapeExpression(stack2)
+      + "</div>\n    <a class=\"rankings\"></a>\n  </div>\n  <div class=\"right-block\">\n    <a id=\"link-fb\" class=\"link-fb\"></a>\n    <a class=\"current-level\">";
+    if (stack2 = helpers.rank) { stack2 = stack2.call(depth0, {hash:{},data:data}); }
+    else { stack2 = depth0.rank; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; }
+    buffer += escapeExpression(stack2)
+      + "</a>\n  </div>\n</div>\n<div class=\"clearfix\"></div>\n\n<div class=\"footer-container box-align\">\n  <div class=\"block played\">\n    <div class=\"score-container box-align\"></div>\n    <div class=\"text box-align\">Parties jouées</div>\n  </div>\n  <div class=\"block won\">\n    <div class=\"score-container box-align\"></div>\n    <div class=\"text box-align\">Parties gagnées</div>\n  </div>\n  <div class=\"block best-score\">\n    <div class=\"score-container box-align\"></div>\n    <div class=\"text box-align\">Meilleur niveau</div>\n  </div>\n  <div class=\"block best-cash\">\n    <div class=\"score-container box-align\"></div>\n    <div class=\"text box-align\">Meilleure cagnotte</div>\n  </div>\n  <div class=\"block stars\">\n    <div class=\"score-container box-align\"></div>\n    <div class=\"text box-align\">Etoiles Mystérieuses</div>\n  </div>\n</div>-->\n";
+    return buffer;
+    });
+});
+window.require.register("views/templates/outgame/shop", function(exports, require, module) {
   module.exports = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
-    helpers = helpers || Handlebars.helpers; data = data || {};
-    var buffer = "", stack1, foundHelper, functionType="function", escapeExpression=this.escapeExpression, self=this;
+    this.compilerInfo = [2,'>= 1.0.0-rc.3'];
+  helpers = helpers || Handlebars.helpers; data = data || {};
+    var buffer = "", stack1, stack2, functionType="function", escapeExpression=this.escapeExpression, self=this;
 
   function program1(depth0,data) {
     
     var buffer = "", stack1;
     buffer += "\n        ";
-    stack1 = depth0.disabled;
-    stack1 = helpers.unless.call(depth0, stack1, {hash:{},inverse:self.noop,fn:self.program(2, program2, data),data:data});
+    stack1 = helpers.unless.call(depth0, depth0.disabled, {hash:{},inverse:self.noop,fn:self.program(2, program2, data),data:data});
     if(stack1 || stack1 === 0) { buffer += stack1; }
     buffer += "\n      ";
-    return buffer;}
+    return buffer;
+    }
   function program2(depth0,data) {
     
-    var buffer = "", stack1, foundHelper;
+    var buffer = "", stack1;
     buffer += "\n          <a class=\"free-pack\" id=\"";
-    foundHelper = helpers.name;
-    if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{},data:data}); }
-    else { stack1 = depth0.name; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
-    buffer += escapeExpression(stack1) + "\">\n            <span>+ ";
-    foundHelper = helpers.value;
-    if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{},data:data}); }
-    else { stack1 = depth0.value; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
-    buffer += escapeExpression(stack1) + "</span>\n          </a>\n        ";
-    return buffer;}
+    if (stack1 = helpers.name) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+    else { stack1 = depth0.name; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+    buffer += escapeExpression(stack1)
+      + "\">\n            <span>+ ";
+    if (stack1 = helpers.value) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+    else { stack1 = depth0.value; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+    buffer += escapeExpression(stack1)
+      + "</span>\n          </a>\n        ";
+    return buffer;
+    }
 
   function program4(depth0,data,depth1) {
     
-    var buffer = "", stack1, foundHelper;
-    buffer += "\n        <a class=\"paid-pack first-offer ";
-    stack1 = depth1.packs;
-    stack1 = stack1 == null || stack1 === false ? stack1 : stack1.type;
-    stack1 = typeof stack1 === functionType ? stack1() : stack1;
-    buffer += escapeExpression(stack1) + "\" data-id=\"";
-    foundHelper = helpers.product_id;
-    if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{},data:data}); }
-    else { stack1 = depth0.product_id; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
-    buffer += escapeExpression(stack1) + "\" style=\"background-image:url(";
-    foundHelper = helpers.image;
-    if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{},data:data}); }
-    else { stack1 = depth0.image; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
-    buffer += escapeExpression(stack1) + ")\">\n          <span class='marker'>+</span>\n          <span class='value'>";
-    foundHelper = helpers.value;
-    if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{},data:data}); }
-    else { stack1 = depth0.value; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
-    buffer += escapeExpression(stack1) + "</span>\n          <span class='credit-icon'></span>\n        </a>\n      ";
-    return buffer;}
+    var buffer = "", stack1, stack2;
+    buffer += "\n        <a class=\"paid-pack first-offer "
+      + escapeExpression(((stack1 = ((stack1 = depth1.packs),stack1 == null || stack1 === false ? stack1 : stack1.type)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+      + "\" data-id=\"";
+    if (stack2 = helpers.product_id) { stack2 = stack2.call(depth0, {hash:{},data:data}); }
+    else { stack2 = depth0.product_id; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; }
+    buffer += escapeExpression(stack2)
+      + "\" style=\"background-image:url(";
+    if (stack2 = helpers.image) { stack2 = stack2.call(depth0, {hash:{},data:data}); }
+    else { stack2 = depth0.image; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; }
+    buffer += escapeExpression(stack2)
+      + ")\">\n          <span class='marker'>+</span>\n          <span class='value'>";
+    if (stack2 = helpers.value) { stack2 = stack2.call(depth0, {hash:{},data:data}); }
+    else { stack2 = depth0.value; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; }
+    buffer += escapeExpression(stack2)
+      + "</span>\n          <span class='credit-icon'></span>\n        </a>\n      ";
+    return buffer;
+    }
 
   function program6(depth0,data) {
     
-    var buffer = "", stack1, foundHelper;
+    var buffer = "", stack1;
     buffer += "\n        <div class=\"life-pack\" style='background-image: url(images/shop/life_and_bonus/Vies/";
-    foundHelper = helpers.value;
-    if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{},data:data}); }
-    else { stack1 = depth0.value; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
-    buffer += escapeExpression(stack1) + ".png)' data-position='";
-    stack1 = data.index;
-    stack1 = typeof stack1 === functionType ? stack1() : stack1;
-    buffer += escapeExpression(stack1) + "'></div>\n      ";
-    return buffer;}
+    if (stack1 = helpers.value) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+    else { stack1 = depth0.value; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+    buffer += escapeExpression(stack1)
+      + ".png)' data-position='"
+      + escapeExpression(((stack1 = data.index),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+      + "'></div>\n      ";
+    return buffer;
+    }
 
     buffer += "<!-- HEADER BLOCK BEGIN -->\n<a href=\"#home\" class=\"home-btn\"></a>\n<div class='tabs-container'>\n  <div class='tab active' id='credits'></div>\n  <div class='tab inactive' id='bonuses'></div>\n</div>\n\n<div id='numbers'>\n  <span id='hearts' class='number'>";
-    foundHelper = helpers.health;
-    if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{},data:data}); }
-    else { stack1 = depth0.health; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
-    buffer += escapeExpression(stack1) + "</span>\n  <span id='heart-icon' class='icon'></span>\n  <span id='credits' class='number'>";
-    foundHelper = helpers.credits;
-    if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{},data:data}); }
-    else { stack1 = depth0.credits; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
-    buffer += escapeExpression(stack1) + "</span>\n  <span id='credit-icon' class='icon'></span>\n</div>\n\n<div class=\"clearfix\"></div>\n\n\n<div class='tab-container'>\n\n  <!-- CREDITS CONTENT BLOCK BEGIN -->\n  <div class=\"content-container\" id='credits'>\n    <div class=\"free-offers\">\n      ";
-    stack1 = depth0.packs;
-    stack1 = stack1 == null || stack1 === false ? stack1 : stack1.free_packs;
-    stack1 = helpers.each.call(depth0, stack1, {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
-    if(stack1 || stack1 === 0) { buffer += stack1; }
+    if (stack1 = helpers.health) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+    else { stack1 = depth0.health; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+    buffer += escapeExpression(stack1)
+      + "</span>\n  <span id='heart-icon' class='icon'></span>\n  <span id='credits' class='number'>";
+    if (stack1 = helpers.credits) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+    else { stack1 = depth0.credits; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+    buffer += escapeExpression(stack1)
+      + "</span>\n  <span id='credit-icon' class='icon'></span>\n</div>\n\n<div class=\"clearfix\"></div>\n\n\n<div class='tab-container'>\n\n  <!-- CREDITS CONTENT BLOCK BEGIN -->\n  <div class=\"content-container\" id='credits'>\n    <div class=\"free-offers\">\n      ";
+    stack2 = helpers.each.call(depth0, ((stack1 = depth0.packs),stack1 == null || stack1 === false ? stack1 : stack1.free_packs), {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
+    if(stack2 || stack2 === 0) { buffer += stack2; }
     buffer += "\n    </div>\n    <div class=\"clearfix\"></div>\n    <div class=\"paid-offers\">\n      ";
-    stack1 = depth0.packs;
-    stack1 = stack1 == null || stack1 === false ? stack1 : stack1.credit_packs;
-    stack1 = helpers.each.call(depth0, stack1, {hash:{},inverse:self.noop,fn:self.programWithDepth(program4, data, depth0),data:data});
-    if(stack1 || stack1 === 0) { buffer += stack1; }
+    stack2 = helpers.each.call(depth0, ((stack1 = depth0.packs),stack1 == null || stack1 === false ? stack1 : stack1.credit_packs), {hash:{},inverse:self.noop,fn:self.programWithDepth(program4, data, depth0),data:data});
+    if(stack2 || stack2 === 0) { buffer += stack2; }
     buffer += "\n    </div>\n    <div class=\"clearfix\"></div>\n  </div>\n\n\n  <!-- BONUSES CONTENT BLOCK BEGIN -->\n  <div class=\"content-container\" id='bonus' style='display: none'>\n    <div class='life-container'>\n      ";
-    stack1 = depth0.bonuses;
-    stack1 = stack1 == null || stack1 === false ? stack1 : stack1.life_packs;
-    stack1 = helpers.each.call(depth0, stack1, {hash:{},inverse:self.noop,fn:self.program(6, program6, data),data:data});
-    if(stack1 || stack1 === 0) { buffer += stack1; }
+    stack2 = helpers.each.call(depth0, ((stack1 = depth0.bonuses),stack1 == null || stack1 === false ? stack1 : stack1.life_packs), {hash:{},inverse:self.noop,fn:self.program(6, program6, data),data:data});
+    if(stack2 || stack2 === 0) { buffer += stack2; }
     buffer += "\n    </div>\n    <div data-position='0' class='bonus-pack small'></div>\n    <div data-position='1' class='bonus-pack medium'></div>\n    <div data-position='2' class='bonus-pack big'></div>\n  </div>\n\n</div>";
-    return buffer;});
-}});
-
-window.require.define({"views/templates/outgame/tutorial": function(exports, require, module) {
+    return buffer;
+    });
+});
+window.require.register("views/templates/outgame/tutorial", function(exports, require, module) {
   module.exports = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
-    helpers = helpers || Handlebars.helpers;
-    var buffer = "", stack1, foundHelper, functionType="function", escapeExpression=this.escapeExpression;
+    this.compilerInfo = [2,'>= 1.0.0-rc.3'];
+  helpers = helpers || Handlebars.helpers; data = data || {};
+    var buffer = "", stack1, functionType="function", escapeExpression=this.escapeExpression;
 
 
     buffer += "<a id='close-btn' href='#options'></a>\n<div class='screen' style=\"background-image:url(images/tutorial/tutoriel_";
-    foundHelper = helpers.currentIndex;
-    if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
-    else { stack1 = depth0.currentIndex; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
-    buffer += escapeExpression(stack1) + ".jpg)\"></div>\n<ul id='pagination'>\n  <li class='current'></li>\n  <li></li>\n  <li></li>\n</ul>\n<div id='next-btn'></div>";
-    return buffer;});
-}});
-
-window.require.define({"views/templates/pause": function(exports, require, module) {
+    if (stack1 = helpers.currentIndex) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+    else { stack1 = depth0.currentIndex; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+    buffer += escapeExpression(stack1)
+      + ".jpg)\"></div>\n<ul id='pagination'>\n  <li class='current'></li>\n  <li></li>\n  <li></li>\n</ul>\n<div id='next-btn'></div>";
+    return buffer;
+    });
+});
+window.require.register("views/templates/pause", function(exports, require, module) {
   module.exports = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
-    helpers = helpers || Handlebars.helpers;
-    var buffer = "", stack1, foundHelper, functionType="function", escapeExpression=this.escapeExpression;
+    this.compilerInfo = [2,'>= 1.0.0-rc.3'];
+  helpers = helpers || Handlebars.helpers; data = data || {};
+    var buffer = "", stack1, functionType="function", escapeExpression=this.escapeExpression;
 
 
     buffer += "<div id=\"popup\" class=\"popup pause\" style=\"z-index:100";
-    foundHelper = helpers.level;
-    if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
-    else { stack1 = depth0.level; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
-    buffer += escapeExpression(stack1) + "\" data-key=\"";
-    foundHelper = helpers.key;
-    if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
-    else { stack1 = depth0.key; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
-    buffer += escapeExpression(stack1) + "\">\n  <h1 class='title'>Attention!</h1>\n  <p class='text-container'>\n    Le chrono tourne... reprends vite pour ne pas perdre la partie !\n  </p>\n  <div class=\"btn-container\">\n    <a class=\"ok resume btn remove\"></a>\n    <a href=\"#home\" class=\"quit btn remove\"></a>\n    <div class=\"clearfix\"></div>\n    <div class=\"music btn ";
-    foundHelper = helpers.music;
-    if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
-    else { stack1 = depth0.music; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
-    buffer += escapeExpression(stack1) + "\"></div>\n    <div class=\"fx btn ";
-    foundHelper = helpers.fx;
-    if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
-    else { stack1 = depth0.fx; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
-    buffer += escapeExpression(stack1) + "\"></div>\n  </div>\n</div>\n";
-    return buffer;});
-}});
-
-window.require.define({"views/templates/popup": function(exports, require, module) {
+    if (stack1 = helpers.level) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+    else { stack1 = depth0.level; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+    buffer += escapeExpression(stack1)
+      + "\" data-key=\"";
+    if (stack1 = helpers.key) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+    else { stack1 = depth0.key; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+    buffer += escapeExpression(stack1)
+      + "\">\n  <h1 class='title'>Attention!</h1>\n  <p class='text-container'>\n    Le chrono tourne... reprends vite pour ne pas perdre la partie !\n  </p>\n  <div class=\"btn-container\">\n    <a class=\"ok resume btn remove\"></a>\n    <a href=\"#home\" class=\"quit btn remove\"></a>\n    <div class=\"clearfix\"></div>\n    <div class=\"music btn ";
+    if (stack1 = helpers.music) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+    else { stack1 = depth0.music; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+    buffer += escapeExpression(stack1)
+      + "\"></div>\n    <div class=\"fx btn ";
+    if (stack1 = helpers.fx) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+    else { stack1 = depth0.fx; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+    buffer += escapeExpression(stack1)
+      + "\"></div>\n  </div>\n</div>\n";
+    return buffer;
+    });
+});
+window.require.register("views/templates/popup", function(exports, require, module) {
   module.exports = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
-    helpers = helpers || Handlebars.helpers;
-    var buffer = "", stack1, foundHelper, functionType="function", escapeExpression=this.escapeExpression, self=this;
+    this.compilerInfo = [2,'>= 1.0.0-rc.3'];
+  helpers = helpers || Handlebars.helpers; data = data || {};
+    var buffer = "", stack1, functionType="function", escapeExpression=this.escapeExpression, self=this;
 
   function program1(depth0,data) {
     
     var buffer = "";
-    buffer += "\n        <li>";
-    depth0 = typeof depth0 === functionType ? depth0() : depth0;
-    buffer += escapeExpression(depth0) + "</li>\n      ";
-    return buffer;}
+    buffer += "\n        <li>"
+      + escapeExpression((typeof depth0 === functionType ? depth0.apply(depth0) : depth0))
+      + "</li>\n      ";
+    return buffer;
+    }
 
   function program3(depth0,data) {
     
     
-    return "\n      <div class=\"ok btn remove\">ok</div>\n    ";}
+    return "\n      <div class=\"ok btn remove\">ok</div>\n    ";
+    }
 
   function program5(depth0,data) {
     
     
-    return "\n      <div class=\"no btn remove\">no</div>\n      <div class=\"yes btn remove\">yes</div>\n    ";}
+    return "\n      <div class=\"no btn remove\">no</div>\n      <div class=\"yes btn remove\">yes</div>\n    ";
+    }
 
     buffer += "<div id=\"popup\" class=\"popup ";
-    foundHelper = helpers.className;
-    if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
-    else { stack1 = depth0.className; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
-    buffer += escapeExpression(stack1) + "\" style=\"z-index:100";
-    foundHelper = helpers.level;
-    if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
-    else { stack1 = depth0.level; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
-    buffer += escapeExpression(stack1) + "\" data-key=\"";
-    foundHelper = helpers.key;
-    if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
-    else { stack1 = depth0.key; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
-    buffer += escapeExpression(stack1) + "\">\n  <h1>";
-    foundHelper = helpers.title;
-    if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
-    else { stack1 = depth0.title; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
-    buffer += escapeExpression(stack1) + "</h1>\n  <p>\n    <ul class=\"messages\">\n      ";
-    stack1 = depth0.message;
-    stack1 = helpers.each.call(depth0, stack1, {hash:{},inverse:self.noop,fn:self.program(1, program1, data)});
+    if (stack1 = helpers.className) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+    else { stack1 = depth0.className; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+    buffer += escapeExpression(stack1)
+      + "\" style=\"z-index:100";
+    if (stack1 = helpers.level) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+    else { stack1 = depth0.level; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+    buffer += escapeExpression(stack1)
+      + "\" data-key=\"";
+    if (stack1 = helpers.key) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+    else { stack1 = depth0.key; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+    buffer += escapeExpression(stack1)
+      + "\">\n  <h1>";
+    if (stack1 = helpers.title) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+    else { stack1 = depth0.title; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+    buffer += escapeExpression(stack1)
+      + "</h1>\n  <p>\n    <ul class=\"messages\">\n      ";
+    stack1 = helpers.each.call(depth0, depth0.message, {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
     if(stack1 || stack1 === 0) { buffer += stack1; }
     buffer += "\n    </ul>\n  </p>\n  <div class=\"btn-container\">\n    ";
-    stack1 = depth0.info;
-    stack1 = helpers['if'].call(depth0, stack1, {hash:{},inverse:self.noop,fn:self.program(3, program3, data)});
+    stack1 = helpers['if'].call(depth0, depth0.info, {hash:{},inverse:self.noop,fn:self.program(3, program3, data),data:data});
     if(stack1 || stack1 === 0) { buffer += stack1; }
     buffer += "\n    ";
-    stack1 = depth0.confirmation;
-    stack1 = helpers['if'].call(depth0, stack1, {hash:{},inverse:self.noop,fn:self.program(5, program5, data)});
+    stack1 = helpers['if'].call(depth0, depth0.confirmation, {hash:{},inverse:self.noop,fn:self.program(5, program5, data),data:data});
     if(stack1 || stack1 === 0) { buffer += stack1; }
     buffer += "\n  </div>\n</div>\n";
-    return buffer;});
-}});
-
+    return buffer;
+    });
+});

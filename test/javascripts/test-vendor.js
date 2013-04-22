@@ -61,16 +61,21 @@
     throw new Error('Cannot find module "' + name + '"');
   };
 
-  var define = function(bundle) {
-    for (var key in bundle) {
-      if (has(bundle, key)) {
-        modules[key] = bundle[key];
+  var define = function(bundle, fn) {
+    if (typeof bundle === 'object') {
+      for (var key in bundle) {
+        if (has(bundle, key)) {
+          modules[key] = bundle[key];
+        }
       }
+    } else {
+      modules[bundle] = fn;
     }
-  }
+  };
 
   globals.require = require;
   globals.require.define = define;
+  globals.require.register = define;
   globals.require.brunch = true;
 })();
 
@@ -3841,7 +3846,6 @@
 
   return require('chai');
 });;
-
 ;(function(){
 
 
@@ -8842,7 +8846,6 @@ process.on = function(e, fn){
 })();
 })();
 ;
-
 /**
  * Sinon.JS 1.5.2, 2012/11/27
  *
@@ -12997,7 +13000,6 @@ if (typeof module == "object" && typeof require == "function") {
 
 return sinon;}.call(typeof window != 'undefined' && window || {}));
 ;
-
 (function (sinonChai) {
     "use strict";
 
@@ -13105,11 +13107,9 @@ return sinon;}.call(typeof window != 'undefined' && window || {}));
     exceptionalSinonMethod("thrown", "threw", "thrown %1");
 }));
 ;
-
 // Create `window.describe` etc. for our BDD-like tests.
 mocha.setup({ui: 'bdd'});
 
 // Create another global variable for simpler syntax.
 window.expect = chai.expect;
 ;
-
