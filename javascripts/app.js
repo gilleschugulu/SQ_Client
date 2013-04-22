@@ -63020,9 +63020,9 @@ window.require.register("helpers/facebook-helper", function(exports, require, mo
         FacebookHelper.getOtherFriends(function(friends) {
           var toto;
 
-          toto = _.pluck(friends, 'id');
-          return console.log(toto);
+          return toto = _.pluck(friends, 'id');
         });
+        console.log(toto);
         return FB.ui({
           method: 'apprequests',
           message: message,
@@ -63066,9 +63066,9 @@ window.require.register("helpers/facebook-helper", function(exports, require, mo
         FacebookHelper.getOtherFriends(function(friends) {
           var toto;
 
-          toto = _.pluck(friends, 'id');
-          return console.log(toto);
+          return toto = _.pluck(friends, 'id');
         });
+        console.log(toto);
         return FB.ui({
           method: 'apprequests',
           message: message,
