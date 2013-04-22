@@ -61538,7 +61538,11 @@ window.require.register("controllers/outgame/home-controller", function(exports,
 
       return FacebookHelper.getOtherFriends(function(friends) {
         if (_.difference(_.pluck(friends, 'id'), Parse.User.current().get('fb_invited')).length < 1) {
-          return popUp('Desole vous avez deja invite tous vos amis');
+          return popUp.initialize({
+            message: 'Erreur avec Facebook',
+            title: 400,
+            key: 'api-error'
+          });
         } else {
           return FacebookHelper.friendRequest(i18n.t('controller.home.facebook_invite_message'));
         }
