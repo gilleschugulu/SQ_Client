@@ -61424,7 +61424,7 @@ window.require.register("controllers/outgame/hall-of-fame-controller", function(
   
 });
 window.require.register("controllers/outgame/home-controller", function(exports, require, module) {
-  var AnalyticsHelper, Controller, FacebookHelper, HomeController, HomePageView, NoFriendsJournalView, OneFriendJournalView, TwoFriendsJournalView, TwoplusFriendsJournalView, i18n, mediator, _ref,
+  var AnalyticsHelper, Controller, FacebookHelper, HomeController, HomePageView, NoFriendsJournalView, OneFriendJournalView, TwoFriendsJournalView, TwoplusFriendsJournalView, i18n, mediator, popUp, _ref,
     __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
     __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
@@ -61440,6 +61440,8 @@ window.require.register("controllers/outgame/home-controller", function(exports,
   FacebookHelper = require('helpers/facebook-helper');
 
   AnalyticsHelper = require('helpers/analytics-helper');
+
+  popUp = require('helpers/pop-up-helper');
 
   NoFriendsJournalView = require('views/outgame/journal/no-friends-journal-view');
 
@@ -61536,7 +61538,7 @@ window.require.register("controllers/outgame/home-controller", function(exports,
 
       return FacebookHelper.getOtherFriends(function(friends) {
         if (_.difference(_.pluck(friends, 'id'), Parse.User.current().get('fb_invited')).length < 1) {
-          return console.log('no more friends');
+          return popUp('Desole vous avez deja invite tous vos amis');
         } else {
           return FacebookHelper.friendRequest(i18n.t('controller.home.facebook_invite_message'));
         }
