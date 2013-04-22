@@ -17,7 +17,7 @@ module.exports = class FacebookHelper
       FB.login( (response) =>
         if response.authResponse
           FB.api '/me', (res) =>
-            params = 
+            params =
               id: res.id
               access_token: response.authResponse.accessToken
               expiration_date: new Date(response.authResponse.expirationTime).toISOString()
@@ -47,12 +47,14 @@ module.exports = class FacebookHelper
         return alert "FB.request: message doit faire entre 1 et 255 characteres (" + message.length + " actuellement)"
 
       # Checking FB is existant
-      FB.ui {method: 'apprequests', message: message}, (response) =>
-        # if we have a callback for this method, then use it (for exemple avoid rewarding?)
-        user = Parse.User.current()
-        user.set("fb_invited", _.uniq(response.to.concat(user.get('fb_invited')))).save()
-        if(callback and response)
-          callback(response)
+      user = Parse.User.current()
+      FacebookHelper.getOtherFriends (friends) =>
+        notInstalledFriends = _.pluck(friends, 'id')
+        FB.ui {method: 'apprequests', message: message, filters: [{name : 'invite friends', user_ids : _.difference(notInstalledFriends, user.get('fb_invited'))}]}, (response) =>
+          # if we have a callback for this method, then use it (for exemple avoid rewarding?)
+          user.set("fb_invited", _.uniq(response.to.concat(user.get('fb_invited')))).save()
+          if(callback and response)
+            callback(response)
     unless @isLinked()
       @linkPlayer doRequest
     else
@@ -69,6 +71,7 @@ module.exports = class FacebookHelper
         return alert "FB.request: message doit faire entre 1 et 255 characteres (" + message.length + " actuellement)"
 
       # Checking FB is existant
+      user = Parse.User.current()
       FB.ui {method: 'apprequests', message: message, to: friend}, (response) =>
         # if we have a callback for this method, then use it (for exemple avoid rewarding?)
         user.set("fb_invited", _.uniq(response.to.concat(user.get('fb_invited')))).save()
@@ -120,7 +123,7 @@ module.exports = class FacebookHelper
   # -----------------
   @getFriends: (callback, error) ->
     if @isLinked()
-      FB.api '/me/friends?fields=installed', (response) => 
+      FB.api '/me/friends?fields=installed', (response) =>
         if response.data
           friends = (friend for friend in response.data when friend.installed)
           if !friends?
@@ -131,11 +134,15 @@ module.exports = class FacebookHelper
     else
       callback([])
 
-  @getOtherFriends:(callback) ->
+  @getOtherFriends:(callback = null) ->
     if @isLinked()
       FB.api '/me/friends?fields=id,name,installed', (response) =>
         friends = (friend for friend in response.data when !friend.installed )
-        callback(friends)
+        if callback
+          callback(friends)
+        else
+          console.log 'toto'
+          friends
     else
       callback([])
   # # Like the appli
@@ -147,6 +154,3 @@ module.exports = class FacebookHelper
   #       object: "http://samples.ogp.me/226075010839791"
   #     (response) ->
   #       callback?(response)
-
-
-
