@@ -63017,7 +63017,8 @@ window.require.register("helpers/facebook-helper", function(exports, require, mo
         }
         return FB.ui({
           method: 'apprequests',
-          message: message
+          message: message,
+          filters: ['app_non_users']
         }, function(response) {
           var user;
 
@@ -63053,7 +63054,8 @@ window.require.register("helpers/facebook-helper", function(exports, require, mo
         return FB.ui({
           method: 'apprequests',
           message: message,
-          to: friend
+          to: friend,
+          filters: ['app_non_users']
         }, function(response) {
           user.set("fb_invited", _.uniq(response.to.concat(user.get('fb_invited')))).save();
           if (response && callback) {
