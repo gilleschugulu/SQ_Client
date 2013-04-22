@@ -63185,6 +63185,7 @@ window.require.register("helpers/facebook-helper", function(exports, require, mo
             return _results;
           })();
           if (callback) {
+            console.log('titi ' + callback);
             return callback(friends);
           } else {
             console.log('toto');
