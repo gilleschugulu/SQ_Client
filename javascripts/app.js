@@ -61378,7 +61378,7 @@ window.require.register("controllers/outgame/hall-of-fame-controller", function(
       friends2 = _.pluck(friends, 'id');
       user = Parse.User.current();
       tmp = _.first(_.shuffle(_.difference(friends2, user.get('fb_invited'))), 3);
-      console.log('toto ' + tmp);
+      console.log(_.difference(friends2, user.get('fb_invited')));
       results = [];
       for (_i = 0, _len = tmp.length; _i < _len; _i++) {
         friend = tmp[_i];
