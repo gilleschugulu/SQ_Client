@@ -63018,9 +63018,9 @@ window.require.register("helpers/facebook-helper", function(exports, require, mo
         }
         user = Parse.User.current();
         FacebookHelper.getOtherFriends(function(friends) {
-          _this.toto = _.pluck(friends, 'id');
-          return console.log(_this.toto);
+          return _this.toto = _.pluck(friends, 'id');
         });
+        console.log(this.toto);
         return FB.ui({
           method: 'apprequests',
           message: message,
@@ -63062,9 +63062,9 @@ window.require.register("helpers/facebook-helper", function(exports, require, mo
         }
         user = Parse.User.current();
         FacebookHelper.getOtherFriends(function(friends) {
-          _this.toto = _.pluck(friends, 'id');
-          return console.log(_this.toto);
+          return _this.toto = _.pluck(friends, 'id');
         });
+        console.log(this.toto);
         return FB.ui({
           method: 'apprequests',
           message: message,
