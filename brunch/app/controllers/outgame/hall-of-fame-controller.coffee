@@ -15,6 +15,7 @@ module.exports = class HallOfFameController extends Controller
   fetchPlayers: (withFriends) =>
     @friend = if withFriends then true else false
     ranking = if withFriends then @friendsArray else @globalArray
+    #console.log ranking
     @collection = []
     for i in [0...ranking.length]
       @collection[i] =
@@ -109,12 +110,13 @@ module.exports = class HallOfFameController extends Controller
     friends2 = _.pluck(friends, 'id')
     user = Parse.User.current()
     tmp = _.first(_.shuffle(_.difference(friends2, user.get('fb_invited'))), 3)
-    console.log tmp
+    console.log   _.difference(friends2, user.get('fb_invited'))
+    console.log friends2, user.get('fb_invited')
     results = []
     for friend in tmp
       FB.api '/'+friend+'?fields=name', (response)->
         results.push(response)
-    console.log results
+    #console.log results
     #TODO: Use the id from tmp tab to get the friend name
     @friendsToInvite  = results
 

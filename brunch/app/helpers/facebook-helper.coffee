@@ -46,7 +46,6 @@ module.exports = class FacebookHelper
         # if we have a callback for this method, then use it (for exemple avoid rewarding?)
         user.set("fb_invited", _.uniq(response.to.concat(user.get('fb_invited')))).save()
         if response and callback
-          console.log response
           callback(response)
     unless @isLinked()
       @linkPlayer doRequest
