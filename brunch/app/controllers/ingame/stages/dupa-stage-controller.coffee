@@ -31,7 +31,7 @@ module.exports = class DupaStageController extends StageController
 
       @view.delegate 'click', '.bonus', (event) =>
         @view.chooseBonus event.currentTarget, (bonusName) =>
-          if @canUseBonus(bonusName) and @model.get('player').consumeBonus(bonusName)
+          if @canUseBonus(bonusName) #and @model.get('player').consumeBonus(bonusName)
             @view.updateBonus event.currentTarget, @model.get('player').getBonusQuantity(bonusName)
             @executeBonus(bonusName)
 
@@ -56,6 +56,8 @@ module.exports = class DupaStageController extends StageController
           , question
 
   playerDidAnswer: (player, question, result) =>
+    oldJackpot = @model.getCurrentThreshold()
+
     if result
       @model.playerMadeSuccess(player, @bonusDoubleUsed)
       @row++
@@ -67,7 +69,7 @@ module.exports = class DupaStageController extends StageController
     GameStatHelper.incrementAnswersCount(result, question.get('category'))
     GameStatHelper.incrementSumTimeQuestion((new Date().getTime()) - @startTime)
 
-    @view.updateJackpot player.get('jackpot'), @model.getCurrentThreshold(), result
+    @view.updateJackpot player.get('jackpot'), @model.getCurrentThreshold(), {result, oldJackpot}
     @askNextQuestion()
 
   beforeFinishStage: (player) =>

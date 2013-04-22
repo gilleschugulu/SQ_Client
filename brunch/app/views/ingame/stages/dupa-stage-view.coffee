@@ -97,19 +97,26 @@ module.exports = class DupaView extends View
         callback?()
     , 2000
 
-  updateJackpot: (jackpot, currentThresholdValue, result) ->
+  updateJackpot: (jackpot, currentThresholdValue, options = {}) ->
     el = $('.jackpot-container', @$el)
     $('#total-jackpot', el).text jackpot
     
     $(".threshold .highlighted", el).addClass('animated fadeOut').one 'webkitAnimationEnd', ->
       $(@).remove()
+    
+
+    if options?.oldJackpot
+      $(".threshold[data-value='#{options.oldJackpot}']", el).removeClass('highlighted gold')
+
+
 
     blockEl = $(".threshold[data-value='#{currentThresholdValue}']", el)
 
-    blockEl.append("<div class='highlighted'>#{currentThresholdValue}</div>")
+    blockEl.addClass('highlighted')
+    blockEl.append("<div class='highlighted'></div>")
     $('.highlighted', blockEl).addClass('animated fadeIn')
 
-    @updateJackpotMarker(currentThresholdValue, result)
+    @updateJackpotMarker(currentThresholdValue, result?.result)
 
   updateJackpotMarker: (currentThresholdValue, result = true) ->
     el = $('.jackpot-container', @$el)
@@ -141,6 +148,7 @@ module.exports = class DupaView extends View
 
   doubleScoreActivated: ->
     $('.highlighted').addClass('gold')
+    $('.highlighted').parent().addClass('gold')
     $('#jackpot-marker').addClass('gold')
 
   doubleScoreDeactivated: ->
