@@ -63172,7 +63172,6 @@ window.require.register("helpers/facebook-helper", function(exports, require, mo
       var _this = this;
 
       if (this.isLinked()) {
-        console.log(callback);
         return FB.api('/me/friends?fields=id,name,installed', function(response) {
           var friend, friends;
 
@@ -63190,8 +63189,10 @@ window.require.register("helpers/facebook-helper", function(exports, require, mo
             return _results;
           })();
           if (callback) {
+            console.log(callback(friends));
             return callback(friends);
           } else {
+            console.log('toto');
             return friends;
           }
         });
