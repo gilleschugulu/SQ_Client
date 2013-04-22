@@ -62939,8 +62939,7 @@ window.require.register("helpers/device-helper", function(exports, require, modu
   
 });
 window.require.register("helpers/facebook-helper", function(exports, require, module) {
-  var DeviceHelper, FacebookHelper, PopUpHelper, i18n, mediator, spinner, utils,
-    __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
+  var DeviceHelper, FacebookHelper, PopUpHelper, i18n, mediator, spinner, utils;
 
   mediator = require('mediator');
 
@@ -62957,9 +62956,7 @@ window.require.register("helpers/facebook-helper", function(exports, require, mo
   module.exports = FacebookHelper = (function() {
     var self;
 
-    function FacebookHelper() {
-      this.toto = __bind(this.toto, this);
-    }
+    function FacebookHelper() {}
 
     self = FacebookHelper;
 
@@ -63010,7 +63007,7 @@ window.require.register("helpers/facebook-helper", function(exports, require, mo
         callback = null;
       }
       doRequest = function() {
-        var toto, user,
+        var user,
           _this = this;
 
         if (!message) {
@@ -63020,16 +63017,18 @@ window.require.register("helpers/facebook-helper", function(exports, require, mo
           return alert("FB.request: message doit faire entre 1 et 255 characteres (" + message.length + " actuellement)");
         }
         user = Parse.User.current();
-        toto = FacebookHelper.getOtherFriends();
-        console.log(toto);
-        console.log(FacebookHelper.getOtherFriends());
+        FacebookHelper.getOtherFriends(function(friends) {
+          var notInstalledFriends;
+
+          return notInstalledFriends = _.pluck(friends, 'id');
+        });
         return FB.ui({
           method: 'apprequests',
           message: message,
           filters: [
             {
               name: 'invite friends',
-              user_ids: user.get('fb_invited')
+              user_ids: _.difference(notInstalledFriends, user.get('fb_invited'))
             }
           ]
         }, function(response) {
@@ -63063,26 +63062,15 @@ window.require.register("helpers/facebook-helper", function(exports, require, mo
           return alert("FB.request: message doit faire entre 1 et 255 characteres (" + message.length + " actuellement)");
         }
         user = Parse.User.current();
-        return FacebookHelper.getOtherFriends(function(friends) {
-          var notInstalledFriends;
-
-          notInstalledFriends = _.pluck(friends, 'id');
-          return FB.ui({
-            method: 'apprequests',
-            message: message,
-            to: friend,
-            filters: [
-              {
-                name: 'invite friends',
-                user_ids: _.difference(notInstalledFriends, user.get('fb_invited'))
-              }
-            ]
-          }, function(response) {
-            user.set("fb_invited", _.uniq(response.to.concat(user.get('fb_invited')))).save();
-            if (response && callback) {
-              return callback(response);
-            }
-          });
+        return FB.ui({
+          method: 'apprequests',
+          message: message,
+          to: friend
+        }, function(response) {
+          user.set("fb_invited", _.uniq(response.to.concat(user.get('fb_invited')))).save();
+          if (response && callback) {
+            return callback(response);
+          }
         });
       };
       if (!this.isLinked()) {
@@ -63200,11 +63188,6 @@ window.require.register("helpers/facebook-helper", function(exports, require, mo
       } else {
         return callback([]);
       }
-    };
-
-    FacebookHelper.prototype.toto = function(friends) {
-      this.titi = _.pluck(friends, 'id');
-      return console.log(titi);
     };
 
     return FacebookHelper;
