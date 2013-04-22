@@ -15,7 +15,6 @@ module.exports = class TutorialController extends Controller
       view.delegate 'click', '#next-btn', @onClickNext
 
   onClickNext: =>
-    console.log "NEXT SCREEN"
     @currentIndex++
     if @currentIndex > @maxIndex
       @redirectTo 'options'
