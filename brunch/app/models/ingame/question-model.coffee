@@ -12,4 +12,4 @@ module.exports = class Question extends Model
     no
 
   getPropositions: ->
-    @get('propositions').shuffle()
+    _.shuffle @get('propositions')

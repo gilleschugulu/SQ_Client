@@ -1,6 +1,6 @@
 <div id='equipe-btn'></div>
 <div id='date'>EDITION DU {{date}}</div>
-<div id='title'>{{winner}} a mis sa patee a {{loser}}</div>
+<div id='title' class='resize'>{{winner}} a mis sa patee a {{loser}}</div>
 <div id='vs'>
   {{#each participants}}
   <div class='participant'>
@@ -9,7 +9,7 @@
     {{else}}
       <div class='photo' style='background-image:url(images/common/facebook-default.jpg)'></div>
     {{/if}}
-    <div class='blaze'>{{username}}</div>
+    <div class='blaze resize'>{{username}}</div>
     <div class='score'>{{score}}</div>
   </div>
   {{/each}}

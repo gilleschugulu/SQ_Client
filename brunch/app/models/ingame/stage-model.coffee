@@ -19,7 +19,7 @@ module.exports = class Stage extends Model
     q = {}
 
     for question_difficulty, questions_data of questions
-      q[question_difficulty] = (Factory.questionModel(question_data) for question_data in questions_data.shuffle())
+      q[question_difficulty] = (Factory.questionModel(question_data) for question_data in _.shuffle(questions_data))
 
     @set 'questions', q
     @
