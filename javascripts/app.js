@@ -63007,7 +63007,8 @@ window.require.register("helpers/facebook-helper", function(exports, require, mo
         callback = null;
       }
       doRequest = function() {
-        var _this = this;
+        var user,
+          _this = this;
 
         if (!message) {
           return alert("FB.request: pas de message :(");
@@ -63015,6 +63016,7 @@ window.require.register("helpers/facebook-helper", function(exports, require, mo
         if (message.length < 1 || message.length > 255) {
           return alert("FB.request: message doit faire entre 1 et 255 characteres (" + message.length + " actuellement)");
         }
+        user = Parse.User.current();
         return FB.ui({
           method: 'apprequests',
           message: message,
@@ -63025,10 +63027,7 @@ window.require.register("helpers/facebook-helper", function(exports, require, mo
             }
           ]
         }, function(response) {
-          var user;
-
-          user = Parse.User.current();
-          user.set("fb_invited", _.uniq(response.to.concat(Parse.User.current().get('fb_invited')))).save();
+          user.set("fb_invited", _.uniq(response.to.concat(user.get('fb_invited')))).save();
           if (callback && response) {
             return callback(response);
           }
@@ -63048,7 +63047,8 @@ window.require.register("helpers/facebook-helper", function(exports, require, mo
         callback = null;
       }
       doRequest = function() {
-        var _this = this;
+        var user,
+          _this = this;
 
         if (!message) {
           return alert("FB.request: pas de message :(");
@@ -63056,6 +63056,7 @@ window.require.register("helpers/facebook-helper", function(exports, require, mo
         if (message.length < 1 || message.length > 255) {
           return alert("FB.request: message doit faire entre 1 et 255 characteres (" + message.length + " actuellement)");
         }
+        user = Parse.User.current();
         return FB.ui({
           method: 'apprequests',
           message: message,
