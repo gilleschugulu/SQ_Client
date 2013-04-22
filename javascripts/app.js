@@ -3635,10 +3635,10 @@ Handlebars.template = Handlebars.VM.template;
 ;;
 var BuildVersion = {
   version     : '',
-  commit      : 'ff686da492e5192c1f49898cb0a9851a976ce479',
-  shortCommit : 'ff686da',
+  commit      : 'deac1962de8ae07128d1ca45c27a6b72cdc5f421',
+  shortCommit : 'deac196',
   branch      : 'feature/hall-of-fame',
-  time        : '2013-04-22 15:48',
+  time        : '2013-04-22 17:06',
   author      : 'Louis',
 
   getCommitLink: function() {
@@ -61532,7 +61532,11 @@ window.require.register("controllers/outgame/home-controller", function(exports,
     };
 
     HomeController.prototype.onClickFacebook = function() {
-      return FacebookHelper.friendRequest(i18n.t('controller.home.facebook_invite_message'));
+      var _this = this;
+
+      return FacebookHelper.getOtherFriends(function(friends) {
+        return console.log(_.difference(_.pluck(friends, 'id'), user.get('fb_invited')));
+      });
     };
 
     HomeController.prototype.getJournalView = function(friends, callback) {
