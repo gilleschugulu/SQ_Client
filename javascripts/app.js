@@ -63017,11 +63017,9 @@ window.require.register("helpers/facebook-helper", function(exports, require, mo
           return alert("FB.request: message doit faire entre 1 et 255 characteres (" + message.length + " actuellement)");
         }
         user = Parse.User.current();
-        this.toto = FacebookHelper.getOtherFriends(function(friends) {
-          var toto;
-
-          toto = _.pluck(friends, 'id');
-          return console.log(toto);
+        FacebookHelper.getOtherFriends(function(friends) {
+          _this.toto = _.pluck(friends, 'id');
+          return console.log(_this.toto);
         });
         return FB.ui({
           method: 'apprequests',
@@ -63063,11 +63061,9 @@ window.require.register("helpers/facebook-helper", function(exports, require, mo
           return alert("FB.request: message doit faire entre 1 et 255 characteres (" + message.length + " actuellement)");
         }
         user = Parse.User.current();
-        this.toto = FacebookHelper.getOtherFriends(function(friends) {
-          var toto;
-
-          toto = _.pluck(friends, 'id');
-          return console.log(toto);
+        FacebookHelper.getOtherFriends(function(friends) {
+          _this.toto = _.pluck(friends, 'id');
+          return console.log(_this.toto);
         });
         return FB.ui({
           method: 'apprequests',
@@ -63189,7 +63185,6 @@ window.require.register("helpers/facebook-helper", function(exports, require, mo
             return _results;
           })();
           if (callback) {
-            console.log(callback(friends));
             return callback(friends);
           } else {
             return friends;
