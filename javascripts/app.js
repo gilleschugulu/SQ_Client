@@ -61538,7 +61538,7 @@ window.require.register("controllers/outgame/home-controller", function(exports,
 
       return FacebookHelper.getOtherFriends(function(friends) {
         if (_.difference(_.pluck(friends, 'id'), Parse.User.current().get('fb_invited')).length < 1) {
-          return popUp('Desole vous avez deja invite tous vos amis');
+          return popUp.initialize('Desole vous avez deja invite tous vos amis');
         } else {
           return FacebookHelper.friendRequest(i18n.t('controller.home.facebook_invite_message'));
         }
