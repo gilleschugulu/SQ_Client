@@ -61378,7 +61378,7 @@ window.require.register("controllers/outgame/hall-of-fame-controller", function(
       friends2 = _.pluck(friends, 'id');
       user = Parse.User.current();
       tmp = _.first(_.shuffle(_.difference(friends2, user.get('fb_invited'))), 3);
-      console.log(tmp);
+      console.log('toto ' + tmp);
       results = [];
       for (_i = 0, _len = tmp.length; _i < _len; _i++) {
         friend = tmp[_i];
@@ -62956,7 +62956,6 @@ window.require.register("helpers/facebook-helper", function(exports, require, mo
         }, function(response) {
           user.set("fb_invited", _.uniq(response.to.concat(user.get('fb_invited')))).save();
           if (response && callback) {
-            console.log(response);
             return callback(response);
           }
         });
