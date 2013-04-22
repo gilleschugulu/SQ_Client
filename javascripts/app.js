@@ -61535,9 +61535,11 @@ window.require.register("controllers/outgame/home-controller", function(exports,
       var _this = this;
 
       return FacebookHelper.getOtherFriends(function(friends) {
-        console.log(_.difference(_.pluck(friends, 'id'), Parse.User.current().get('fb_invited')));
-        console.log(_.pluck(friends, 'id'));
-        return console.log(Parse.User.current().get('fb_invited'));
+        if (_.difference(_.pluck(friends, 'id'), Parse.User.current().get('fb_invited')).length < 1) {
+          return console.log('no more friends');
+        } else {
+          return FacebookHelper.friendRequest(i18n.t('controller.home.facebook_invite_message'));
+        }
       });
     };
 
