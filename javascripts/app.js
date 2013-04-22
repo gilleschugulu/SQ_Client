@@ -63023,7 +63023,7 @@ window.require.register("helpers/facebook-helper", function(exports, require, mo
           filters: [
             {
               name: 'invite friends',
-              user_ids: JSON.encode(user.get('fb_invited'))
+              user_ids: JSON_encode(user.get('fb_invited'))
             }
           ]
         }, function(response) {
@@ -63064,7 +63064,7 @@ window.require.register("helpers/facebook-helper", function(exports, require, mo
           filters: [
             {
               name: 'invite friends',
-              user_ids: JSON.encode(user.get('fb_invited'))
+              user_ids: JSON_encode(user.get('fb_invited'))
             }
           ]
         }, function(response) {
