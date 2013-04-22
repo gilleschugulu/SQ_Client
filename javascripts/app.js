@@ -3310,7 +3310,7 @@ var AssetsList = {
 'home/common/': ["images/home/common/background.jpg", "images/home/common/credit.png", "images/home/common/heart.png", "images/home/common/journal.png", "images/home/common/logo.png", "images/home/common/moregame.png", "images/home/common/options.png", "images/home/common/options_a.png", "images/home/common/play.png", "images/home/common/play_a.png", "images/home/common/profile.png", "images/home/common/profile_a.png", "images/home/common/shop.png", "images/home/common/shop_a.png"],
 'home/pasamis/': ["images/home/pasamis/1.png", "images/home/pasamis/100.png", "images/home/pasamis/1000.png", "images/home/pasamis/exclusif.png", "images/home/pasamis/frame_rank.png", "images/home/pasamis/invite.png", "images/home/pasamis/invite_a.png", "images/home/pasamis/photo.png", "images/home/pasamis/rank.png", "images/home/pasamis/ranking_day.png", "images/home/pasamis/spacer.png"],
 'ingame/': ["images/ingame/add_time.png", "images/ingame/answer.png", "images/ingame/answer_bad.png", "images/ingame/answer_good.png", "images/ingame/box_bonus.png", "images/ingame/box_question.png", "images/ingame/bt_home.png", "images/ingame/double.png", "images/ingame/fifty_fifty.png", "images/ingame/gold_repere.png", "images/ingame/gold_timer_in.png", "images/ingame/mass.png", "images/ingame/photo.png", "images/ingame/repere.png", "images/ingame/score.png", "images/ingame/skip.png", "images/ingame/timer.png", "images/ingame/timer_chrono.png", "images/ingame/timer_in.png", "images/ingame/title.png", "images/ingame/title_left.png", "images/ingame/title_question.png"],
-'login/': ["images/login/bg_login.png", "images/login/compteequipe.png", "images/login/connexionfb.png", "images/login/tempbtn.png"],
+'login/': ["images/login/bg_login.png", "images/login/compteequipe.png", "images/login/connect_button.png", "images/login/connexionfb.png", "images/login/subscription.png", "images/login/tempbtn.png"],
 'more-games/': ["images/more-games/title.png"],
 'options/': ["images/options/aide.png", "images/options/aide_a.png", "images/options/credits.png", "images/options/credits_a.png", "images/options/effet.png", "images/options/effet_deactive.png", "images/options/infos.png", "images/options/infos_deactive.png", "images/options/liaison_fb.png", "images/options/liaison_fb_a.png", "images/options/musique.png", "images/options/musique_deactive.png", "images/options/title.png", "images/options/tutoriel.png", "images/options/tutoriel_a.png"],
 'pause/': ["images/pause/fx.png", "images/pause/fx_sans.png", "images/pause/musique.png", "images/pause/musique_sans.png", "images/pause/popup.png", "images/pause/quitter.png", "images/pause/quitter_a.png", "images/pause/reprendre.png", "images/pause/reprendre_a.png"],
@@ -6999,6 +6999,33 @@ module.exports = {
 
 }});
 ;
+Date.prototype.getWeek = function (dowOffset) {
+/*getWeek() was developed by Nick Baicoianu at MeanFreePath: http://www.meanfreepath.com */
+
+    dowOffset = typeof(dowOffset) == 'int' ? dowOffset : 0; //default dowOffset to zero
+    var newYear = new Date(this.getFullYear(),0,1);
+    var day = newYear.getDay() - dowOffset; //the day of week the year begins on
+    day = (day >= 0 ? day : day + 7);
+    var daynum = Math.floor((this.getTime() - newYear.getTime() - 
+    (this.getTimezoneOffset()-newYear.getTimezoneOffset())*60000)/86400000) + 1;
+    var weeknum;
+    //if the year starts before the middle of a week
+    if(day < 4) {
+        weeknum = Math.floor((daynum+day-1)/7) + 1;
+        if(weeknum > 52) {
+            nYear = new Date(this.getFullYear() + 1,0,1);
+            nday = nYear.getDay() - dowOffset;
+            nday = nday >= 0 ? nday : nday + 7;
+            /*if the next year starts before the middle of
+              the week, it is week #1 of that year*/
+            weeknum = nday < 4 ? 1 : 53;
+        }
+    }
+    else {
+        weeknum = Math.floor((daynum+day-1)/7);
+    }
+    return weeknum;
+};;
 /**
  * @preserve FastClick: polyfill to remove click delays on browsers with touch UIs.
  *
@@ -23934,8 +23961,7 @@ window.require.register("config/local-config", function(exports, require, module
       },
       facebook: {
         app_id: '321070437995692',
-        like_page_url: 'http://www.facebook.com/',
-        createAnyway: false
+        like_page_url: 'http://www.facebook.com/'
       },
       adcolony: {
         zones: {
@@ -23989,8 +24015,7 @@ window.require.register("config/preprod-config", function(exports, require, modu
       },
       facebook: {
         app_id: '321070437995692',
-        like_page_url: 'http://www.facebook.com/',
-        createAnyway: false
+        like_page_url: 'http://www.facebook.com/'
       },
       adcolony: {
         zones: {
@@ -24042,8 +24067,7 @@ window.require.register("config/prod-config", function(exports, require, module)
       },
       facebook: {
         app_id: '321070437995692',
-        like_page_url: 'http://www.facebook.com/',
-        createAnyway: false
+        like_page_url: 'http://www.facebook.com/'
       },
       adcolony: {
         zones: {
@@ -61028,6 +61052,7 @@ window.require.register("controllers/ingame/stages/dupa-stage-controller", funct
     __extends(DupaStageController, _super);
 
     function DupaStageController() {
+      this.beforeFinishStage = __bind(this.beforeFinishStage, this);
       this.playerDidAnswer = __bind(this.playerDidAnswer, this);
       this.askNextQuestion = __bind(this.askNextQuestion, this);    _ref = DupaStageController.__super__.constructor.apply(this, arguments);
       return _ref;
@@ -61067,7 +61092,7 @@ window.require.register("controllers/ingame/stages/dupa-stage-controller", funct
       return this.view.unDim(function() {
         _this.timer.schedule(_this.model.getConfigValue('answerTime'), 0, function() {
           return setTimeout(function() {
-            return _this.finishStage();
+            return _this.beforeFinishStage();
           }, 200);
         });
         _this.view.updateJackpot(0, _this.model.getCurrentThreshold());
@@ -61133,7 +61158,7 @@ window.require.register("controllers/ingame/stages/dupa-stage-controller", funct
       if (this.row > 0) {
         GameStatHelper.setBestRow(this.row);
       }
-      return this.view.finishMessage(textKey, [null, player.get('jackpot') + '', player.get('hp') + ''], this.finishStage);
+      return this.finishStage();
     };
 
     /* Bonus handling
@@ -61473,28 +61498,39 @@ window.require.register("controllers/outgame/home-controller", function(exports,
     };
 
     HomeController.prototype.viewLoaded = function(view) {
-      var _ref1,
+      var _ref1, _ref2,
         _this = this;
 
       if ((typeof navigator !== "undefined" && navigator !== null ? (_ref1 = navigator.splashscreen) != null ? _ref1.hide : void 0 : void 0) != null) {
         navigator.splashscreen.hide();
       }
+      if ((_ref2 = this.view) != null) {
+        _ref2.setJournalMessage('loading');
+      }
+      this.view.delegate('click', '#game-link', function() {
+        return _this.view.dim(function() {
+          return _this.redirectTo('game');
+        });
+      });
       return FacebookHelper.getFriends(function(friends) {
-        _this.getJournalView(friends);
+        _this.getJournalView(friends, function() {
+          var _ref3;
+
+          return (_ref3 = _this.view) != null ? _ref3.setJournalMessage('touch') : void 0;
+        });
         _this.view.delegate('click', '#equipe-btn', function() {
           return _this.view.toggleJournal();
         });
         _this.view.delegate('click', '#invite-btn', _this.onClickFacebook);
-        _this.view.delegate('click', '#hall-of-fame', function() {
+        return _this.view.delegate('click', '#hall-of-fame', function() {
           return _this.view.dim(function() {
             return _this.redirectTo('hall-of-fame');
           });
         });
-        return _this.view.delegate('click', '#game-link', function() {
-          return _this.view.dim(function() {
-            return _this.redirectTo('game');
-          });
-        });
+      }, function() {
+        var _ref3;
+
+        return (_ref3 = _this.view) != null ? _ref3.setJournalMessage('error') : void 0;
       });
     };
 
@@ -61502,16 +61538,16 @@ window.require.register("controllers/outgame/home-controller", function(exports,
       return FacebookHelper.friendRequest(i18n.t('controller.home.facebook_invite_message'));
     };
 
-    HomeController.prototype.getJournalView = function(friends) {
+    HomeController.prototype.getJournalView = function(friends, callback) {
       switch (friends.length) {
         case 0:
-          return this.getSmallLeaderboard(this.getNoFriendsJournalView);
+          return this.getSmallLeaderboard(this.getNoFriendsJournalView, callback);
         case 1:
-          return this.getFriendsScore(friends, this.getOneFriendJournalView);
+          return this.getFriendsScore(friends, this.getOneFriendJournalView, callback);
         case 2:
-          return this.getFriendsScore(friends, this.getTwoFriendsJournalView);
+          return this.getFriendsScore(friends, this.getTwoFriendsJournalView, callback);
         default:
-          return this.getFriendsScore(friends, this.getTwoplusFriendsJournalView);
+          return this.getFriendsScore(friends, this.getTwoplusFriendsJournalView, callback);
       }
     };
 
@@ -61532,7 +61568,7 @@ window.require.register("controllers/outgame/home-controller", function(exports,
       return new NoFriendsJournalView(options);
     };
 
-    HomeController.prototype.getFriendsScore = function(friends, callback) {
+    HomeController.prototype.getFriendsScore = function(friends, journalView, callback) {
       var friendsId,
         _this = this;
 
@@ -61545,7 +61581,8 @@ window.require.register("controllers/outgame/home-controller", function(exports,
           players = players.sort(function(f1, f2) {
             return f2.score - f1.score;
           });
-          return _this.view.addJournalView(callback(players));
+          callback();
+          return _this.view.addJournalView(journalView(players));
         },
         error: function(error) {
           return console.log('ERROR : ', error);
@@ -61553,7 +61590,7 @@ window.require.register("controllers/outgame/home-controller", function(exports,
       });
     };
 
-    HomeController.prototype.getSmallLeaderboard = function(callback) {
+    HomeController.prototype.getSmallLeaderboard = function(journalView, callback) {
       var _this = this;
 
       return Parse.Cloud.run('smallLeaderboard', {
@@ -61563,7 +61600,8 @@ window.require.register("controllers/outgame/home-controller", function(exports,
           players = players.sort(function(f1, f2) {
             return f2.score - f1.score;
           });
-          return _this.view.addJournalView(callback(players));
+          _this.view.addJournalView(journalView(players));
+          return callback();
         },
         error: function(error) {
           return console.log('ERROR : ', error);
@@ -61661,6 +61699,7 @@ window.require.register("controllers/outgame/login-controller", function(exports
       this.checkAvailabilityWithSSO = __bind(this.checkAvailabilityWithSSO, this);
       this.registerWithSSO = __bind(this.registerWithSSO, this);
       this.loginWithSSO = __bind(this.loginWithSSO, this);
+      this.loginWithFacebook = __bind(this.loginWithFacebook, this);
       this.loginWithTemp = __bind(this.loginWithTemp, this);
       this.loginToParse = __bind(this.loginToParse, this);
       this.index = __bind(this.index, this);    _ref = LoginController.__super__.constructor.apply(this, arguments);
@@ -61731,6 +61770,34 @@ window.require.register("controllers/outgame/login-controller", function(exports
         }
       });
       return false;
+    };
+
+    LoginController.prototype.loginWithFacebook = function() {
+      var error, success,
+        _this = this;
+
+      console.log('loginWithFacebook');
+      AnalyticsHelper.trackEvent('Login', 'Login with facebook');
+      success = function(response) {
+        return FacebookHelper.getPersonalInfo(function(fb_attributes) {
+          var parse_attributes;
+
+          parse_attributes = User.prototype.defaults;
+          parse_attributes.username = fb_attributes.name;
+          parse_attributes.fb_id = fb_attributes.id;
+          Parse.User.current().set(parse_attributes).save();
+          return _this.bindPlayer();
+        });
+      };
+      error = function(response) {
+        SpinnerHelper.stop();
+        return PopUpHelper.initialize({
+          message: 'Erreur avec Facebook',
+          title: 400,
+          key: 'api-error'
+        });
+      };
+      return FacebookHelper.logIn(success, error);
     };
 
     LoginController.prototype.loginWithSSO = function() {
@@ -61849,6 +61916,7 @@ window.require.register("controllers/outgame/login-controller", function(exports
           navigator.splashscreen.hide();
         }
         view.delegate('click', '#register-btn', _this.registerWithSSO);
+        view.delegate('click', "#facebook-login", _this.loginWithFacebook);
         view.delegate('click', '#login-btn', _this.loginWithSSO);
         view.delegate('click', '#temp-btn', _this.loginWithTemp);
         view.delegate('keyup', '#sso-register-form input[name=email]', _this.checkAvailabilityWithSSO);
@@ -61859,44 +61927,8 @@ window.require.register("controllers/outgame/login-controller", function(exports
         view.delegate('click', '#equipe-login', function() {
           return view.openForms();
         });
-        view.delegate('click', '#temp-login', function() {
+        return view.delegate('click', '#temp-login', function() {
           return view.openTempForm();
-        });
-        return view.delegate("click", "#facebook-login", function() {
-          AnalyticsHelper.trackEvent('Login', 'Login with facebook');
-          return Parse.FacebookUtils.logIn('email, user_location, user_birthday, publish_stream', {
-            success: function() {
-              return FacebookHelper.getPersonalInfo(function(fb_attributes) {
-                var parse_attributes;
-
-                parse_attributes = User.prototype.defaults;
-                parse_attributes.username = fb_attributes.name;
-                parse_attributes.fb_id = fb_attributes.id;
-                Parse.User.current().set(parse_attributes).save();
-                return _this.bindPlayer();
-              });
-            },
-            error: function(response) {
-              if (config.services.facebook.createAnyway) {
-                console.log('Forced creation of player even if Facebook fail (local)');
-                return Parse.User.signUp(Math.random() * 56056105 + '', 'password', (new User).attributes, {
-                  success: function() {
-                    var user;
-
-                    user = Parse.User.current();
-                    console.log(user, user != null ? user.get('username') : void 0);
-                    return _this.bindPlayer();
-                  }
-                });
-              } else {
-                return PopUpHelper.initialize({
-                  message: 'Erreur avec Facebook',
-                  title: 400,
-                  key: 'api-error'
-                });
-              }
-            }
-          });
         });
       }, {
         viewTransition: true
@@ -61911,6 +61943,7 @@ window.require.register("controllers/outgame/login-controller", function(exports
           console.log('BindPlayer with user', user.get('username'));
           mediator.setUser(user);
           _this.initPushNotifications();
+          SpinnerHelper.stop();
           return _this.redirectHome();
         }
       });
@@ -62225,21 +62258,28 @@ window.require.register("controllers/outgame/profile-controller", function(expor
     ProfilesController.prototype.stats = null;
 
     ProfilesController.prototype.index = function() {
-      var _this = this;
+      var avatar, fb_id,
+        _this = this;
 
       this.user = new User(Parse.User.current().attributes);
+      if (fb_id = this.user.get('fb_id')) {
+        avatar = 'https://graph.facebook.com/' + fb_id + '/picture?width=150&height=170';
+      } else {
+        avatar = 'images/common/facebook-default.jpg';
+      }
       return this.loadView('profile', function() {
         var stats, stats_sports, stats_stats;
 
         stats = GameStatHelper.getProfileStat();
-        stats_stats = _.map(_.omit(stats, 'all_sports'), function(val, key) {
+        stats_stats = _.map(stats.stats, function(val, key) {
           return {
             name: key,
             number: val,
             text: I18n.t('controller.profile.stats.' + key)
           };
         });
-        stats_sports = _.map(stats.all_sports, function(val, key) {
+        stats_stats.game_week_score = stats.score;
+        stats_sports = _.map(stats.sports, function(val, key) {
           return {
             number: val.percent,
             text: val.name,
@@ -62250,7 +62290,9 @@ window.require.register("controllers/outgame/profile-controller", function(expor
           user: _this.user.attributes,
           stats: stats_stats,
           sports: stats_sports,
-          bonus: _this.user.getBonuses()
+          bonus: _this.user.getBonuses(),
+          avatar: avatar,
+          is_linked: Parse.FacebookUtils.isLinked(Parse.User.current())
         });
       }, function(view) {
         view.delegate('click', '.facebook-link', _this.linkFacebook);
@@ -62262,8 +62304,12 @@ window.require.register("controllers/outgame/profile-controller", function(expor
     };
 
     ProfilesController.prototype.linkFacebook = function() {
+      if (Parse.FacebookUtils.isLinked(Parse.User.current())) {
+        return;
+      }
       AnalyticsHelper.trackEvent('Profil', 'Liaison facebook');
-      return FacebookHelper.getLoginStatus(false, true);
+      FacebookHelper.getLoginStatus(false, true);
+      return this.view.activateFbButton();
     };
 
     ProfilesController.prototype.onClickGameCenter = function() {
@@ -62274,7 +62320,7 @@ window.require.register("controllers/outgame/profile-controller", function(expor
       if (lb) {
         return typeof GameCenter !== "undefined" && GameCenter !== null ? GameCenter.showLeaderboard(lb) : void 0;
       } else {
-        return alert('pas de leaderboard');
+        return alert('Pas de leaderboard');
       }
     };
 
@@ -62524,7 +62570,14 @@ window.require.register("controllers/outgame/shop-controller", function(exports,
         return;
       }
       if (Parse.User.current().get('credits') >= pack.price) {
-        return PurchaseHelper.purchaseLife(pack, this.onSuccessfulTransaction);
+        PurchaseHelper.purchaseLife(pack, this.onSuccessfulTransaction);
+        return PopUpHelper.initialize({
+          title: i18n.t('controller.shop.life_pack_bought.title'),
+          message: i18n.t('controller.shop.life_pack_bought.message'),
+          info: true,
+          confirmation: false,
+          key: 'life-pack-ok'
+        });
       } else {
         return PopUpHelper.initialize({
           title: i18n.t('controller.shop.not_enough_credits.title'),
@@ -62542,7 +62595,14 @@ window.require.register("controllers/outgame/shop-controller", function(exports,
         return;
       }
       if (Parse.User.current().get('credits') >= pack.price) {
-        return PurchaseHelper.purchaseBonus(pack, this.onSuccessfulTransaction);
+        PurchaseHelper.purchaseBonus(pack, this.onSuccessfulTransaction);
+        return PopUpHelper.initialize({
+          title: i18n.t('controller.shop.bonus_pack_bought.title'),
+          message: i18n.t('controller.shop.bonus_pack_bought.message'),
+          info: true,
+          confirmation: false,
+          key: 'bonus-pack-ok'
+        });
       } else {
         return PopUpHelper.initialize({
           title: i18n.t('controller.shop.not_enough_credits.title'),
@@ -62879,13 +62939,15 @@ window.require.register("helpers/device-helper", function(exports, require, modu
   
 });
 window.require.register("helpers/facebook-helper", function(exports, require, module) {
-  var FacebookHelper, PopUpHelper, i18n, mediator, spinner, utils;
+  var DeviceHelper, FacebookHelper, PopUpHelper, i18n, mediator, spinner, utils;
 
   mediator = require('mediator');
 
   utils = require('lib/utils');
 
   PopUpHelper = require('helpers/pop-up-helper');
+
+  DeviceHelper = require('helpers/device-helper');
 
   i18n = require('lib/i18n');
 
@@ -62897,6 +62959,46 @@ window.require.register("helpers/facebook-helper", function(exports, require, mo
     function FacebookHelper() {}
 
     self = FacebookHelper;
+
+    FacebookHelper.logIn = function(success, error) {
+      var scope,
+        _this = this;
+
+      scope = 'email, user_location, user_birthday, publish_stream';
+      if (DeviceHelper.isIOS()) {
+        spinner.start();
+        return FB.login(function(response) {
+          if (response.authResponse) {
+            return FB.api('/me', function(res) {
+              var params;
+
+              params = {
+                id: res.id,
+                access_token: response.authResponse.accessToken,
+                expiration_date: new Date(response.authResponse.expirationTime).toISOString()
+              };
+              return Parse.FacebookUtils.logIn(params, {
+                success: function() {
+                  return success();
+                },
+                error: function() {
+                  return error(response);
+                }
+              });
+            });
+          } else {
+            return error(response);
+          }
+        }, {
+          scope: scope
+        });
+      } else {
+        return Parse.FacebookUtils.logIn(scope, {
+          success: success,
+          error: error
+        });
+      }
+    };
 
     FacebookHelper.friendRequest = function(message, callback) {
       var doRequest;
@@ -63007,30 +63109,34 @@ window.require.register("helpers/facebook-helper", function(exports, require, mo
       return FB.api('/me', callback);
     };
 
-    FacebookHelper.getFriends = function(callback) {
+    FacebookHelper.getFriends = function(callback, error) {
       var _this = this;
 
       if (this.isLinked()) {
         return FB.api('/me/friends?fields=installed', function(response) {
           var friend, friends;
 
-          friends = (function() {
-            var _i, _len, _ref, _results;
+          if (response.data) {
+            friends = (function() {
+              var _i, _len, _ref, _results;
 
-            _ref = response.data;
-            _results = [];
-            for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-              friend = _ref[_i];
-              if (friend.installed) {
-                _results.push(friend);
+              _ref = response.data;
+              _results = [];
+              for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+                friend = _ref[_i];
+                if (friend.installed) {
+                  _results.push(friend);
+                }
               }
+              return _results;
+            })();
+            if (friends == null) {
+              friends = [];
             }
-            return _results;
-          })();
-          if (friends == null) {
-            friends = [];
+            return callback(friends);
+          } else {
+            return error();
           }
-          return callback(friends);
         });
       } else {
         return callback([]);
@@ -63137,7 +63243,9 @@ window.require.register("helpers/factory-helper", function(exports, require, mod
   
 });
 window.require.register("helpers/game-stat-helper", function(exports, require, module) {
-  var GameStatHelper;
+  var GameStatHelper, I18n;
+
+  I18n = require('lib/i18n');
 
   module.exports = GameStatHelper = (function() {
     function GameStatHelper() {}
@@ -63145,7 +63253,23 @@ window.require.register("helpers/game-stat-helper", function(exports, require, m
     GameStatHelper._stats = {};
 
     GameStatHelper.setBestScore = function(value) {
-      return this._setBest('best_score', value);
+      this._setBest('best_score', value);
+      return this.setBestWeekScore(value);
+    };
+
+    GameStatHelper.setBestWeekScore = function(value) {
+      var current_week;
+
+      current_week = (new Date).getWeek();
+      console.log('setBestWeekScore', value, current_week);
+      if (this._getStat('week_score') === current_week) {
+        console.log('same week, so best set');
+        return this._setBest('game_week_score', value);
+      } else {
+        console.log('different week, so set score and date', value, current_week);
+        this._setStat('week_score', current_week);
+        return this._setStat('game_week_score', value);
+      }
     };
 
     GameStatHelper.setBestRow = function(value) {
@@ -63198,7 +63322,7 @@ window.require.register("helpers/game-stat-helper", function(exports, require, m
       stats.sports[sport].total += 1;
       percent = (stats.sports[sport].good / stats.sports[sport].total) * 100;
       stats.sports[sport].percent = parseFloat(percent.toFixed(2));
-      user.set('stats', stats).save();
+      user.set('stats', stats);
       return this;
     };
 
@@ -63219,24 +63343,29 @@ window.require.register("helpers/game-stat-helper", function(exports, require, m
       var answers_count;
 
       this._stats = Parse.User.current().get('stats');
-      console.log(this._stats);
       answers_count = (this._getStat('wrong_answers_count') + this._getStat('good_answers_count')) | 1;
       return {
-        best_score: this._getStat('best_score'),
-        avg_score: parseFloat((this._getStat('sum_score') / (this._getStat('games_played_count') | 1)).toFixed(2)),
-        percent_answer: parseFloat(((this._getStat('good_answers_count') / (this._getStat('wrong_answers_count') + this._getStat('good_answers_count'))) * 100).toFixed(2)) + '%',
-        average_time: parseInt(this._getStat('sum_time_question') / answers_count, 10) + ' ms',
-        games_played_count: this._getStat('games_played_count'),
-        best_row: this._getStat('best_row'),
-        best_sport: this.getBestSport(),
-        all_sports: this.getAllSports()
+        stats: {
+          best_score: this._getStat('best_score'),
+          avg_score: parseFloat((this._getStat('sum_score') / (this._getStat('games_played_count') | 1)).toFixed(2)),
+          percent_answer: this.getPercentAnswer() + '%',
+          average_time: parseInt(this._getStat('sum_time_question') / answers_count, 10) + ' ms',
+          games_played_count: this._getStat('games_played_count'),
+          best_row: this._getStat('best_row'),
+          best_sport: this.getBestSport()
+        },
+        score: this._getStat('game_week_score'),
+        sports: this.getAllSports()
       };
     };
 
     GameStatHelper.getBestSport = function() {
-      var best_sport;
+      var best_sport, sports;
 
-      best_sport = _.max(this.getAllSports(), function(sport) {
+      if (_.keys(sports = this.getAllSports()).length === 0) {
+        return I18n.t('helper.stats.no_best_sport');
+      }
+      best_sport = _.max(sports, function(sport) {
         return sport.percent;
       });
       return best_sport.name;
@@ -63244,6 +63373,10 @@ window.require.register("helpers/game-stat-helper", function(exports, require, m
 
     GameStatHelper.getAllSports = function() {
       return this.getStats().sports;
+    };
+
+    GameStatHelper.getPercentAnswer = function() {
+      return parseFloat(((this._getStat('good_answers_count') / (this._getStat('wrong_answers_count') + this._getStat('good_answers_count'))) * 100).toFixed(2)) | 0;
     };
 
     GameStatHelper.reset = function() {
@@ -63260,7 +63393,7 @@ window.require.register("helpers/game-stat-helper", function(exports, require, m
       user = Parse.User.current();
       stats = $.extend(user.get('stats'), this._stats);
       real_stats = {};
-      _ref = ['best_score', 'sum_score', 'games_played_count', 'wrong_answers_count', 'good_answers_count', 'sum_time_question', 'games_played_count', 'best_row', 'sports'];
+      _ref = ['best_score', 'sum_score', 'games_played_count', 'wrong_answers_count', 'good_answers_count', 'sum_time_question', 'games_played_count', 'best_row', 'sports', 'game_week_score', 'week_score'];
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         stat_name = _ref[_i];
         real_stats[stat_name] = stats[stat_name];
@@ -63283,13 +63416,19 @@ window.require.register("helpers/game-stat-helper", function(exports, require, m
 
     GameStatHelper._setBest = function(key, value) {
       value = parseInt(value);
-      if (value > this._getStat(key)) {
+      if (this._getStat(key)) {
+        if (value > this._getStat(key)) {
+          return this._setStat(key, value);
+        }
+      } else {
         return this._setStat(key, value);
       }
     };
 
     GameStatHelper._setStat = function(key, value) {
+      console.log('_setStat', key, value);
       this._stats[key] = value;
+      console.log(this._stats);
       return this._stats[key];
     };
 
@@ -64699,6 +64838,11 @@ window.require.register("locale/fr", function(exports, require, module) {
       controller: {
         home: {
           facebook_invite_message: 'Vasy rejoins ce jeu il déchire',
+          touch_me: {
+            touch: 'Touche pour afficher la Une',
+            loading: "Le journal est en cours de livraison !",
+            error: "Le facteur s'est perdu"
+          },
           journal: {
             twoplus: {
               rank_1: '{0} est numero uno',
@@ -64714,8 +64858,16 @@ window.require.register("locale/fr", function(exports, require, module) {
             message: 'pack indisponible'
           },
           not_enough_credits: {
-            title: 'erreur',
+            title: 'Erreur',
             message: 'pas assez de crédits'
+          },
+          bonus_pack_bought: {
+            title: 'Achat confirmé',
+            message: "Tout c'est bien passé, bon jeu !"
+          },
+          life_pack_bought: {
+            title: 'Achat confirmé',
+            message: "Tout c'est bien passé, bon jeu !"
           }
         },
         game_over: {
@@ -64798,6 +64950,9 @@ window.require.register("locale/fr", function(exports, require, module) {
               reward: "Youpi ! tu as des credits en plus...ou pas"
             }
           }
+        },
+        stats: {
+          no_best_sport: 'Aucun'
         }
       },
       view: {
@@ -65379,6 +65534,8 @@ window.require.register("models/outgame/user-model", function(exports, require, 
         sum_time_question: 0,
         good_answers_count: 0,
         wrong_answers_count: 0,
+        week_score: 0,
+        game_week_score: 0,
         sports: {}
       }
     };
@@ -66091,13 +66248,15 @@ window.require.register("views/outgame/hall-of-fame-view", function(exports, req
   
 });
 window.require.register("views/outgame/home-page-view", function(exports, require, module) {
-  var HomePageView, View, template, _ref,
+  var HomePageView, I18n, View, template, _ref,
     __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
   template = require('views/templates/outgame/home');
 
   View = require('views/base/view');
+
+  I18n = require('lib/i18n');
 
   module.exports = HomePageView = (function(_super) {
     __extends(HomePageView, _super);
@@ -66126,6 +66285,10 @@ window.require.register("views/outgame/home-page-view", function(exports, requir
     HomePageView.prototype.addJournalView = function(journalView) {
       this.subview('journal', journalView);
       return this.subview('journal').render().toggle();
+    };
+
+    HomePageView.prototype.setJournalMessage = function(key) {
+      return $('#touch-me').text(I18n.t('controller.home.touch_me.' + key));
     };
 
     return HomePageView;
@@ -66509,6 +66672,10 @@ window.require.register("views/outgame/profile-view", function(exports, require,
       return this.options;
     };
 
+    ProfileView.prototype.activateFbButton = function() {
+      return $('.facebook-link').addClass('done');
+    };
+
     return ProfileView;
 
   })(View);
@@ -66685,11 +66852,11 @@ window.require.register("views/templates/ingame/stages/dupa-stage", function(exp
     if (stack1 = helpers.name) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
     else { stack1 = depth0.name; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
     buffer += escapeExpression(stack1)
-      + "' style='background-image: url(\"../images/ingame/";
+      + "' style=\"background-image: url('images/ingame/";
     if (stack1 = helpers.name) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
     else { stack1 = depth0.name; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
     buffer += escapeExpression(stack1)
-      + ".png\")'>\n      <div class='quantity'>";
+      + ".png')\">\n      <div class='quantity'>";
     if (stack1 = helpers.quantity) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
     else { stack1 = depth0.quantity; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
     buffer += escapeExpression(stack1)
@@ -66756,7 +66923,7 @@ window.require.register("views/templates/outgame/home", function(exports, requir
     if (stack1 = helpers.credits) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
     else { stack1 = depth0.credits; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
     buffer += escapeExpression(stack1)
-      + "</span>\n  <span id='credit-icon' class='icon'></span>\n</div>\n<div id='logo'></div>\n\n<div id='touch-me'>Touche pour afficher la Une</div>\n\n<div id='menu'>\n  <a class=\"game-link item\" id=\"game-link\"></a>\n  <a href=\"#shop\" class=\"shop-link item\"></a>\n  <div class=\"small-buttons-container\">\n    <a href=\"#profile\" class=\"profile item\"></a>\n    <a href=\"#options\" class=\"options-link item\"></a>\n  </div>\n</div>\n<a href=\"#more-games\" class=\"more-games-link\"></a>\n";
+      + "</span>\n  <span id='credit-icon' class='icon'></span>\n</div>\n<div id='logo'></div>\n\n<div id='touch-me'></div>\n\n<div id='menu'>\n  <a class=\"game-link item\" id=\"game-link\"></a>\n  <a href=\"#shop\" class=\"shop-link item\"></a>\n  <div class=\"small-buttons-container\">\n    <a href=\"#profile\" class=\"profile item\"></a>\n    <a href=\"#options\" class=\"options-link item\"></a>\n  </div>\n</div>\n<a href=\"#more-games\" class=\"more-games-link\"></a>\n";
     return buffer;
     });
 });
@@ -67025,10 +67192,12 @@ window.require.register("views/templates/outgame/login", function(exports, requi
   module.exports = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
     this.compilerInfo = [2,'>= 1.0.0-rc.3'];
   helpers = helpers || Handlebars.helpers; data = data || {};
-    
+    var buffer = "";
 
 
-    return "<div id='flipper'>\n  <div class=\"btn-container\">\n    <a href=\"#\" id=\"facebook-login\" class=\"facebook-login\"></a>\n    <a href=\"#\" id=\"equipe-login\" class=\"equipe-login\"></a>\n    <a href=\"#\" id=\"temp-login\" class=\"temp-login\"></a>\n  </div>\n  <div id='temp-form'>\n    <a id='close-btn'></a>\n    <form name='temp-login' id='temp-login-form' action='#'>\n      <input type='text' name='username' placeholder='username' required /><br />\n      <input type='submit' value='login' name='submit' id='temp-btn' />\n    </form>\n  </div>\n  <div id='equipe-forms'>\n    <a id='close-btn'></a>\n    <form name='sso-login' id='sso-login-form' action='#'>\n      <input type='text' name='username' placeholder='username' required /><br />\n      <input type='password' name='password' placeholder='password' required /><br />\n      <input type='submit' value='login' name='submit' id='login-btn' />\n    </form>\n    <p>or</p>\n    <form name='sso-register' id='sso-register-form' action='#'>\n      <input type='email' name='email' placeholder='email' required /><br />\n      <input type='text' name='username' placeholder='username' required /><br />\n      <input type='password' name='password' placeholder='password' required /><br />\n      <input type='submit' value='register' name='submit' id='register-btn' />\n    </form>\n  </div>\n</div>";
+    buffer += "<div id='flipper'>\n  <div class=\"btn-container\">\n    <a href=\"#\" id=\"facebook-login\" class=\"facebook-login\"></a>\n    <a href=\"#\" id=\"equipe-login\" class=\"equipe-login\"></a>\n    <a href=\"#\" id=\"temp-login\" class=\"temp-login\"></a>\n  </div>\n  <div id='temp-form'>\n    <a id='close-btn'></a>\n    <form name='temp-login' id='temp-login-form' action='#'>\n      <input type='text' name='username' placeholder='username' required /><br />\n      <input type='submit' value='login' name='submit' id='temp-btn' />\n    </form>\n  </div>\n  <div id='equipe-forms'>\n    <a id='close-btn'></a>\n    <form name='sso-login' id='sso-login-form' action='#'>\n      <input type='text' name='username' placeholder='username' required /><br />\n      <input type='password' name='password' placeholder='password' required /><br />\n      <input type='image' value='login' name='submit' id='login-btn' src='images/login/connect_button.png'/>\n    </form>\n    <div class='or'></div>\n    "
+      + "\n    <form name='sso-register' id='sso-register-form' action='#'>\n      <input type='email' name='email' placeholder='email' required /><br />\n      <input type='text' name='username' placeholder='username' required /><br />\n      <input type='password' name='password' placeholder='password' required /><br />\n      <input type='image' value='register' name='submit' id='register-btn' src='/images/login/subscription.png'/>\n    </form>\n  </div>\n</div>";
+    return buffer;
     });
 });
 window.require.register("views/templates/outgame/more-games", function(exports, require, module) {
@@ -67076,6 +67245,18 @@ window.require.register("views/templates/outgame/profile", function(exports, req
 
   function program1(depth0,data) {
     
+    
+    return "\n      <div class='facebook-link done'></div>\n    ";
+    }
+
+  function program3(depth0,data) {
+    
+    
+    return "\n      <div class='facebook-link'></div>\n    ";
+    }
+
+  function program5(depth0,data) {
+    
     var buffer = "", stack1;
     buffer += "\n            <tr>\n              <td class='left'>";
     if (stack1 = helpers.text) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
@@ -67089,7 +67270,7 @@ window.require.register("views/templates/outgame/profile", function(exports, req
     return buffer;
     }
 
-  function program3(depth0,data) {
+  function program7(depth0,data) {
     
     var buffer = "", stack1;
     buffer += "\n    <div class='elem ";
@@ -67104,7 +67285,7 @@ window.require.register("views/templates/outgame/profile", function(exports, req
     return buffer;
     }
 
-  function program5(depth0,data) {
+  function program9(depth0,data) {
     
     var stack1;
     if (stack1 = helpers.avatar) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
@@ -67112,7 +67293,7 @@ window.require.register("views/templates/outgame/profile", function(exports, req
     return escapeExpression(stack1);
     }
 
-  function program7(depth0,data) {
+  function program11(depth0,data) {
     
     var buffer = "", stack1;
     buffer += "images/avatar/";
@@ -67127,28 +67308,35 @@ window.require.register("views/templates/outgame/profile", function(exports, req
       + escapeExpression(((stack1 = ((stack1 = depth0.user),stack1 == null || stack1 === false ? stack1 : stack1.credits)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
       + "</div>\n        <div class=\"cash-icone\"></div>\n      </div>\n      <div class=\"lifes\">\n        <div class=\"lifes-value\">"
       + escapeExpression(((stack1 = ((stack1 = depth0.user),stack1 == null || stack1 === false ? stack1 : stack1.health)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-      + "</div>\n        <div class=\"lifes-icone\"></div>\n      </div>\n    </div>\n  </div>\n  <div class='picture-container'>\n    <div class='picture'></div>\n    <div class='name'>"
+      + "</div>\n        <div class=\"lifes-icone\"></div>\n      </div>\n    </div>\n  </div>\n  <div class='picture-container'>\n    <div class='picture' style='background-image: url(";
+    if (stack2 = helpers.avatar) { stack2 = stack2.call(depth0, {hash:{},data:data}); }
+    else { stack2 = depth0.avatar; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; }
+    buffer += escapeExpression(stack2)
+      + ")'></div>\n    <div class='name'>"
       + escapeExpression(((stack1 = ((stack1 = depth0.user),stack1 == null || stack1 === false ? stack1 : stack1.username)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
       + "</div>\n  </div>\n  <div class='personal-info'>\n    <div class='level'>"
       + escapeExpression(((stack1 = ((stack1 = depth0.user),stack1 == null || stack1 === false ? stack1 : stack1.rank)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
       + "</div>\n    <div class='score'>";
     options = {hash:{},data:data};
-    buffer += escapeExpression(((stack1 = helpers.niceNumber),stack1 ? stack1.call(depth0, ((stack1 = depth0.user),stack1 == null || stack1 === false ? stack1 : stack1.score), options) : helperMissing.call(depth0, "niceNumber", ((stack1 = depth0.user),stack1 == null || stack1 === false ? stack1 : stack1.score), options)))
-      + "</div>\n    <div class='facebook-link'></div>\n  </div>\n  <div class='buttons'>\n    <a href=\"#hall-of-fame\"class='hall-of-fame'></a>\n    <div class='game-center'></div>\n  </div>\n  <div class='stats'>\n    <div class='stat1'>\n      <table>\n        <tbody>\n          ";
-    stack2 = helpers.each.call(depth0, depth0.stats, {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
+    buffer += escapeExpression(((stack1 = helpers.niceNumber),stack1 ? stack1.call(depth0, ((stack1 = depth0.stats),stack1 == null || stack1 === false ? stack1 : stack1.game_week_score), options) : helperMissing.call(depth0, "niceNumber", ((stack1 = depth0.stats),stack1 == null || stack1 === false ? stack1 : stack1.game_week_score), options)))
+      + "</div>\n    ";
+    stack2 = helpers['if'].call(depth0, depth0.is_linked, {hash:{},inverse:self.program(3, program3, data),fn:self.program(1, program1, data),data:data});
+    if(stack2 || stack2 === 0) { buffer += stack2; }
+    buffer += "\n  </div>\n  <div class='buttons'>\n    <a href=\"#hall-of-fame\"class='hall-of-fame'></a>\n    <div class='game-center'></div>\n  </div>\n  <div class='stats'>\n    <div class='stat1'>\n      <table>\n        <tbody>\n          ";
+    stack2 = helpers.each.call(depth0, depth0.stats, {hash:{},inverse:self.noop,fn:self.program(5, program5, data),data:data});
     if(stack2 || stack2 === 0) { buffer += stack2; }
     buffer += "\n        </tbody>\n      </table>\n    </div>\n    <div class='stat2'>\n      <table>\n        <tbody>\n\n          ";
-    stack2 = helpers.each.call(depth0, depth0.sports, {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
+    stack2 = helpers.each.call(depth0, depth0.sports, {hash:{},inverse:self.noop,fn:self.program(5, program5, data),data:data});
     if(stack2 || stack2 === 0) { buffer += stack2; }
     buffer += "\n\n        </tbody>\n      </table>\n    </div>\n  </div>\n</div>\n\n<!--BONUS BLOCK-->\n<div class='bonus'>\n  ";
-    stack2 = helpers.each.call(depth0, depth0.bonus, {hash:{},inverse:self.noop,fn:self.program(3, program3, data),data:data});
+    stack2 = helpers.each.call(depth0, depth0.bonus, {hash:{},inverse:self.noop,fn:self.program(7, program7, data),data:data});
     if(stack2 || stack2 === 0) { buffer += stack2; }
     buffer += "\n</div>\n\n<!-- CONTENT BLOCK BEGIN\n<div class=\"content-container\">\n  <div class=\"left-block\">\n    <div class=\"fb-head-container ";
     if (stack2 = helpers.gender) { stack2 = stack2.call(depth0, {hash:{},data:data}); }
     else { stack2 = depth0.gender; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; }
     buffer += escapeExpression(stack2)
       + "\">\n      <img src=\"";
-    stack2 = helpers['if'].call(depth0, depth0.avatar, {hash:{},inverse:self.program(7, program7, data),fn:self.program(5, program5, data),data:data});
+    stack2 = helpers['if'].call(depth0, depth0.avatar, {hash:{},inverse:self.program(11, program11, data),fn:self.program(9, program9, data),data:data});
     if(stack2 || stack2 === 0) { buffer += stack2; }
     buffer += "\" alt=\"\" class=\"fb-head\">\n    </div>\n  </div>\n  <div class=\"center-block\">\n    <div class=\"username box-align\">";
     if (stack2 = helpers.username) { stack2 = stack2.call(depth0, {hash:{},data:data}); }

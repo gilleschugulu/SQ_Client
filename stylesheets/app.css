@@ -5591,11 +5591,32 @@ body.box-align {
   position: absolute;
   top: 0;
   ((null)): 0;
-  padding-top: 17%;
+  padding-top: 13%;
 }
 .login-page-container #flipper #equipe-forms .invalid {
   color: #f00;
   border: 1px solid #f00;
+}
+.login-page-container #flipper #equipe-forms input {
+  margin-bottom: 0.7%;
+}
+.login-page-container #flipper #equipe-forms .or {
+  background-repeat: no-repeat;
+  background-image: url("../images/login/or.png");
+  -webkit-background-size: 100% 100%;
+  -moz-background-size: 100% 100%;
+  background-size: 100% 100%;
+  width: 66%;
+  height: 4%;
+  position: relative;
+  top: 3%;
+  ((null)): 0;
+  margin: 3% auto 5%;
+}
+.login-page-container #flipper #equipe-forms #login-btn,
+.login-page-container #flipper #equipe-forms #register-btn {
+  margin-top: 1%;
+  margin-bottom: 0;
 }
 .login-page-container #flipper #equipe-forms #close-btn,
 .login-page-container #flipper #temp-form #close-btn {
@@ -5920,12 +5941,15 @@ body.box-align {
   margin-top: 4.5%;
 }
 .profile-page .background .picture-container .picture {
-  margin-left: 13%;
-  height: 75%;
-  width: 76%;
-  -webkit-background-size: 100%;
-  -moz-background-size: 100%;
-  background-size: 100%;
+  position: relative;
+  top: 0.6%;
+  left: 14.2%;
+  height: 73.8%;
+  width: 73.3%;
+  -webkit-background-size: contain;
+  -moz-background-size: contain;
+  background-size: contain;
+  background-repeat: no-repeat;
 }
 .profile-page .background .picture-container .name {
   padding-top: 4%;
