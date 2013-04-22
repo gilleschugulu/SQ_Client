@@ -3310,7 +3310,7 @@ var AssetsList = {
 'home/common/': ["images/home/common/background.jpg", "images/home/common/credit.png", "images/home/common/heart.png", "images/home/common/journal.png", "images/home/common/logo.png", "images/home/common/moregame.png", "images/home/common/options.png", "images/home/common/options_a.png", "images/home/common/play.png", "images/home/common/play_a.png", "images/home/common/profile.png", "images/home/common/profile_a.png", "images/home/common/shop.png", "images/home/common/shop_a.png"],
 'home/pasamis/': ["images/home/pasamis/1.png", "images/home/pasamis/100.png", "images/home/pasamis/1000.png", "images/home/pasamis/exclusif.png", "images/home/pasamis/frame_rank.png", "images/home/pasamis/invite.png", "images/home/pasamis/invite_a.png", "images/home/pasamis/photo.png", "images/home/pasamis/rank.png", "images/home/pasamis/ranking_day.png", "images/home/pasamis/spacer.png"],
 'ingame/': ["images/ingame/add_time.png", "images/ingame/answer.png", "images/ingame/answer_bad.png", "images/ingame/answer_good.png", "images/ingame/box_bonus.png", "images/ingame/box_question.png", "images/ingame/bt_home.png", "images/ingame/double.png", "images/ingame/fifty_fifty.png", "images/ingame/gold_repere.png", "images/ingame/gold_timer_in.png", "images/ingame/mass.png", "images/ingame/photo.png", "images/ingame/repere.png", "images/ingame/score.png", "images/ingame/skip.png", "images/ingame/timer.png", "images/ingame/timer_chrono.png", "images/ingame/timer_in.png", "images/ingame/title.png", "images/ingame/title_left.png", "images/ingame/title_question.png"],
-'login/': ["images/login/bg_login.png", "images/login/compteequipe.png", "images/login/connect_button.png", "images/login/connexionfb.png", "images/login/subscription.png", "images/login/tempbtn.png"],
+'login/': ["images/login/bg_login.png", "images/login/compteequipe.png", "images/login/connect_button.png", "images/login/connexionfb.png", "images/login/or.png", "images/login/subscription.png", "images/login/tempbtn.png"],
 'more-games/': ["images/more-games/title.png"],
 'options/': ["images/options/aide.png", "images/options/aide_a.png", "images/options/credits.png", "images/options/credits_a.png", "images/options/effet.png", "images/options/effet_deactive.png", "images/options/infos.png", "images/options/infos_deactive.png", "images/options/liaison_fb.png", "images/options/liaison_fb_a.png", "images/options/musique.png", "images/options/musique_deactive.png", "images/options/title.png", "images/options/tutoriel.png", "images/options/tutoriel_a.png"],
 'pause/': ["images/pause/fx.png", "images/pause/fx_sans.png", "images/pause/musique.png", "images/pause/musique_sans.png", "images/pause/popup.png", "images/pause/quitter.png", "images/pause/quitter_a.png", "images/pause/reprendre.png", "images/pause/reprendre_a.png"],
@@ -3635,10 +3635,10 @@ Handlebars.template = Handlebars.VM.template;
 ;;
 var BuildVersion = {
   version     : '',
-  commit      : 'a49d7c96419cbbb69371eacf16a439e57fccfebf',
-  shortCommit : 'a49d7c9',
+  commit      : 'ff686da492e5192c1f49898cb0a9851a976ce479',
+  shortCommit : 'ff686da',
   branch      : 'feature/hall-of-fame',
-  time        : '2013-04-22 10:58',
+  time        : '2013-04-22 15:48',
   author      : 'Louis',
 
   getCommitLink: function() {
@@ -23872,27 +23872,27 @@ window.require.register("config/bonus-config", function(exports, require, module
   
 });
 window.require.register("config/environment-config", function(exports, require, module) {
-  var Parent, PreprodConfig, _ref,
+  var LocalConfig, Parent, _ref,
     __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-  Parent = require('config/prod-config');
+  Parent = require('config/preprod-config');
 
-  PreprodConfig = (function(_super) {
-    __extends(PreprodConfig, _super);
+  LocalConfig = (function(_super) {
+    __extends(LocalConfig, _super);
 
-    function PreprodConfig() {
-      _ref = PreprodConfig.__super__.constructor.apply(this, arguments);
+    function LocalConfig() {
+      _ref = LocalConfig.__super__.constructor.apply(this, arguments);
       return _ref;
     }
 
-    PreprodConfig.log = true;
+    LocalConfig.analytics = {
+      enabled: false
+    };
 
-    PreprodConfig.long_version_format = true;
+    LocalConfig.pay_game = false;
 
-    PreprodConfig.pay_game = false;
-
-    PreprodConfig.services = {
+    LocalConfig.services = {
       parse: {
         app_id: 'ixxjIFjdYTjOeKSZycsaPw8DHndujhvHFX2rNW10',
         js_key: 'XQMt26dlAXV32EmVVEQYwhSK2yYuvD6qDA3HaFqS',
@@ -23906,8 +23906,7 @@ window.require.register("config/environment-config", function(exports, require, 
       },
       facebook: {
         app_id: '321070437995692',
-        like_page_url: 'http://www.facebook.com/',
-        createAnyway: false
+        like_page_url: 'http://www.facebook.com/'
       },
       adcolony: {
         zones: {
@@ -23919,11 +23918,11 @@ window.require.register("config/environment-config", function(exports, require, 
       }
     };
 
-    return PreprodConfig;
+    return LocalConfig;
 
   })(Parent);
 
-  module.exports = PreprodConfig;
+  module.exports = LocalConfig;
   
 });
 window.require.register("config/local-config", function(exports, require, module) {
@@ -61402,8 +61401,6 @@ window.require.register("controllers/outgame/hall-of-fame-controller", function(
       friends2 = _.pluck(friends, 'id');
       user = Parse.User.current();
       tmp = _.first(_.shuffle(_.difference(friends2, user.get('fb_invited'))), 3);
-      console.log(_.difference(friends2, user.get('fb_invited')));
-      console.log(friends2, user.get('fb_invited'));
       results = [];
       for (_i = 0, _len = tmp.length; _i < _len; _i++) {
         friend = tmp[_i];
@@ -63181,7 +63178,6 @@ window.require.register("helpers/facebook-helper", function(exports, require, mo
           if (callback) {
             return callback(friends);
           } else {
-            console.log('toto');
             return friends;
           }
         });
@@ -66916,7 +66912,7 @@ window.require.register("views/templates/outgame/hall-of-fame", function(exports
     if (stack1 = helpers.rank) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
     else { stack1 = depth0.rank; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
     buffer += escapeExpression(stack1)
-      + "</div>\n  <div id=\"btn_HoF\">\n    <div class=\"friends active category\" id=\"btn-friends\"></div>\n    <div class=\"global category\" id=\"btn-global\"></div>\n  </div>\n  <div class=\"ranking-container\" id=\"toto\">\n  </div>\n</div>\n\n<!-- HEADER BLOCK BEGIN -->\n<div class=\"cash-container\">\n  <span class=\"life-value\">";
+      + "</div>\n  <div id=\"btn_HoF\">\n    <div class=\"friends active category\" id=\"btn-friends\"></div>\n    <div class=\"global category\" id=\"btn-global\"></div>\n  </div>\n  <div class=\"ranking-container\" id=\"toto\">\n    <div class=\"spinner\"></div>\n  </div>\n</div>\n\n<!-- HEADER BLOCK BEGIN -->\n<div class=\"cash-container\">\n  <span class=\"life-value\">";
     if (stack1 = helpers.health) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
     else { stack1 = depth0.health; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
     buffer += escapeExpression(stack1)

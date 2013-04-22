@@ -3998,6 +3998,18 @@ body.box-align {
   background-image: url("../images/hall-of-fame/box_classements.png");
   padding-top: 1%;
 }
+.hall-of-fame .content-container .ranking-container .spinner {
+  width: 50%;
+  height: 50%;
+  position: absolute;
+  left: 25%;
+  top: 25%;
+  background-image: url("..images/spinner/spinner2.gif");
+  -webkit-background-size: 100%;
+  -moz-background-size: 100%;
+  background-size: 100%;
+  background-repeat: no-repeat;
+}
 .hall-of-fame .content-container .ranking-container #no-friends {
   width: 40%;
   height: 20%;
