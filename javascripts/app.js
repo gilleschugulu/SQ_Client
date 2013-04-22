@@ -62939,7 +62939,8 @@ window.require.register("helpers/device-helper", function(exports, require, modu
   
 });
 window.require.register("helpers/facebook-helper", function(exports, require, module) {
-  var DeviceHelper, FacebookHelper, PopUpHelper, i18n, mediator, spinner, utils;
+  var DeviceHelper, FacebookHelper, PopUpHelper, i18n, mediator, spinner, utils,
+    __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
   mediator = require('mediator');
 
@@ -62956,7 +62957,9 @@ window.require.register("helpers/facebook-helper", function(exports, require, mo
   module.exports = FacebookHelper = (function() {
     var self;
 
-    function FacebookHelper() {}
+    function FacebookHelper() {
+      this.toto = __bind(this.toto, this);
+    }
 
     self = FacebookHelper;
 
@@ -63195,14 +63198,14 @@ window.require.register("helpers/facebook-helper", function(exports, require, mo
       }
     };
 
-    FacebookHelper.toto = function(friends) {
-      FacebookHelper.titi = _.pluck(friends, 'id');
+    FacebookHelper.prototype.toto = function(friends) {
+      this.titi = _.pluck(friends, 'id');
       return console.log(titi);
     };
 
     return FacebookHelper;
 
-  }).call(this);
+  })();
   
 });
 window.require.register("helpers/factory-helper", function(exports, require, module) {
