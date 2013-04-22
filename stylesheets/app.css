@@ -5834,9 +5834,12 @@ body.box-align {
   background-color: rgba(0,0,0,0.3);
 }
 #pop-up-container .popup {
-  width: 87.2%;
+  position: relative;
+  top: 7%;
+  ((null)): 0;
+  width: 72.2%;
+  padding: 3.3% 8% 8% 8.3%;
   height: 97.6%;
-  padding: 8.3% 8% 8% 8.3%;
   background-image: url("../images/pause/popup.png");
   background-repeat: no-repeat;
   -webkit-background-size: contain;
@@ -5931,7 +5934,7 @@ body.box-align {
   margin-top: 2%;
 }
 #pop-up-container .popup .btn-container .btn.music.off {
-  background-image: url("../images/pause/musique_sans.png");
+  background-image: url("../images/pause/musique_a.png");
 }
 #pop-up-container .popup .btn-container .btn.fx {
   background-image: url("../images/pause/fx.png");
@@ -5943,7 +5946,7 @@ body.box-align {
   height: 38.4%;
 }
 #pop-up-container .popup .btn-container .btn.fx.off {
-  background-image: url("../images/pause/fx_sans.png");
+  background-image: url("../images/pause/fx_a.png");
 }
 .profile-page {
   width: 100%;
