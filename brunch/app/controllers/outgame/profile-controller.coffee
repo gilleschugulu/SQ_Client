@@ -40,6 +40,7 @@ module.exports = class ProfilesController extends Controller
       , (view) =>
         view.delegate 'click', '.facebook-link', @linkFacebook
         view.delegate 'click', '.game-center', @onClickGameCenter
+        view.autoSizeText()
       , {viewTransition: yes, music: 'outgame'}
 
   linkFacebook: ->
