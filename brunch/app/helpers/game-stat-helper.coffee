@@ -10,12 +10,9 @@ module.exports = class GameStatHelper
 
   @setBestWeekScore: (value) ->
     current_week = (new Date).getWeek()
-    console.log 'setBestWeekScore', value, current_week
     if @_getStat('week_score') == current_week
-      console.log 'same week, so best set'
       @_setBest('game_week_score', value)
     else
-      console.log 'different week, so set score and date', value, current_week
       @_setStat('week_score', current_week)
       @_setStat('game_week_score', value)
 
@@ -41,6 +38,8 @@ module.exports = class GameStatHelper
   @_incrementSportAnswersCount: (success, sport) ->
     user = Parse.User.current()
     stats = user.get('stats')
+    sport = sport.replace /\w\S*/g, (txt) => 
+      return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase()
 
     unless stats.sports[sport]
       stats.sports[sport] =
@@ -100,11 +99,7 @@ module.exports = class GameStatHelper
     parseFloat(((@_getStat('good_answers_count') / (@_getStat('wrong_answers_count') + @_getStat('good_answers_count'))) * 100).toFixed(2)) | 0
 
   @reset: ->
-    @_stats = {
-      game_good_answers_count:  0
-      game_wrong_answers_count: 0
-      game_best_row:            0
-    }
+    @_stats = Parse.User.current().get('stats')
 
 
   # Will save stats on Parse. 
@@ -137,9 +132,7 @@ module.exports = class GameStatHelper
       @_setStat(key, value)
 
   @_setStat: (key, value) ->
-    console.log '_setStat', key, value
     @_stats[key] = value
-    console.log @_stats
     @_stats[key]
 
   @_getStat: (key) ->
