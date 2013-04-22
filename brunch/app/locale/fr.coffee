@@ -3,6 +3,7 @@ module.exports =
     controller:
       home:
         facebook_invite_message: 'Vasy rejoins ce jeu il déchire'
+        app_request_error: 'Désolé vous avez déjà invité tous vos amis'
         touch_me:
           touch: 'Touche pour afficher la Une'
           loading: "Le journal est en cours de livraison !"

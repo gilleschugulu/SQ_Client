@@ -4,6 +4,7 @@ mediator                  = require 'mediator'
 i18n                      = require 'lib/i18n'
 FacebookHelper            = require 'helpers/facebook-helper'
 AnalyticsHelper           = require 'helpers/analytics-helper'
+popUp                     = require 'helpers/pop-up-helper'
 NoFriendsJournalView      = require 'views/outgame/journal/no-friends-journal-view'
 OneFriendJournalView      = require 'views/outgame/journal/one-friend-journal-view'
 TwoFriendsJournalView     = require 'views/outgame/journal/two-friends-journal-view'
@@ -55,7 +56,11 @@ module.exports = class HomeController extends Controller
 
 
   onClickFacebook: =>
-    FacebookHelper.friendRequest i18n.t('controller.home.facebook_invite_message')
+    FacebookHelper.getOtherFriends (friends) =>
+      if _.difference(_.pluck(friends, 'id'), Parse.User.current().get('fb_invited')).length < 1
+         popUp.initialize {message: i18n.t('controller.home.app_request_error'), title: 'Action impossible', key: 'appRequest-error'}
+      else
+        FacebookHelper.friendRequest i18n.t('controller.home.facebook_invite_message')
 
   getJournalView: (friends, callback) ->
     switch friends.length
