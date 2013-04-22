@@ -63053,7 +63053,7 @@ window.require.register("helpers/facebook-helper", function(exports, require, mo
         callback = null;
       }
       doRequest = function() {
-        var toto, user,
+        var user,
           _this = this;
 
         if (!message) {
@@ -63063,24 +63063,26 @@ window.require.register("helpers/facebook-helper", function(exports, require, mo
           return alert("FB.request: message doit faire entre 1 et 255 characteres (" + message.length + " actuellement)");
         }
         user = Parse.User.current();
-        toto = FacebookHelper.getOtherFriends();
-        console.log(toto);
-        console.log(FacebookHelper.getOtherFriends());
-        return FB.ui({
-          method: 'apprequests',
-          message: message,
-          to: friend,
-          filters: [
-            {
-              name: 'invite friends',
-              user_ids: user.get('fb_invited')
+        return FacebookHelper.getOtherFriends(function(friends) {
+          var notInstalledFriends;
+
+          notInstalledFriends = _.pluck(friends, 'id');
+          return FB.ui({
+            method: 'apprequests',
+            message: message,
+            to: friend,
+            filters: [
+              {
+                name: 'invite friends',
+                user_ids: _.difference(notInstalledFriends, user.get('fb_invited'))
+              }
+            ]
+          }, function(response) {
+            user.set("fb_invited", _.uniq(response.to.concat(user.get('fb_invited')))).save();
+            if (response && callback) {
+              return callback(response);
             }
-          ]
-        }, function(response) {
-          user.set("fb_invited", _.uniq(response.to.concat(user.get('fb_invited')))).save();
-          if (response && callback) {
-            return callback(response);
-          }
+          });
         });
       };
       if (!this.isLinked()) {
