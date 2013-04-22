@@ -66912,7 +66912,7 @@ window.require.register("views/templates/outgame/hall-of-fame", function(exports
     if (stack1 = helpers.rank) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
     else { stack1 = depth0.rank; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
     buffer += escapeExpression(stack1)
-      + "</div>\n  <div id=\"btn_HoF\">\n    <div class=\"friends active category\" id=\"btn-friends\"></div>\n    <div class=\"global category\" id=\"btn-global\"></div>\n  </div>\n  <div class=\"ranking-container\" id=\"toto\">\n    <div class=\"spinner\"></div>\n  </div>\n</div>\n\n<!-- HEADER BLOCK BEGIN -->\n<div class=\"cash-container\">\n  <span class=\"life-value\">";
+      + "</div>\n  <div id=\"btn_HoF\">\n    <div class=\"friends active category\" id=\"btn-friends\"></div>\n    <div class=\"global category\" id=\"btn-global\"></div>\n  </div>\n  <div class=\"ranking-container\" id=\"toto\">\n  </div>\n  <div class=\"spinner\"></div>\n</div>\n\n<!-- HEADER BLOCK BEGIN -->\n<div class=\"cash-container\">\n  <span class=\"life-value\">";
     if (stack1 = helpers.health) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
     else { stack1 = depth0.health; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
     buffer += escapeExpression(stack1)
