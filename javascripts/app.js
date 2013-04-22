@@ -66255,6 +66255,7 @@ window.require.register("views/outgame/hall-of-fame-view", function(exports, req
         friend = friends[_i];
         moreFriends += "<div class='div-ranking moreFriends'><img class='profilepic' src='https://graph.facebook.com/" + friend.id + "/picture'/><span class='username'>" + friend.name + "</span><div data-id='" + friend.id + "' class='invite-btn'></div></div>";
       }
+      $(".spinner").css(display, 'none');
       return moreFriends;
     };
 
