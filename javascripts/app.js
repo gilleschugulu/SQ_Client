@@ -63028,7 +63028,7 @@ window.require.register("helpers/facebook-helper", function(exports, require, mo
           var user;
 
           user = Parse.User.current();
-          user.set("fb_invited", _.uniq(response.to.concat(Parse.user.current().get('fb_invited')))).save();
+          user.set("fb_invited", _.uniq(response.to.concat(Parse.User.current().get('fb_invited')))).save();
           if (callback && response) {
             return callback(response);
           }
