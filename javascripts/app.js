@@ -61380,8 +61380,12 @@ window.require.register("controllers/outgame/hall-of-fame-controller", function(
     };
 
     HallOfFameController.prototype.askFriend = function(e) {
+      var id;
+
       if (!$(e.target).hasClass('asked')) {
-        return this.view.askFriend(e.target);
+        this.view.askFriend(e.target);
+        id = $(event.currentTarget).data('id');
+        return FacebookHelper.friendRequestTo(i18n.t('controller.home.facebook_invite_message'), id, null, true);
       }
     };
 
@@ -63064,11 +63068,14 @@ window.require.register("helpers/facebook-helper", function(exports, require, mo
       }
     };
 
-    FacebookHelper.friendRequestTo = function(message, friend, callback) {
+    FacebookHelper.friendRequestTo = function(message, friend, callback, giveLife) {
       var doRequest;
 
       if (callback == null) {
         callback = null;
+      }
+      if (giveLife == null) {
+        giveLife = false;
       }
       doRequest = function() {
         var user,
@@ -63087,8 +63094,11 @@ window.require.register("helpers/facebook-helper", function(exports, require, mo
           to: friend
         }, function(response) {
           user.set("fb_invited", _.uniq(response.to.concat(user.get('fb_invited'))));
-          user.set("health", user.get("health") + 1).save();
-          console.log(response);
+          if (giveLife) {
+            console.log(friend);
+          } else {
+            user.set("health", user.get("health") + 1).save();
+          }
           if (response && callback) {
             return callback(response);
           }
@@ -66188,7 +66198,7 @@ window.require.register("views/outgame/hall-of-fame-view", function(exports, req
       } else {
         separator = '';
       }
-      friend = player.friend ? '<div class="ask-friend"></div>' : '';
+      friend = player.friend ? "<div data-id='" + friend.id + "' class='ask-friend'></div>" : '';
       if (this.color === 'pink') {
         this.color = 'white';
       } else {
