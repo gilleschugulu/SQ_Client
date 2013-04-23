@@ -66213,9 +66213,9 @@ window.require.register("views/outgame/hall-of-fame-view", function(exports, req
       this.color = 'pink';
       el = $('.ranking-container', this.$el).empty();
       if (!fbConnected && withFriends) {
-        return el.append('<a id="no-fb-connected"></a>');
+        el.append('<a id="no-fb-connected"></a>');
       } else if (noFriends && withFriends) {
-        return el.append('<a id="no-friends"></a>');
+        el.append('<a id="no-friends"></a>');
       } else {
         for (_i = 0, _len = players.length; _i < _len; _i++) {
           player = players[_i];
@@ -66224,8 +66224,9 @@ window.require.register("views/outgame/hall-of-fame-view", function(exports, req
         if (withFriends) {
           el.append(this.suggestFriends(friendsToInvite));
         }
-        return this.scrollTo(playerPosition);
+        this.scrollTo(playerPosition);
       }
+      return $(".spinner").css('display', 'none');
     };
 
     HallOfFameView.prototype.chooseList = function(eventTargetEl) {
@@ -66291,7 +66292,6 @@ window.require.register("views/outgame/hall-of-fame-view", function(exports, req
         friend = friends[_i];
         moreFriends += "<div class='div-ranking moreFriends'><img class='profilepic' src='https://graph.facebook.com/" + friend.id + "/picture'/><span class='username'>" + friend.name + "</span><div data-id='" + friend.id + "' class='invite-btn'></div></div>";
       }
-      $(".spinner").css('display', 'none');
       return moreFriends;
     };
 
