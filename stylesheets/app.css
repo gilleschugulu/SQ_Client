@@ -4072,10 +4072,10 @@ body.box-align {
   cursor: pointer;
   margin-top: 1%;
   position: absolute;
-  right: 1%;
+  right: 0%;
   ((null)): 0;
   width: 9%;
-  height: 9%;
+  height: 7%;
   background-image: url("../images/hall-of-fame/icon-feature-invite.png");
   -webkit-background-size: contain;
   -moz-background-size: contain;
