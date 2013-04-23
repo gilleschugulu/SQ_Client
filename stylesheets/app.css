@@ -4047,7 +4047,7 @@ body.box-align {
   width: 100%;
   height: 2%;
   margin-left: 0%;
-  background-color: 'rgb(226, 23, 23)';
+  background-color: #e21717;
 }
 .hall-of-fame .content-container .ranking-container .div-ranking {
   margin-left: 1%;
@@ -4076,7 +4076,7 @@ body.box-align {
   ((null)): 0;
   width: 9%;
   height: 9%;
-  background-image: url("../images/hall-of-fame/invite.png");
+  background-image: url("../images/hall-of-fame/icon-feature-invite.png");
   -webkit-background-size: contain;
   -moz-background-size: contain;
   background-size: contain;
