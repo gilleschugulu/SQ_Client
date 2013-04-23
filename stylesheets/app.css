@@ -4048,6 +4048,8 @@ body.box-align {
   height: 3%;
   margin-left: 0%;
   background-color: #d80000;
+  -webkit-border-radius: 5%;
+  border-radius: 5%;
 }
 .hall-of-fame .content-container .ranking-container .div-ranking {
   margin-left: 1%;
