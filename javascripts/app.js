@@ -66288,8 +66288,7 @@ window.require.register("views/outgame/hall-of-fame-view", function(exports, req
     };
 
     HallOfFameView.prototype.takeOffFriend = function(target) {
-      console.log('toto');
-      return console.log(target);
+      return $(target).css('display', 'none');
     };
 
     return HallOfFameView;
