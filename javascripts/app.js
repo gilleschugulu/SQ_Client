@@ -63099,8 +63099,8 @@ window.require.register("helpers/facebook-helper", function(exports, require, mo
             Parse.Cloud.run('giveLife', {
               friendsId: friend
             }, {
-              success: function() {
-                return console.log('it worked');
+              success: function(msg) {
+                return console.log(msg);
               }
             });
           } else {
