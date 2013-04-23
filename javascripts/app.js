@@ -63101,6 +63101,9 @@ window.require.register("helpers/facebook-helper", function(exports, require, mo
             }, {
               success: function(msg) {
                 return console.log(msg);
+              },
+              error: function(msg) {
+                return console.log(msg);
               }
             });
           } else {
