@@ -63100,8 +63100,7 @@ window.require.register("helpers/facebook-helper", function(exports, require, mo
               friendsId: friend
             }, {
               success: function(msg) {
-                console.log(msg.get('health'));
-                return msg.set('health', msg.get('health') + 1).save();
+                return console.log(msg.get('health'));
               },
               error: function(msg) {
                 return console.log(msg);
