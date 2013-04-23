@@ -61264,6 +61264,7 @@ window.require.register("controllers/outgame/hall-of-fame-controller", function(
 
       this.friend = withFriends ? true : false;
       ranking = withFriends ? this.friendsArray : this.globalArray;
+      console.log(ranking);
       this.collection = [];
       for (i = _i = 0, _ref1 = ranking.length; 0 <= _ref1 ? _i < _ref1 : _i > _ref1; i = 0 <= _ref1 ? ++_i : --_i) {
         this.collection[i] = {
@@ -66191,7 +66192,6 @@ window.require.register("views/outgame/hall-of-fame-view", function(exports, req
     HallOfFameView.prototype.newPlayerHTML = function(player, picSize, players) {
       var friend, pic, rank, separator;
 
-      console.log(player);
       separator = '<div class="separator"></div>';
       if (this.i > 0) {
         if (players[this.i - 1].rank + 1 === player.rank || players[this.i - 1].rank === player.rank) {
