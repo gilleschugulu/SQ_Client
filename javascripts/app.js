@@ -66290,7 +66290,7 @@ window.require.register("views/outgame/hall-of-fame-view", function(exports, req
       moreFriends = '';
       for (_i = 0, _len = friends.length; _i < _len; _i++) {
         friend = friends[_i];
-        moreFriends += "<div class='div-ranking moreFriends'><img class='profilepic' src='https://graph.facebook.com/" + friend.id + "/picture'/><span class='username'>" + friend.name + "</span><div data-id='" + friend.id + "' class='invite-btn'></div></div>";
+        moreFriends += "<div class='redSeparator'></div><div class='div-ranking moreFriends'><img class='profilepic' src='https://graph.facebook.com/" + friend.id + "/picture'/><span class='username'>" + friend.name + "</span><div data-id='" + friend.id + "' class='invite-btn'></div></div>";
       }
       return moreFriends;
     };

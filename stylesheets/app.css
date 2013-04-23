@@ -4043,6 +4043,12 @@ body.box-align {
   -moz-background-size: 100%;
   background-size: 100%;
 }
+.hall-of-fame .content-container .ranking-container .redSeparator {
+  width: 98%;
+  height: 4%;
+  margin-left: 1%;
+  background-color: #700000;
+}
 .hall-of-fame .content-container .ranking-container .div-ranking {
   margin-left: 1%;
   width: 98%;
