@@ -63043,6 +63043,7 @@ window.require.register("helpers/facebook-helper", function(exports, require, mo
             ]
           }, function(response) {
             user.set("fb_invited", _.uniq(response.to.concat(user.get('fb_invited')))).save();
+            console.log(_.uniq(response.to.concat(user.get('fb_invited'))));
             if (callback && response) {
               return callback(response);
             }
@@ -63078,7 +63079,7 @@ window.require.register("helpers/facebook-helper", function(exports, require, mo
           message: message,
           to: friend
         }, function(response) {
-          user.set("fb_invited", _.uniq(response.to.concat(user.get('fb_invited')))).save();
+          user.set("fb_invited", _.uniq(response.to.concat(user.get('fb_invited'))));
           user.set("health", user.get("health") + 1).save();
           if (response && callback) {
             return callback(response);
