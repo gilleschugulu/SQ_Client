@@ -61385,6 +61385,7 @@ window.require.register("controllers/outgame/hall-of-fame-controller", function(
 
       if (!$(e.target).hasClass('asked')) {
         this.view.askFriend(e.target);
+        console.log(event.currentTarget);
         id = $(event.currentTarget).data('id');
         return FacebookHelper.friendRequestTo(i18n.t('controller.home.facebook_invite_message'), id, null, true);
       }
