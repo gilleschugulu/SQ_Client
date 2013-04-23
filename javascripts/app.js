@@ -61385,7 +61385,6 @@ window.require.register("controllers/outgame/hall-of-fame-controller", function(
 
       if (!$(e.target).hasClass('asked')) {
         this.view.askFriend(e.target);
-        console.log(e.currentTarget);
         id = $(e.currentTarget).data('id');
         return FacebookHelper.friendRequestTo(i18n.t('controller.home.facebook_invite_message'), id, null, true);
       }
@@ -63079,7 +63078,6 @@ window.require.register("helpers/facebook-helper", function(exports, require, mo
       if (giveLife == null) {
         giveLife = false;
       }
-      console.log(friend);
       doRequest = function() {
         var user,
           _this = this;
@@ -63098,7 +63096,13 @@ window.require.register("helpers/facebook-helper", function(exports, require, mo
         }, function(response) {
           user.set("fb_invited", _.uniq(response.to.concat(user.get('fb_invited'))));
           if (giveLife) {
-            console.log(friend);
+            Parse.Cloud.run('giveLife', {
+              friendsId: friend
+            }, {
+              success: function() {
+                return console.log('it worked');
+              }
+            });
           } else {
             user.set("health", user.get("health") + 1).save();
           }
