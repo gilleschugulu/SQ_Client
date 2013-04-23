@@ -3635,10 +3635,10 @@ Handlebars.template = Handlebars.VM.template;
 ;;
 var BuildVersion = {
   version     : '',
-  commit      : 'ec9e372a0d3bfb19e4e2bd155c8f7bbe0c97347f',
-  shortCommit : 'ec9e372',
+  commit      : '936ecdda00da4a605864ab2426f4845521bcc6c9',
+  shortCommit : '936ecdd',
   branch      : 'feature/hall-of-fame',
-  time        : '2013-04-22 18:12',
+  time        : '2013-04-23 11:02',
   author      : 'Louis',
 
   getCommitLink: function() {
@@ -61415,7 +61415,8 @@ window.require.register("controllers/outgame/hall-of-fame-controller", function(
       var id;
 
       id = $(event.currentTarget).data('id');
-      return FacebookHelper.friendRequestTo(i18n.t('controller.home.facebook_invite_message')(id));
+      FacebookHelper.friendRequestTo(i18n.t('controller.home.facebook_invite_message')(id));
+      return typeof this.view === "function" ? this.view(takeOffFriend(event.currentTarget)) : void 0;
     };
 
     return HallOfFameController;
@@ -66139,6 +66140,7 @@ window.require.register("views/outgame/hall-of-fame-view", function(exports, req
     __extends(HallOfFameView, _super);
 
     function HallOfFameView() {
+      this.takeOffFriend = __bind(this.takeOffFriend, this);
       this.suggestFriends = __bind(this.suggestFriends, this);    _ref = HallOfFameView.__super__.constructor.apply(this, arguments);
       return _ref;
     }
@@ -66283,6 +66285,10 @@ window.require.register("views/outgame/hall-of-fame-view", function(exports, req
       }
       $(".spinner").css('display', 'none');
       return moreFriends;
+    };
+
+    HallOfFameView.prototype.takeOffFriend = function(target) {
+      return console.log(target);
     };
 
     return HallOfFameView;
