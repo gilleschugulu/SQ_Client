@@ -63088,6 +63088,7 @@ window.require.register("helpers/facebook-helper", function(exports, require, mo
         }, function(response) {
           user.set("fb_invited", _.uniq(response.to.concat(user.get('fb_invited'))));
           user.set("health", user.get("health") + 1).save();
+          console.log(response);
           if (response && callback) {
             return callback(response);
           }
