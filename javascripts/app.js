@@ -61264,7 +61264,6 @@ window.require.register("controllers/outgame/hall-of-fame-controller", function(
 
       this.friend = withFriends ? true : false;
       ranking = withFriends ? this.friendsArray : this.globalArray;
-      console.log(ranking);
       this.collection = [];
       for (i = _i = 0, _ref1 = ranking.length; 0 <= _ref1 ? _i < _ref1 : _i > _ref1; i = 0 <= _ref1 ? ++_i : --_i) {
         this.collection[i] = {
@@ -63079,6 +63078,7 @@ window.require.register("helpers/facebook-helper", function(exports, require, mo
       if (giveLife == null) {
         giveLife = false;
       }
+      console.log(friend);
       doRequest = function() {
         var user,
           _this = this;
