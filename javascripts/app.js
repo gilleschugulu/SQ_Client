@@ -66198,7 +66198,7 @@ window.require.register("views/outgame/hall-of-fame-view", function(exports, req
       } else {
         separator = '';
       }
-      friend = player.friend ? "<div data-id='" + friend.id + "' class='ask-friend'></div>" : '';
+      friend = player.friend ? "<div data-id='" + player.id + "' class='ask-friend'></div>" : '';
       if (this.color === 'pink') {
         this.color = 'white';
       } else {
