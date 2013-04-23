@@ -61272,7 +61272,7 @@ window.require.register("controllers/outgame/hall-of-fame-controller", function(
           rank: ranking[i].rank,
           username: ranking[i].username,
           jackpot: ranking[i].score,
-          id: ranking[i].id,
+          id: ranking[i].fb_id,
           profilepic: !!ranking[i].fb_id ? 'https://graph.facebook.com/' + ranking[i].fb_id + '/picture' : null
         };
         if (ranking[i].username === this.user.get('username')) {
