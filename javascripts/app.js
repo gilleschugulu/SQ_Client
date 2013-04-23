@@ -66190,6 +66190,7 @@ window.require.register("views/outgame/hall-of-fame-view", function(exports, req
     HallOfFameView.prototype.newPlayerHTML = function(player, picSize, players) {
       var friend, pic, rank, separator;
 
+      console.log(player);
       separator = '<div class="separator"></div>';
       if (this.i > 0) {
         if (players[this.i - 1].rank + 1 === player.rank || players[this.i - 1].rank === player.rank) {
