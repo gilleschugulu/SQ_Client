@@ -61297,7 +61297,8 @@ window.require.register("controllers/outgame/hall-of-fame-controller", function(
         userId: this.user.id
       }, {
         success: function(players) {
-          return _this.globalArray = players;
+          _this.globalArray = players;
+          return console.log(_this.globalArray);
         },
         error: function() {
           return console.log('toto s dead');
@@ -61417,19 +61418,11 @@ window.require.register("controllers/outgame/hall-of-fame-controller", function(
     };
 
     HallOfFameController.prototype.FacebookInvite = function(event) {
-      var _this = this;
+      var id;
 
-      return Parse.Cloud.run('clean', {
-        column: 'life_given',
-        value: []
-      }, {
-        success: function() {
-          return console.log('it worked');
-        },
-        error: function() {
-          return console.log('it didn t work');
-        }
-      });
+      id = $(event.currentTarget).data('id');
+      FacebookHelper.friendRequestTo(i18n.t('controller.home.facebook_invite_message'), id);
+      return this.view.takeOffFriend(event.currentTarget);
     };
 
     return HallOfFameController;
