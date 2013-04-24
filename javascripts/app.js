@@ -66208,10 +66208,6 @@ window.require.register("views/outgame/hall-of-fame-view", function(exports, req
       } else {
         separator = '';
       }
-      console.log(Parse.User.current().get('life_given')[0]);
-      console.log(player.id);
-      console.log(_.indexOf(Parse.User.current().get("life_given", player.id)));
-      console.log(player.id === Parse.User.current().get('life_given')[0]);
       alredySend = '';
       _ref1 = Parse.User.current().get("life_given");
       for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
