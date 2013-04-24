@@ -66210,7 +66210,7 @@ window.require.register("views/outgame/hall-of-fame-view", function(exports, req
       }
       console.log(Parse.User.current().get('life_given')[0]);
       console.log(player.id);
-      console.log(_.contains(Parse.User.current().get("life_given", player.id)));
+      console.log(_.indexOf(Parse.User.current().get("life_given", player.id)));
       console.log(player.id === Parse.User.current().get('life_given')[0]);
       alredySend = _.indexOf(Parse.User.current().get("life_given", player.id)) ? 'asked' : '';
       friend = player.friend ? ("<div data-id='" + player.id + "' class='ask-friend ") + alredySend + "'></div>" : '';
