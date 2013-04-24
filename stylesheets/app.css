@@ -4998,6 +4998,13 @@ body.box-align {
   -ms-transition: height linear 1s;
   transition: height linear 1s;
 }
+@media screen and (min-width: 1024px) {
+  .dupa-stage .chrono-container .chrono-filler-container {
+    position: absolute;
+    bottom: 1.4%;
+    left: 9.7%;
+  }
+}
 .dupa-stage .question-container {
   position: absolute;
   top: 7%;
@@ -5196,11 +5203,23 @@ body.box-align {
   color: #75634e;
   padding: 10% 0;
   text-align: center;
+  z-index: 1;
+}
+.dupa-stage .jackpot-container .threshold.highlighted .value {
+  color: #f9e4f3;
+}
+.dupa-stage .jackpot-container .threshold.highlighted.gold {
+  color: #744141;
+}
+.dupa-stage .jackpot-container .threshold .value {
+  position: relative;
+  z-index: 10;
 }
 .dupa-stage .jackpot-container .threshold .highlighted {
   position: absolute;
   top: 0%;
   left: 0%;
+  z-index: 5;
   width: 100%;
   height: 100%;
   background-image: url("../images/ingame/timer_in.png");
@@ -5208,13 +5227,20 @@ body.box-align {
   -webkit-background-size: contain;
   -moz-background-size: contain;
   background-size: contain;
-  color: #f9e4f3;
-  padding: 24% 0;
-  text-align: center;
 }
 .dupa-stage .jackpot-container .threshold .highlighted.gold {
   background-image: url("../images/ingame/gold_timer_in.png");
-  color: #744141;
+}
+@media screen and (min-width: 1024px) {
+  .dupa-stage .jackpot-container .threshold {
+    padding: 17% 0;
+  }
+  .dupa-stage .jackpot-container .threshold .highlighted {
+    width: 102%;
+    height: 105%;
+    top: 9%;
+    left: 2%;
+  }
 }
 .dupa-stage .jackpot-container #jackpot-marker {
   position: absolute;
@@ -5222,6 +5248,7 @@ body.box-align {
   left: 68%;
   width: 45%;
   height: 7%;
+  z-index: 50;
   background-image: url("../images/ingame/repere.png");
   background-repeat: no-repeat;
   -webkit-background-size: contain;
@@ -5891,6 +5918,9 @@ body.box-align {
   display: inline-block;
 }
 #pop-up-container .popup .btn-container .btn.ok {
+  position: relative;
+  top: 5%;
+  ((null)): 0;
   background-image: url("../images/pause/ok.png");
   background-repeat: no-repeat;
   -webkit-background-size: contain;

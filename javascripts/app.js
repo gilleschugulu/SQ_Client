@@ -61098,7 +61098,7 @@ window.require.register("controllers/ingame/stages/dupa-stage-controller", funct
         _this.view.welcome(_this.askNextQuestion);
         return _this.view.delegate('click', '.bonus', function(event) {
           return _this.view.chooseBonus(event.currentTarget, function(bonusName) {
-            if (_this.canUseBonus(bonusName) && _this.model.get('player').consumeBonus(bonusName)) {
+            if (_this.canUseBonus(bonusName)) {
               _this.view.updateBonus(event.currentTarget, _this.model.get('player').getBonusQuantity(bonusName));
               return _this.executeBonus(bonusName);
             }
@@ -61137,6 +61137,9 @@ window.require.register("controllers/ingame/stages/dupa-stage-controller", funct
     };
 
     DupaStageController.prototype.playerDidAnswer = function(player, question, result) {
+      var oldJackpot;
+
+      oldJackpot = this.model.getCurrentThreshold();
       if (result) {
         this.model.playerMadeSuccess(player, this.bonusDoubleUsed);
         this.row++;
@@ -61149,7 +61152,10 @@ window.require.register("controllers/ingame/stages/dupa-stage-controller", funct
       }
       GameStatHelper.incrementAnswersCount(result, question.get('category'));
       GameStatHelper.incrementSumTimeQuestion((new Date().getTime()) - this.startTime);
-      this.view.updateJackpot(player.get('jackpot'), this.model.getCurrentThreshold(), result);
+      this.view.updateJackpot(player.get('jackpot'), this.model.getCurrentThreshold(), {
+        result: result,
+        oldJackpot: oldJackpot
+      });
       return this.askNextQuestion();
     };
 
@@ -66048,18 +66054,25 @@ window.require.register("views/ingame/stages/dupa-stage-view", function(exports,
       }, 2000);
     };
 
-    DupaView.prototype.updateJackpot = function(jackpot, currentThresholdValue, result) {
+    DupaView.prototype.updateJackpot = function(jackpot, currentThresholdValue, options) {
       var blockEl, el;
 
+      if (options == null) {
+        options = {};
+      }
       el = $('.jackpot-container', this.$el);
       $('#total-jackpot', el).text(jackpot);
       $(".threshold .highlighted", el).addClass('animated fadeOut').one('webkitAnimationEnd', function() {
         return $(this).remove();
       });
+      if (options != null ? options.oldJackpot : void 0) {
+        $(".threshold[data-value='" + options.oldJackpot + "']", el).removeClass('highlighted gold');
+      }
       blockEl = $(".threshold[data-value='" + currentThresholdValue + "']", el);
-      blockEl.append("<div class='highlighted'>" + currentThresholdValue + "</div>");
+      blockEl.addClass('highlighted');
+      blockEl.append("<div class='highlighted'></div>");
       $('.highlighted', blockEl).addClass('animated fadeIn');
-      return this.updateJackpotMarker(currentThresholdValue, result);
+      return this.updateJackpotMarker(currentThresholdValue, typeof result !== "undefined" && result !== null ? result.result : void 0);
     };
 
     DupaView.prototype.updateJackpotMarker = function(currentThresholdValue, result) {
@@ -66107,6 +66120,7 @@ window.require.register("views/ingame/stages/dupa-stage-view", function(exports,
 
     DupaView.prototype.doubleScoreActivated = function() {
       $('.highlighted').addClass('gold');
+      $('.highlighted').parent().addClass('gold');
       return $('#jackpot-marker').addClass('gold');
     };
 
@@ -66959,9 +66973,9 @@ window.require.register("views/templates/ingame/stages/dupa-stage", function(exp
     var buffer = "";
     buffer += "\n    <div class='threshold' data-value=\""
       + escapeExpression((typeof depth0 === functionType ? depth0.apply(depth0) : depth0))
-      + "\">"
+      + "\"><span class='value'>"
       + escapeExpression((typeof depth0 === functionType ? depth0.apply(depth0) : depth0))
-      + "</div>\n  ";
+      + "</span></div>\n  ";
     return buffer;
     }
 
