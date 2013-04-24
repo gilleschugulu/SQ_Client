@@ -66198,7 +66198,7 @@ window.require.register("views/outgame/hall-of-fame-view", function(exports, req
     };
 
     HallOfFameView.prototype.newPlayerHTML = function(player, picSize, players) {
-      var alredySend, friend, pic, rank, separator;
+      var alredySend, friend, pic, rank, separator, _i, _len, _ref1;
 
       separator = '<div class="separator"></div>';
       if (this.i > 0) {
@@ -66212,7 +66212,14 @@ window.require.register("views/outgame/hall-of-fame-view", function(exports, req
       console.log(player.id);
       console.log(_.indexOf(Parse.User.current().get("life_given", player.id)));
       console.log(player.id === Parse.User.current().get('life_given')[0]);
-      alredySend = _.indexOf(Parse.User.current().get("life_given", player.id)) ? 'asked' : '';
+      alredySend = '';
+      _ref1 = Parse.User.current().get("life-given");
+      for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
+        friend = _ref1[_i];
+        if (friend === player.id) {
+          alredySend = 'asked';
+        }
+      }
       friend = player.friend ? ("<div data-id='" + player.id + "' class='ask-friend ") + alredySend + "'></div>" : '';
       if (this.color === 'pink') {
         this.color = 'white';
