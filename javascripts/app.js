@@ -66209,8 +66209,8 @@ window.require.register("views/outgame/hall-of-fame-view", function(exports, req
         separator = '';
       }
       console.log(Parse.User.current().get('life_given'));
-      console.log(player.id);
-      console.log(_.indexOf(Parse.User.current().get("life_given", player.id.toSting())));
+      console.log(player.id.toString());
+      console.log(_.indexOf(Parse.User.current().get("life_given", player.id.toString())));
       alredySend = _.contains(Parse.User.current().get("life_given", player.id)) ? 'asked' : '';
       friend = player.friend ? ("<div data-id='" + player.id + "' class='ask-friend ") + alredySend + "'></div>" : '';
       if (this.color === 'pink') {
