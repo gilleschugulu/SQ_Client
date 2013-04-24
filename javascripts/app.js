@@ -3633,27 +3633,6 @@ Handlebars.VM = {
 
 Handlebars.template = Handlebars.VM.template;
 ;;
-var BuildVersion = {
-  version     : '',
-  commit      : '1ad73f85abfca1e176010c2c17db2a8ab076b675',
-  shortCommit : '1ad73f8',
-  branch      : 'feature/hall-of-fame',
-  time        : '2013-04-24 16:10',
-  author      : 'Louis',
-
-  getCommitLink: function() {
-    return 'https://github.com/ChuguluGames/triviasports-client/tree/'+BuildVersion.commit;
-  },
-
-  toShortString: function() {
-    return 'v' + BuildVersion.version;
-  },
-
-  toString: function() {
-    var b=BuildVersion;
-    return b.toShortString() + ' of ' + b.time + ' | ' + b.shortCommit + ' by ' + b.author + ' on ' + b.branch;
-  }
-};
 ;
 // ----------------------------------------------------------------------------
 // Buzz, a Javascript HTML5 Audio library
@@ -60763,6 +60742,7 @@ window.require.register("controllers/ingame/game-controller", function(exports, 
         jackpot: human.get('jackpot'),
         uuid: mediator.user.get('uuid')
       };
+      console.log(human.get('jackpot'));
       return this.redirectToRoute("game-won", {
         jackpot: human.get('jackpot'),
         reward: 10,
