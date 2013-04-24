@@ -61420,7 +61420,7 @@ window.require.register("controllers/outgame/hall-of-fame-controller", function(
       var _this = this;
 
       return Parse.Cloud.run('clean', {
-        column: 'live_given'
+        column: 'life_given'
       }, {
         success: function() {
           return console.log('it worked');
