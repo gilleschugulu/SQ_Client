@@ -80,6 +80,9 @@
         background-repeat: no-repeat
         background-size: 100% 100%
         transition: height linear 1s
+    @media screen and (min-width: 1024px)
+      .chrono-filler-container
+        absolute: bottom 1.4% left 9.7%
 
   .question-container
     absolute: top 7% left 16%
@@ -213,31 +216,39 @@
       color: #75634e
       padding: 10% 0
       text-align: center
-      // &.highlighted
-      //   background-image: url("../images/ingame/timer_in.png")
-      //   background-repeat: no-repeat
-      //   background-size: contain
-      //   color: #f9e4f3
+      z-index: 1
+      &.highlighted
+        .value
+          color: #f9e4f3
+        &.gold
+          color: #744141
+      .value
+        position: relative
+        z-index: 10
       .highlighted
         absolute: top 0% left 0%
+        z-index: 5
         width: 100%
         height: 100%
         background-image: url("../images/ingame/timer_in.png")
         background-repeat: no-repeat
         background-size: contain
-        color: #f9e4f3
-        padding: 24% 0
-        text-align: center
-        // opacity: 0
-        // transition: opacity ease-in 300ms
         &.gold
           background-image: url("../images/ingame/gold_timer_in.png")
-          color: #744141
+    @media screen and (min-width: 1024px)
+      .threshold
+        padding: 17% 0
+        .highlighted
+          width: 102%
+          height: 105%
+          top: 9%
+          left: 2%
 
     #jackpot-marker
       absolute: top 91% left 68%
       width: 45%
-      height: 7%   
+      height: 7%
+      z-index: 50
       background-image: url("../images/ingame/repere.png")
       background-repeat: no-repeat
       background-size: contain
