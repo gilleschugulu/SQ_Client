@@ -61267,7 +61267,7 @@ window.require.register("controllers/outgame/hall-of-fame-controller", function(
       this.collection = [];
       for (i = _i = 0, _ref1 = ranking.length; 0 <= _ref1 ? _i < _ref1 : _i > _ref1; i = 0 <= _ref1 ? ++_i : --_i) {
         this.collection[i] = {
-          friend: ranking[i].fb_id === Parse.User.current().get('fb_id') ? this.friend : false,
+          friend: ranking[i].fb_id === Parse.User.current().get('fb_id') ? false : this.friend,
           rank: ranking[i].rank,
           username: ranking[i].username,
           jackpot: ranking[i].score,
