@@ -62342,7 +62342,7 @@ window.require.register("controllers/outgame/profile-controller", function(expor
 
       AnalyticsHelper.trackEvent('Profil', 'Affichage de Game Center');
       lb = ConfigHelper.config.gamecenter.leaderboard;
-      console.log(lb);
+      console.log(GameCenter);
       if (lb) {
         return typeof GameCenter !== "undefined" && GameCenter !== null ? GameCenter.showLeaderboard(lb) : void 0;
       } else {
