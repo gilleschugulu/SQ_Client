@@ -3635,10 +3635,10 @@ Handlebars.template = Handlebars.VM.template;
 ;;
 var BuildVersion = {
   version     : '',
-  commit      : '936ecdda00da4a605864ab2426f4845521bcc6c9',
-  shortCommit : '936ecdd',
+  commit      : '1ad73f85abfca1e176010c2c17db2a8ab076b675',
+  shortCommit : '1ad73f8',
   branch      : 'feature/hall-of-fame',
-  time        : '2013-04-24 11:31',
+  time        : '2013-04-24 16:10',
   author      : 'Louis',
 
   getCommitLink: function() {
