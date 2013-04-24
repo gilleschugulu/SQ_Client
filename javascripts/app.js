@@ -61417,11 +61417,18 @@ window.require.register("controllers/outgame/hall-of-fame-controller", function(
     };
 
     HallOfFameController.prototype.FacebookInvite = function(event) {
-      var id;
+      var _this = this;
 
-      id = $(event.currentTarget).data('id');
-      FacebookHelper.friendRequestTo(i18n.t('controller.home.facebook_invite_message'), id);
-      return this.view.takeOffFriend(event.currentTarget);
+      return Parse.Cloud.run('getAllScore', {
+        column: 'live_given'
+      }, {
+        success: function() {
+          return console.log('it worked');
+        },
+        error: function() {
+          return console.log('it didn t work');
+        }
+      });
     };
 
     return HallOfFameController;
