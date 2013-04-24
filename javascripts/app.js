@@ -66198,7 +66198,7 @@ window.require.register("views/outgame/hall-of-fame-view", function(exports, req
     };
 
     HallOfFameView.prototype.newPlayerHTML = function(player, picSize, players) {
-      var alredySend, pic, rank, separator;
+      var alredySend, friend, pic, rank, separator;
 
       separator = '<div class="separator"></div>';
       if (this.i > 0) {
@@ -66209,6 +66209,7 @@ window.require.register("views/outgame/hall-of-fame-view", function(exports, req
         separator = '';
       }
       alredySend = _.contains(Parse.User.current().get("life_given", player.id)) ? '' : 'asked';
+      friend = player.friend ? ("<div data-id='" + player.id + "' class='ask-friend ") + alredySend + "'></div>" : '';
       if (this.color === 'pink') {
         this.color = 'white';
       } else {
