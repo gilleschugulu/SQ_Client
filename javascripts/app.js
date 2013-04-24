@@ -61419,7 +61419,7 @@ window.require.register("controllers/outgame/hall-of-fame-controller", function(
     HallOfFameController.prototype.FacebookInvite = function(event) {
       var _this = this;
 
-      return Parse.Cloud.run('getAllScore', {
+      return Parse.Cloud.run('clean', {
         column: 'live_given'
       }, {
         success: function() {
