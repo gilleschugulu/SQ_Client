@@ -66208,6 +66208,8 @@ window.require.register("views/outgame/hall-of-fame-view", function(exports, req
       } else {
         separator = '';
       }
+      console.log(Parse.User.current().get('life_given'));
+      console.log(player.id);
       alredySend = _.contains(Parse.User.current().get("life_given", player.id)) ? 'asked' : '';
       friend = player.friend ? ("<div data-id='" + player.id + "' class='ask-friend ") + alredySend + "'></div>" : '';
       if (this.color === 'pink') {
