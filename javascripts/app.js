@@ -62340,13 +62340,13 @@ window.require.register("controllers/outgame/profile-controller", function(expor
     ProfilesController.prototype.onClickGameCenter = function() {
       var lb;
 
+      console.log('toto');
       AnalyticsHelper.trackEvent('Profil', 'Affichage de Game Center');
       lb = ConfigHelper.config.gamecenter.leaderboard;
       if (lb) {
         return typeof GameCenter !== "undefined" && GameCenter !== null ? GameCenter.showLeaderboard(lb) : void 0;
       } else {
-        alert('Pas de leaderboard');
-        return console.log('toto');
+        return alert('Pas de leaderboard');
       }
     };
 
