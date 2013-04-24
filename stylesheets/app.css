@@ -4035,7 +4035,7 @@ body.box-align {
   top: 40%;
 }
 .hall-of-fame .content-container .ranking-container .separator {
-  width: 98%;
+  width: 99%;
   height: 2%;
   margin-left: 1%;
   background-image: url("../images/hall-of-fame/line.png");
@@ -4060,7 +4060,8 @@ body.box-align {
   background-size: 100%;
 }
 .hall-of-fame .content-container .ranking-container .div-ranking.moreFriends {
-  background-color: #b5b5b5;
+  border: 1px solid #e21717;
+  background-color: #faf2dd;
 }
 .hall-of-fame .content-container .ranking-container .div-ranking.pink {
   background-image: url("../images/hall-of-fame/pink.png");
