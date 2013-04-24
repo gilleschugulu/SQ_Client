@@ -61271,7 +61271,7 @@ window.require.register("controllers/outgame/hall-of-fame-controller", function(
           rank: ranking[i].rank,
           username: ranking[i].username,
           jackpot: ranking[i].score,
-          id: ranking[i].fb_id,
+          id: ranking[i].fb_id.toString(),
           profilepic: !!ranking[i].fb_id ? 'https://graph.facebook.com/' + ranking[i].fb_id + '/picture' : null
         };
         if (ranking[i].username === this.user.get('username')) {
@@ -66209,8 +66209,8 @@ window.require.register("views/outgame/hall-of-fame-view", function(exports, req
         separator = '';
       }
       console.log(Parse.User.current().get('life_given'));
-      console.log(player.id.toString());
-      console.log(_.indexOf(Parse.User.current().get("life_given", player.id.toString())));
+      console.log(player.id);
+      console.log(_.indexOf(Parse.User.current().get("life_given", player.id)));
       alredySend = _.contains(Parse.User.current().get("life_given", player.id)) ? 'asked' : '';
       friend = player.friend ? ("<div data-id='" + player.id + "' class='ask-friend ") + alredySend + "'></div>" : '';
       if (this.color === 'pink') {
