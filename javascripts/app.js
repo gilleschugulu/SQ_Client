@@ -63099,9 +63099,9 @@ window.require.register("helpers/facebook-helper", function(exports, require, mo
             Parse.Cloud.run('giveLife', {
               friendsId: friend
             }, {
-              success: function(msg) {
+              success: function(results) {
                 user.set('life_given', user.get('life_given').concat(results.get('fb_id')));
-                return console.log(msg.get('health'));
+                return console.log(results.get('health'));
               },
               error: function(msg) {
                 return console.log(msg);
