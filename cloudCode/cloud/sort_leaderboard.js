@@ -15,7 +15,10 @@ exports.task = function(request, response) {
     success: function(results) {
       var board, i;
 
-      i = 7;
+      i = 0;
+      while (results[i].id !== userId) {
+        i++;
+      }
       if (i < 8) {
         return response.success(fetchUsers(results, 0, 9));
       } else if (i > results.length - 5) {

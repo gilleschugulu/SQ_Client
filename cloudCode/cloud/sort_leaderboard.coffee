@@ -7,10 +7,9 @@ exports.task = (request, response) ->
   query.descending('score')
   query.find
     success: (results) ->
-      #i = 0
-      #while results[i].id isnt userId
-      #  i++
-      i= 7
+      i = 0
+      while results[i].id isnt userId
+       i++
       if i < 8
         response.success(fetchUsers(results, 0, 9))
       else if i > results.length-5

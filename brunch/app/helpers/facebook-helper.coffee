@@ -52,7 +52,10 @@ module.exports = class FacebookHelper
         notInstalledFriends = _.pluck(friends, 'id')
         FB.ui {method: 'apprequests', message: message, filters: [{name : 'invite friends', user_ids : _.difference(notInstalledFriends, user.get('fb_invited'))}]}, (response) =>
           # if we have a callback for this method, then use it (for exemple avoid rewarding?)
-          user.set("fb_invited", _.uniq(response.to.concat(user.get('fb_invited')))).save()
+          user.set("fb_invited", _.uniq(response.to.concat(user.get('fb_invited'))))
+          for friend in _.uniq(response.to.concat(user.get('fb_invited')))
+            user.set("health", user.get("health")+1)
+          user.save()
           if(callback and response)
             callback(response)
     unless @isLinked()
@@ -60,7 +63,7 @@ module.exports = class FacebookHelper
     else
       doRequest()
 
-  @friendRequestTo: (message, friend, callback = null) ->
+  @friendRequestTo: (message, friend, callback = null, giveLife = false) ->
     doRequest = ->
       # if no message is no provided, return
       unless !!message
@@ -74,7 +77,16 @@ module.exports = class FacebookHelper
       user = Parse.User.current()
       FB.ui {method: 'apprequests', message: message, to: friend}, (response) =>
         # if we have a callback for this method, then use it (for exemple avoid rewarding?)
-        user.set("fb_invited", _.uniq(response.to.concat(user.get('fb_invited')))).save()
+        user.set("fb_invited", _.uniq(response.to.concat(user.get('fb_invited'))))
+        if giveLife
+          Parse.Cloud.run 'giveLife' , {friendsId: friend},
+          success: (results) =>
+            user.set('life_given', user.get('life_given').concat(results.get('fb_id')))
+            console.log  results.get('health')
+          error: (msg) =>
+            console.log  msg
+        else
+          user.set("health", user.get("health")+1).save()
         if response and callback
           callback(response)
     unless @isLinked()

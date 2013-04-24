@@ -24,8 +24,12 @@ module.exports = class HallOfFameView extends View
         separator = ''
     else
       separator = ''
-    #friend request button
-    friend = if player.friend then '<div class="ask-friend"></div>' else ''
+    alredySend = ''
+    for friend in Parse.User.current().get("life_given")
+      if friend is player.id
+        alredySend = 'asked'
+    # alredySend = if _.indexOf(Parse.User.current().get("life_given", player.id)) then 'asked' else ''
+    friend = if player.friend then "<div data-id='#{player.id}' class='ask-friend "+alredySend+"'></div>" else ''
     #pyjama
     if @color is 'pink'
       @color = 'white'
@@ -56,6 +60,7 @@ module.exports = class HallOfFameView extends View
       el.append @newPlayerHTML(player, 40, players) for player in players
       el.append @suggestFriends(friendsToInvite) if withFriends
       @scrollTo(playerPosition)
+    $(".spinner").css('display','none')
 
   chooseList: (eventTargetEl) ->
     $('div' ,'#btn_HoF').removeClass('active')
@@ -98,8 +103,11 @@ module.exports = class HallOfFameView extends View
     super
 
   suggestFriends: (friends) =>
-    moreFriends = ''
+    moreFriends = "<div class='redSeparator'>"
     for friend in friends
-      moreFriends+="<div class='div-ranking moreFriends'><img class='profilepic' src='https://graph.facebook.com/#{friend.id}/picture'/><span class='username'>#{friend.name}</span><div data-id='#{friend.id}' class='invite-btn'></div></div>"
-    $(".spinner").css('display','none')
+      moreFriends+="</div><div class='div-ranking moreFriends'><img class='profilepic' src='https://graph.facebook.com/#{friend.id}/picture'/><span class='username'>#{friend.name}</span><div data-id='#{friend.id}' class='invite-btn'></div></div>"
     moreFriends
+
+  takeOffFriend: (target) =>
+    $(target).parent().css('display', 'none')
+    $(".life-value").innerHTML(Parse.User.current().get('health'))
