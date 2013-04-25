@@ -61302,35 +61302,35 @@ window.require.register("controllers/outgame/hall-of-fame-controller", function(
       this.globalArray = [];
       FacebookHelper.getOtherFriends(function(friends) {
         _this.friendsToInvite(friends);
-        return console.log(friends);
-      });
-      Parse.Cloud.run('getAllScore', {
-        rank: this.user.get('rank'),
-        userId: this.user.id
-      }, {
-        success: function(players) {
-          _this.globalArray = players;
-          return console.log(_this.globalArray);
-        },
-        error: function() {
-          return console.log('toto s dead');
-        }
-      });
-      FacebookHelper.getFriends(function(friends) {
-        var friendsId;
-
-        friendsId = _.pluck(friends, 'id');
-        return Parse.Cloud.run('getFriendsScore', {
-          friendsId: friendsId
+        console.log(friends);
+        Parse.Cloud.run('getAllScore', {
+          rank: _this.user.get('rank'),
+          userId: _this.user.id
         }, {
           success: function(players) {
-            players.push(Parse.User.current().attributes);
-            players = players.sort(function(f1, f2) {
-              return f2.score - f1.score;
-            });
-            _this.friendsArray = players;
-            return _this.fetchPlayers(true);
+            _this.globalArray = players;
+            return console.log(_this.globalArray);
+          },
+          error: function() {
+            return console.log('toto s dead');
           }
+        });
+        return FacebookHelper.getFriends(function(friends) {
+          var friendsId;
+
+          friendsId = _.pluck(friends, 'id');
+          return Parse.Cloud.run('getFriendsScore', {
+            friendsId: friendsId
+          }, {
+            success: function(players) {
+              players.push(Parse.User.current().attributes);
+              players = players.sort(function(f1, f2) {
+                return f2.score - f1.score;
+              });
+              _this.friendsArray = players;
+              return _this.fetchPlayers(true);
+            }
+          });
         });
       });
       this.targetDate = this.getDate();
