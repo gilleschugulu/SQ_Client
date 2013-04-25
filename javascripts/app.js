@@ -61291,7 +61291,8 @@ window.require.register("controllers/outgame/hall-of-fame-controller", function(
       }
       fbConnected = FacebookHelper.isLinked();
       noFriends = this.collection.length <= 1;
-      return this.updateRanking(position, noFriends, fbConnected, withFriends);
+      this.updateRanking(position, noFriends, fbConnected, withFriends);
+      return console.log(friends);
     };
 
     HallOfFameController.prototype.index = function() {
