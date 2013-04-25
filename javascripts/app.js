@@ -3301,7 +3301,8 @@ PxLoader.prototype.addImage = function(url, tags, priority) {
     return imageLoader.img;
 };;
 var AssetsList = {
-  assets: { 'common/': ["images/common/background.png", "images/common/close.png", "images/common/close_a.png", "images/common/facebook-default.jpg", "images/common/home.png"],
+  assets: { '': ["images/placeholder.png"],
+'common/': ["images/common/background.png", "images/common/close.png", "images/common/close_a.png", "images/common/facebook-default.jpg", "images/common/home.png"],
 'game-over/': ["images/game-over/replay.png", "images/game-over/score.png", "images/game-over/small-background.png", "images/game-over/title.png"],
 'hall-of-fame/': ["images/hall-of-fame/amis.png", "images/hall-of-fame/amis_inactive.png", "images/hall-of-fame/background.png", "images/hall-of-fame/box_classements.png", "images/hall-of-fame/global.png", "images/hall-of-fame/global_inactive.png", "images/hall-of-fame/icon-feature-invite.png", "images/hall-of-fame/invite.png", "images/hall-of-fame/line.png", "images/hall-of-fame/linkfb.png", "images/hall-of-fame/pink.png", "images/hall-of-fame/rank1.png", "images/hall-of-fame/rank2.png", "images/hall-of-fame/rank3.png", "images/hall-of-fame/rank_1.png", "images/hall-of-fame/rank_2.png", "images/hall-of-fame/rank_3.png", "images/hall-of-fame/rankadversaire.png", "images/hall-of-fame/tournoi.png", "images/hall-of-fame/vie_asked.png", "images/hall-of-fame/vie_toask.png", "images/hall-of-fame/white.png"],
 'home/+2amis/': ["images/home/+2amis/inviter.png", "images/home/+2amis/inviter_a.png", "images/home/+2amis/ranking.png", "images/home/+2amis/ranking_a.png", "images/home/+2amis/title.png"],
@@ -3635,10 +3636,10 @@ Handlebars.template = Handlebars.VM.template;
 ;;
 var BuildVersion = {
   version     : '',
-  commit      : 'dfd1f25c53af148e2f3f0dbeeefb7c22d27d8e9b',
-  shortCommit : 'dfd1f25',
-  branch      : 'develop',
-  time        : '2013-04-25 12:51',
+  commit      : '5f55ec23597ac74ade4dc4b4faa348e03d18433b',
+  shortCommit : '5f55ec2',
+  branch      : 'feature/lifes',
+  time        : '2013-04-25 16:15',
   author      : 'Louis',
 
   getCommitLink: function() {
@@ -61567,18 +61568,9 @@ window.require.register("controllers/outgame/home-controller", function(exports,
         _ref2.setJournalMessage('loading');
       }
       this.view.delegate('click', '#game-link', function() {
-        var user;
-
-        user = Parse.User.current();
-        if (user.get('health') > 0) {
-          return _this.view.dim(function() {
-            return _this.redirectTo('game');
-          });
-        } else {
-          return popUp.initialize({
-            template: 'no-more-coins'
-          });
-        }
+        return _this.view.dim(function() {
+          return _this.redirectTo('game');
+        });
       });
       return FacebookHelper.getFriends(function(friends) {
         _this.getJournalView(friends, function() {
@@ -67083,25 +67075,6 @@ window.require.register("views/templates/ingame/stages/dupa-stage", function(exp
     stack1 = helpers.each.call(depth0, depth0.thresholds, {hash:{},inverse:self.noop,fn:self.program(3, program3, data),data:data});
     if(stack1 || stack1 === 0) { buffer += stack1; }
     buffer += "\n  <div id='jackpot-marker'>\n</div>\n";
-    return buffer;
-    });
-});
-window.require.register("views/templates/no-more-coins", function(exports, require, module) {
-  module.exports = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
-    this.compilerInfo = [2,'>= 1.0.0-rc.3'];
-  helpers = helpers || Handlebars.helpers; data = data || {};
-    var buffer = "", stack1, functionType="function", escapeExpression=this.escapeExpression;
-
-
-    buffer += "<div id=\"popup\" class=\"popup no-more-coins\" style=\"z-index:100";
-    if (stack1 = helpers.level) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
-    else { stack1 = depth0.level; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
-    buffer += escapeExpression(stack1)
-      + "\" data-key=\"";
-    if (stack1 = helpers.key) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
-    else { stack1 = depth0.key; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
-    buffer += escapeExpression(stack1)
-      + "\">\n  <h1 class='title'>Oh non !</h1>\n  <br/>\n  <p class='text-container'>\n    Il semblerait que tu n'aies plus assez de vies\n  </p>\n  <div class=\"btn-container\">\n    <a href=\"#shop\" class=\"ok btn remove\"></a>\n  </div>\n</div>\n";
     return buffer;
     });
 });
