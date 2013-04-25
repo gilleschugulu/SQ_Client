@@ -61302,14 +61302,12 @@ window.require.register("controllers/outgame/hall-of-fame-controller", function(
       this.globalArray = [];
       FacebookHelper.getOtherFriends(function(friends) {
         _this.friendsToInvite(friends);
-        console.log(friends);
         Parse.Cloud.run('getAllScore', {
           rank: _this.user.get('rank'),
           userId: _this.user.id
         }, {
           success: function(players) {
-            _this.globalArray = players;
-            return console.log(_this.globalArray);
+            return _this.globalArray = players;
           },
           error: function() {
             return console.log('toto s dead');
