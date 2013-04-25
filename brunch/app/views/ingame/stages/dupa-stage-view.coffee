@@ -79,19 +79,18 @@ module.exports = class DupaView extends View
     if propositionId
       propositionEl = $('.proposition[data-id="'+propositionId+'"]', @$el)
       propositionEl.parent().addClass(klass)
+      answerEl
       if klass isnt 'success'
         answerEl = $('.proposition[data-id="'+correctAnswer+'"]', @$el)
         answerEl.parent().addClass('success')
-        # console.log $('.proposition[data-id="'+correctAnswer+'"]',@$el).parent().hasClass('success')
     else
       propositionEl = $('.proposition', @$el)
 
     setTimeout =>
-    #   $('.proposition[data-id="'+correctAnswer+'"]',@$el).removeClass('animated').addClass('animated fadeOut').one 'webkitAnimationEnd', =>
-    #     # propositionEl.parent().removeClass(klass)
-    #     # propositionEl.removeClass('fadeOut').addClass('fadeIn').one 'webkitAnimationEnd', ->
-    #     callback()
-    # , 500
+      answerEl.removeClass('animated').addClass('animated fadeOut').one 'webkitAnimationEnd', =>
+        # propositionEl.parent().removeClass(klass)
+        # propositionEl.removeClass('fadeOut').addClass('fadeIn').one 'webkitAnimationEnd', ->
+        callback()
       propositionEl.removeClass('animated').addClass('animated fadeOut').one 'webkitAnimationEnd', =>
         # propositionEl.parent().removeClass(klass)
         # propositionEl.removeClass('fadeOut').addClass('fadeIn').one 'webkitAnimationEnd', ->
