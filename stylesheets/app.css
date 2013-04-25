@@ -6532,69 +6532,6 @@ body.box-align {
   width: 60%;
   height: 60%;
 }
-.tutorial {
-  width: 100%;
-  height: 100%;
-  background: #fff;
-}
-.tutorial .screen {
-  width: 100%;
-  height: 100%;
-  -webkit-background-size: 100% 100%;
-  -moz-background-size: 100% 100%;
-  background-size: 100% 100%;
-  background-repeat: no-repeat;
-}
-.tutorial #close-btn {
-  width: 7.8%;
-  height: 11.7%;
-  position: absolute;
-  top: 1%;
-  left: 0.7%;
-  background-image: url("../images/common/close.png");
-  -webkit-background-size: contain;
-  -moz-background-size: contain;
-  background-size: contain;
-  background-repeat: no-repeat;
-}
-.tutorial #close-btn:active {
-  background-image: url("../images/common/close_a.png");
-}
-.tutorial #next-btn {
-  width: 11.6%;
-  height: 16.7%;
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  background-image: url("../images/tutorial/next.png");
-  -webkit-background-size: 100% 100%;
-  -moz-background-size: 100% 100%;
-  background-size: 100% 100%;
-  background-repeat: no-repeat;
-}
-.tutorial ul#pagination {
-  width: 100%;
-  height: 4.7%;
-  position: absolute;
-  bottom: 3%;
-  ((null)): 0;
-  list-style-type: none;
-  padding: 0;
-  text-align: center;
-}
-.tutorial ul#pagination li {
-  display: inline-block;
-  height: 100%;
-  width: 1.5em;
-  background-image: url("../images/tutorial/pagination_grey.png");
-  -webkit-background-size: contain;
-  -moz-background-size: contain;
-  background-size: contain;
-  background-repeat: no-repeat;
-}
-.tutorial ul#pagination li.current {
-  background-image: url("../images/tutorial/pagination_red.png");
-}
 /* ==========================================================================
    Helper classes
    ========================================================================== */
