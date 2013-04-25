@@ -3778,6 +3778,38 @@ body.box-align {
     top: 6%;
   }
 }
+.credits {
+  width: 100%;
+  height: 100%;
+  background: #fff;
+}
+.credits .background {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0%;
+  top: 0%;
+  background-image: url("../images/placeholder.png");
+  -webkit-background-size: contain;
+  -moz-background-size: contain;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+.credits #close-btn {
+  width: 7.8%;
+  height: 11.7%;
+  position: absolute;
+  top: 1%;
+  left: 0.7%;
+  background-image: url("../images/common/close.png");
+  -webkit-background-size: contain;
+  -moz-background-size: contain;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+.credits #close-btn:active {
+  background-image: url("../images/common/close_a.png");
+}
 @font-face {
   font-family: 'champagne';
   src: url("../fonts/champagne.eot");
@@ -3852,7 +3884,7 @@ body.box-align {
   width: 7.4%;
   height: 12%;
   display: inline-block;
-  background-image: url("../images/common/home.png");
+  background-image: url("../images/common/close.png");
   background-repeat: no-repeat;
   -webkit-background-size: contain;
   -moz-background-size: contain;
@@ -4871,6 +4903,666 @@ body.box-align {
 }
 .blaze {
   overflow: hidden;
+}
+@-webkit-keyframes inverseBounce {
+  0%, 20%, 50%, 80%, 100% {
+    -webkit-transform: translateY(0);
+  }
+
+  40% {
+    -webkit-transform: translateY(30px);
+  }
+
+  60% {
+    -webkit-transform: translateY(15px);
+  }
+}
+@-moz-keyframes inverseBounce {
+  0%, 20%, 50%, 80%, 100% {
+    -moz-transform: translateY(0);
+  }
+
+  40% {
+    -moz-transform: translateY(30px);
+  }
+
+  60% {
+    -moz-transform: translateY(15px);
+  }
+}
+@-o-keyframes inverseBounce {
+  0%, 20%, 50%, 80%, 100% {
+    -o-transform: translateY(0);
+  }
+
+  40% {
+    -o-transform: translateY(30px);
+  }
+
+  60% {
+    -o-transform: translateY(15px);
+  }
+}
+.inverseBounce {
+  -webkit-animation-name: inverseBounce;
+  -moz-animation-name: inverseBounce;
+  -o-animation-name: inverseBounce;
+  -webkit-animation-name: inverseBounce;
+  -moz-animation-name: inverseBounce;
+  -o-animation-name: inverseBounce;
+  -ms-animation-name: inverseBounce;
+  animation-name: inverseBounce;
+}
+.dupa-stage {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background-image: url("../images/common/background.png");
+  color: #fff;
+}
+.dupa-stage .btn-menu {
+  position: absolute;
+  top: 1%;
+  left: 6%;
+  width: 8%;
+  height: 11%;
+  display: inline-block;
+  background-image: url("../images/ingame/bt_home.png");
+  background-repeat: no-repeat;
+  -webkit-background-size: contain;
+  -moz-background-size: contain;
+  background-size: contain;
+  cursor: pointer;
+}
+.dupa-stage .chrono-container {
+  position: absolute;
+  top: 17%;
+  left: 7%;
+  width: 6%;
+  height: 81%;
+  background-image: url("../images/ingame/timer.png");
+  background-repeat: no-repeat;
+  -webkit-background-size: 100% 100%;
+  -moz-background-size: 100% 100%;
+  background-size: 100% 100%;
+  font-family: grilled;
+}
+.dupa-stage .chrono-container .chrono-chrono {
+  position: absolute;
+  top: -5.5%;
+  left: 9%;
+  width: 82%;
+  height: 20%;
+  background-image: url("../images/ingame/timer_chrono.png");
+  background-repeat: no-repeat;
+  -webkit-background-size: contain;
+  -moz-background-size: contain;
+  background-size: contain;
+  z-index: 3;
+}
+.dupa-stage .chrono-container .chrono-time {
+  position: absolute;
+  top: 13%;
+  left: 12%;
+  z-index: 3;
+}
+.dupa-stage .chrono-container .chrono-filler-container {
+  position: absolute;
+  bottom: 1.4%;
+  left: 8%;
+  width: 82%;
+  height: 97.4%;
+  z-index: 2;
+}
+.dupa-stage .chrono-container .chrono-filler-container .chrono-filler {
+  position: absolute;
+  bottom: 0%;
+  ((null)): 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("../images/ingame/timer_in.png");
+  background-repeat: no-repeat;
+  -webkit-background-size: 100% 100%;
+  -moz-background-size: 100% 100%;
+  background-size: 100% 100%;
+  -webkit-transition: height linear 1s;
+  -moz-transition: height linear 1s;
+  -o-transition: height linear 1s;
+  -ms-transition: height linear 1s;
+  transition: height linear 1s;
+}
+@media screen and (min-width: 1024px) {
+  .dupa-stage .chrono-container .chrono-filler-container {
+    position: absolute;
+    bottom: 1.4%;
+    left: 9.7%;
+  }
+}
+.dupa-stage .question-container {
+  position: absolute;
+  top: 7%;
+  left: 16%;
+  width: 68%;
+  height: 71%;
+}
+.dupa-stage .question-container .question-photo {
+  position: relative;
+  top: 5%;
+  left: 1%;
+  width: 45%;
+  height: 93%;
+  float: left;
+  background-image: url("../images/ingame/photo.png");
+  background-repeat: no-repeat;
+  -webkit-background-size: contain;
+  -moz-background-size: contain;
+  background-size: contain;
+}
+.dupa-stage .question-container .question-theme-container {
+  position: relative;
+  top: 4%;
+  left: 3%;
+  width: 30%;
+  height: 8%;
+  float: left;
+  background-image: url("../images/ingame/title.png");
+  background-repeat: no-repeat;
+  -webkit-background-size: contain;
+  -moz-background-size: contain;
+  background-size: contain;
+}
+.dupa-stage .question-container .question-theme-container .question-theme {
+  position: relative;
+  top: 3%;
+  left: 3%;
+  width: 75%;
+  height: 94%;
+  font-family: speedregular;
+}
+.dupa-stage .question-container .question-content-container {
+  position: relative;
+  top: 3.7%;
+  left: 3%;
+  width: 50%;
+  height: 30%;
+  float: left;
+  background-image: url("../images/ingame/box_question.png");
+  background-repeat: no-repeat;
+  -webkit-background-size: contain;
+  -moz-background-size: contain;
+  background-size: contain;
+}
+.dupa-stage .question-container .question-content-container .question-content {
+  position: relative;
+  top: 3%;
+  left: 3%;
+  width: 94%;
+  height: 94%;
+  font-family: ramblabold;
+}
+.dupa-stage .question-container .question-propositions-container {
+  position: relative;
+  top: 7%;
+  left: 2%;
+  width: 54%;
+  height: 60%;
+  float: left;
+}
+.dupa-stage .question-container .question-propositions-container .proposition-container {
+  position: relative;
+  top: 5%;
+  left: 0%;
+  width: 43%;
+  height: 36%;
+  margin: 3%;
+  float: left;
+  cursor: pointer;
+  background-image: url("../images/ingame/answer.png");
+  background-repeat: no-repeat;
+  -webkit-background-size: 100% 100%;
+  -moz-background-size: 100% 100%;
+  background-size: 100% 100%;
+}
+.dupa-stage .question-container .question-propositions-container .proposition-container.animated {
+  -webkit-animation-duration: 250ms;
+  -moz-animation-duration: 250ms;
+  -o-animation-duration: 250ms;
+  -ms-animation-duration: 250ms;
+  animation-duration: 250ms;
+}
+.dupa-stage .question-container .question-propositions-container .proposition-container.success {
+  background-image: url("../images/ingame/answer_good.png");
+}
+.dupa-stage .question-container .question-propositions-container .proposition-container.error {
+  background-image: url("../images/ingame/answer_bad.png");
+}
+.dupa-stage .question-container .question-propositions-container .proposition-container .proposition {
+  position: relative;
+  top: -4%;
+  left: -1%;
+  width: 90%;
+  height: 85%;
+  font-family: ramblabold;
+  text-align: center;
+}
+.dupa-stage .question-container .question-propositions-container .proposition-container .proposition.animated {
+  -webkit-animation-duration: 300ms;
+  -moz-animation-duration: 300ms;
+  -o-animation-duration: 300ms;
+  -ms-animation-duration: 300ms;
+  animation-duration: 300ms;
+}
+.dupa-stage .question-container .question-propositions-container .proposition-container .massOpinion {
+  position: absolute;
+  top: -16%;
+  right: -13%;
+  width: 35%;
+  height: 37%;
+  -webkit-border-radius: 20%;
+  border-radius: 20%;
+  line-height: 200%;
+  text-align: center;
+  background: #c50000;
+  display: none;
+  font-family: grilled;
+}
+.dupa-stage .bonus-container {
+  position: absolute;
+  top: 83%;
+  left: 13%;
+  width: 75%;
+  height: 17%;
+  background-image: url("../images/ingame/box_bonus.png");
+  background-repeat: no-repeat;
+  -webkit-background-size: contain;
+  -moz-background-size: contain;
+  background-size: contain;
+}
+.dupa-stage .bonus-container .bonus {
+  position: relative;
+  top: 17%;
+  left: 6%;
+  float: left;
+  height: 61%;
+  width: 13.6%;
+  margin: 1% 2%;
+  cursor: pointer;
+  background-repeat: no-repeat;
+  -webkit-background-size: contain;
+  -moz-background-size: contain;
+  background-size: contain;
+}
+.dupa-stage .bonus-container .bonus .quantity {
+  position: relative;
+  top: -10%;
+  left: 76%;
+  width: 35%;
+  height: 47%;
+  -webkit-border-radius: 400%;
+  border-radius: 400%;
+  line-height: 170%;
+  text-align: center;
+  background: #c50000;
+  font-family: grilled;
+}
+.dupa-stage .jackpot-container {
+  position: absolute;
+  top: 2%;
+  left: 83%;
+  width: 15%;
+  height: 96%;
+  background-image: url("../images/ingame/score.png");
+  background-repeat: no-repeat;
+  -webkit-background-size: contain;
+  -moz-background-size: contain;
+  background-size: contain;
+  font-family: grilled;
+}
+.dupa-stage .jackpot-container #total-jackpot {
+  position: relative;
+  top: 0.8%;
+  left: 2%;
+  width: 95%;
+  height: 8%;
+  text-align: center;
+  padding: 7% 0;
+}
+.dupa-stage .jackpot-container .threshold {
+  position: relative;
+  top: 1%;
+  left: 26.5%;
+  width: 45.3%;
+  height: 9.01%;
+  color: #75634e;
+  padding: 10% 0;
+  text-align: center;
+  z-index: 1;
+}
+.dupa-stage .jackpot-container .threshold.highlighted .value {
+  color: #f9e4f3;
+}
+.dupa-stage .jackpot-container .threshold.highlighted.gold {
+  color: #744141;
+}
+.dupa-stage .jackpot-container .threshold .value {
+  position: relative;
+  z-index: 10;
+}
+.dupa-stage .jackpot-container .threshold .highlighted {
+  position: absolute;
+  top: 0%;
+  left: 0%;
+  z-index: 5;
+  width: 100%;
+  height: 100%;
+  background-image: url("../images/ingame/timer_in.png");
+  background-repeat: no-repeat;
+  -webkit-background-size: contain;
+  -moz-background-size: contain;
+  background-size: contain;
+}
+.dupa-stage .jackpot-container .threshold .highlighted.gold {
+  background-image: url("../images/ingame/gold_timer_in.png");
+}
+@media screen and (min-width: 1024px) {
+  .dupa-stage .jackpot-container .threshold {
+    padding: 17% 0;
+  }
+  .dupa-stage .jackpot-container .threshold .highlighted {
+    width: 102%;
+    height: 105%;
+    top: 9%;
+    left: 2%;
+  }
+}
+.dupa-stage .jackpot-container #jackpot-marker {
+  position: absolute;
+  top: 91%;
+  left: 68%;
+  width: 45%;
+  height: 7%;
+  z-index: 50;
+  background-image: url("../images/ingame/repere.png");
+  background-repeat: no-repeat;
+  -webkit-background-size: contain;
+  -moz-background-size: contain;
+  background-size: contain;
+  -webkit-transition: top ease-in 300ms;
+  -moz-transition: top ease-in 300ms;
+  -o-transition: top ease-in 300ms;
+  -ms-transition: top ease-in 300ms;
+  transition: top ease-in 300ms;
+  -webkit-animation-delay: -0.3s;
+  -moz-animation-delay: -0.3s;
+  -o-animation-delay: -0.3s;
+  -ms-animation-delay: -0.3s;
+  animation-delay: -0.3s;
+  -webkit-animation-duration: 1.2s;
+  -moz-animation-duration: 1.2s;
+  -o-animation-duration: 1.2s;
+  -ms-animation-duration: 1.2s;
+  animation-duration: 1.2s;
+}
+.dupa-stage .jackpot-container #jackpot-marker.gold {
+  background-image: url("../images/ingame/gold_repere.png");
+}
+@-moz-keyframes inverseBounce {
+  0%, 20%, 50%, 80%, 100% {
+    -webkit-transform: translateY(0);
+    -moz-transform: translateY(0);
+    -o-transform: translateY(0);
+    -ms-transform: translateY(0);
+    transform: translateY(0);
+  }
+
+  40% {
+    -webkit-transform: translateY(30px);
+    -moz-transform: translateY(30px);
+    -o-transform: translateY(30px);
+    -ms-transform: translateY(30px);
+    transform: translateY(30px);
+  }
+
+  60% {
+    -webkit-transform: translateY(15px);
+    -moz-transform: translateY(15px);
+    -o-transform: translateY(15px);
+    -ms-transform: translateY(15px);
+    transform: translateY(15px);
+  }
+}
+@-webkit-keyframes inverseBounce {
+  0%, 20%, 50%, 80%, 100% {
+    -webkit-transform: translateY(0);
+    -moz-transform: translateY(0);
+    -o-transform: translateY(0);
+    -ms-transform: translateY(0);
+    transform: translateY(0);
+  }
+
+  40% {
+    -webkit-transform: translateY(30px);
+    -moz-transform: translateY(30px);
+    -o-transform: translateY(30px);
+    -ms-transform: translateY(30px);
+    transform: translateY(30px);
+  }
+
+  60% {
+    -webkit-transform: translateY(15px);
+    -moz-transform: translateY(15px);
+    -o-transform: translateY(15px);
+    -ms-transform: translateY(15px);
+    transform: translateY(15px);
+  }
+}
+@-o-keyframes inverseBounce {
+  0%, 20%, 50%, 80%, 100% {
+    -webkit-transform: translateY(0);
+    -moz-transform: translateY(0);
+    -o-transform: translateY(0);
+    -ms-transform: translateY(0);
+    transform: translateY(0);
+  }
+
+  40% {
+    -webkit-transform: translateY(30px);
+    -moz-transform: translateY(30px);
+    -o-transform: translateY(30px);
+    -ms-transform: translateY(30px);
+    transform: translateY(30px);
+  }
+
+  60% {
+    -webkit-transform: translateY(15px);
+    -moz-transform: translateY(15px);
+    -o-transform: translateY(15px);
+    -ms-transform: translateY(15px);
+    transform: translateY(15px);
+  }
+}
+@-ms-keyframes inverseBounce {
+  0%, 20%, 50%, 80%, 100% {
+    -webkit-transform: translateY(0);
+    -moz-transform: translateY(0);
+    -o-transform: translateY(0);
+    -ms-transform: translateY(0);
+    transform: translateY(0);
+  }
+
+  40% {
+    -webkit-transform: translateY(30px);
+    -moz-transform: translateY(30px);
+    -o-transform: translateY(30px);
+    -ms-transform: translateY(30px);
+    transform: translateY(30px);
+  }
+
+  60% {
+    -webkit-transform: translateY(15px);
+    -moz-transform: translateY(15px);
+    -o-transform: translateY(15px);
+    -ms-transform: translateY(15px);
+    transform: translateY(15px);
+  }
+}
+@keyframes inverseBounce {
+  0%, 20%, 50%, 80%, 100% {
+    -webkit-transform: translateY(0);
+    -moz-transform: translateY(0);
+    -o-transform: translateY(0);
+    -ms-transform: translateY(0);
+    transform: translateY(0);
+  }
+
+  40% {
+    -webkit-transform: translateY(30px);
+    -moz-transform: translateY(30px);
+    -o-transform: translateY(30px);
+    -ms-transform: translateY(30px);
+    transform: translateY(30px);
+  }
+
+  60% {
+    -webkit-transform: translateY(15px);
+    -moz-transform: translateY(15px);
+    -o-transform: translateY(15px);
+    -ms-transform: translateY(15px);
+    transform: translateY(15px);
+  }
+}
+.game-over {
+  width: 100%;
+  height: 100%;
+  background-image: url("../images/common/background.png");
+  -webkit-background-size: 100% 100%;
+  -moz-background-size: 100% 100%;
+  background-size: 100% 100%;
+  position: relative;
+}
+.game-over .header-container {
+  width: 100%;
+  height: 11%;
+  position: absolute;
+}
+.game-over .header-container .home-btn {
+  width: 7.4%;
+  height: 100%;
+  display: inline-block;
+  background-image: url("../images/common/home.png");
+  background-repeat: no-repeat;
+  -webkit-background-size: contain;
+  -moz-background-size: contain;
+  background-size: contain;
+  position: relative;
+  top: 15%;
+  left: 0.7%;
+}
+.game-over .content-container {
+  position: relative;
+  top: 16%;
+  ((null)): 0;
+  width: 88.6%;
+  height: 84.8%;
+  -webkit-background-size: 100% 100%;
+  -moz-background-size: 100% 100%;
+  background-size: 100% 100%;
+  background-repeat: contain;
+  margin: 0 auto;
+  padding: 8.5% 2% 0 2%;
+  background-image: url("../images/game-over/small-background.png");
+}
+.game-over .content-container .title {
+  width: 95%;
+  height: 20%;
+  text-align: center;
+  margin: 0 auto 0 auto;
+  font: 1.8em dax;
+  color: #000;
+}
+.game-over .content-container .title .jetons {
+  display: block;
+  width: 6.5%;
+  height: 30%;
+  position: relative;
+  left: 2%;
+  ((null)): 0;
+  background-image: url("../images/home/common/credit.png");
+  -webkit-background-size: contain;
+  -moz-background-size: contain;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+.game-over .content-container .title .jetons-number {
+  color: #d80505;
+}
+.game-over .content-container .blocks-container {
+  width: 86%;
+  height: 50%;
+  margin: 0 auto;
+  position: relative;
+  padding: 1%;
+}
+.game-over .content-container .blocks-container .block {
+  float: left;
+  position: relative;
+  width: 41%;
+  height: 100%;
+  margin-right: 9%;
+  top: 15%;
+}
+.game-over .content-container .blocks-container .block.stats {
+  margin-right: 0;
+}
+.game-over .content-container .blocks-container .block.stats table {
+  width: 100%;
+  height: 100%;
+}
+.game-over .content-container .blocks-container .block.stats table .name {
+  font-family: ramblabold;
+}
+.game-over .content-container .blocks-container .block.stats table .number {
+  color: #d80505;
+  font: 1.3em ramblabold;
+}
+.game-over .content-container .blocks-container .block.jackpot {
+  top: 40%;
+}
+.game-over .content-container .blocks-container .block.jackpot .title {
+  position: relative;
+  left: 10%;
+  ((null)): 0;
+  width: 66%;
+  height: 24%;
+  background-image: url("../images/game-over/score.png");
+  -webkit-background-size: contain;
+  -moz-background-size: contain;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+.game-over .content-container .blocks-container .block.jackpot .value {
+  position: relative;
+  left: 7%;
+  ((null)): 0;
+  width: 59%;
+  text-align: right;
+  display: block;
+  color: #000;
+  font: 1.7em grilled;
+}
+.game-over .content-container .replay-btn {
+  width: 33.8%;
+  height: 18.7%;
+  background-image: url("../images/game-over/rejouer.png");
+  -webkit-background-size: contain;
+  -moz-background-size: contain;
+  background-size: contain;
+  background-repeat: no-repeat;
+  display: block;
+  margin: 2% auto 0 auto;
+}
+.game-over .content-container .replay-btn:active {
+  background-image: url("../images/game-over/rejouer_a.png");
 }
 .interstage {
   width: 100%;
