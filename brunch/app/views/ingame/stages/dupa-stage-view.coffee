@@ -79,9 +79,8 @@ module.exports = class DupaView extends View
     if propositionId
       propositionEl = $('.proposition[data-id="'+propositionId+'"]', @$el)
       propositionEl.parent().addClass(klass)
-      answerEl
+      answerEl = $('.proposition[data-id="'+correctAnswer+'"]', @$el)
       if klass isnt 'success'
-        answerEl = $('.proposition[data-id="'+correctAnswer+'"]', @$el)
         answerEl.parent().addClass('success')
     else
       propositionEl = $('.proposition', @$el)
