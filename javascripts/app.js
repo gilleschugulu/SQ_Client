@@ -61291,8 +61291,7 @@ window.require.register("controllers/outgame/hall-of-fame-controller", function(
       }
       fbConnected = FacebookHelper.isLinked();
       noFriends = this.collection.length <= 1;
-      this.updateRanking(position, noFriends, fbConnected, withFriends);
-      return console.log(friends);
+      return this.updateRanking(position, noFriends, fbConnected, withFriends);
     };
 
     HallOfFameController.prototype.index = function() {
@@ -61302,7 +61301,8 @@ window.require.register("controllers/outgame/hall-of-fame-controller", function(
       this.friendsArray = [];
       this.globalArray = [];
       FacebookHelper.getOtherFriends(function(friends) {
-        return _this.friendsToInvite(friends);
+        _this.friendsToInvite(friends);
+        return console.log(friends);
       });
       Parse.Cloud.run('getAllScore', {
         rank: this.user.get('rank'),
