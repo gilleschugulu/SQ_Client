@@ -3633,6 +3633,27 @@ Handlebars.VM = {
 
 Handlebars.template = Handlebars.VM.template;
 ;;
+var BuildVersion = {
+  version     : '',
+  commit      : '1ad73f85abfca1e176010c2c17db2a8ab076b675',
+  shortCommit : '1ad73f8',
+  branch      : 'feature/hall-of-fame',
+  time        : '2013-04-25 10:35',
+  author      : 'Louis',
+
+  getCommitLink: function() {
+    return 'https://github.com/ChuguluGames/triviasports-client/tree/'+BuildVersion.commit;
+  },
+
+  toShortString: function() {
+    return 'v' + BuildVersion.version;
+  },
+
+  toString: function() {
+    var b=BuildVersion;
+    return b.toShortString() + ' of ' + b.time + ' | ' + b.shortCommit + ' by ' + b.author + ' on ' + b.branch;
+  }
+};
 ;
 // ----------------------------------------------------------------------------
 // Buzz, a Javascript HTML5 Audio library
@@ -60742,7 +60763,11 @@ window.require.register("controllers/ingame/game-controller", function(exports, 
         jackpot: human.get('jackpot'),
         uuid: mediator.user.get('uuid')
       };
-      console.log(human.get('jackpot'));
+      if (!isNaN(human.get('jackpot'))) {
+        if (typeof GameCenter !== "undefined" && GameCenter !== null) {
+          GameCenter.reportScore(human.get('jackpot'), ConfigHelper.config.gamecenter.leaderboard);
+        }
+      }
       return this.redirectToRoute("game-won", {
         jackpot: human.get('jackpot'),
         reward: 10,
@@ -61255,7 +61280,7 @@ window.require.register("controllers/outgame/hall-of-fame-controller", function(
         this.collection[i] = {
           friend: ranking[i].fb_id === Parse.User.current().get('fb_id') ? false : this.friend,
           rank: ranking[i].rank,
-          username: ranking[i].username,
+          username: ranking[i].username.slice(0, 20),
           jackpot: ranking[i].score,
           id: ranking[i].fb_id,
           profilepic: !!ranking[i].fb_id ? 'https://graph.facebook.com/' + ranking[i].fb_id + '/picture' : null
