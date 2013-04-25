@@ -51,7 +51,9 @@ module.exports = class DupaStageController extends StageController
       @view.delegateSingleOnce 'click', '.proposition', (event) =>
         @view.chooseProposition event.currentTarget, (propositionId) =>
           result = question.isCorrectAnswer propositionId
-          @view.updateAnswerButton propositionId, result, =>
+          goodOne = result[1]
+          result =  result[0]
+          @view.updateAnswerButton propositionId, goodOne, result, =>
             @playerDidAnswer player, question, result
           , question
 
@@ -94,12 +96,12 @@ module.exports = class DupaStageController extends StageController
     @view.hideSomeAnswers(@model.getCurrentQuestion().getWrongAnwers(2))
     @bonusFiftyFiftyUsed = yes
 
-  # Ask the crowd 
+  # Ask the crowd
   executeBonusMass: ->
     @view.displayMass(@model.getCurrentQuestion().getPonderatedAnwers())
     @bonusMassUsed = yes
 
-  # Skip a threshold ? 
+  # Skip a threshold ?
   executeBonusDouble: ->
     @view.doubleScoreActivated()
     @bonusDoubleUsed = yes

@@ -72,17 +72,26 @@ module.exports = class DupaView extends View
       $(".proposition[data-id='#{proposition.id}']").text proposition.text
     @autoSizeText()
 
-  updateAnswerButton: (propositionId, status, callback, question) ->
+  updateAnswerButton: (propositionId, correctAnswer, status, callback, question) ->
     @updatePropositionsText question
     klass = if status then 'success' else 'error'
 
     if propositionId
       propositionEl = $('.proposition[data-id="'+propositionId+'"]', @$el)
       propositionEl.parent().addClass(klass)
+      if klass isnt 'success'
+        answerEl = $('.proposition[data-id="'+correctAnswer+'"]', @$el)
+        answerEl.parent().addClass('success')
+        # console.log $('.proposition[data-id="'+correctAnswer+'"]',@$el).parent().hasClass('success')
     else
       propositionEl = $('.proposition', @$el)
 
     setTimeout =>
+    #   $('.proposition[data-id="'+correctAnswer+'"]',@$el).removeClass('animated').addClass('animated fadeOut').one 'webkitAnimationEnd', =>
+    #     # propositionEl.parent().removeClass(klass)
+    #     # propositionEl.removeClass('fadeOut').addClass('fadeIn').one 'webkitAnimationEnd', ->
+    #     callback()
+    # , 500
       propositionEl.removeClass('animated').addClass('animated fadeOut').one 'webkitAnimationEnd', =>
         # propositionEl.parent().removeClass(klass)
         # propositionEl.removeClass('fadeOut').addClass('fadeIn').one 'webkitAnimationEnd', ->
@@ -100,10 +109,10 @@ module.exports = class DupaView extends View
   updateJackpot: (jackpot, currentThresholdValue, options = {}) ->
     el = $('.jackpot-container', @$el)
     $('#total-jackpot', el).text jackpot
-    
+
     $(".threshold .highlighted", el).addClass('animated fadeOut').one 'webkitAnimationEnd', ->
       $(@).remove()
-    
+
 
     if options?.oldJackpot
       $(".threshold[data-value='#{options.oldJackpot}']", el).removeClass('highlighted gold')
