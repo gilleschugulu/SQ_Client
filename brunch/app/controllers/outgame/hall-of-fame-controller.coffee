@@ -20,7 +20,7 @@ module.exports = class HallOfFameController extends Controller
       @collection[i] =
         friend     : if ranking[i].fb_id is Parse.User.current().get('fb_id') then false else @friend
         rank       : ranking[i].rank
-        username   : ranking[i].username
+        username   : (ranking[i].username).slice(0,20)
         jackpot    : ranking[i].score
         id         : ranking[i].fb_id
         profilepic : if !!ranking[i].fb_id then 'https://graph.facebook.com/'+ranking[i].fb_id+'/picture' else null
@@ -36,21 +36,20 @@ module.exports = class HallOfFameController extends Controller
     @globalArray = []
     FacebookHelper.getOtherFriends (friends) =>
       @friendsToInvite(friends)
-    Parse.Cloud.run 'getAllScore' , {rank : @user.get('rank'), userId : @user.id},
-      success: (players) =>
-        @globalArray = players
-        console.log @globalArray
-      error: =>
-        console.log 'toto s dead'
-    FacebookHelper.getFriends (friends) =>
-      friendsId = _.pluck(friends, 'id')
-      Parse.Cloud.run 'getFriendsScore' , {friendsId: friendsId},
+      Parse.Cloud.run 'getAllScore' , {rank : @user.get('rank'), userId : @user.id},
         success: (players) =>
-          players.push Parse.User.current().attributes
-          players = players.sort (f1, f2) ->
-            f2.score - f1.score
-          @friendsArray = players
-          @fetchPlayers yes
+          @globalArray = players
+        error: =>
+          console.log 'toto s dead'
+      FacebookHelper.getFriends (friends) =>
+        friendsId = _.pluck(friends, 'id')
+        Parse.Cloud.run 'getFriendsScore' , {friendsId: friendsId},
+          success: (players) =>
+            players.push Parse.User.current().attributes
+            players = players.sort (f1, f2) ->
+              f2.score - f1.score
+            @friendsArray = players
+            @fetchPlayers yes
 
     @targetDate = @getDate()
     @loadView null
@@ -117,8 +116,6 @@ module.exports = class HallOfFameController extends Controller
     for friend in tmp
       FB.api '/'+friend+'?fields=name', (response)->
         results.push(response)
-    #console.log results
-    #TODO: Use the id from tmp tab to get the friend name
     @friendsToInvite  = results
 
   FacebookInvite: (event) =>

@@ -21,7 +21,7 @@ module.exports = class ProfilesController extends Controller
       avatar = 'https://graph.facebook.com/' + fb_id + '/picture?width=150&height=170'
     else
       avatar = 'images/common/facebook-default.jpg'
-    
+
     @loadView 'profile'
       , =>
         stats = GameStatHelper.getProfileStat()
@@ -57,7 +57,9 @@ module.exports = class ProfilesController extends Controller
     AnalyticsHelper.trackEvent 'Profil', 'Affichage de Game Center'
 
     lb = ConfigHelper.config.gamecenter.leaderboard
+    console.log GameCenter?.showLeaderboard
     if lb
       GameCenter?.showLeaderboard lb
     else
       alert('Pas de leaderboard')
+

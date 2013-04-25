@@ -22,7 +22,7 @@ exports.task = function(request, response) {
       if (i < 8) {
         return response.success(fetchUsers(results, 0, 9));
       } else if (i > results.length - 5) {
-        return response.success(fetchUsers(results, results.length - 10, results.length - 1));
+        return response.success(fetchUsers(results, 0, 2).concat(fetchUsers(results, results.length - 7, results.length - 1)));
       } else {
         board = fetchUsers(results, 0, 2).concat(fetchUsers(results, i - 3, i + 3));
         return response.success(board);
