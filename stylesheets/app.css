@@ -6297,9 +6297,9 @@ body.box-align {
   height: 100%;
   background-repeat: no-repeat;
   background-image: url("../images/common/background.png");
-  -webkit-background-size: 100% 100%;
-  -moz-background-size: 100% 100%;
-  background-size: 100% 100%;
+  -webkit-background-size: contain;
+  -moz-background-size: contain;
+  background-size: contain;
   position: relative;
 }
 .shop-page .home-btn {
@@ -6359,7 +6359,7 @@ body.box-align {
   left: 8%;
   width: 81%;
   height: 72%;
-  background-image: url("../images/shop/box2.png");
+  background-image: url("../images/shop/box.png");
   background-repeat: no-repeat;
   -webkit-background-size: contain;
   -moz-background-size: contain;

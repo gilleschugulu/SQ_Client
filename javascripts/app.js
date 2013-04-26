@@ -3318,7 +3318,7 @@ var AssetsList = {
 'profile/': ["images/profile/bg_profil.png", "images/profile/bloc_infos.png", "images/profile/box_info.png", "images/profile/bt_gamecenter.png", "images/profile/bt_home.png", "images/profile/bt_ranking.png", "images/profile/cagnottecourante.png", "images/profile/classement.png", "images/profile/eoile.png", "images/profile/etoile.png", "images/profile/framephoto.png", "images/profile/jeton.png", "images/profile/levelscore.png", "images/profile/liaison_fb.png", "images/profile/linkfb.png", "images/profile/linkfb_done.png", "images/profile/niveaucourant.png", "images/profile/photo_m.png", "images/profile/photo_pseudo.png", "images/profile/photo_w.png", "images/profile/pseudo.png", "images/profile/title.png"],
 'profile/bonus/': ["images/profile/bonus/50-50.png", "images/profile/bonus/credit.png", "images/profile/bonus/divide.png", "images/profile/bonus/freeze_10s.png", "images/profile/bonus/heart.png", "images/profile/bonus/pass.png", "images/profile/bonus/x2.png"],
 'profile/box/': ["images/profile/box/etoilemysterieure.png", "images/profile/box/meileurniveau.png", "images/profile/box/meilleurecagnotte.png", "images/profile/box/partiesgagnees.png", "images/profile/box/partiesjouees.png"],
-'shop/': ["images/shop/bonusvies.png", "images/shop/bonusvies_inactive.png", "images/shop/box.png", "images/shop/box2.png", "images/shop/credit.png", "images/shop/jeton.png", "images/shop/jeton_inactive.png"],
+'shop/': ["images/shop/bonusvies.png", "images/shop/bonusvies_inactive.png", "images/shop/box.png", "images/shop/credit.png", "images/shop/jeton.png", "images/shop/jeton_inactive.png"],
 'shop/Jetons/': ["images/shop/Jetons/invite.png", "images/shop/Jetons/like.png", "images/shop/Jetons/note.png", "images/shop/Jetons/offre.png", "images/shop/Jetons/pack_1.png", "images/shop/Jetons/pack_2.png", "images/shop/Jetons/pack_3.png", "images/shop/Jetons/pack_4.png", "images/shop/Jetons/twitter.png", "images/shop/Jetons/video.png"],
 'shop/life_and_bonus/': ["images/shop/life_and_bonus/1000.png", "images/shop/life_and_bonus/300.png", "images/shop/life_and_bonus/50.png"],
 'shop/life_and_bonus/Vies/': ["images/shop/life_and_bonus/Vies/10.png", "images/shop/life_and_bonus/Vies/100.png", "images/shop/life_and_bonus/Vies/150.png", "images/shop/life_and_bonus/Vies/5.png", "images/shop/life_and_bonus/Vies/50.png"],
@@ -3636,10 +3636,10 @@ Handlebars.template = Handlebars.VM.template;
 ;;
 var BuildVersion = {
   version     : '',
-  commit      : 'b073e0eeb9d3e1a19efe2ff5bb6c6ac4fdbcc9a7',
-  shortCommit : 'b073e0e',
-  branch      : 'develop',
-  time        : '2013-04-25 17:33',
+  commit      : '5f55ec23597ac74ade4dc4b4faa348e03d18433b',
+  shortCommit : '5f55ec2',
+  branch      : 'feature/lifes',
+  time        : '2013-04-26 11:11',
   author      : 'Louis',
 
   getCommitLink: function() {
@@ -60724,9 +60724,6 @@ window.require.register("controllers/ingame/game-controller", function(exports, 
     GameController.prototype.payGame = function() {
       var user;
 
-      if (!config.pay_game) {
-        return true;
-      }
       user = Parse.User.current();
       if (user.get('health') <= 0) {
         return false;
@@ -61568,9 +61565,18 @@ window.require.register("controllers/outgame/home-controller", function(exports,
         _ref2.setJournalMessage('loading');
       }
       this.view.delegate('click', '#game-link', function() {
-        return _this.view.dim(function() {
-          return _this.redirectTo('game');
-        });
+        var user;
+
+        user = Parse.User.current();
+        if (user.get('health') > 0) {
+          return _this.view.dim(function() {
+            return _this.redirectTo('game');
+          });
+        } else {
+          return popUp.initialize({
+            template: 'no-more-coins'
+          });
+        }
       });
       return FacebookHelper.getFriends(function(friends) {
         _this.getJournalView(friends, function() {
@@ -66079,8 +66085,9 @@ window.require.register("views/ingame/stages/dupa-stage-view", function(exports,
       if (propositionId) {
         propositionEl = $('.proposition[data-id="' + propositionId + '"]', this.$el);
         propositionEl.parent().addClass(klass);
-        answerEl = $('.proposition[data-id="' + correctAnswer + '"]', this.$el);
+        answerEl;
         if (klass !== 'success') {
+          answerEl = $('.proposition[data-id="' + correctAnswer + '"]', this.$el);
           answerEl.parent().addClass('success');
         }
       } else {
@@ -66430,7 +66437,7 @@ window.require.register("views/outgame/hall-of-fame-view", function(exports, req
 
     HallOfFameView.prototype.takeOffFriend = function(target) {
       $(target).parent().css('display', 'none');
-      return $(".life-value").innerHTML(Parse.User.current().get('health'));
+      return $(".life-value").text(Parse.User.current().get('health'));
     };
 
     return HallOfFameView;
@@ -67074,6 +67081,25 @@ window.require.register("views/templates/ingame/stages/dupa-stage", function(exp
     stack1 = helpers.each.call(depth0, depth0.thresholds, {hash:{},inverse:self.noop,fn:self.program(3, program3, data),data:data});
     if(stack1 || stack1 === 0) { buffer += stack1; }
     buffer += "\n  <div id='jackpot-marker'>\n</div>\n";
+    return buffer;
+    });
+});
+window.require.register("views/templates/no-more-coins", function(exports, require, module) {
+  module.exports = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
+    this.compilerInfo = [2,'>= 1.0.0-rc.3'];
+  helpers = helpers || Handlebars.helpers; data = data || {};
+    var buffer = "", stack1, functionType="function", escapeExpression=this.escapeExpression;
+
+
+    buffer += "<div id=\"popup\" class=\"popup no-more-coins\" style=\"z-index:100";
+    if (stack1 = helpers.level) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+    else { stack1 = depth0.level; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+    buffer += escapeExpression(stack1)
+      + "\" data-key=\"";
+    if (stack1 = helpers.key) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+    else { stack1 = depth0.key; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+    buffer += escapeExpression(stack1)
+      + "\">\n  <h1 class='title'>Oh non !</h1>\n  <br/>\n  <p class='text-container'>\n    Il semblerait que tu n'aies plus assez de vies\n  </p>\n  <div class=\"btn-container\">\n    <a href=\"#shop\" class=\"ok btn remove\"></a>\n  </div>\n</div>\n";
     return buffer;
     });
 });
