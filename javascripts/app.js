@@ -63125,8 +63125,6 @@ window.require.register("helpers/facebook-helper", function(exports, require, mo
             user.save();
             if (callback && response) {
               return callback(response);
-            } else {
-              return [_.uniq(response.to.concat(user.get('fb_invited'))).length, response.to.length];
             }
           });
         });
