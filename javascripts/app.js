@@ -63125,13 +63125,7 @@ window.require.register("helpers/facebook-helper", function(exports, require, mo
           notInstalledFriends = _.pluck(friends, 'id');
           return FB.ui({
             method: 'apprequests',
-            message: message,
-            filters: [
-              {
-                name: 'invite friends',
-                user_ids: _.difference(notInstalledFriends, user.get('fb_invited'))
-              }
-            ]
+            message: message
           }, function(response) {
             var friend, _i, _len, _ref;
 
