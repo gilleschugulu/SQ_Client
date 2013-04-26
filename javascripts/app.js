@@ -61604,6 +61604,8 @@ window.require.register("controllers/outgame/home-controller", function(exports,
       var _this = this;
 
       return FacebookHelper.getOtherFriends(function(friends) {
+        var toto;
+
         if (_.difference(_.pluck(friends, 'id'), Parse.User.current().get('fb_invited')).length < 1 && FacebookHelper.isLinked()) {
           return popUp.initialize({
             message: i18n.t('controller.home.app_request_error'),
@@ -61611,7 +61613,9 @@ window.require.register("controllers/outgame/home-controller", function(exports,
             key: 'appRequest-error'
           });
         } else {
-          return FacebookHelper.friendRequest(i18n.t('controller.home.facebook_invite_message'));
+          console.log('toto');
+          toto = FacebookHelper.friendRequest(i18n.t('controller.home.facebook_invite_message'));
+          return console.log(toto);
         }
       });
     };
@@ -63121,7 +63125,7 @@ window.require.register("helpers/facebook-helper", function(exports, require, mo
             if (callback && response) {
               return callback(response);
             } else {
-              return _.uniq(response.to.concat(user.get('fb_invited'))).length;
+              return [_.uniq(response.to.concat(user.get('fb_invited'))).length, response.to.length];
             }
           });
         });
