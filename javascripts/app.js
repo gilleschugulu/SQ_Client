@@ -63129,15 +63129,15 @@ window.require.register("helpers/facebook-helper", function(exports, require, mo
           }, function(response) {
             var friend, _i, _len, _ref;
 
-            user.set("fb_invited", _.uniq(response.to.concat(user.get('fb_invited'))));
             console.log(response.to);
-            console.log(user.get('fb_invited'));
+            console.log(user.get('fb'));
             console.log(_.difference(response.to, user.get('fb_invited')));
             _ref = _.difference(response.to, user.get('fb_invited'));
             for (_i = 0, _len = _ref.length; _i < _len; _i++) {
               friend = _ref[_i];
               user.set("health", user.get("health") + 1);
             }
+            user.set("fb_invited", _.uniq(response.to.concat(user.get('fb_invited'))));
             user.save();
             if (callback && response) {
               return callback(response);
