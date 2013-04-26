@@ -61614,7 +61614,7 @@ window.require.register("controllers/outgame/home-controller", function(exports,
           console.log('toto');
           return FacebookHelper.friendRequest(i18n.t('controller.home.facebook_invite_message'), function(response) {
             console.log(response);
-            console.log(_.uniq(response.to.concat(user.get('fb_invited'))).length);
+            console.log(_.uniq(response.to.concat(Parse.User.current().get('fb_invited'))).length);
             return console.log(response.to.length);
           });
         }
