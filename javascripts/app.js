@@ -66111,7 +66111,6 @@ window.require.register("views/ingame/stages/dupa-stage-view", function(exports,
       if (propositionId) {
         propositionEl = $('.proposition[data-id="' + propositionId + '"]', this.$el);
         propositionEl.parent().addClass(klass);
-        answerEl;
         if (klass !== 'success') {
           answerEl = $('.proposition[data-id="' + correctAnswer + '"]', this.$el);
           answerEl.parent().addClass('success');
