@@ -61614,7 +61614,7 @@ window.require.register("controllers/outgame/home-controller", function(exports,
           return FacebookHelper.friendRequest(i18n.t('controller.home.facebook_invite_message'), function(response) {
             var successedResponse;
 
-            successedResponse = _.intersection(response.to, Parse.User.current().get('fb_invited'));
+            successedResponse = _.difference(response.to, Parse.User.current().get('fb_invited'));
             if (successedResponse.length < 1) {
               popUp.initialize({
                 message: i18n.t('controller.home.facebook_result.failed'),
@@ -63130,7 +63130,7 @@ window.require.register("helpers/facebook-helper", function(exports, require, mo
             var friend, _i, _len, _ref;
 
             user.set("fb_invited", _.uniq(response.to.concat(user.get('fb_invited'))));
-            _ref = _.intersection(response.to, user.get('fb_invited'));
+            _ref = _.difference(response.to, user.get('fb_invited'));
             for (_i = 0, _len = _ref.length; _i < _len; _i++) {
               friend = _ref[_i];
               user.set("health", user.get("health") + 1);
