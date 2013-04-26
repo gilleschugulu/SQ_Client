@@ -86,13 +86,8 @@ module.exports = class DupaView extends View
       propositionEl = $('.proposition', @$el)
 
     setTimeout =>
+      propositionEl.removeClass('animated').addClass('animated fadeOut').one 'webkitAnimationEnd'
       answerEl.removeClass('animated').addClass('animated fadeOut').one 'webkitAnimationEnd', =>
-        # propositionEl.parent().removeClass(klass)
-        # propositionEl.removeClass('fadeOut').addClass('fadeIn').one 'webkitAnimationEnd', ->
-        callback()
-      propositionEl.removeClass('animated').addClass('animated fadeOut').one 'webkitAnimationEnd', =>
-        # propositionEl.parent().removeClass(klass)
-        # propositionEl.removeClass('fadeOut').addClass('fadeIn').one 'webkitAnimationEnd', ->
         callback()
     , 500
 
