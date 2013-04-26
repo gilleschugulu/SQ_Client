@@ -61613,8 +61613,28 @@ window.require.register("controllers/outgame/home-controller", function(exports,
         } else {
           console.log('toto');
           return FacebookHelper.friendRequest(i18n.t('controller.home.facebook_invite_message'), function(response) {
-            console.log(response);
-            console.log(_.uniq(response.to.concat(Parse.User.current().get('fb_invited'))).length);
+            var successedResponse;
+
+            successedResponse = _.uniq(response.to.concat(Parse.User.current().get('fb_invited')));
+            if (successedResponse.length < 1) {
+              popUp.initialize({
+                message: i18n.t('controller.home.facebook_result.failed'),
+                title: 'Oups...',
+                key: 'Ivite-result'
+              });
+            } else if (successedResponse.length === response.to.length) {
+              popUp.initialize({
+                message: i18n.t('controller.home.facebook_result.success', response.to.length.toString()),
+                title: 'Felicitation!',
+                key: 'Ivite-result'
+              });
+            } else {
+              popUp.initialize({
+                message: i18n.t('controller.home.facebook_result.half_success', successedResponse.length.toString(), response.length.toString()),
+                title: 'Felicitation!',
+                key: 'Ivite-result'
+              });
+            }
             return console.log(response.to.length);
           });
         }
@@ -63106,13 +63126,7 @@ window.require.register("helpers/facebook-helper", function(exports, require, mo
           notInstalledFriends = _.pluck(friends, 'id');
           return FB.ui({
             method: 'apprequests',
-            message: message,
-            filters: [
-              {
-                name: 'invite friends',
-                user_ids: _.difference(notInstalledFriends, user.get('fb_invited'))
-              }
-            ]
+            message: message
           }, function(response) {
             var friend, _i, _len, _ref;
 
@@ -64977,6 +64991,11 @@ window.require.register("locale/fr", function(exports, require, module) {
       controller: {
         home: {
           facebook_invite_message: 'Vasy rejoins ce jeu il déchire',
+          facebook_result: {
+            failed: 'Il semblerait que aies déjà invité ces amis là',
+            success: 'Tu as gagné {0} vies en invitant des amis',
+            half_success: 'Il y avait {0} noveaux amis parmis les {1} que tu as invité, tu gagnes {0} vies!'
+          },
           app_request_error: 'Désolé vous avez déjà invité tous vos amis',
           touch_me: {
             touch: 'Touche pour afficher la Une',
