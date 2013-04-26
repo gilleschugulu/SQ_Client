@@ -61568,9 +61568,18 @@ window.require.register("controllers/outgame/home-controller", function(exports,
         _ref2.setJournalMessage('loading');
       }
       this.view.delegate('click', '#game-link', function() {
-        return _this.view.dim(function() {
-          return _this.redirectTo('game');
-        });
+        var user;
+
+        user = Parse.User.current();
+        if (user.get('health') > 0) {
+          return _this.view.dim(function() {
+            return _this.redirectTo('game');
+          });
+        } else {
+          return popUp.initialize({
+            template: 'no-more-coins'
+          });
+        }
       });
       return FacebookHelper.getFriends(function(friends) {
         _this.getJournalView(friends, function() {
@@ -67074,6 +67083,25 @@ window.require.register("views/templates/ingame/stages/dupa-stage", function(exp
     stack1 = helpers.each.call(depth0, depth0.thresholds, {hash:{},inverse:self.noop,fn:self.program(3, program3, data),data:data});
     if(stack1 || stack1 === 0) { buffer += stack1; }
     buffer += "\n  <div id='jackpot-marker'>\n</div>\n";
+    return buffer;
+    });
+});
+window.require.register("views/templates/no-more-coins", function(exports, require, module) {
+  module.exports = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
+    this.compilerInfo = [2,'>= 1.0.0-rc.3'];
+  helpers = helpers || Handlebars.helpers; data = data || {};
+    var buffer = "", stack1, functionType="function", escapeExpression=this.escapeExpression;
+
+
+    buffer += "<div id=\"popup\" class=\"popup no-more-coins\" style=\"z-index:100";
+    if (stack1 = helpers.level) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+    else { stack1 = depth0.level; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+    buffer += escapeExpression(stack1)
+      + "\" data-key=\"";
+    if (stack1 = helpers.key) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+    else { stack1 = depth0.key; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+    buffer += escapeExpression(stack1)
+      + "\">\n  <h1 class='title'>Oh non !</h1>\n  <br/>\n  <p class='text-container'>\n    Il semblerait que tu n'aies plus assez de vies\n  </p>\n  <div class=\"btn-container\">\n    <a href=\"#shop\" class=\"ok btn remove\"></a>\n  </div>\n</div>\n";
     return buffer;
     });
 });
