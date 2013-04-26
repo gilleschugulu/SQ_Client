@@ -61611,11 +61611,10 @@ window.require.register("controllers/outgame/home-controller", function(exports,
             key: 'appRequest-error'
           });
         } else {
-          console.log('toto');
           return FacebookHelper.friendRequest(i18n.t('controller.home.facebook_invite_message'), function(response) {
             var successedResponse;
 
-            successedResponse = _.uniq(response.to.concat(Parse.User.current().get('fb_invited')));
+            successedResponse = _.intersection(response.to, Parse.User.current().get('fb_invited'));
             if (successedResponse.length < 1) {
               popUp.initialize({
                 message: i18n.t('controller.home.facebook_result.failed'),
