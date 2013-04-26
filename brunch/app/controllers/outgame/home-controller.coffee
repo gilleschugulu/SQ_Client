@@ -38,7 +38,11 @@ module.exports = class HomeController extends Controller
     @view?.setJournalMessage('loading')
 
     @view.delegate 'click', '#game-link', =>
-      @view.dim => @redirectTo 'game'
+      user = Parse.User.current()
+      if user.get('health') > 0
+        @view.dim => @redirectTo 'game'
+      else
+        popUp.initialize {template: 'no-more-coins'}
 
     FacebookHelper.getFriends (friends) =>
       @getJournalView friends, =>
