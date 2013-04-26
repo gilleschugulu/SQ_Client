@@ -66437,10 +66437,9 @@ window.require.register("views/outgame/hall-of-fame-view", function(exports, req
 
     HallOfFameView.prototype.takeOffFriend = function(target) {
       $(target).parent().css('display', 'none');
-      console.log('toto');
-      console.log($(".life-value", this.$el).text);
+      console.log($(".life-value", this.$el).text());
       $(".life-value", this.$el).text(Parse.User.current().get('health'));
-      return console.log($(".life-value", this.$el).text);
+      return console.log($(".life-value", this.$el).text());
     };
 
     return HallOfFameView;
