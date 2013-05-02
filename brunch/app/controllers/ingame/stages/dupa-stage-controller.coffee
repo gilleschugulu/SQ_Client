@@ -31,7 +31,7 @@ module.exports = class DupaStageController extends StageController
 
       @view.delegate 'click', '.bonus', (event) =>
         @view.chooseBonus event.currentTarget, (bonusName) =>
-          if @canUseBonus(bonusName) #and @model.get('player').consumeBonus(bonusName)
+          if @canUseBonus(bonusName) and @model.get('player').consumeBonus(bonusName)
             @view.updateBonus event.currentTarget, @model.get('player').getBonusQuantity(bonusName)
             @executeBonus(bonusName)
 
