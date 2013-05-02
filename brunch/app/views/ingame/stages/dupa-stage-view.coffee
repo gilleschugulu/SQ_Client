@@ -75,11 +75,11 @@ module.exports = class DupaView extends View
   updateAnswerButton: (propositionId, correctAnswer, status, callback, question) ->
     @updatePropositionsText question
     klass = if status then 'success' else 'error'
+    answerEl = $('.proposition[data-id="'+correctAnswer+'"]', @$el)
 
     if propositionId
       propositionEl = $('.proposition[data-id="'+propositionId+'"]', @$el)
       propositionEl.parent().addClass(klass)
-      answerEl = $('.proposition[data-id="'+correctAnswer+'"]', @$el)
       if klass isnt 'success'
         answerEl.parent().addClass('success')
     else
