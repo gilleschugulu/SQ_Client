@@ -12,7 +12,7 @@ module.exports =
           twoplus:
             rank_1 : '{0} est numero uno'
             rank_2 : '{0} y est presque'
-            rank_3 : '{0} dernier du podium'
+            rank_3 : '{0} décroche le bronze'
             rank_n : '{0} n\'est qu\'a la position {1}'
       shop:
         unavailable_pack:
