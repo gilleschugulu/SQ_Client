@@ -32,8 +32,10 @@ module.exports = class ShopController extends Controller
     , =>
       new ShopView {@packs, @bonuses, health: user.get('health'), credits: user.get('credits'), like_page_url: ConfigHelper.config.services.facebook.like_page_url}
     , (view) =>
-      view.delegate 'click', '#bonuses.inactive', @onToggleTab
-      view.delegate 'click', '#credits.inactive', @onToggleTab
+      view.delegate 'click', '#bonuses.inactive', =>
+        @onToggleTab 'bonus'
+      view.delegate 'click', '#credits.inactive', =>
+        @onToggleTab 'credits'
 
       view.delegate 'click', '.paid-pack.ios', @onClickApplePack
       view.delegate 'click', '.paid-pack.web', @onClickAllopassPack
@@ -145,8 +147,8 @@ module.exports = class ShopController extends Controller
   # / Free packs
 
 
-  onToggleTab: =>
-    @view.toggleTabs()
+  onToggleTab: (tab) =>
+    @view.toggleTabs(tab)
 
 
   onClickLifePack: (e) =>

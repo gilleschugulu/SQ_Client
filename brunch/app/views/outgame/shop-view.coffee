@@ -38,7 +38,7 @@ module.exports = class ShopView extends View
   removeFreePack: (elemId) ->
     $('.free-pack#'+elemId, @$el).remove()
 
-  toggleTabs: ->
-    $('.tab', @$el).toggleClass('inactive')
-    $('.tab', @$el).toggleClass('active')
-    $('.content-container', @$el).toggle()
+  toggleTabs: (tabId) ->
+    $('.tab', @$el).toggleClass('inactive active')
+    $('.content-container', @$el).hide()
+    $('.content-container#' + tabId, @$el).show()
