@@ -19,6 +19,8 @@ module.exports = class DupaStageController extends StageController
     @view = new DupaStageView {stage : {@name, @type}, thresholds: t, bonus: @model.get('player').getBonuses(), time : @model.getConfigValue('answerTime')}
     @timer = new Timer((duration) =>
       @view.updateTimer(duration)
+      if duration == '8'
+        SoundHelper.play('acceleration')
     )
     GameStatHelper.incrementGamesPlayedCount()
     super
@@ -110,6 +112,7 @@ module.exports = class DupaStageController extends StageController
 
   # Add x time
   executeBonusAddTime: ->
+    SoundHelper.stop('acceleration')
     @timer.adjustDuration(@model.getConfigValue('timeBonus'))
 
   # Skip question
