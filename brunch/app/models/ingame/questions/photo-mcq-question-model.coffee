@@ -32,7 +32,6 @@ module.exports = class PhotoMcqQuestion extends Question
       proposition
 
     unless total is 0
-      console.log 'total is not null'
       @get('propositions')[1].massOpinion = Math.round(@get('propositions')[1].massOpinion + total)
 
     @get('propositions')
