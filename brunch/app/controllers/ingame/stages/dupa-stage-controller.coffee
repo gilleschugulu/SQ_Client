@@ -4,6 +4,7 @@ Timer           = require 'helpers/timer-helper'
 i18n            = require 'lib/i18n'
 utils           = require 'lib/utils'
 GameStatHelper  = require 'helpers/game-stat-helper'
+SoundHelper     = require 'helpers/sound-helper'
 
 module.exports = class DupaStageController extends StageController
   timer: null
@@ -89,6 +90,7 @@ module.exports = class DupaStageController extends StageController
     true
 
   executeBonus: (bonusName) ->
+    SoundHelper.play(bonusName)
     @[$.camelCase('executeBonus-' + utils.dasherize(bonusName))]?()
 
   # Remove 2 answers

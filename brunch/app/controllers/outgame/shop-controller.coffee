@@ -10,6 +10,7 @@ PopUpHelper        = require 'helpers/pop-up-helper'
 AnalyticsHelper    = require 'helpers/analytics-helper'
 PurchasePacks      = require 'config/purchase-config'
 BonusPacks         = require 'config/bonus-config'
+SoundHelper        = require 'helpers/sound-helper'
 
 module.exports = class ShopController extends Controller
   historyURL       : 'shop'
@@ -52,6 +53,7 @@ module.exports = class ShopController extends Controller
 
   onSuccessfulTransaction: (credits, life) =>
     @view.updateWallet credits, life
+    SoundHelper.play('buy')
 
   onClickApplePack: (e) =>
     packId = @view.chooseApplePack(e.currentTarget)

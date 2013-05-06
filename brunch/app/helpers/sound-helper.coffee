@@ -27,10 +27,10 @@ module.exports = class SoundHelper
     return unless @currentMusicKey or @musicMuted
     @play @currentMusicKey
 
-  @pause = (key) ->
+  @pause = (key = @currentMusicKey) ->
     @sounds[key].sound.pause()
 
-  @stop = (key) ->
+  @stop = (key = @currentMusicKey) ->
     @sounds[key].sound.stop()
 
   @togglePlay : (key) ->
@@ -39,8 +39,19 @@ module.exports = class SoundHelper
   @stopAll = ->
     buzz.all().stop()
 
-  @getDuration = (key) ->
-    @sounds[key].sound.getDuration() * 1000
+  @getDuration = (key, fallbackDuration = 1000) ->
+    duration = @sounds[key].sound.getDuration() * 1000
+    if isNaN duration then duration = fallbackDuration
+    duration
+
+  @fadeOut: (key, duration, callback) ->
+    @sounds[key].sound.fadeOut duration, callback
+
+  @fadeIn: (key, duration, callback) ->
+    @sounds[key].sound.fadeIn duration, callback
+
+  @fadeWith: (firstKey, secondKey, duration) ->
+    @sounds[firstKey].sound.fadeWith secondKey, duration
 
   @toggleMusic = ->
     @musicMuted = !@musicMuted
