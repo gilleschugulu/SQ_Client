@@ -53,8 +53,9 @@ module.exports = class DupaStageController extends StageController
           @playerDidAnswer player, question, propositionId
 
   playerDidAnswer: (player, question, propositionId) =>
-    result = true
-    goodOne = true
+    result = question.isCorrectAnswer propositionId
+    correctAnswer = question.getCorrectAnswer()
+
     oldJackpot = @model.getCurrentThreshold()
 
     if result
@@ -69,7 +70,7 @@ module.exports = class DupaStageController extends StageController
     GameStatHelper.incrementSumTimeQuestion((new Date().getTime()) - @startTime)
 
     @view.playQuestionSound @model.currentThresholdIndex, result
-    @view.updateAnswerButton propositionId, goodOne, result, =>
+    @view.updateAnswerButton propositionId, correctAnswer, result, =>
       @view.updateJackpot player.get('jackpot'), @model.getCurrentThreshold(), {result, oldJackpot}
       @askNextQuestion()
 

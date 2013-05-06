@@ -7,9 +7,13 @@ module.exports = class Question extends Model
     masked      : no
 
   isCorrectAnswer: (answerId) ->
-    for proposition in @get('propositions')
-      return [proposition.is_valid if parseInt(proposition.id) is parseInt(answerId), parseInt(proposition.id)]
+    for proposition in @get('propositions') when parseInt(proposition.id) is parseInt(answerId)
+      return proposition.is_valid
     no
+
+  getCorrectAnswer: ->
+    for proposition in @get('propositions') when proposition.is_valid
+      return proposition.id
 
   getPropositions: ->
     _.shuffle @get('propositions')
