@@ -26,7 +26,7 @@ module.exports = class DupaStageController extends StageController
         setTimeout =>
           @beforeFinishStage()
         , 200
-      @view.updateJackpot(0, @model.getCurrentThreshold())
+      @view.updateJackpot(0, @model.getCurrentThreshold(), {no_sound: true})
       @view.welcome @askNextQuestion
 
       @view.delegate 'click', '.bonus', (event) =>
@@ -55,7 +55,6 @@ module.exports = class DupaStageController extends StageController
           result =  result[0]
           @view.updateAnswerButton propositionId, goodOne, result, =>
             @playerDidAnswer player, question, result
-          , question
 
   playerDidAnswer: (player, question, result) =>
     oldJackpot = @model.getCurrentThreshold()

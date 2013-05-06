@@ -1,6 +1,7 @@
 View        = require 'views/base/view'
 template    = require 'views/templates/ingame/stages/dupa-stage'
 i18n        = require 'lib/i18n'
+SoundHelper = require 'helpers/sound-helper'
 
 module.exports = class DupaView extends View
   propContainerInit: no
@@ -72,8 +73,7 @@ module.exports = class DupaView extends View
       $(".proposition[data-id='#{proposition.id}']").text proposition.text
     @autoSizeText()
 
-  updateAnswerButton: (propositionId, correctAnswer, status, callback, question) ->
-    @updatePropositionsText question
+  updateAnswerButton: (propositionId, correctAnswer, status, callback) ->
     klass = if status then 'success' else 'error'
     answerEl = $('.proposition[data-id="'+correctAnswer+'"]', @$el)
 
@@ -86,9 +86,7 @@ module.exports = class DupaView extends View
       propositionEl = $('.proposition', @$el)
 
     setTimeout =>
-      propositionEl.removeClass('animated').addClass('animated fadeOut').one 'webkitAnimationEnd'
-      answerEl.removeClass('animated').addClass('animated fadeOut').one 'webkitAnimationEnd', =>
-        callback()
+      callback()
     , 500
 
   beforeNextQuestionMessage: (textKey, jackpot, callback) ->
@@ -101,16 +99,14 @@ module.exports = class DupaView extends View
 
   updateJackpot: (jackpot, currentThresholdValue, options = {}) ->
     el = $('.jackpot-container', @$el)
-    $('#total-jackpot', el).text jackpot
+    currentThresholdIndex = @options.thresholds.indexOf(currentThresholdValue)
 
+    $('#total-jackpot', el).text jackpot
     $(".threshold .highlighted", el).addClass('animated fadeOut').one 'webkitAnimationEnd', ->
       $(@).remove()
 
-
     if options?.oldJackpot
       $(".threshold[data-value='#{options.oldJackpot}']", el).removeClass('highlighted gold')
-
-
 
     blockEl = $(".threshold[data-value='#{currentThresholdValue}']", el)
 
@@ -118,11 +114,10 @@ module.exports = class DupaView extends View
     blockEl.append("<div class='highlighted'></div>")
     $('.highlighted', blockEl).addClass('animated fadeIn')
 
-    @updateJackpotMarker(currentThresholdValue, result?.result)
+    @updateJackpotMarker(currentThresholdIndex, result?.result)
 
-  updateJackpotMarker: (currentThresholdValue, result = true) ->
+  updateJackpotMarker: (currentThresholdIndex, result = true) ->
     el = $('.jackpot-container', @$el)
-    currentThresholdIndex = @options.thresholds.indexOf(currentThresholdValue)
 
     # Position go for 91 to 10. May need some... adaptation
     height = (currentThresholdIndex + 1) * 9 + 1
