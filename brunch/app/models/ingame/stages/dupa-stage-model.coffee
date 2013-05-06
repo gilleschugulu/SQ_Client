@@ -37,23 +37,17 @@ module.exports = class DupaStage extends Stage
       else
         @questionDifficulty = 4
 
-
-
   getCurrentThreshold: ->
     @getConfigValue('thresholds')[@currentThresholdIndex]
+
 
   getNextQuestion: (reset = no) ->
     @questionIndex = -1 if reset
     ++@questionIndex
 
-    # @get('questions')[@questionIndex % @get('questions').length]
-
     questions = @get('questions')[@questionDifficulty]
     questions[@questionIndex % questions.length]
-
 
   getCurrentQuestion: ->
     questions = @get('questions')[@questionDifficulty]
     questions[@questionIndex % questions.length]
-
-    # @get('questions')[@questionIndex % @get('questions').length]

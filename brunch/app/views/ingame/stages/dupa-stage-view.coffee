@@ -97,6 +97,13 @@ module.exports = class DupaView extends View
         callback?()
     , 2000
 
+  playQuestionSound: (currentThresholdIndex, result) ->
+    console.log currentThresholdIndex, result
+    if result
+      SoundHelper.play('good_answer_' + currentThresholdIndex)
+    else
+      SoundHelper.play('wrong_answer')
+
   updateJackpot: (jackpot, currentThresholdValue, options = {}) ->
     el = $('.jackpot-container', @$el)
     currentThresholdIndex = @options.thresholds.indexOf(currentThresholdValue)

@@ -26,7 +26,7 @@ module.exports = class DupaStageController extends StageController
         setTimeout =>
           @beforeFinishStage()
         , 200
-      @view.updateJackpot(0, @model.getCurrentThreshold(), {no_sound: true})
+      @view.updateJackpot(0, @model.getCurrentThreshold())
       @view.welcome @askNextQuestion
 
       @view.delegate 'click', '.bonus', (event) =>
@@ -50,13 +50,11 @@ module.exports = class DupaStageController extends StageController
       @view.undelegateSingle 'click', '.proposition'
       @view.delegateSingleOnce 'click', '.proposition', (event) =>
         @view.chooseProposition event.currentTarget, (propositionId) =>
-          result = question.isCorrectAnswer propositionId
-          goodOne = result[1]
-          result =  result[0]
-          @view.updateAnswerButton propositionId, goodOne, result, =>
-            @playerDidAnswer player, question, result
+          @playerDidAnswer player, question, propositionId
 
-  playerDidAnswer: (player, question, result) =>
+  playerDidAnswer: (player, question, propositionId) =>
+    result = true
+    goodOne = true
     oldJackpot = @model.getCurrentThreshold()
 
     if result
@@ -70,8 +68,10 @@ module.exports = class DupaStageController extends StageController
     GameStatHelper.incrementAnswersCount(result, question.get('category'))
     GameStatHelper.incrementSumTimeQuestion((new Date().getTime()) - @startTime)
 
-    @view.updateJackpot player.get('jackpot'), @model.getCurrentThreshold(), {result, oldJackpot}
-    @askNextQuestion()
+    @view.playQuestionSound @model.currentThresholdIndex, result
+    @view.updateAnswerButton propositionId, goodOne, result, =>
+      @view.updateJackpot player.get('jackpot'), @model.getCurrentThreshold(), {result, oldJackpot}
+      @askNextQuestion()
 
   beforeFinishStage: (player) =>
     GameStatHelper.setBestRow(@row) if @row > 0
