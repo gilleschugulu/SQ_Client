@@ -16,8 +16,9 @@ module.exports = class HomePageView extends View
 
   addJournalView: (journalView) ->
     @subview 'journal', journalView
-    @subview('journal').render().toggle()
+    @subview('journal').render()
     @subview('journal').autoSizeText()
+    @subview('journal').appear()
 
   setJournalMessage: (key) ->
     $('#touch-me').text(I18n.t('controller.home.touch_me.' + key))

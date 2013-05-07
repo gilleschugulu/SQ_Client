@@ -2,7 +2,7 @@ View = require 'views/base/view'
 
 module.exports = class JournalView extends View
   autoRender: yes
-  className: 'journal-container shown'
+  className: 'journal-container completely-hiddened'
   container: '.home-page'
 
   getTemplateData: ->
@@ -19,3 +19,6 @@ module.exports = class JournalView extends View
 
   toggle: ->
     @$el.toggleClass('hiddened').toggleClass('shown')
+
+  appear: ->
+    @$el.toggleClass('completely-hiddened').toggleClass('hiddened')
