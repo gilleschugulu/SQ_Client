@@ -21,6 +21,7 @@ module.exports = class SoundHelper
     return if @sfxMuted and sound.type is 'sfx'
     @currentMusicKey = key if sound.type is 'music'
     return if @musicMuted and (sound.type is 'music' or sound.type is 'jingle')
+    @sounds[key].sound.stop()
     @sounds[key].sound.play()
 
   @resumeMusic = ->
