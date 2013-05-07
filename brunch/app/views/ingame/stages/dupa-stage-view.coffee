@@ -98,7 +98,6 @@ module.exports = class DupaView extends View
     , 2000
 
   playQuestionSound: (currentThresholdIndex, result) ->
-    console.log currentThresholdIndex, result
     if result
       SoundHelper.play('good_answer_' + currentThresholdIndex)
     else
