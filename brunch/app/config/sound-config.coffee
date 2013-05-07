@@ -108,6 +108,11 @@ module.exports =
         file: 'good_8.m4a'
       }
       {
+        key: 'good_answer_9'
+        type: 'sfx'
+        file: 'good_9.m4a'
+      }
+      {
         key: 'wrong_answer'
         type: 'sfx'
         file: 'wrong.m4a'
