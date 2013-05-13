@@ -13,22 +13,24 @@ module.exports = class HallOfFameController extends Controller
   request : null
 
   fetchPlayers: (withFriends) =>
-    @friend = if withFriends then true else false
     ranking = if withFriends then @friendsArray else @globalArray
     @collection = []
-    for i in [0...ranking.length]
-      @collection[i] =
-        friend     : if ranking[i].fb_id is Parse.User.current().get('fb_id') then false else @friend
-        rank       : ranking[i].rank
-        username   : (ranking[i].username).slice(0,20)
-        jackpot    : ranking[i].score
-        id         : ranking[i].fb_id
-        profilepic : if !!ranking[i].fb_id then 'https://graph.facebook.com/'+ranking[i].fb_id+'/picture' else null
-      if ranking[i].username is @user.get('username')
-        position = i
+
+    playerPosition = 0
+    for entry, i in ranking
+      @collection.push
+        friend     : if entry.fb_id is Parse.User.current().get('fb_id') then false else withFriends
+        rank       : entry.rank
+        username   : (entry.username).slice(0,20)
+        jackpot    : entry.score
+        id         : entry.fb_id
+        profilepic : if !!entry.fb_id then 'https://graph.facebook.com/'+entry.fb_id+'/picture' else null
+      if entry.username is @user.get('username')
+        playerPosition = i
+
     fbConnected = FacebookHelper.isLinked()
     noFriends = @collection.length <= 1
-    @updateRanking(position, noFriends, fbConnected, withFriends)
+    @updateRanking(playerPosition, noFriends, fbConnected, withFriends)
 
   index: ->
     @user = Parse.User.current()
@@ -39,8 +41,7 @@ module.exports = class HallOfFameController extends Controller
       Parse.Cloud.run 'getAllScore' , {rank : @user.get('rank'), userId : @user.id},
         success: (players) =>
           @globalArray = players
-        error: =>
-          console.log 'toto s dead'
+        error: ->
       FacebookHelper.getFriends (friends) =>
         friendsId = _.pluck(friends, 'id')
         Parse.Cloud.run 'getFriendsScore' , {friendsId: friendsId},
@@ -122,4 +123,3 @@ module.exports = class HallOfFameController extends Controller
     id = $(event.currentTarget).data 'id'
     FacebookHelper.friendRequestTo(i18n.t('controller.home.facebook_invite_message'), id)
     @view.takeOffFriend(event.currentTarget)
-

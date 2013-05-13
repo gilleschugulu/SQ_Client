@@ -16,6 +16,8 @@ module.exports = class HallOfFameView extends View
     s
     @options
 
+
+  # TODO : Clean dat' shit
   newPlayerHTML: (player, picSize, players) ->
     #separators
     separator = '<div class="separator"></div>'
@@ -25,7 +27,7 @@ module.exports = class HallOfFameView extends View
     else
       separator = ''
     alredySend = ''
-    for friend in Parse.User.current().get("life_given")
+    for friend in (Parse.User.current().get("life_given") | [])
       if friend is player.id
         alredySend = 'asked'
     # alredySend = if _.indexOf(Parse.User.current().get("life_given", player.id)) then 'asked' else ''

@@ -7,6 +7,7 @@ module.exports = class User extends Parse.User
     score:          0
     health:         25
     notifications:  true
+    life_given:     []
     providers:
       facebook: null
       equipe:   null
