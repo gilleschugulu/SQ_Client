@@ -21,8 +21,10 @@ module.exports = class HallOfFameView extends View
   newPlayerHTML: (player, picSize, players) ->
     #separators
     separator = '<div class="separator"></div>'
-    separator = '' if @i == 0
-    if @i > 0 and players[@i-1].rank+1 is player.rank or players[@i-1].rank is player.rank
+    if @i > 0
+      if players[@i-1].rank+1 is player.rank or players[@i-1].rank is player.rank
+        separator = ''
+    else
       separator = ''
     alredySend = ''
 
