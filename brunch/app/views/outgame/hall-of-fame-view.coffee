@@ -21,23 +21,27 @@ module.exports = class HallOfFameView extends View
   newPlayerHTML: (player, picSize, players) ->
     #separators
     separator = '<div class="separator"></div>'
-    if @i > 0
-      if players[@i-1].rank+1 is player.rank or players[@i-1].rank is player.rank
-        separator = ''
-    else
+    separator = '' if @i == 0
+    if @i > 0 and players[@i-1].rank+1 is player.rank or players[@i-1].rank is player.rank
       separator = ''
     alredySend = ''
+
+    # TODO : Move this loop out. Only do once.
     for friend in (Parse.User.current().get("life_given") | [])
       if friend is player.id
         alredySend = 'asked'
-    # alredySend = if _.indexOf(Parse.User.current().get("life_given", player.id)) then 'asked' else ''
+
     friend = if player.friend then "<div data-id='#{player.id}' class='ask-friend "+alredySend+"'></div>" else ''
-    #pyjama
+
+    # TODO : Use css : nth-child(:even)... Pyjama ?? Oo
+    # pyjama
     if @color is 'pink'
       @color = 'white'
     else
       @color = 'pink'
-    #medialles
+
+    # TODO : Use css : nth-child(1), 2 or 3
+    # medailles
     rank = '<span class="rank">'+player.rank+'</span>'
     if player.rank is 1
       rank = '<div class="rank first"></div>'
@@ -46,6 +50,7 @@ module.exports = class HallOfFameView extends View
     else if player.rank is 3
       rank = '<div class="rank third"></div>'
     @i++
+
     pic = if player.profilepic then player.profilepic else 'http://profile.ak.fbcdn.net/static-ak/rsrc.php/v2/yo/r/UlIqmHJn-SK.gif'
     separator+'<div class="div-ranking '+@color+'">'+rank+'<img class="profilepic" src="'+pic+'" width="'+picSize+'" height="'+picSize+'"/><span class="username">'+player.username+'</span><span class="money">'+player.jackpot+'</span>'+friend+'</div>'
 
