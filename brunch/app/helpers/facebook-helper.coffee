@@ -52,14 +52,14 @@ module.exports = class FacebookHelper
         notInstalledFriends = _.pluck(friends, 'id')
         FB.ui {method: 'apprequests', message: message, filters: [{name : 'invite friends', user_ids : _.difference(notInstalledFriends, user.get('fb_invited'))}]}, (response) =>
 
-          # On iOs, response.to doesn't exist, and we receive "to%5B0%5D" (to[0]). Weird.
+          # On iOs, response.to doesn't exist, and we receive "to%5B0%5D" (to[0]). Weiiiird.
           players_invited = if response.to then response.to else response['to%5B0%5D']
-          players_invited = players_invited.concat(user.get('fb_invited'))
+          players_invited = _.uniq(players_invited.concat(user.get('fb_invited')))
 
           # If we have a callback for this method, then use it (for exemple avoid rewarding?)
-          user.set("fb_invited", _.uniq(players_invited))
+          user.set("fb_invited", players_invited)
           # Add a life at user per NEW friends added
-          for friend in _.uniq(players_invited)
+          for friend in players_invited
             user.set("health", user.get("health")+1)
 
           user.save()
