@@ -18,11 +18,11 @@ module.exports = class HallOfFameView extends View
 
 
   # TODO : Clean dat' shit
-  newPlayerHTML: (player, picSize, players) ->
+  newPlayerHTML: (player, picSize, position, players) ->
     #separators
     separator = '<div class="separator"></div>'
-    if @i > 0
-      if players[@i-1].rank+1 is player.rank or players[@i-1].rank is player.rank
+    if position > 0
+      if players[position - 1].rank + 1 is player.rank or players[position - 1].rank is player.rank
         separator = ''
     else
       separator = ''
@@ -35,13 +35,6 @@ module.exports = class HallOfFameView extends View
 
     friend = if player.friend then "<div data-id='#{player.id}' class='ask-friend "+alredySend+"'></div>" else ''
 
-    # TODO : Use css : nth-child(:even)... Pyjama ?? Oo
-    # pyjama
-    if @color is 'pink'
-      @color = 'white'
-    else
-      @color = 'pink'
-
     # TODO : Use css : nth-child(1), 2 or 3
     # medailles
     rank = '<span class="rank">'+player.rank+'</span>'
@@ -51,22 +44,19 @@ module.exports = class HallOfFameView extends View
       rank = '<div class="rank second"></div>'
     else if player.rank is 3
       rank = '<div class="rank third"></div>'
-    @i++
 
     pic = if player.profilepic then player.profilepic else 'http://profile.ak.fbcdn.net/static-ak/rsrc.php/v2/yo/r/UlIqmHJn-SK.gif'
-    separator+'<div class="div-ranking '+@color+'">'+rank+'<img class="profilepic" src="'+pic+'" width="'+picSize+'" height="'+picSize+'"/><span class="username resize">'+player.username+'</span><span class="money">'+player.jackpot+'</span>'+friend+'</div>'
+    separator+'<div class="div-ranking">'+rank+'<img class="profilepic" src="'+pic+'" width="'+picSize+'" height="'+picSize+'"/><span class="username resize">'+player.username+'</span><span class="money">'+player.jackpot+'</span>'+friend+'</div>'
 
 
   updateRankingList: (players, playerPosition, noFriends, fbConnected, withFriends, friendsToInvite) ->
-    @i = 0
-    @color= 'pink'
     el = $('.ranking-container', @$el).empty()
     if !fbConnected and withFriends
       el.append '<a id="no-fb-connected"></a>'
     else if noFriends and withFriends
       el.append '<a id="no-friends"></a>'
     else
-      el.append @newPlayerHTML(player, 40, players) for player in players
+      el.append @newPlayerHTML(player, 40, i, players) for player, i in players
       el.append @suggestFriends(friendsToInvite) if withFriends
       @scrollTo(playerPosition)
       @autoSizeText()
