@@ -34,7 +34,11 @@ body.box-align
 .no-anim
   animation-duration: 1ms !important
 
+#iphone5bg
+  position: absolute
+
 #global-container
+  z-index: 2
   background: #000
   position: relative
   overflow: hidden
@@ -66,15 +70,41 @@ body.box-align
     height: 320px
     font-size: 11px
 
-@media screen and (min-width: 960px) and (max-width: 1023px)
-  #global-container
-    width: 960px
-    height: 640px
-    font-size: 21px
+  .fixedSize
+    width: 480px !important
+    height: 320px !important
 
-@media screen and (min-width: 1024px)
-  #global-container
-    width: 1024px
-    height: 682px
-    font-size: 23px
-    top: 6%
+@media only screen and (min-width: 560px) and (max-device-width: 1136px)
+  #global-container, #iphone5bg
+    width: 568px
+    height: 320px
+    font-size: 11px
+
+@media screen and (min-width: 960px) and (max-width: 1023px)
+  // #global-container
+  //   width: 960px
+  //   height: 640px
+  //   font-size: 21px
+
+  // .fixedSize
+  //   width: 960px !important
+  //   height: 640px !important
+
+  #global-container, #iphone5bg
+    width: 568px
+    height: 320px
+    font-size: 11px
+  .fixedSize
+    width: 480px !important
+    height: 320px !important
+
+// @media screen and (min-width: 1024px)
+//   #global-container
+//     width: 1024px
+//     height: 682px
+//     font-size: 23px
+//     top: 6%
+
+//   .fixedSize
+//     width: 1024px !important
+//     height: 682px !important

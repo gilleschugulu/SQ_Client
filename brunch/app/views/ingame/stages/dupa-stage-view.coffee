@@ -7,7 +7,7 @@ module.exports = class DupaView extends View
   propContainerInit: no
   template         : template
   autoRender       : yes
-  className        : 'dupa-stage'
+  className        : 'dupa-stage fixedSize'
   container        : '#page-container'
   thresholds       : null
 

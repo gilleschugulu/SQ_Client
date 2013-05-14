@@ -4,7 +4,7 @@ I18n      = require 'lib/i18n'
 
 module.exports = class HomePageView extends View
   autoRender: yes
-  className: 'home-page'
+  className: 'home-page fixedSize'
   container: '#page-container'
   template: template
 
