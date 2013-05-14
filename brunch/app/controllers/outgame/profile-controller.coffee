@@ -4,6 +4,7 @@ ProfileView     = require 'views/outgame/profile-view'
 mediator        = require 'mediator'
 FacebookHelper  = require 'helpers/facebook-helper'
 ConfigHelper    = require 'helpers/config-helper'
+PopUpHelper     = require 'helpers/pop-up-helper'
 GameStatHelper  = require 'helpers/game-stat-helper'
 I18n            = require 'lib/i18n'
 User            = require 'models/outgame/user-model'
@@ -49,8 +50,11 @@ module.exports = class ProfilesController extends Controller
     AnalyticsHelper.trackEvent 'Profil', 'Liaison facebook'
 
     # Call Facebook for linking
-    FacebookHelper.getLoginStatus(false, true)
-    @view.activateFbButton()
+    # FacebookHelper.getLoginStatus(false, true)
+    FacebookHelper.logIn =>
+      @view.activateFbButton()
+    , =>
+      PopUpHelper.initialize {message: 'Erreur avec Facebook', title: 400, key: 'api-error'}
 
   onClickGameCenter: =>
     # Track Event

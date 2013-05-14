@@ -61,10 +61,15 @@ module.exports = class HomeController extends Controller
 
   onClickFacebook: =>
     FacebookHelper.getOtherFriends (friends) =>
+      # Check if everyone is invited
       if _.difference(_.pluck(friends, 'id'), Parse.User.current().get('fb_invited')).length < 1 and FacebookHelper.isLinked()
-         popUp.initialize {message: i18n.t('controller.home.app_request_error'), title: 'Action impossible', key: 'appRequest-error'}
+         popUp.initialize {message: i18n.t('controller.home.app_request.error'), title: 'Action impossible', key: 'appRequest-error'}
       else
-        FacebookHelper.friendRequest i18n.t('controller.home.facebook_invite_message')
+        FacebookHelper.friendRequest i18n.t('controller.home.facebook_invite_message'), =>
+          popUp.initialize {message: i18n.t('controller.home.app_request.success'), title: 'Invitations envoyées', key: 'appRequest-success'}
+        , =>
+          popUp.initialize {message: i18n.t('controller.home.app_request.error'), title: 'Action impossible', key: 'appRequest-error'}
+
 
   getJournalView: (friends, callback) ->
     switch friends.length
