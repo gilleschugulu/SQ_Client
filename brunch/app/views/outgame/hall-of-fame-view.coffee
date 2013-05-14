@@ -54,7 +54,7 @@ module.exports = class HallOfFameView extends View
     @i++
 
     pic = if player.profilepic then player.profilepic else 'http://profile.ak.fbcdn.net/static-ak/rsrc.php/v2/yo/r/UlIqmHJn-SK.gif'
-    separator+'<div class="div-ranking '+@color+'">'+rank+'<img class="profilepic" src="'+pic+'" width="'+picSize+'" height="'+picSize+'"/><span class="username">'+player.username+'</span><span class="money">'+player.jackpot+'</span>'+friend+'</div>'
+    separator+'<div class="div-ranking '+@color+'">'+rank+'<img class="profilepic" src="'+pic+'" width="'+picSize+'" height="'+picSize+'"/><span class="username resize">'+player.username+'</span><span class="money">'+player.jackpot+'</span>'+friend+'</div>'
 
 
   updateRankingList: (players, playerPosition, noFriends, fbConnected, withFriends, friendsToInvite) ->
@@ -69,6 +69,8 @@ module.exports = class HallOfFameView extends View
       el.append @newPlayerHTML(player, 40, players) for player in players
       el.append @suggestFriends(friendsToInvite) if withFriends
       @scrollTo(playerPosition)
+      @autoSizeText()
+
     $(".spinner").css('display','none')
 
   chooseList: (eventTargetEl) ->

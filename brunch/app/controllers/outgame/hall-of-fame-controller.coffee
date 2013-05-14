@@ -21,7 +21,7 @@ module.exports = class HallOfFameController extends Controller
       @collection.push
         friend     : if entry.fb_id is Parse.User.current().get('fb_id') then false else withFriends
         rank       : entry.rank
-        username   : (entry.username).slice(0,20)
+        username   : entry.username
         jackpot    : entry.score
         id         : entry.fb_id
         profilepic : if !!entry.fb_id then 'https://graph.facebook.com/'+entry.fb_id+'/picture' else null
