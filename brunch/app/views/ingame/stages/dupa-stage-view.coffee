@@ -5,11 +5,12 @@ SoundHelper = require 'helpers/sound-helper'
 
 module.exports = class DupaView extends View
   propContainerInit: no
-  template         : template
-  autoRender       : yes
-  className        : 'dupa-stage fixedSize'
-  container        : '#page-container'
-  thresholds       : null
+  template          : template
+  autoRender        : yes
+  className         : 'dupa-stage fixedSize'
+  container         : '#page-container'
+  thresholds        : null
+  iphone5Class      : 'dupa-page-568h'
 
   getTemplateData: ->
     @options

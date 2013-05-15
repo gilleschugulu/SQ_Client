@@ -4,9 +4,10 @@ View = require 'views/base/view'
 
 module.exports = class ShopView extends View
   autoRender: yes
-  className: 'shop-page'
+  className: 'shop-page fixedSize'
   container: '#page-container'
   template: template
+  iphone5Class: 'shop-page-568h'
 
   getTemplateData: ->
     @options
