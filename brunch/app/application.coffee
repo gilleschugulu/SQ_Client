@@ -3,6 +3,7 @@ Layout        = require 'views/layout'
 mediator      = require 'mediator'
 routes        = require 'routes'
 config        = require 'config/environment-config'
+DeviceHelper  = require 'helpers/device-helper'
 
 # The application object
 module.exports = class Application extends Chaplin.Application
@@ -47,6 +48,10 @@ module.exports = class Application extends Chaplin.Application
     # Use an application-specific Layout class. Currently this adds
     # no features to the standard Chaplin Layout, it’s an empty placeholder.
     @layout = new Layout {@title}
+    # if DeviceHelper.isIPhone5()
+    $('#global-container').addClass('iphone5')
+    # else
+    #   $('#iphone5bg').remove()
 
   # Instantiate common controllers
   # ------------------------------

@@ -37,6 +37,10 @@ module.exports = class View extends Chaplin.View
 
     templateFunc
 
+  initialize: ->
+    super
+    $('#iphone5bg').addClass("#{@iphone5Class}")
+
   autoSizeText: (domElement = '.resize') ->
     elements = $(domElement)
     return if elements.length < 0

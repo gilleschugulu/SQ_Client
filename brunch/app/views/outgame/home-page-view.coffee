@@ -7,6 +7,7 @@ module.exports = class HomePageView extends View
   className: 'home-page fixedSize'
   container: '#page-container'
   template: template
+  iphone5Class: 'home-page-568h'
 
   getTemplateData: ->
     @options
