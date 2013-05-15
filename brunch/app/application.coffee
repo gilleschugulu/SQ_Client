@@ -48,10 +48,10 @@ module.exports = class Application extends Chaplin.Application
     # Use an application-specific Layout class. Currently this adds
     # no features to the standard Chaplin Layout, it’s an empty placeholder.
     @layout = new Layout {@title}
-    # if DeviceHelper.isIPhone5()
-    $('#global-container').addClass('iphone5')
-    # else
-    #   $('#iphone5bg').remove()
+    if DeviceHelper.isIPhone5()
+      $('#global-container').addClass('iphone5')
+    else
+      $('#iphone5bg').remove()
 
   # Instantiate common controllers
   # ------------------------------
