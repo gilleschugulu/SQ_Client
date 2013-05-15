@@ -89,3 +89,10 @@ module.exports = class DeviceHelper
 
   @canPerformAnimation = ->
     @_animationGrade < 2
+
+  @isIPhone5 = ->
+    if screen.availWidth is 320 and screen.availHeight is 568
+      @_isIPhone5 = true
+      return true
+    else
+      return false
