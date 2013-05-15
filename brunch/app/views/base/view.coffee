@@ -126,3 +126,44 @@ module.exports = class View extends Chaplin.View
       @undelegateSingle eventName, selector
       handler?(event)
     @delegateOnce eventName, selector, singleHandler
+
+  dispose: ->
+    return if @disposed
+
+    throw new Error('Your `initialize` method must include a super call to
+      Chaplin `initialize`') unless @subviews?
+
+    # Unregister all regions.
+    @unregisterAllRegions()
+
+    # Dispose subviews.
+    subview.dispose() for subview in @subviews
+
+    # Unbind handlers of global events.
+    @unsubscribeAllEvents()
+
+    # Unbind all referenced handlers.
+    @stopListening()
+
+    # Remove all event handlers on this module.
+    @off()
+
+    # Remove the topmost element from DOM. This also removes all event
+    # handlers from the element and all its children.
+    @publishEvent 'oldViewRegister', {el: @$el, iphone5: @iphone5Class}
+
+    # Remove element references, options,
+    # model/collection references and subview lists.
+    properties = [
+      'el', '$el',
+      'options', 'model', 'collection',
+      'subviews', 'subviewsByName',
+      '_callbacks'
+    ]
+    delete this[prop] for prop in properties
+
+    # Finished.
+    @disposed = true
+
+    # You’re frozen when your heart’s not open.
+    Object.freeze? this

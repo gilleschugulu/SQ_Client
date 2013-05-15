@@ -1,4 +1,7 @@
 Chaplin = require 'chaplin'
+PreloadHelper = require 'helpers/preload-helper'
+DeviceHelper  = require 'helpers/device-helper'
+SpinnerHelper = require 'helpers/spinner-helper'
 
 # Layout is the top-level application ‘view’.
 module.exports = class Layout extends Chaplin.Layout
