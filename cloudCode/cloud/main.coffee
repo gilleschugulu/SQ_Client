@@ -1,4 +1,3 @@
-
 Parse.Cloud.define 'getFriendsScore', (request, response) ->
   require('cloud/friends.js').task request, response
 
@@ -13,3 +12,6 @@ Parse.Cloud.define 'giveLife', (request, response) ->
 
 Parse.Cloud.define 'clean', (request, response) ->
   require('cloud/clean.js').task request, response
+
+Parse.Cloud.define 'saveScore', (request, response) ->
+  require('cloud/save_score.js').task request, response

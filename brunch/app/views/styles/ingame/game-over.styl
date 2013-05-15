@@ -19,8 +19,16 @@
       background-repeat: no-repeat
       background-size: contain
       relative: top 15% left 0.7%
+  #header-title
+    absolute: top -0.3% left 30%
+    width: 40%
+    height: 15%
+    margin: 0 auto
+    background-image: url('../images/game-over/title.png')
+    background-repeat: no-repeat
+    background-size: contain
   .content-container
-    relative: top 16% left 0
+    relative: top 12% left 0
     width: 88.6%
     height: 84.8%
     background-size: 100% 100%
@@ -32,7 +40,7 @@
       width: 95%
       height: 20%
       text-align: center
-      margin: 0 auto 0 auto
+      margin: 0 auto
       font: 1.8em dax
       color: black
       .jetons
@@ -48,8 +56,8 @@
 
     .blocks-container
       width: 86%
-      height: 50%
-      margin: 0 auto
+      height: 45%
+      margin: -3% auto 0
       position: relative
       padding: 1%
       .block
@@ -89,10 +97,10 @@
     .replay-btn
       width: 33.8%
       height: 18.7%
-      background-image: url('../images/game-over/rejouer.png')
+      background-image: url('../images/game-over/replay.png')
       background-size: contain
       background-repeat: no-repeat
       display: block
-      margin: 2% auto 0 auto
+      margin: 6% auto 0 auto
       &:active
-        background-image: url('../images/game-over/rejouer_a.png')
+        background-image: url('../images/game-over/replay_a.png')

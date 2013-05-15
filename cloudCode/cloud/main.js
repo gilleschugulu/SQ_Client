@@ -18,3 +18,7 @@ Parse.Cloud.define('giveLife', function(request, response) {
 Parse.Cloud.define('clean', function(request, response) {
   return require('cloud/clean.js').task(request, response);
 });
+
+Parse.Cloud.define('saveScore', function(request, response) {
+  return require('cloud/save_score.js').task(request, response);
+});

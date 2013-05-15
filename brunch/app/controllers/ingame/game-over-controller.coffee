@@ -17,7 +17,7 @@ module.exports = class GameOverController extends Controller
 
       user.increment('credits', 10)
       jackpot = parseInt(params.jackpot)
-      user.set('score', jackpot) if jackpot > user.get('score')
+      user = @updateUserJackpot(user, jackpot)
       user.save()
 
       params.stats = _.map GameStatHelper.getEndGameScoreStat(), (val, key) ->
@@ -36,3 +36,15 @@ module.exports = class GameOverController extends Controller
 
   won: (params) ->
     @index yes, params
+
+
+  updateUserJackpot: (user, jackpot) ->
+    if jackpot > user.get('score')
+      user.set('score', jackpot)
+
+      # TODO : Change all leaderboard system, to use GameScore instead of Player
+      # Parse.Cloud.run 'saveScore', {player_id : user.id, score: jackpot},
+      #   success: () =>
+      #   error: (error) ->
+
+    user
