@@ -1,15 +1,38 @@
-View     = require 'views/base/view'
 template = require 'views/templates/outgame/tutorial'
+View = require 'views/base/view'
 
 module.exports = class TutorialView extends View
-  template  : template
-  className : 'tutorial'
   autoRender: yes
-  container : '#page-container'
+  className: 'tutorial'
+  container: '#page-container'
+  template: template
 
-  getTemplateData: ->
-    @options
+  appendFirstSlides: (slides, swiper) ->
+    $('#wrapper', @$el).css('position', 'static')
+    for i in [0..2]
+      page = (if i is 0 then slides.length - 1 else i - 1)
+      el = "<img src='#{slides[page].img}'>"
+      swiper.masterPages[i].innerHTML = el
 
-  changeScreen: (screenNumber) ->
-    $('#pagination li').removeClass('current').eq(screenNumber - 1).addClass('current')
-    $('.screen', @$el).css('background-image', "url(images/tutorial/tutoriel_#{screenNumber}.jpg)")
+  appendNewSlides: (slides, swiper) =>
+    @switchBtn((swiper.page + 1) is slides.length)
+
+    $('ul#pagination li.current', @$el).removeClass('current')
+    $('ul#pagination li:nth-child(' + (swiper.page + 1) + ')', @$el).addClass('current')
+
+    for i in [0..2]
+      upcoming = swiper.masterPages[i].dataset.upcomingPageIndex
+      unless upcoming is swiper.masterPages[i].dataset.pageIndex
+        el = "<img src='#{slides[upcoming].img}'>"
+        swiper.masterPages[i].innerHTML = el
+
+  switchBtn: (isLastPage) ->
+    if isLastPage
+      $('#next-btn', @$el).css('background-image', 'url(images/tutorial/close_corner.png)')
+      setTimeout => 
+        $('#next-btn', @$el).addClass('close')
+      , 200
+    else
+      if $('.next', @$el).hasClass('close')
+        $('.close', @$el).show()
+        $('.next', @$el).removeClass('close')
