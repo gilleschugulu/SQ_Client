@@ -255,7 +255,7 @@
           top: 25%
           left: 5%
     // Ipad
-    @media screen and (min-width: 1024px)
+    @media screen and (min-width: 960px) and (max-width: 1023px)
       .threshold
         padding: 17% 0
         .highlighted
@@ -263,6 +263,15 @@
           height: 105%
           top: 9%
           left: 2%
+    // Iphone 5
+    @media screen and (min-width: 1024px)
+      .threshold
+        padding: 12% 0
+        .highlighted
+          width: 102%
+          height: 105%
+          top: -4%
+          left: 0%
 
     #jackpot-marker
       absolute: top 91% left 68%
