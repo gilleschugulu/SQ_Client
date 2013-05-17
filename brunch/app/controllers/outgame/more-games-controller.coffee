@@ -24,7 +24,7 @@ module.exports = class MoreGamesController extends Controller
   loadContent: =>
     SpinnerHelper.start()
     $.ajax
-      url     : 'http://www.google.com'
+      url     : 'http://moregames.chugulu.com/fr/triviatunes'
       dataType: 'html'
       success : (@content) =>
         @view?.setContent @content
