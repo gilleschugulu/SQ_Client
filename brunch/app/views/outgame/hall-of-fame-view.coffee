@@ -106,7 +106,7 @@ module.exports = class HallOfFameView extends View
   suggestFriends: (friends) =>
     moreFriends = "<div class='redSeparator'>"
     for friend in friends
-      moreFriends+="</div><div class='div-ranking moreFriends'><img class='profilepic' src='https://graph.facebook.com/#{friend.id}/picture'/><span class='username'>#{friend.name}</span><div data-id='#{friend.id}' class='invite-btn'></div></div>"
+      moreFriends+="</div><div class='div-ranking moreFriends'><img class='profilepic' src='https://graph.facebook.com/#{friend.id}/picture'/><span class='username resize'>#{friend.name}</span><div data-id='#{friend.id}' class='invite-btn'></div></div>"
     moreFriends
 
   takeOffFriend: (target) =>
