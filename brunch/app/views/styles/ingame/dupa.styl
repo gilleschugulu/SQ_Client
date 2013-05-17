@@ -221,15 +221,16 @@
       height: 8%
       text-align: center
       padding: 7% 0
-    // Default & web
+
+    // Default
     .threshold
       relative: top 1% left 26.5%
       width: 45.3%
       height: 9.01%
-      color: #75634e
       padding: 10% 0
       text-align: center
       z-index: 1
+      color: #75634e
       &.highlighted
         .value
           color: #f9e4f3
@@ -255,8 +256,14 @@
         .highlighted
           top: 25%
           left: 5%
-    // Ipad
+    // Web
     @media screen and (min-width: 960px) and (max-width: 1023px)
+      .threshold
+        .highlighted
+          top: 0%
+          left: 0%
+    // Ipad
+    @media screen and (min-width: 1024px)
       .threshold
         padding: 17% 0
         .highlighted
@@ -265,7 +272,7 @@
           top: 9%
           left: 2%
     // Iphone 5
-    @media screen and (min-width: 1024px)
+    @media only screen and (min-device-width: 560px) and (max-device-width: 1136px) and (-webkit-min-device-pixel-ratio: 2)
       .threshold
         padding: 12% 0
         .highlighted
