@@ -3304,7 +3304,7 @@ PxLoader.prototype.addImage = function(url, tags, priority) {
 var AssetsList = {
   assets: { '': ["images/placeholder.png"],
 'common/': ["images/common/background.png", "images/common/close.png", "images/common/close_a.png", "images/common/facebook-default.jpg", "images/common/home.png"],
-'game-over/': ["images/game-over/replay.png", "images/game-over/score.png", "images/game-over/small-background.png", "images/game-over/title.png"],
+'game-over/': ["images/game-over/replay.png", "images/game-over/replay_a.png", "images/game-over/score.png", "images/game-over/small-background.png", "images/game-over/title.png"],
 'hall-of-fame/': ["images/hall-of-fame/amis.png", "images/hall-of-fame/amis_inactive.png", "images/hall-of-fame/background.png", "images/hall-of-fame/box_classements.png", "images/hall-of-fame/global.png", "images/hall-of-fame/global_inactive.png", "images/hall-of-fame/icon-feature-invite.png", "images/hall-of-fame/invite.png", "images/hall-of-fame/line.png", "images/hall-of-fame/linkfb.png", "images/hall-of-fame/rank1.png", "images/hall-of-fame/rank2.png", "images/hall-of-fame/rank3.png", "images/hall-of-fame/rank_1.png", "images/hall-of-fame/rank_2.png", "images/hall-of-fame/rank_3.png", "images/hall-of-fame/rankadversaire.png", "images/hall-of-fame/tournoi.png", "images/hall-of-fame/vie_asked.png", "images/hall-of-fame/vie_toask.png"],
 'home/+2amis/': ["images/home/+2amis/inviter.png", "images/home/+2amis/inviter_a.png", "images/home/+2amis/ranking.png", "images/home/+2amis/ranking_a.png", "images/home/+2amis/title.png"],
 'home/1ami/': ["images/home/1ami/invite.png", "images/home/1ami/invite_a.png", "images/home/1ami/player_VS.png", "images/home/1ami/ranking.png", "images/home/1ami/ranking_a.png", "images/home/1ami/title.png"],
@@ -3322,7 +3322,7 @@ var AssetsList = {
 'shop/Jetons/': ["images/shop/Jetons/invite.png", "images/shop/Jetons/like.png", "images/shop/Jetons/note.png", "images/shop/Jetons/offre.png", "images/shop/Jetons/pack_1.png", "images/shop/Jetons/pack_2.png", "images/shop/Jetons/pack_3.png", "images/shop/Jetons/pack_4.png", "images/shop/Jetons/twitter.png", "images/shop/Jetons/video.png"],
 'shop/life_and_bonus/': ["images/shop/life_and_bonus/1000.png", "images/shop/life_and_bonus/300.png", "images/shop/life_and_bonus/50.png"],
 'shop/life_and_bonus/Vies/': ["images/shop/life_and_bonus/Vies/10.png", "images/shop/life_and_bonus/Vies/100.png", "images/shop/life_and_bonus/Vies/150.png", "images/shop/life_and_bonus/Vies/5.png", "images/shop/life_and_bonus/Vies/50.png"],
-'tutorial/': ["images/tutorial/next.png", "images/tutorial/pagination_grey.png", "images/tutorial/pagination_red.png", "images/tutorial/tutoriel_1.jpg", "images/tutorial/tutoriel_2.jpg", "images/tutorial/tutoriel_3.jpg"] },
+'tutorial/': ["images/tutorial/close_corner.png", "images/tutorial/next.png", "images/tutorial/pagination_grey.png", "images/tutorial/pagination_red.png", "images/tutorial/tutoriel_1.jpg", "images/tutorial/tutoriel_2.jpg", "images/tutorial/tutoriel_3.jpg"] },
   keys: {
     profile: ['profile', 'common'],
     home: ['home/1ami', 'home/2amis/', 'home/common/', 'home/pasamis/', 'home/+2amis'],
@@ -3583,10 +3583,10 @@ Handlebars.template = Handlebars.VM.template;
 
 var BuildVersion = {
   version     : '',
-  commit      : '90c1471bb815a2f9d531449b7906da586ff02318',
-  shortCommit : '90c1471',
+  commit      : '43420155639537caca1fd38c130ac94b465b0a19',
+  shortCommit : '4342015',
   branch      : 'develop',
-  time        : '2013-05-14 12:11',
+  time        : '2013-05-17 11:41',
   author      : 'Pierre Boutbel',
 
   getCommitLink: function() {
@@ -23669,6 +23669,478 @@ window.Raphael.vml && function (R) {
     }
 }(window.Raphael);;
 
+/*!
+ * SwipeView v1.0 ~ Copyright (c) 2012 Matteo Spinelli, http://cubiq.org
+ * Released under MIT license, http://cubiq.org/license
+ */
+var SwipeView = (function (window, document) {
+  var dummyStyle = document.createElement('div').style,
+    vendor = (function () {
+      var vendors = 't,webkitT,MozT,msT,OT'.split(','),
+        t,
+        i = 0,
+        l = vendors.length;
+
+      for ( ; i < l; i++ ) {
+        t = vendors[i] + 'ransform';
+        if ( t in dummyStyle ) {
+          return vendors[i].substr(0, vendors[i].length - 1);
+        }
+      }
+
+      return false;
+    })(),
+    cssVendor = vendor ? '-' + vendor.toLowerCase() + '-' : '',
+
+    // Style properties
+    transform = prefixStyle('transform'),
+    transitionDuration = prefixStyle('transitionDuration'),
+
+    // Browser capabilities
+    has3d = prefixStyle('perspective') in dummyStyle,
+    hasTouch = 'ontouchstart' in window,
+    hasTransform = !!vendor,
+    hasTransitionEnd = prefixStyle('transition') in dummyStyle,
+
+    // Helpers
+    translateZ = has3d ? ' translateZ(0)' : '',
+
+    // Events
+    resizeEvent = 'onorientationchange' in window ? 'orientationchange' : 'resize',
+    startEvent = hasTouch ? 'touchstart' : 'mousedown',
+    moveEvent = hasTouch ? 'touchmove' : 'mousemove',
+    endEvent = hasTouch ? 'touchend' : 'mouseup',
+    cancelEvent = hasTouch ? 'touchcancel' : 'mouseup',
+    transitionEndEvent = (function () {
+      if ( vendor === false ) return false;
+
+      var transitionEnd = {
+          ''      : 'transitionend',
+          'webkit'  : 'webkitTransitionEnd',
+          'Moz'   : 'transitionend',
+          'O'     : 'oTransitionEnd',
+          'ms'    : 'MSTransitionEnd'
+        };
+
+      return transitionEnd[vendor];
+    })(),
+    
+    SwipeView = function (el, options) {
+      var i,
+        div,
+        className,
+        pageIndex;
+
+      this.wrapper = typeof el == 'string' ? document.querySelector(el) : el;
+      this.options = {
+        text: null,
+        numberOfPages: 3,
+        snapThreshold: null,
+        hastyPageFlip: false,
+        loop: true
+      };
+    
+      // User defined options
+      for (i in options) this.options[i] = options[i];
+      
+      this.wrapper.style.overflow = 'hidden';
+      this.wrapper.style.position = 'relative';
+      
+      this.masterPages = [];
+      
+      div = document.createElement('div');
+      div.id = 'swipeview-slider';
+      div.style.cssText = 'position:relative;top:0;height:100%;width:100%;' + cssVendor + 'transition-duration:0;' + cssVendor + 'transform:translateZ(0);' + cssVendor + 'transition-timing-function:ease-out';
+      this.wrapper.appendChild(div);
+      this.slider = div;
+
+      this.refreshSize();
+
+      for (i=-1; i<2; i++) {
+        div = document.createElement('div');
+        div.id = 'swipeview-masterpage-' + (i+1);
+        div.style.cssText = cssVendor + 'transform:translateZ(0);position:absolute;top:0;height:100%;width:100%;left:' + i*100 + '%';
+        if (!div.dataset) div.dataset = {};
+        pageIndex = i == -1 ? this.options.numberOfPages - 1 : i;
+        div.dataset.pageIndex = pageIndex;
+        div.dataset.upcomingPageIndex = pageIndex;
+        
+        if (!this.options.loop && i == -1) div.style.visibility = 'hidden';
+
+        this.slider.appendChild(div);
+        this.masterPages.push(div);
+      }
+      
+      className = this.masterPages[1].className;
+      this.masterPages[1].className = !className ? 'swipeview-active' : className + ' swipeview-active';
+
+      window.addEventListener(resizeEvent, this, false);
+      this.wrapper.addEventListener(startEvent, this, false);
+      this.wrapper.addEventListener(moveEvent, this, false);
+      this.wrapper.addEventListener(endEvent, this, false);
+      this.slider.addEventListener(transitionEndEvent, this, false);
+      // in Opera >= 12 the transitionend event is lowercase so we register both events
+      if ( vendor == 'O' ) this.slider.addEventListener(transitionEndEvent.toLowerCase(), this, false);
+
+/*      if (!hasTouch) {
+        this.wrapper.addEventListener('mouseout', this, false);
+      }*/
+    };
+
+  SwipeView.prototype = {
+    currentMasterPage: 1,
+    x: 0,
+    page: 0,
+    pageIndex: 0,
+    customEvents: [],
+    
+    onFlip: function (fn) {
+      this.wrapper.addEventListener('swipeview-flip', fn, false);
+      this.customEvents.push(['flip', fn]);
+    },
+    
+    onMoveOut: function (fn) {
+      this.wrapper.addEventListener('swipeview-moveout', fn, false);
+      this.customEvents.push(['moveout', fn]);
+    },
+
+    onMoveIn: function (fn) {
+      this.wrapper.addEventListener('swipeview-movein', fn, false);
+      this.customEvents.push(['movein', fn]);
+    },
+    
+    onTouchStart: function (fn) {
+      this.wrapper.addEventListener('swipeview-touchstart', fn, false);
+      this.customEvents.push(['touchstart', fn]);
+    },
+
+    destroy: function () {
+      while ( this.customEvents.length ) {
+        this.wrapper.removeEventListener('swipeview-' + this.customEvents[0][0], this.customEvents[0][1], false);
+        this.customEvents.shift();
+      }
+      
+      // Remove the event listeners
+      window.removeEventListener(resizeEvent, this, false);
+      this.wrapper.removeEventListener(startEvent, this, false);
+      this.wrapper.removeEventListener(moveEvent, this, false);
+      this.wrapper.removeEventListener(endEvent, this, false);
+      this.slider.removeEventListener(transitionEndEvent, this, false);
+
+/*      if (!hasTouch) {
+        this.wrapper.removeEventListener('mouseout', this, false);
+      }*/
+    },
+
+    refreshSize: function () {
+      this.wrapperWidth = this.wrapper.clientWidth;
+      this.wrapperHeight = this.wrapper.clientHeight;
+      this.pageWidth = this.wrapperWidth;
+      this.maxX = -this.options.numberOfPages * this.pageWidth + this.wrapperWidth;
+      this.snapThreshold = this.options.snapThreshold === null ?
+        Math.round(this.pageWidth * 0.15) :
+        /%/.test(this.options.snapThreshold) ?
+          Math.round(this.pageWidth * this.options.snapThreshold.replace('%', '') / 100) :
+          this.options.snapThreshold;
+    },
+    
+    updatePageCount: function (n) {
+      this.options.numberOfPages = n;
+      this.maxX = -this.options.numberOfPages * this.pageWidth + this.wrapperWidth;
+    },
+    
+    goToPage: function (p) {
+      var i;
+
+      this.masterPages[this.currentMasterPage].className = this.masterPages[this.currentMasterPage].className.replace(/(^|\s)swipeview-active(\s|$)/, '');
+      for (i=0; i<3; i++) {
+        className = this.masterPages[i].className;
+        /(^|\s)swipeview-loading(\s|$)/.test(className) || (this.masterPages[i].className = !className ? 'swipeview-loading' : className + ' swipeview-loading');
+      }
+      
+      p = p < 0 ? 0 : p > this.options.numberOfPages-1 ? this.options.numberOfPages-1 : p;
+      this.page = p;
+      this.pageIndex = p;
+      this.slider.style[transitionDuration] = '0s';
+      this.__pos(-p * this.pageWidth);
+
+      this.currentMasterPage = (this.page + 1) - Math.floor((this.page + 1) / 3) * 3;
+
+      this.masterPages[this.currentMasterPage].className = this.masterPages[this.currentMasterPage].className + ' swipeview-active';
+
+      if (this.currentMasterPage === 0) {
+        this.masterPages[2].style.left = this.page * 100 - 100 + '%';
+        this.masterPages[0].style.left = this.page * 100 + '%';
+        this.masterPages[1].style.left = this.page * 100 + 100 + '%';
+        
+        this.masterPages[2].dataset.upcomingPageIndex = this.page === 0 ? this.options.numberOfPages-1 : this.page - 1;
+        this.masterPages[0].dataset.upcomingPageIndex = this.page;
+        this.masterPages[1].dataset.upcomingPageIndex = this.page == this.options.numberOfPages-1 ? 0 : this.page + 1;
+      } else if (this.currentMasterPage == 1) {
+        this.masterPages[0].style.left = this.page * 100 - 100 + '%';
+        this.masterPages[1].style.left = this.page * 100 + '%';
+        this.masterPages[2].style.left = this.page * 100 + 100 + '%';
+
+        this.masterPages[0].dataset.upcomingPageIndex = this.page === 0 ? this.options.numberOfPages-1 : this.page - 1;
+        this.masterPages[1].dataset.upcomingPageIndex = this.page;
+        this.masterPages[2].dataset.upcomingPageIndex = this.page == this.options.numberOfPages-1 ? 0 : this.page + 1;
+      } else {
+        this.masterPages[1].style.left = this.page * 100 - 100 + '%';
+        this.masterPages[2].style.left = this.page * 100 + '%';
+        this.masterPages[0].style.left = this.page * 100 + 100 + '%';
+
+        this.masterPages[1].dataset.upcomingPageIndex = this.page === 0 ? this.options.numberOfPages-1 : this.page - 1;
+        this.masterPages[2].dataset.upcomingPageIndex = this.page;
+        this.masterPages[0].dataset.upcomingPageIndex = this.page == this.options.numberOfPages-1 ? 0 : this.page + 1;
+      }
+      
+      this.__flip();
+    },
+    
+    next: function () {
+      if (!this.options.loop && this.x == this.maxX) return;
+      
+      this.directionX = -1;
+      this.x -= 1;
+      this.__checkPosition();
+    },
+
+    prev: function () {
+      if (!this.options.loop && this.x === 0) return;
+
+      this.directionX = 1;
+      this.x += 1;
+      this.__checkPosition();
+    },
+
+    handleEvent: function (e) {
+      switch (e.type) {
+        case startEvent:
+          this.__start(e);
+          break;
+        case moveEvent:
+          this.__move(e);
+          break;
+        case cancelEvent:
+        case endEvent:
+          this.__end(e);
+          break;
+        case resizeEvent:
+          this.__resize();
+          break;
+        case transitionEndEvent:
+        case 'otransitionend':
+          if (e.target == this.slider && !this.options.hastyPageFlip) this.__flip();
+          break;
+      }
+    },
+
+
+    /**
+    *
+    * Pseudo private methods
+    *
+    */
+    __pos: function (x) {
+      this.x = x;
+      this.slider.style[transform] = 'translate(' + x + 'px,0)' + translateZ;
+    },
+
+    __resize: function () {
+      this.refreshSize();
+      this.slider.style[transitionDuration] = '0s';
+      this.__pos(-this.page * this.pageWidth);
+    },
+
+    __start: function (e) {
+      //e.preventDefault();
+
+      if (this.initiated) return;
+      
+      var point = hasTouch ? e.touches[0] : e;
+      
+      this.initiated = true;
+      this.moved = false;
+      this.thresholdExceeded = false;
+      this.startX = point.pageX;
+      this.startY = point.pageY;
+      this.pointX = point.pageX;
+      this.pointY = point.pageY;
+      this.stepsX = 0;
+      this.stepsY = 0;
+      this.directionX = 0;
+      this.directionLocked = false;
+      
+/*      var matrix = getComputedStyle(this.slider, null).webkitTransform.replace(/[^0-9-.,]/g, '').split(',');
+      this.x = matrix[4] * 1;*/
+
+      this.slider.style[transitionDuration] = '0s';
+      
+      this.__event('touchstart');
+    },
+    
+    __move: function (e) {
+      if (!this.initiated) return;
+
+      var point = hasTouch ? e.touches[0] : e,
+        deltaX = point.pageX - this.pointX,
+        deltaY = point.pageY - this.pointY,
+        newX = this.x + deltaX,
+        dist = Math.abs(point.pageX - this.startX);
+
+      this.moved = true;
+      this.pointX = point.pageX;
+      this.pointY = point.pageY;
+      this.directionX = deltaX > 0 ? 1 : deltaX < 0 ? -1 : 0;
+      this.stepsX += Math.abs(deltaX);
+      this.stepsY += Math.abs(deltaY);
+
+      // We take a 10px buffer to figure out the direction of the swipe
+      if (this.stepsX < 10 && this.stepsY < 10) {
+//        e.preventDefault();
+        return;
+      }
+
+      // We are scrolling vertically, so skip SwipeView and give the control back to the browser
+      if (!this.directionLocked && this.stepsY > this.stepsX) {
+        this.initiated = false;
+        return;
+      }
+
+      e.preventDefault();
+
+      this.directionLocked = true;
+
+      if (!this.options.loop && (newX > 0 || newX < this.maxX)) {
+        newX = this.x + (deltaX / 2);
+      }
+
+      if (!this.thresholdExceeded && dist >= this.snapThreshold) {
+        this.thresholdExceeded = true;
+        this.__event('moveout');
+      } else if (this.thresholdExceeded && dist < this.snapThreshold) {
+        this.thresholdExceeded = false;
+        this.__event('movein');
+      }
+      
+/*      if (newX > 0 || newX < this.maxX) {
+        newX = this.x + (deltaX / 2);
+      }*/
+      
+      this.__pos(newX);
+    },
+    
+    __end: function (e) {
+      if (!this.initiated) return;
+      
+      var point = hasTouch ? e.changedTouches[0] : e,
+        dist = Math.abs(point.pageX - this.startX);
+
+      this.initiated = false;
+      
+      if (!this.moved) return;
+
+      if (!this.options.loop && (this.x > 0 || this.x < this.maxX)) {
+        dist = 0;
+        this.__event('movein');
+      }
+
+      // Check if we exceeded the snap threshold
+      if (dist < this.snapThreshold) {
+        this.slider.style[transitionDuration] = Math.floor(300 * dist / this.snapThreshold) + 'ms';
+        this.__pos(-this.page * this.pageWidth);
+        return;
+      }
+
+      this.__checkPosition();
+    },
+    
+    __checkPosition: function () {
+      var pageFlip,
+        pageFlipIndex,
+        className;
+
+      this.masterPages[this.currentMasterPage].className = this.masterPages[this.currentMasterPage].className.replace(/(^|\s)swipeview-active(\s|$)/, '');
+
+      // Flip the page
+      if (this.directionX > 0) {
+        this.page = -Math.ceil(this.x / this.pageWidth);
+        this.currentMasterPage = (this.page + 1) - Math.floor((this.page + 1) / 3) * 3;
+        this.pageIndex = this.pageIndex === 0 ? this.options.numberOfPages - 1 : this.pageIndex - 1;
+
+        pageFlip = this.currentMasterPage - 1;
+        pageFlip = pageFlip < 0 ? 2 : pageFlip;
+        this.masterPages[pageFlip].style.left = this.page * 100 - 100 + '%';
+
+        pageFlipIndex = this.page - 1;
+      } else {
+        this.page = -Math.floor(this.x / this.pageWidth);
+        this.currentMasterPage = (this.page + 1) - Math.floor((this.page + 1) / 3) * 3;
+        this.pageIndex = this.pageIndex == this.options.numberOfPages - 1 ? 0 : this.pageIndex + 1;
+
+        pageFlip = this.currentMasterPage + 1;
+        pageFlip = pageFlip > 2 ? 0 : pageFlip;
+        this.masterPages[pageFlip].style.left = this.page * 100 + 100 + '%';
+
+        pageFlipIndex = this.page + 1;
+      }
+
+      // Add active class to current page
+      className = this.masterPages[this.currentMasterPage].className;
+      /(^|\s)swipeview-active(\s|$)/.test(className) || (this.masterPages[this.currentMasterPage].className = !className ? 'swipeview-active' : className + ' swipeview-active');
+
+      // Add loading class to flipped page
+      className = this.masterPages[pageFlip].className;
+      /(^|\s)swipeview-loading(\s|$)/.test(className) || (this.masterPages[pageFlip].className = !className ? 'swipeview-loading' : className + ' swipeview-loading');
+      
+      pageFlipIndex = pageFlipIndex - Math.floor(pageFlipIndex / this.options.numberOfPages) * this.options.numberOfPages;
+      this.masterPages[pageFlip].dataset.upcomingPageIndex = pageFlipIndex;   // Index to be loaded in the newly flipped page
+
+      newX = -this.page * this.pageWidth;
+      
+      this.slider.style[transitionDuration] = Math.floor(500 * Math.abs(this.x - newX) / this.pageWidth) + 'ms';
+
+      // Hide the next page if we decided to disable looping
+      if (!this.options.loop) {
+        this.masterPages[pageFlip].style.visibility = newX === 0 || newX == this.maxX ? 'hidden' : '';
+      }
+
+      if (this.x == newX) {
+        this.__flip();    // If we swiped all the way long to the next page (extremely rare but still)
+      } else {
+        this.__pos(newX);
+        if (this.options.hastyPageFlip) this.__flip();
+      }
+    },
+    
+    __flip: function () {
+      this.__event('flip');
+
+      for (var i=0; i<3; i++) {
+        this.masterPages[i].className = this.masterPages[i].className.replace(/(^|\s)swipeview-loading(\s|$)/, '');   // Remove the loading class
+        this.masterPages[i].dataset.pageIndex = this.masterPages[i].dataset.upcomingPageIndex;
+      }
+    },
+    
+    __event: function (type) {
+      var ev = document.createEvent("Event");
+      
+      ev.initEvent('swipeview-' + type, true, true);
+
+      this.wrapper.dispatchEvent(ev);
+    }
+  };
+
+  function prefixStyle (style) {
+    if ( vendor === '' ) return style;
+
+    style = style.charAt(0).toUpperCase() + style.substr(1);
+    return vendor + style;
+  }
+
+  return SwipeView;
+})(window, document);;
+
 Array.prototype.unique = function () {
     var r = [];
     o:for(var i = 0, n = this.length; i < n; i++)
@@ -23687,7 +24159,7 @@ Array.prototype.unique = function () {
 ;
 
 window.require.define({"application": function(exports, require, module) {
-  var Application, Chaplin, Layout, config, mediator, routes,
+  var Application, Chaplin, DeviceHelper, Layout, config, mediator, routes,
     __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
@@ -23700,6 +24172,8 @@ window.require.define({"application": function(exports, require, module) {
   routes = require('routes');
 
   config = require('config/environment-config');
+
+  DeviceHelper = require('helpers/device-helper');
 
   module.exports = Application = (function(_super) {
 
@@ -23738,9 +24212,14 @@ window.require.define({"application": function(exports, require, module) {
     };
 
     Application.prototype.initLayout = function() {
-      return this.layout = new Layout({
+      this.layout = new Layout({
         title: this.title
       });
+      if (DeviceHelper.isIPhone5()) {
+        return $('#global-container').addClass('iphone5');
+      } else {
+        return $('#iphone5bg').remove();
+      }
     };
 
     Application.prototype.initControllers = function() {};
@@ -60593,7 +61072,7 @@ window.require.define({"config/stages/dupa-stage-config": function(exports, requ
   
   module.exports = {
     stage: {
-      answerTime: 90,
+      answerTime: 100,
       thresholds: [100, 200, 300, 400, 500, 1000, 2000, 3000, 4000, 5000],
       timeBonus: 10
     },
@@ -60907,9 +61386,7 @@ window.require.define({"controllers/ingame/game-over-controller": function(expor
         user = Parse.User.current();
         user.increment('credits', 10);
         jackpot = parseInt(params.jackpot);
-        if (jackpot > user.get('score')) {
-          user.set('score', jackpot);
-        }
+        user = _this.updateUserJackpot(user, jackpot);
         user.save();
         params.stats = _.map(GameStatHelper.getEndGameScoreStat(), function(val, key) {
           return {
@@ -60942,6 +61419,13 @@ window.require.define({"controllers/ingame/game-over-controller": function(expor
 
     GameOverController.prototype.won = function(params) {
       return this.index(true, params);
+    };
+
+    GameOverController.prototype.updateUserJackpot = function(user, jackpot) {
+      if (jackpot > user.get('score')) {
+        user.set('score', jackpot);
+      }
+      return user;
     };
 
     return GameOverController;
@@ -62790,7 +63274,7 @@ window.require.define({"controllers/outgame/shop-controller": function(exports, 
 }});
 
 window.require.define({"controllers/outgame/tutorial-controller": function(exports, require, module) {
-  var Controller, TutorialController, TutorialView,
+  var AnalyticsHelper, Controller, LocalStorageHelper, TutorialController, TutorialView,
     __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
     __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
@@ -62799,12 +63283,16 @@ window.require.define({"controllers/outgame/tutorial-controller": function(expor
 
   TutorialView = require('views/outgame/tutorial-view');
 
+  AnalyticsHelper = require('helpers/analytics-helper');
+
+  LocalStorageHelper = require('helpers/local-storage-helper');
+
   module.exports = TutorialController = (function(_super) {
 
     __extends(TutorialController, _super);
 
     function TutorialController() {
-      this.onClickNext = __bind(this.onClickNext, this);
+      this.initializeSwiper = __bind(this.initializeSwiper, this);
 
       this.index = __bind(this.index, this);
       return TutorialController.__super__.constructor.apply(this, arguments);
@@ -62814,28 +63302,50 @@ window.require.define({"controllers/outgame/tutorial-controller": function(expor
 
     TutorialController.prototype.historyURL = 'tutorial';
 
-    TutorialController.prototype.currentIndex = 1;
+    TutorialController.prototype.swiper = null;
 
-    TutorialController.prototype.maxIndex = 3;
+    TutorialController.prototype.slides = [
+      {
+        img: 'images/tutorial/tutoriel_1.jpg'
+      }, {
+        img: 'images/tutorial/tutoriel_2.jpg'
+      }, {
+        img: 'images/tutorial/tutoriel_3.jpg'
+      }
+    ];
 
     TutorialController.prototype.index = function() {
       var _this = this;
+      AnalyticsHelper.trackEvent('Tutorial', 'Affichage du Tutorial');
+      window.localStorage.setItem('firstTime', false);
       return this.loadView('tutorial', function() {
         return new TutorialView({
           currentIndex: _this.currentIndex
         });
       }, function(view) {
-        return view.delegate('click', '#next-btn', _this.onClickNext);
+        return _this.initializeSwiper();
       });
     };
 
-    TutorialController.prototype.onClickNext = function() {
-      this.currentIndex++;
-      if (this.currentIndex > this.maxIndex) {
-        return this.redirectTo('options');
-      } else {
-        return this.view.changeScreen(this.currentIndex);
-      }
+    TutorialController.prototype.initializeSwiper = function() {
+      var _this = this;
+      this.swiper = new SwipeView('#wrapper', {
+        numberOfPages: this.slides.length,
+        hastyPageFlip: true,
+        loop: false
+      });
+      this.view.delegate('click', '#next-btn', function() {
+        AnalyticsHelper.trackEvent('Tutorial', 'Page suivant Tutorial');
+        return _this.swiper.next();
+      });
+      this.view.delegate('click', '.close', function() {
+        AnalyticsHelper.trackEvent('Tutorial', 'Quitter le tutorial');
+        return _this.redirectTo('home');
+      });
+      this.view.appendFirstSlides(this.slides, this.swiper);
+      return this.swiper.onFlip(function() {
+        return _this.view.appendNewSlides(_this.slides, _this.swiper);
+      });
     };
 
     return TutorialController;
@@ -63096,6 +63606,15 @@ window.require.define({"helpers/device-helper": function(exports, require, modul
       return this._animationGrade < 2;
     };
 
+    DeviceHelper.isIPhone5 = function() {
+      if (screen.availWidth === 320 && screen.availHeight === 568) {
+        this._isIPhone5 = true;
+        return true;
+      } else {
+        return false;
+      }
+    };
+
     return DeviceHelper;
 
   })();
@@ -63167,22 +63686,15 @@ window.require.define({"helpers/facebook-helper": function(exports, require, mod
       doRequest = function() {
         var user,
           _this = this;
-        console.log('doRequest');
         if (!message) {
-          console.log('no message');
           return alert("FB.request: pas de message :(");
         }
         if (message.length < 1 || message.length > 255) {
-          console.log('incorrect message');
           return alert("FB.request: message doit faire entre 1 et 255 characteres (" + message.length + " actuellement)");
         }
         user = Parse.User.current();
-        console.log('user');
-        console.log(user);
         return FacebookHelper.getOtherFriends(function(friends) {
           var notInstalledFriends;
-          console.log('getOtherFriends callback');
-          console.log(friends);
           notInstalledFriends = _.pluck(friends, 'id');
           return FB.ui({
             method: 'apprequests',
@@ -63194,36 +63706,21 @@ window.require.define({"helpers/facebook-helper": function(exports, require, mod
               }
             ]
           }, function(response) {
-            var friend, key, value, _i, _len, _ref;
-            console.log('Facebook success');
-            console.log('user');
-            console.log(user);
-            console.log('response');
-            console.log(response);
-            for (key in response) {
-              value = response[key];
-              console.log('Response key');
-              console.log(key);
-            }
-            user.set("fb_invited", _.uniq(response.to.concat(user.get('fb_invited'))));
-            console.log('User set');
-            _ref = _.uniq(response.to.concat(user.get('fb_invited')));
-            for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-              friend = _ref[_i];
+            var friend, players_invited, _i, _len;
+            players_invited = response.to ? response.to : response['to%5B0%5D'];
+            players_invited = _.uniq(players_invited.concat(user.get('fb_invited')));
+            user.set("fb_invited", players_invited);
+            for (_i = 0, _len = players_invited.length; _i < _len; _i++) {
+              friend = players_invited[_i];
               user.set("health", user.get("health") + 1);
             }
-            console.log('Life given');
             user.save();
-            console.log('User saved');
             if (response) {
-              console.log('Facebook success and response, so callback');
               return typeof callback === "function" ? callback(response) : void 0;
             } else {
-              console.log('Facebook success and NO response, so errorCallback');
               return typeof errorCallback === "function" ? errorCallback() : void 0;
             }
           }, function() {
-            console.log('Facebook error');
             return typeof errorCallback === "function" ? errorCallback() : void 0;
           });
         });
@@ -65903,6 +66400,14 @@ window.require.define({"views/base/view": function(exports, require, module) {
       return templateFunc;
     };
 
+    View.prototype.initialize = function() {
+      View.__super__.initialize.apply(this, arguments);
+      if (this.iphone5Class) {
+        $('#iphone5bg').removeClass();
+        return $('#iphone5bg').addClass("" + this.iphone5Class);
+      }
+    };
+
     View.prototype.autoSizeText = function(domElement) {
       var el, elements, _i, _len, _results;
       if (domElement == null) {
@@ -66042,11 +66547,13 @@ window.require.define({"views/ingame/game-over-view": function(exports, require,
 
     GameOverView.prototype.autoRender = true;
 
-    GameOverView.prototype.className = 'game-over';
+    GameOverView.prototype.className = 'game-over fixedSize';
 
     GameOverView.prototype.container = '#page-container';
 
     GameOverView.prototype.template = template;
+
+    GameOverView.prototype.iphone5Class = 'game-over-page-568h';
 
     GameOverView.prototype.getTemplateData = function() {
       return this.options;
@@ -66087,11 +66594,13 @@ window.require.define({"views/ingame/stages/dupa-stage-view": function(exports, 
 
     DupaView.prototype.autoRender = true;
 
-    DupaView.prototype.className = 'dupa-stage';
+    DupaView.prototype.className = 'dupa-stage fixedSize';
 
     DupaView.prototype.container = '#page-container';
 
     DupaView.prototype.thresholds = null;
+
+    DupaView.prototype.iphone5Class = 'dupa-page-568h';
 
     DupaView.prototype.getTemplateData = function() {
       return this.options;
@@ -66310,19 +66819,145 @@ window.require.define({"views/ingame/stages/dupa-stage-view": function(exports, 
 }});
 
 window.require.define({"views/layout": function(exports, require, module) {
-  var Chaplin, Layout,
+  var Chaplin, DeviceHelper, Layout, PreloadHelper, SpinnerHelper,
+    __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
     __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
   Chaplin = require('chaplin');
+
+  PreloadHelper = require('helpers/preload-helper');
+
+  DeviceHelper = require('helpers/device-helper');
+
+  SpinnerHelper = require('helpers/spinner-helper');
 
   module.exports = Layout = (function(_super) {
 
     __extends(Layout, _super);
 
     function Layout() {
+      this.unDimLayout = __bind(this.unDimLayout, this);
+
+      this.dimLayout = __bind(this.dimLayout, this);
+
+      this.realHideOldView = __bind(this.realHideOldView, this);
+
+      this.realShowNewView = __bind(this.realShowNewView, this);
       return Layout.__super__.constructor.apply(this, arguments);
     }
+
+    Layout.prototype.lastViewEl = null;
+
+    Layout.prototype.newViewEl = null;
+
+    Layout.prototype.lastIphone5Class = null;
+
+    Layout.prototype.initialize = function() {
+      var _this = this;
+      Layout.__super__.initialize.apply(this, arguments);
+      this.unsubscribeEvent('beforeControllerDispose', this.hideOldView);
+      this.unsubscribeEvent('startupController', this.showNewView);
+      this.subscribeEvent('startupController', this.realShowNewView);
+      return this.subscribeEvent('oldViewRegister', function(view) {
+        _this.lastIphone5Class = view.iphone5;
+        _this.lastViewEl = view.el;
+        return _this.lastViewEl.css({
+          'z-index': '1',
+          'position': 'relative',
+          'margin': '0 auto'
+        });
+      });
+    };
+
+    Layout.prototype.realShowNewView = function(context) {
+      var assetKey, view,
+        _this = this;
+      SpinnerHelper.startPartial();
+      assetKey = context.controller.assetKey;
+      view = context.controller.view;
+      if (view) {
+        this.newViewEl = view.$el;
+      }
+      if (view) {
+        this.newViewEl.css('z-index', '0');
+      }
+      if (assetKey) {
+        return PreloadHelper.preloadAssets(assetKey, function() {
+          return _this.dimLayout(_this.realHideOldView);
+        });
+      } else {
+        return this.dimLayout(this.realHideOldView);
+      }
+    };
+
+    Layout.prototype.realHideOldView = function() {
+      var callback, _ref, _ref1, _ref2,
+        _this = this;
+      if ((_ref = $('#iphone5bg')) != null) {
+        _ref.removeClass("" + this.lastIphone5Class);
+      }
+      SpinnerHelper.stop();
+      callback = function() {
+        return _.defer(function() {
+          return _this.unDimLayout(function() {
+            return _.defer(function() {
+              return _this.publishEvent('oldViewHided');
+            });
+          });
+        });
+      };
+      if ($('#page-container').children().length === 2) {
+        $('#page-container').one('DOMNodeRemoved', callback);
+        return (_ref1 = this.lastViewEl) != null ? _ref1.remove() : void 0;
+      } else {
+        if ((_ref2 = this.lastViewEl) != null) {
+          _ref2.remove();
+        }
+        return callback();
+      }
+    };
+
+    Layout.prototype.dimLayout = function(callback, time) {
+      var page,
+        _this = this;
+      if (time == null) {
+        time = 0.300;
+      }
+      if (typeof TransitionScreen !== "undefined" && TransitionScreen !== null) {
+        TransitionScreen.dim(time, function() {
+          return typeof callback === "function" ? callback() : void 0;
+        });
+      } else {
+        $('#fade-screen').one('webkitAnimationEnd', function() {
+          return _.defer(function() {
+            $('#fade-screen').removeClass('fadeIn');
+            return typeof callback === "function" ? callback() : void 0;
+          });
+        }).addClass('animated fadeIn');
+      }
+      page = document.getElementById('page-container');
+      return page.style.webkitTransform = page.style.webkitTransform;
+    };
+
+    Layout.prototype.unDimLayout = function(callback, time) {
+      var _this = this;
+      if (time == null) {
+        time = 0.300;
+      }
+      if (typeof TransitionScreen !== "undefined" && TransitionScreen !== null) {
+        return TransitionScreen.unDim(time, function() {
+          return typeof callback === "function" ? callback() : void 0;
+        });
+      } else {
+        return $('#fade-screen').one('webkitAnimationEnd', function() {
+          return _.defer(function() {
+            $('#fade-screen').removeClass('animated fadeOut');
+            return typeof callback === "function" ? callback() : void 0;
+          });
+        }).addClass('fadeOut');
+      }
+    };
 
     return Layout;
 
@@ -66555,11 +67190,13 @@ window.require.define({"views/outgame/home-page-view": function(exports, require
 
     HomePageView.prototype.autoRender = true;
 
-    HomePageView.prototype.className = 'home-page';
+    HomePageView.prototype.className = 'home-page fixedSize';
 
     HomePageView.prototype.container = '#page-container';
 
     HomePageView.prototype.template = template;
+
+    HomePageView.prototype.iphone5Class = 'home-page-568h';
 
     HomePageView.prototype.getTemplateData = function() {
       return this.options;
@@ -66923,9 +67560,11 @@ window.require.define({"views/outgame/options-view": function(exports, require, 
 
     OptionsView.prototype.autoRender = true;
 
-    OptionsView.prototype.className = 'options-container';
+    OptionsView.prototype.className = 'options-container fixedSize';
 
     OptionsView.prototype.container = '#page-container';
+
+    OptionsView.prototype.iphone5Class = 'options-page-568h';
 
     OptionsView.prototype.getTemplateData = function() {
       return this.options.templateData;
@@ -66960,13 +67599,15 @@ window.require.define({"views/outgame/profile-view": function(exports, require, 
       return ProfileView.__super__.constructor.apply(this, arguments);
     }
 
-    ProfileView.prototype.template = template;
+    ProfileView.prototype.autoRender = true;
 
-    ProfileView.prototype.className = 'profile-page';
+    ProfileView.prototype.className = 'profile-page fixedSize';
 
     ProfileView.prototype.container = '#page-container';
 
-    ProfileView.prototype.autoRender = true;
+    ProfileView.prototype.template = template;
+
+    ProfileView.prototype.iphone5Class = 'profile-page-568h';
 
     ProfileView.prototype.getTemplateData = function() {
       return this.options;
@@ -67003,11 +67644,13 @@ window.require.define({"views/outgame/shop-view": function(exports, require, mod
 
     ShopView.prototype.autoRender = true;
 
-    ShopView.prototype.className = 'shop-page';
+    ShopView.prototype.className = 'shop-page fixedSize';
 
     ShopView.prototype.container = '#page-container';
 
     ShopView.prototype.template = template;
+
+    ShopView.prototype.iphone5Class = 'shop-page-568h';
 
     ShopView.prototype.getTemplateData = function() {
       return this.options;
@@ -67066,36 +67709,74 @@ window.require.define({"views/outgame/shop-view": function(exports, require, mod
 
 window.require.define({"views/outgame/tutorial-view": function(exports, require, module) {
   var TutorialView, View, template,
+    __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
     __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-  View = require('views/base/view');
-
   template = require('views/templates/outgame/tutorial');
+
+  View = require('views/base/view');
 
   module.exports = TutorialView = (function(_super) {
 
     __extends(TutorialView, _super);
 
     function TutorialView() {
+      this.appendNewSlides = __bind(this.appendNewSlides, this);
       return TutorialView.__super__.constructor.apply(this, arguments);
     }
 
-    TutorialView.prototype.template = template;
+    TutorialView.prototype.autoRender = true;
 
     TutorialView.prototype.className = 'tutorial';
 
-    TutorialView.prototype.autoRender = true;
-
     TutorialView.prototype.container = '#page-container';
 
-    TutorialView.prototype.getTemplateData = function() {
-      return this.options;
+    TutorialView.prototype.template = template;
+
+    TutorialView.prototype.appendFirstSlides = function(slides, swiper) {
+      var el, i, page, _i, _results;
+      $('#wrapper', this.$el).css('position', 'static');
+      _results = [];
+      for (i = _i = 0; _i <= 2; i = ++_i) {
+        page = (i === 0 ? slides.length - 1 : i - 1);
+        el = "<img src='" + slides[page].img + "'>";
+        _results.push(swiper.masterPages[i].innerHTML = el);
+      }
+      return _results;
     };
 
-    TutorialView.prototype.changeScreen = function(screenNumber) {
-      $('#pagination li').removeClass('current').eq(screenNumber - 1).addClass('current');
-      return $('.screen', this.$el).css('background-image', "url(images/tutorial/tutoriel_" + screenNumber + ".jpg)");
+    TutorialView.prototype.appendNewSlides = function(slides, swiper) {
+      var el, i, upcoming, _i, _results;
+      this.switchBtn((swiper.page + 1) === slides.length);
+      $('ul#pagination li.current', this.$el).removeClass('current');
+      $('ul#pagination li:nth-child(' + (swiper.page + 1) + ')', this.$el).addClass('current');
+      _results = [];
+      for (i = _i = 0; _i <= 2; i = ++_i) {
+        upcoming = swiper.masterPages[i].dataset.upcomingPageIndex;
+        if (upcoming !== swiper.masterPages[i].dataset.pageIndex) {
+          el = "<img src='" + slides[upcoming].img + "'>";
+          _results.push(swiper.masterPages[i].innerHTML = el);
+        } else {
+          _results.push(void 0);
+        }
+      }
+      return _results;
+    };
+
+    TutorialView.prototype.switchBtn = function(isLastPage) {
+      var _this = this;
+      if (isLastPage) {
+        $('#next-btn', this.$el).css('background-image', 'url(images/tutorial/close_corner.png)');
+        return setTimeout(function() {
+          return $('#next-btn', _this.$el).addClass('close');
+        }, 200);
+      } else {
+        if ($('.next', this.$el).hasClass('close')) {
+          $('.close', this.$el).show();
+          return $('.next', this.$el).removeClass('close');
+        }
+      }
     };
 
     return TutorialView;
@@ -67123,7 +67804,7 @@ window.require.define({"views/templates/ingame/game-over": function(exports, req
     buffer += escapeExpression(stack1) + "</td>\n        </tr>\n        ";
     return buffer;}
 
-    buffer += "<div class=\"header-container\">\n  <a href=\"#home\" class=\"home-btn\"></a>\n  <div id=\"title\" class=\"title\"></div>\n</div>\n\n<div id='numbers'>\n  <span id='hearts' class='number'>";
+    buffer += "<div class=\"header-container\">\n  <a href=\"#home\" class=\"home-btn\"></a>\n</div>\n<div id=\"header-title\"></div>\n\n<div id='numbers'>\n  <span id='hearts' class='number'>";
     stack1 = depth0.player;
     stack1 = stack1 == null || stack1 === false ? stack1 : stack1.health;
     stack1 = typeof stack1 === functionType ? stack1() : stack1;
@@ -67140,12 +67821,12 @@ window.require.define({"views/templates/ingame/game-over": function(exports, req
     stack1 = stack1 == null || stack1 === false ? stack1 : stack1.jackpot;
     foundHelper = helpers.niceNumber;
     stack1 = foundHelper ? foundHelper.call(depth0, stack1, {hash:{}}) : helperMissing.call(depth0, "niceNumber", stack1, {hash:{}});
-    buffer += escapeExpression(stack1) + "</div>\n    </div>\n\n    <div class='block stats'>\n\n\n      <table id='stats'>\n        ";
+    buffer += escapeExpression(stack1) + "</div>\n    </div>\n\n    <div class='block stats'>\n      <table id='stats'>\n        ";
     stack1 = depth0.params;
     stack1 = stack1 == null || stack1 === false ? stack1 : stack1.stats;
     stack1 = helpers.each.call(depth0, stack1, {hash:{},inverse:self.noop,fn:self.program(1, program1, data)});
     if(stack1 || stack1 === 0) { buffer += stack1; }
-    buffer += "\n      </table>\n    </div>\n\n  </div>\n\n  <a href=\"#game\" class=\"replay-btn\"></a>\n</div>\n";
+    buffer += "\n      </table>\n    </div>\n  </div>\n  <a href=\"#game\" class=\"replay-btn\"></a>\n</div>\n";
     return buffer;});
 }});
 
@@ -67279,7 +67960,7 @@ window.require.define({"views/templates/outgame/journal/no-friends-journal": fun
   function program3(depth0,data) {
     
     
-    return "\n    <div id='photo' style='background-image:url(http://media.comicvine.com/uploads/7/77914/2109064-4char_forever_alone_guy_high_resolution_icon.png)'></div>\n  ";}
+    return "\n    <div id='photo' style='background-image:url(images/common/facebook-default.jpg)'></div>\n  ";}
 
   function program5(depth0,data) {
     
@@ -67292,7 +67973,7 @@ window.require.define({"views/templates/outgame/journal/no-friends-journal": fun
     stack1 = depth0.fb_id;
     stack1 = helpers['if'].call(depth0, stack1, {hash:{},inverse:self.program(8, program8, data),fn:self.program(6, program6, data)});
     if(stack1 || stack1 === 0) { buffer += stack1; }
-    buffer += "\n      <div class='blaze'>";
+    buffer += "\n      <div class='blaze resize'>";
     foundHelper = helpers.username;
     if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
     else { stack1 = depth0.username; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
@@ -67794,15 +68475,10 @@ window.require.define({"views/templates/outgame/shop": function(exports, require
 window.require.define({"views/templates/outgame/tutorial": function(exports, require, module) {
   module.exports = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
     helpers = helpers || Handlebars.helpers;
-    var buffer = "", stack1, foundHelper, functionType="function", escapeExpression=this.escapeExpression;
+    
 
 
-    buffer += "<a id='close-btn' href='#options'></a>\n<div class='screen' style=\"background-image:url(images/tutorial/tutoriel_";
-    foundHelper = helpers.currentIndex;
-    if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
-    else { stack1 = depth0.currentIndex; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
-    buffer += escapeExpression(stack1) + ".jpg)\"></div>\n<ul id='pagination'>\n  <li class='current'></li>\n  <li></li>\n  <li></li>\n</ul>\n<div id='next-btn'></div>";
-    return buffer;});
+    return "<a id='close-btn' href='#options'></a>\n<div class=\"wrapper\" id=\"wrapper\"></div>\n<ul id='pagination'>\n  <li class='current'></li>\n  <li></li>\n  <li></li>\n</ul>\n<div id='next-btn'></div>\n";});
 }});
 
 window.require.define({"views/templates/pause": function(exports, require, module) {
