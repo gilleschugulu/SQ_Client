@@ -27,6 +27,7 @@
 		<plugin name="Social" value="SocialPlugin"/>
 		<plugin name="SplashScreen" value="CDVSplashScreen"/>
 		<plugin name="TapjoyConnect" value="TapjoyConnectPlugin"/>
+		<plugin name="TransitionScreenPlugin" value="TransitionScreenPlugin"/>
         <plugin name="AdColony" value="AdColonyPlugin"/>
         <plugin name="ChartBoost" value="ChartBoostPlugin"/>
 		<plugin name="XitiAnalytics" value="XitiAnalyticsPlugin"/>

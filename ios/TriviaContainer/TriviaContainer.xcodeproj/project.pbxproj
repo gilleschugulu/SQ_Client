@@ -99,6 +99,7 @@
 		23F57DF2157E5A8A00F7847A /* MKStoreObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = 23F57DDD157E5A8A00F7847A /* MKStoreObserver.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		23F57DF3157E5A8A00F7847A /* README.mdown in Resources */ = {isa = PBXBuildFile; fileRef = 23F57DDE157E5A8A00F7847A /* README.mdown */; };
 		23FD1C5B159A30F700D19DD8 /* FacebookConnectPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 23FD1C5A159A30F700D19DD8 /* FacebookConnectPlugin.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		8F574DD81746761D00BAAACD /* TransitionScreenPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F574DD71746761D00BAAACD /* TransitionScreenPlugin.m */; };
 		BF52D6E217257132007CD290 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BF52D6E117257132007CD290 /* Default-568h@2x.png */; };
 /* End PBXBuildFile section */
 
@@ -324,6 +325,8 @@
 		23F57DDE157E5A8A00F7847A /* README.mdown */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.mdown; sourceTree = "<group>"; };
 		23FD1C59159A30F700D19DD8 /* FacebookConnectPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FacebookConnectPlugin.h; path = Plugins/FacebookConnectPlugin.h; sourceTree = "<group>"; };
 		23FD1C5A159A30F700D19DD8 /* FacebookConnectPlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FacebookConnectPlugin.m; path = Plugins/FacebookConnectPlugin.m; sourceTree = "<group>"; };
+		8F574DD61746761D00BAAACD /* TransitionScreenPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransitionScreenPlugin.h; sourceTree = "<group>"; };
+		8F574DD71746761D00BAAACD /* TransitionScreenPlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransitionScreenPlugin.m; sourceTree = "<group>"; };
 		BF52D6E117257132007CD290 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -540,6 +543,8 @@
 		2354522F156174B800A821D6 /* Plugins */ = {
 			isa = PBXGroup;
 			children = (
+				8F574DD61746761D00BAAACD /* TransitionScreenPlugin.h */,
+				8F574DD71746761D00BAAACD /* TransitionScreenPlugin.m */,
 				2359307B16A0357B0009CF9F /* AdColonyPlugin.h */,
 				2359307C16A0357B0009CF9F /* AdColonyPlugin.m */,
 				237AE3D7169F1CF600A94A7E /* ChartBoostPlugin.h */,
@@ -962,6 +967,7 @@
 				237AE3D9169F1CF600A94A7E /* ChartBoostPlugin.m in Sources */,
 				2359307D16A0357B0009CF9F /* AdColonyPlugin.m in Sources */,
 				23814DB816D3D48F00011C6E /* PermaKeyboardPlugin.m in Sources */,
+				8F574DD81746761D00BAAACD /* TransitionScreenPlugin.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
