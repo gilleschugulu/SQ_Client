@@ -11,6 +11,7 @@ module.exports = class HallOfFameController extends Controller
   title: 'Hall of Fame'
   collection: null
   request : null
+  nextRoute: null
 
   fetchPlayers: (withFriends) =>
     ranking = if withFriends then @friendsArray else @globalArray
@@ -32,7 +33,8 @@ module.exports = class HallOfFameController extends Controller
     noFriends = @collection.length <= 1
     @updateRanking(playerPosition, noFriends, fbConnected, withFriends)
 
-  index: ->
+  index: (params) ->
+    @nextRoute = params.nextRoute
     @user = Parse.User.current()
     @friendsArray = []
     @globalArray = []
@@ -67,7 +69,8 @@ module.exports = class HallOfFameController extends Controller
       view.delegate 'click', '.ask-friend', @askFriend
       view.delegate 'click', '#no-friends', @addFriends
       view.delegate 'click', '#no-fb-connected', @connectFacebook
-      view.delegate 'click', '.invite-btn',@FacebookInvite
+      view.delegate 'click', '.invite-btn', @FacebookInvite
+      view.delegate 'click', '.home-btn', @onClickHomeBtn
       @updateRanking() if @collection
     , {viewTransition: yes, music: 'outgame'}
 
@@ -123,3 +126,6 @@ module.exports = class HallOfFameController extends Controller
     id = $(event.currentTarget).data 'id'
     FacebookHelper.friendRequestTo(i18n.t('controller.home.facebook_invite_message'), id)
     @view.takeOffFriend(event.currentTarget)
+
+  onClickHomeBtn: =>
+    @redirectTo @nextRoute

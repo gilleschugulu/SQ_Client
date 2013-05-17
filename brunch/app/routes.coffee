@@ -8,7 +8,7 @@ routeList = {
     ['options', 'options#index']
     ['shop', 'shop#index']
     ['tutorial', 'tutorial#index']
-    ['hall-of-fame', 'hall-of-fame#index']
+    ['hall-of-fame/:nextRoute', 'hall-of-fame#index', name: 'hall-of-fame']
     ['credits', 'credits#index']
   ]
   ingame: [
