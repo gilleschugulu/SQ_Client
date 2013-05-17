@@ -3,9 +3,10 @@ View = require 'views/base/view'
 
 module.exports = class HallOfFameView extends View
   autoRender: yes
-  className: 'hall-of-fame'
+  className: 'hall-of-fame-page fixedSize'
   container: '#page-container'
   template: template
+  iphone5Class: 'hall-of-fame-page-568h'
 
   getTemplateData: ->
     s = super
