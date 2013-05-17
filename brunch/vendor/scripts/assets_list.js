@@ -19,7 +19,7 @@ var AssetsList = {
 'shop/Jetons/': ["images/shop/Jetons/invite.png", "images/shop/Jetons/like.png", "images/shop/Jetons/note.png", "images/shop/Jetons/offre.png", "images/shop/Jetons/pack_1.png", "images/shop/Jetons/pack_2.png", "images/shop/Jetons/pack_3.png", "images/shop/Jetons/pack_4.png", "images/shop/Jetons/twitter.png", "images/shop/Jetons/video.png"],
 'shop/life_and_bonus/': ["images/shop/life_and_bonus/1000.png", "images/shop/life_and_bonus/300.png", "images/shop/life_and_bonus/50.png"],
 'shop/life_and_bonus/Vies/': ["images/shop/life_and_bonus/Vies/10.png", "images/shop/life_and_bonus/Vies/100.png", "images/shop/life_and_bonus/Vies/150.png", "images/shop/life_and_bonus/Vies/5.png", "images/shop/life_and_bonus/Vies/50.png"],
-'tutorial/': ["images/tutorial/close_corner.png", "images/tutorial/next.png", "images/tutorial/pagination_grey.png", "images/tutorial/pagination_red.png", "images/tutorial/tutoriel_1.jpg", "images/tutorial/tutoriel_2.jpg", "images/tutorial/tutoriel_3.jpg"] },
+'tutorial/': ["images/tutorial/close_corner.png", "images/tutorial/next.png", "images/tutorial/pagination_grey.png", "images/tutorial/pagination_red.png", "images/tutorial/prev.png", "images/tutorial/tutoriel_1.jpg", "images/tutorial/tutoriel_2.jpg", "images/tutorial/tutoriel_3.jpg"] },
   keys: {
     profile: ['profile', 'common'],
     home: ['home/1ami', 'home/2amis/', 'home/common/', 'home/pasamis/', 'home/+2amis'],
