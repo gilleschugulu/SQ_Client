@@ -8,15 +8,11 @@ module.exports = class TutorialController extends Controller
   historyURL  : 'tutorial'
   swiper: null
   slides: [
-    {
-      img: 'images/tutorial/tutoriel_1.jpg'
-    }
-    {
-      img: 'images/tutorial/tutoriel_2.jpg'
-    }
-    {
-      img: 'images/tutorial/tutoriel_3.jpg'
-    }
+    img: 'images/tutorial/tutoriel_1.jpg'
+  ,
+    img: 'images/tutorial/tutoriel_2.jpg'
+  ,
+    img: 'images/tutorial/tutoriel_3.jpg'
   ]
 
   index: =>
@@ -30,6 +26,9 @@ module.exports = class TutorialController extends Controller
 
   initializeSwiper: =>
     @swiper = new SwipeView('#wrapper', {numberOfPages: @slides.length, hastyPageFlip: true, loop: false})
+    @view.delegate 'click', '#prev-btn', =>
+      AnalyticsHelper.trackEvent 'Tutorial', 'Page suivant Tutorial'
+      @swiper.prev()
     @view.delegate 'click', '#next-btn', =>
       AnalyticsHelper.trackEvent 'Tutorial', 'Page suivant Tutorial'
       @swiper.next()

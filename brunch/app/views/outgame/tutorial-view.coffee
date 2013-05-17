@@ -15,7 +15,7 @@ module.exports = class TutorialView extends View
       swiper.masterPages[i].innerHTML = el
 
   appendNewSlides: (slides, swiper) =>
-    @switchBtn((swiper.page + 1) is slides.length)
+    @switchBtn(swiper.page, (swiper.page + 1) is slides.length)
 
     $('ul#pagination li.current', @$el).removeClass('current')
     $('ul#pagination li:nth-child(' + (swiper.page + 1) + ')', @$el).addClass('current')
@@ -26,13 +26,14 @@ module.exports = class TutorialView extends View
         el = "<img src='#{slides[upcoming].img}'>"
         swiper.masterPages[i].innerHTML = el
 
-  switchBtn: (isLastPage) ->
+  switchBtn: (indexPage, isLastPage) ->
     if isLastPage
       $('#next-btn', @$el).css('background-image', 'url(images/tutorial/close_corner.png)')
       setTimeout => 
         $('#next-btn', @$el).addClass('close')
       , 200
+    else if indexPage == 0
+      $('#prev-btn', @$el).hide()
     else
-      if $('.next', @$el).hasClass('close')
-        $('.close', @$el).show()
-        $('.next', @$el).removeClass('close')
+      $('#prev-btn', @$el).removeClass('hidden').show()
+      $('#next-btn', @$el).css('background-image', 'url(images/tutorial/next.png)').removeClass('close')
