@@ -23,6 +23,8 @@
     width: 100%
     height: 100%
     opacity: 0
+    position: relative
+    z-index: 1
 
   .home-btn, .cash-container
     position: absolute
@@ -35,6 +37,8 @@
     background-repeat: no-repeat
     background-size: contain
     absolute: top 1% left 0.7%
+    z-index: 6
+    cursor: pointer
   .cash-container
     width: 100%;
     height: 6%;
@@ -74,6 +78,7 @@
     height: 90%
     margin: 0 auto
     absolute: left 5% top 3%
+    z-index: 5
     .spinner
       width: 25%
       height: 25%
