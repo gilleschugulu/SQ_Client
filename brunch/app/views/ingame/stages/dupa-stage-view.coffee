@@ -34,13 +34,13 @@ module.exports = class DupaView extends View
     $('.chrono-container #time', @$el).empty()
 
   removeQuestion: (callback) ->
-    $('#text-block', @$el).removeClass('active')#.one 'webkitTransitionEnd', =>
+    $('#text-block', @$el).removeClass('active')
     $('.proposition', @$el).removeClass('success error')
     $('#question', @$el).empty()
     callback?()
 
   showQuestion: (question, callback) ->
-    setTimeout => # http://i.imgur.com/xVyoSl.jpg
+    setTimeout =>
       propositionsEl = $('.question-propositions-container', @$el)
       $('.proposition-container', propositionsEl).remove()
       for proposition in question.getPropositions()
