@@ -31,7 +31,7 @@ module.exports = class HomeController extends Controller
       else
         @viewLoaded view
       mediator.setJustLaunched no
-    , {viewTransition: yes, music: 'outgame'}
+    , {viewTransition: yes}
 
   viewLoaded: (view) =>
     navigator.splashscreen.hide() if navigator?.splashscreen?.hide?

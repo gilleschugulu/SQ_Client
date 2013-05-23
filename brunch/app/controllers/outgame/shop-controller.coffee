@@ -49,7 +49,7 @@ module.exports = class ShopController extends Controller
       # test faster, harder, stronger :D
       # @onToggleTab()
 
-    , {viewTransition: yes, music: 'outgame'}
+    , {viewTransition: yes}
 
   onSuccessfulTransaction: (credits, life) =>
     @view.updateWallet credits, life

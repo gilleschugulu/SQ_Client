@@ -42,7 +42,7 @@ module.exports = class ProfilesController extends Controller
         view.delegate 'click', '.facebook-link', @linkFacebook
         view.delegate 'click', '.game-center', @onClickGameCenter
         view.autoSizeText()
-      , {viewTransition: yes, music: 'outgame'}
+      , {viewTransition: yes}
 
   linkFacebook: ->
     return if Parse.FacebookUtils.isLinked(Parse.User.current())

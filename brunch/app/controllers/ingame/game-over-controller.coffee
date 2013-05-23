@@ -36,7 +36,8 @@ module.exports = class GameOverController extends Controller
     , (view) =>
       view.delegate 'click', '#replay', => @redirectTo 'game'
       setTimeout view.bonusAppear, 200
-    , {viewTransition: yes, music: 'game-over'}
+    , {viewTransition: yes}
+
 
   lost: (params) ->
     @index no, params

@@ -32,7 +32,7 @@ module.exports = class OptionsController extends Controller
       view.delegate 'click', '#option-info-notif',       @onClickToggleInfoNotif
       view.delegate 'click', '#option-help',             @onClickHelp
       view.delegate 'click', '#option-facebook-connect', @onClickFacebookConnect
-    , {viewTransition: yes, music: 'outgame'}
+    , {viewTransition: yes}
 
 
   # Option management
