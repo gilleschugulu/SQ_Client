@@ -38,13 +38,13 @@ exports.task = (request, response) ->
   increaseUsersRank = (numberToKeep, users) ->
     guys = _.first(users, numberToKeep)
     for user in guys
-      user.set('score', 0).increment('rank').save()
+      user.increment('rank')
     guys
 
   decreaseUsersRank = (numberToKeep, users) ->
     guys = _.last(users, numberToKeep)
     for user in guys
-      user.set('score', 0).increment('rank', -1).save()
+      user.increment('rank', -1)
     guys
 
   query = new Parse.Query('User')
@@ -66,10 +66,8 @@ exports.task = (request, response) ->
         if (number = Math.ceil(playersNumber * percents.up / 100)) > 0
           uppedGuys = increaseUsersRank(number, players)
 
-        players = _.difference(players, uppedGuys)
         if (number = Math.ceil(playersNumber * percents.down / 100)) > 0
-          downedGuys = increaseUsersRank(number, players)
+          downedGuys = decreaseUsersRank(number, players)
 
-        players = _.difference(players, downedGuys)
         for user in players
-          user.set('score', 0).save()
+          user.set('score', 0).set('game_row', 0).save()

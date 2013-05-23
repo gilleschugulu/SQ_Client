@@ -2,11 +2,11 @@ LocalStorageHelper = require 'helpers/local-storage-helper'
 AnalyticsHelper    = require 'helpers/analytics-helper'
 
 module.exports = class SoundHelper
-  @sounds          = {}
-  @musicMuted      = no
-  @sfxMuted        = no
-  @soundMuted      = no
-  @currentMusicKey = null
+  @sounds           = {}
+  @musicMuted       = no
+  @sfxMuted         = no
+  @soundMuted       = no
+  @currentMusicKey  = null
 
   @initialize: ->
     @musicMuted = LocalStorageHelper.get('musicMuted') is 'true'

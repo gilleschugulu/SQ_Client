@@ -46,7 +46,7 @@ exports.task = function(request, response) {
     guys = _.first(users, numberToKeep);
     for (_i = 0, _len = guys.length; _i < _len; _i++) {
       user = guys[_i];
-      user.set('score', 0).increment('rank').save();
+      user.increment('rank');
     }
     return guys;
   };
@@ -56,7 +56,7 @@ exports.task = function(request, response) {
     guys = _.last(users, numberToKeep);
     for (_i = 0, _len = guys.length; _i < _len; _i++) {
       user = guys[_i];
-      user.set('score', 0).increment('rank', -1).save();
+      user.increment('rank', -1);
     }
     return guys;
   };
@@ -83,14 +83,12 @@ exports.task = function(request, response) {
         if ((number = Math.ceil(playersNumber * percents.up / 100)) > 0) {
           uppedGuys = increaseUsersRank(number, players);
         }
-        players = _.difference(players, uppedGuys);
         if ((number = Math.ceil(playersNumber * percents.down / 100)) > 0) {
-          downedGuys = increaseUsersRank(number, players);
+          downedGuys = decreaseUsersRank(number, players);
         }
-        players = _.difference(players, downedGuys);
         for (_i = 0, _len = players.length; _i < _len; _i++) {
           user = players[_i];
-          user.set('score', 0).save();
+          user.set('score', 0).set('game_row', 0).save();
         }
       }
     }
