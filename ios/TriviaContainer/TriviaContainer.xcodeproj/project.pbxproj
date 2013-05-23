@@ -1215,8 +1215,8 @@
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: L'Equipe 24/24";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: L'Equipe 24/24";
 				COMPRESS_PNG_FILES = NO;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
@@ -1255,8 +1255,8 @@
 					"-ObjC",
 				);
 				PRODUCT_NAME = TriviaContainer;
-				PROVISIONING_PROFILE = "";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				PROVISIONING_PROFILE = "A65E6F11-9A8C-4D5B-8A6A-206040E9F871";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "A65E6F11-9A8C-4D5B-8A6A-206040E9F871";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 				WRAPPER_EXTENSION = app;
