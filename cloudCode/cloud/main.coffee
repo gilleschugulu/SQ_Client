@@ -15,3 +15,6 @@ Parse.Cloud.define 'clean', (request, response) ->
 
 Parse.Cloud.define 'saveScore', (request, response) ->
   require('cloud/save_score.js').task request, response
+
+Parse.Cloud.define 'finishLeaderboard', (request, response) ->
+  require('cloud/finish_leaderboard.js').task request, response
