@@ -6,7 +6,7 @@ module.exports = class User extends Parse.User
     rank:           6
     score:          0
     health:         25
-    game_row        0
+    game_row:       0
     notifications:  true
     life_given:     []
     providers:

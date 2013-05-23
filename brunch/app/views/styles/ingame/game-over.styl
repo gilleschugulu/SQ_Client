@@ -73,14 +73,12 @@
       position: relative
       padding: 1%
       .block
-        float: left
-        position: relative
+        position: absolute
         width: 41%
-        height: 100%
-        margin-right: 9%
-        top: 15%
         &.stats
-          margin-right: 0
+          top: 20%
+          left: 50%
+          height: 90%
           table
             width: 100%
             height: 100%
@@ -90,7 +88,8 @@
               color: #D80505
               font: 1.3em ramblabold
         &.jackpot
-          top: 40%
+          top: 20%
+          height: 90%
           .title
             relative: left 10% top 0
             width: 66%
@@ -100,11 +99,31 @@
             background-repeat: no-repeat
           .value
             relative: left 7% top 0
-            width: 59%
-            text-align: right
-            display: block
+            width: 100%
+            text-align: center
             color: black
             font: 1.7em grilled
+        &.best-jackpot
+          top: 70%
+          height: 90%
+          .title
+            relative: left 10% top 0
+            width: 66%
+            height: 24%
+            background-image: url('../images/game-over/score.png')
+            background-size: contain
+            background-repeat: no-repeat
+          .value
+            relative: left 7% top 0
+            width: 100%
+            text-align: center
+            color: black
+            font: 1.7em grilled
+            .bonus
+              display: inline-block
+              margin-left: 5%
+              &.hide
+                opacity: 0
 
     .replay-btn
       width: 33.8%

@@ -7,6 +7,8 @@ GameStatHelper  = require 'helpers/game-stat-helper'
 
 module.exports = class GameOverController extends Controller
 
+  bestJackpot: no
+
   index: (success, params) ->
     @loadView 'game-over'
     , =>
@@ -16,6 +18,13 @@ module.exports = class GameOverController extends Controller
 
       jackpot = parseInt(params.jackpot)
       user = @updateUser(Parse.User.current(), jackpot)
+      jackpot += user.get('game_row') unless @bestJackpot
+
+      params.jackpot =
+        value: jackpot
+        best: user.get('score')
+        bonus: user.get('game_row')
+        bestJackpot: @bestJackpot
 
       params.stats = _.map GameStatHelper.getEndGameScoreStat(), (val, key) ->
         name: key
@@ -26,6 +35,7 @@ module.exports = class GameOverController extends Controller
 
     , (view) =>
       view.delegate 'click', '#replay', => @redirectTo 'game'
+      setTimeout view.bonusAppear, 200
     , {viewTransition: yes, music: 'game-over'}
 
   lost: (params) ->
@@ -40,7 +50,10 @@ module.exports = class GameOverController extends Controller
 
     if jackpot > user.get('score')
       user.set('score', jackpot)
-    user.increment('score', game_row)
+      @bestJackpot = yes
+      console.log 'Best SCORE !', user.get('score')
+    user.increment('score', user.get('game_row'))
+    console.log 'new score is', user.get('score')
 
     user.save()
     user

@@ -19,8 +19,15 @@
   <div class="blocks-container">
     <div class="block jackpot">
       <div class="title"></div>
-      <div class="value">{{niceNumber params.jackpot }}</div>
+      <div class="value">{{niceNumber params.jackpot.value }}</div>
     </div>
+
+    {{#unless params.jackpot.bestJackpot}}
+      <div class="block best-jackpot">
+        <div class="title"></div>
+        <div class="value">{{niceNumber params.jackpot.best }}<span class="bonus hide">+{{niceNumber params.jackpot.bonus }}</span></div>
+      </div>
+    {{/unless}}
 
     <div class='block stats'>
       <table id='stats'>
