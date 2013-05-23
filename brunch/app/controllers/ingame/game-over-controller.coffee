@@ -51,9 +51,7 @@ module.exports = class GameOverController extends Controller
     if jackpot > user.get('score')
       user.set('score', jackpot)
       @bestJackpot = yes
-      console.log 'Best SCORE !', user.get('score')
     user.increment('score', user.get('game_row'))
-    console.log 'new score is', user.get('score')
 
     user.save()
     user
