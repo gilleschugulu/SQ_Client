@@ -142,12 +142,16 @@ module.exports = class DupaView extends View
 
   hideSomeAnswers: (propositions, callback) ->
     for proposition in propositions
-      $(".proposition[data-id='#{proposition.id}']").css('visibility', 'hidden')
+      $(".proposition[data-id='#{proposition.id}']").addClass('animated fadeOut').one 'webkitAnimationEnd', ->
+        $(@).hide().removeClass('animated fadeOut')
+      $(".proposition-container[data-id='#{proposition.id}'] .massOpinion").addClass('animated fadeOut').one 'webkitAnimationEnd', ->
+        $(@).hide().removeClass('animated fadeOut')
     callback?()
 
   displayMass: (propositions, callback) ->
     for proposition in propositions
-      $(".proposition-container[data-id='#{proposition.id}'] .massOpinion").html(proposition.massOpinion + '%').show()
+      $(".proposition-container[data-id='#{proposition.id}'] .massOpinion").html(proposition.massOpinion + '%').show().addClass('animated rotateIn').one 'webkitAnimationEnd', ->
+        $(@).removeClass('animated rotateIn')
     callback?()
 
   doubleScoreActivated: ->
