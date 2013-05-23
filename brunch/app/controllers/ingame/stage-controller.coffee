@@ -40,8 +40,7 @@ module.exports = class StageController extends Controller
     templateData =
       key: 'pause'
       template: 'pause'
-      music: if SoundHelper.musicMuted then 'off' else '' # sounds helper : music on/off
-      fx: if SoundHelper.sfxMuted then 'off' else '' # sounds helper : fx on/off
+      sound: if SoundHelper.soundMuted then 'off' else '' # sounds helper : music on/off
     PopUpHelper.initialize templateData
 
   resume: =>

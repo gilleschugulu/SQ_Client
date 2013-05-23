@@ -12,7 +12,7 @@
   &.active
     transform: translate(0, 0) translateZ(0)
   &.backgroundTransition
-    background-color: rgba(0,0,0,0.3)
+    background-color: rgba(0,0,0,0.6)
   .popup
     relative: top 7% left 0
     width: 72.2%
@@ -74,20 +74,11 @@
           float: right
           &:active
             background-image: url('../images/pause/quitter_a.png')
-        &.music
-          background-image: url('../images/pause/musique.png')
+        &.sound
+          background-image: url('../images/pause/sound.png')
           background-repeat: no-repeat
           background-size: contain
-          width: 18.8%
-          height: 38.4%
-          margin-top: 2%
+          width: 65%
+          height: 27%
           &.off
-            background-image: url('../images/pause/musique_a.png')
-        &.fx
-          background-image: url('../images/pause/fx.png')
-          background-repeat: no-repeat
-          background-size: contain
-          width: 18.8%
-          height: 38.4%
-          &.off
-            background-image: url('../images/pause/fx_a.png')
+            background-image: url('../images/pause/sound_a.png')

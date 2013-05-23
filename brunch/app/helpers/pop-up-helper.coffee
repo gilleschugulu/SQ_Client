@@ -26,12 +26,9 @@ module.exports = class PopUpHelper
       $(this).removeClass 'bounceInUp'
 
     if data.template is 'pause'
-      $("[data-key=#{data.key}]", $(container)).on 'click', '.fx', ->
+      $("[data-key=#{data.key}]", $(container)).on 'click', '.sound', ->
         $(this).toggleClass 'off'
-        SoundHelper.toggleSFX()
-      $("[data-key=#{data.key}]", $(container)).on 'click', '.music', ->
-        $(this).toggleClass 'off'
-        SoundHelper.toggleMusic()
+        SoundHelper.toggleSound()
 
     # bind btn to publish events
     $("[data-key=#{data.key}]", $(container)).on 'click', '.ok', -> mediator.publish 'popup:'+data.key+':ok'

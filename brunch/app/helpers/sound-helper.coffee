@@ -5,6 +5,7 @@ module.exports = class SoundHelper
   @sounds          = {}
   @musicMuted      = no
   @sfxMuted        = no
+  @soundMuted      = no
   @currentMusicKey = null
 
   @initialize: ->
@@ -53,6 +54,19 @@ module.exports = class SoundHelper
 
   @fadeWith: (firstKey, secondKey, duration) ->
     @sounds[firstKey].sound.fadeWith secondKey, duration
+
+
+  # Toggle ALL sounds : music, jingle and sfx
+  @toggleSound = ->
+    @soundMuted = !@soundMuted
+
+    # Track event
+    AnalyticsHelper.trackEvent 'Options', "Son = #{@soundMuted}"
+
+    LocalStorageHelper.set('soundMuted', @soundMuted) # @soundMuted is a boolean, but will be stocked as string : 'true' or 'false'
+    for key, sound of @sounds
+      @stop(key) if @soundMuted
+    @play(@currentMusicKey) if @currentMusicKey and not @soundMuted
 
   @toggleMusic = ->
     @musicMuted = !@musicMuted
