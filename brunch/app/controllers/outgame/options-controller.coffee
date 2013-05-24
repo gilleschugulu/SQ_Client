@@ -54,7 +54,7 @@ module.exports = class OptionsController extends Controller
     uvData = Parse.User.current().id || "Joueur-non-connecté"
     uvData += ' / ' + DeviceHelper.device()
     uvData += ' / ' + BuildVersion.toString() if BuildVersion
-    uvData = "votre message ici\n\n\ninformations pour les développeurs\n" + uvData
+    uvData = "Votre message ici\n\n\ninformations pour les développeurs. Veuillez ne pas y toucher\n" + uvData
     if Message?
       mail =
         to  : ["lequipe@chugulu.com"]

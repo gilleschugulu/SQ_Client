@@ -19,6 +19,7 @@ module.exports = class DupaView extends View
     @autoSizeText()
     callback?()
 
+  # Update timer text, and decrease the red filler
   updateTimer: (duration) ->
     duration = parseInt(duration)
     duration = @options.time if duration > @options.time
@@ -33,12 +34,14 @@ module.exports = class DupaView extends View
   clearTimer: ->
     $('.chrono-container #time', @$el).empty()
 
+  # Remove question text, and 4 propositions. Also remove theme
   removeQuestion: (callback) ->
     $('#text-block', @$el).removeClass('active')
     $('.proposition', @$el).removeClass('success error')
     $('#question', @$el).empty()
     callback?()
 
+  # Display question text, and 4 propositions. Also display theme
   showQuestion: (question, callback) ->
     setTimeout =>
       propositionsEl = $('.question-propositions-container', @$el)
@@ -60,20 +63,21 @@ module.exports = class DupaView extends View
       callback()
     , 0
 
+  # Getter method
+  # Return the proposition described in the given element
   chooseProposition: (targetElement, callback) ->
     propositionEl = $(targetElement, @$el)
     propositionEl.addClass 'selected'
     callback(propositionEl.data('id'))
 
+  # Getter method
+  # Return the bonus described in the given element
   chooseBonus: (targetElement, callback) ->
     propositionEl = $(targetElement, @$el)
     callback(propositionEl.attr('id'))
 
-  updatePropositionsText: (question) =>
-    for proposition in question.getPropositions()
-      $(".proposition[data-id='#{proposition.id}']").text proposition.text
-    @autoSizeText()
-
+  # Update/animate the clicked button color.
+  # If the player has a wrong answer, also update/animate the correct answer
   updateAnswerButton: (propositionId, correctAnswer, status, callback) ->
     klass = if status then 'success' else 'error'
     callbackDelay = 500
@@ -83,28 +87,23 @@ module.exports = class DupaView extends View
 
     if status is false
       answerEl = $('.proposition[data-id="'+correctAnswer+'"]', @$el)
-      answerEl.parent().removeClass('animated pulse').addClass('success animated tada').one 'webkitAnimationEnd', ->
-        $(@).removeClass('animated tada')
+      answerEl.parent().removeClass('animated pulse').addClass('success animated flipInX').one 'webkitAnimationEnd', ->
+        $(@).removeClass('animated flipInX')
       callbackDelay = 750
 
     setTimeout =>
       callback()
     , callbackDelay
 
-  beforeNextQuestionMessage: (textKey, jackpot, callback) ->
-    @displayMessage textKey, jackpot
-    setTimeout =>
-      $('#question', @$el).addClass('animated fadeOut').one 'webkitAnimationEnd', =>
-        $('#question', @$el).removeClass('fadeOut')
-        callback?()
-    , 2000
-
+  # Play sound when player answer question. A sound if player is wrong. If he's right, the sound will depend of the threshold index
   playQuestionSound: (currentThresholdIndex, result) ->
     if result
       SoundHelper.play('good_answer_' + currentThresholdIndex)
     else
       SoundHelper.play('wrong_answer')
 
+  # Update the jackpot block
+  # Update the displayed score, and move the highlighted block. Also update the jackpot marker (other method)
   updateJackpot: (jackpot, currentThresholdValue, options = {}) ->
     el = $('.jackpot-container', @$el)
     currentThresholdIndex = @options.thresholds.indexOf(currentThresholdValue)
@@ -124,6 +123,7 @@ module.exports = class DupaView extends View
 
     @updateJackpotMarker(currentThresholdIndex, result?.result)
 
+  # Update the jackpot marker. Move both block and arrow
   updateJackpotMarker: (currentThresholdIndex, result = true) ->
     el = $('.jackpot-container', @$el)
 
@@ -135,12 +135,13 @@ module.exports = class DupaView extends View
       $(@).addClass(klass + ' animated').one 'webkitAnimationEnd', ->
         $(@).removeClass(klass + ' animated')
 
-
+  # Display the quantity of bonus for the specified bonus
   updateBonus: (targetElement, quantity, callback) ->
     targetElement = $(targetElement, @$el)
     $('.quantity', targetElement).html(quantity)
     callback?()
 
+  # Bonus fifty_fifty. Hide some propositions, with some animation. Also hide concerned massOpinion block
   hideSomeAnswers: (propositions, callback) ->
     for proposition in propositions
       $(".proposition[data-id='#{proposition.id}']").addClass('animated fadeOut').one 'webkitAnimationEnd', ->
@@ -149,29 +150,19 @@ module.exports = class DupaView extends View
         $(@).hide().removeClass('animated fadeOut')
     callback?()
 
+  # Bonus mass. Display red dots, with given numbers inside
   displayMass: (propositions, callback) ->
     for proposition in propositions
       $(".proposition-container[data-id='#{proposition.id}'] .massOpinion").html(proposition.massOpinion + '%').show().addClass('animated rotateIn').one 'webkitAnimationEnd', ->
         $(@).removeClass('animated rotateIn')
     callback?()
 
+  # Bonus double_score. Arrow and highlighted block now gold
   doubleScoreActivated: ->
     $('.highlighted').addClass('gold')
     $('.highlighted').parent().addClass('gold')
     $('#jackpot-marker').addClass('gold')
 
+  # Bonus double_score. Arrow and highlighted block get back to normal color
   doubleScoreDeactivated: ->
     $('#jackpot-marker').removeClass('gold')
-
-  finishMessage: (textKey, params, callback) ->
-    @displayMessage textKey, params
-    setTimeout =>
-      $('#question', @$el).addClass('animated fadeOut').one 'webkitAnimationEnd', =>
-        $('#question', @$el).removeClass('fadeOut')
-        @displayMessage 'finish'
-        setTimeout =>
-          $('#question', @$el).addClass('animated fadeOut').one 'webkitAnimationEnd', =>
-            $('#question', @$el).removeClass('fadeOut')
-            callback?()
-        , 2000
-    , 4000
