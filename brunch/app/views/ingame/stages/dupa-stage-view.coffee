@@ -76,19 +76,20 @@ module.exports = class DupaView extends View
 
   updateAnswerButton: (propositionId, correctAnswer, status, callback) ->
     klass = if status then 'success' else 'error'
-    answerEl = $('.proposition[data-id="'+correctAnswer+'"]', @$el)
+    callbackDelay = 500
+    propositionEl = $('.proposition[data-id="'+propositionId+'"]', @$el)
+    propositionEl.parent().removeClass('animated pulse').addClass(klass + ' animated fadeIn').one 'webkitAnimationEnd', ->
+      $(@).removeClass('animated fadeIn')
 
-    if propositionId
-      propositionEl = $('.proposition[data-id="'+propositionId+'"]', @$el)
-      propositionEl.parent().addClass(klass)
-      if klass isnt 'success'
-        answerEl.parent().addClass('success')
-    else
-      propositionEl = $('.proposition', @$el)
+    if status is false
+      answerEl = $('.proposition[data-id="'+correctAnswer+'"]', @$el)
+      answerEl.parent().removeClass('animated pulse').addClass('success animated tada').one 'webkitAnimationEnd', ->
+        $(@).removeClass('animated tada')
+      callbackDelay = 750
 
     setTimeout =>
       callback()
-    , 500
+    , callbackDelay
 
   beforeNextQuestionMessage: (textKey, jackpot, callback) ->
     @displayMessage textKey, jackpot
