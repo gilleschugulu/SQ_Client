@@ -27,8 +27,7 @@ module.exports = class OptionsController extends Controller
       new OptionsView({templateData})
     , (view) =>
       # bind actions
-      view.delegate 'click', '#option-music',            @onClickToggleMusic
-      view.delegate 'click', '#option-fx',               @onClickToggleFX
+      view.delegate 'click', '#option-sound',            @onClickToggleSound
       view.delegate 'click', '#option-info-notif',       @onClickToggleInfoNotif
       view.delegate 'click', '#option-help',             @onClickHelp
       view.delegate 'click', '#option-facebook-connect', @onClickFacebookConnect
@@ -72,13 +71,9 @@ module.exports = class OptionsController extends Controller
     AnalyticsHelper.trackEvent 'Options', "Liaison facebook"
     FacebookHelper.linkPlayer() unless FacebookHelper.isLinked()
 
-  onClickToggleFX: =>
-    @view.toggleButton 'option-fx'
-    SoundHelper.toggleSFX()
-
-  onClickToggleMusic: =>
-    @view.toggleButton 'option-music'
-    SoundHelper.toggleMusic()
+  onClickToggleSound: =>
+    @view.toggleButton 'option-sound'
+    SoundHelper.toggleSound()
 
   onClickToggleInfoNotif: =>
     user = Parse.User.current()
