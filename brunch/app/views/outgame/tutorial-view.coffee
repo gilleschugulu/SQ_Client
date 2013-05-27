@@ -44,18 +44,21 @@ module.exports = class TutorialView extends View
     return if @prevBtn
 
     prevBtn = $('#prev-btn', @$el)
-    prevBtn.removeClass('animated fadeInLeft fadeOutLeft hidden').show().addClass('animated fadeInLeft').one 'webkitAnimationEnd', ->
+    prevBtn.removeClass('animated fadeInLeft fadeOutLeft hidden').show().addClass('animated fadeInLeft').one 'webkitAnimationEnd', =>
       prevBtn.removeClass('animated fadeInLeft')
+      @endPrevButtonAnimation()
     @prevBtn = yes
 
   disappearPrevButton: ->
     prevBtn = $('#prev-btn', @$el)
-    prevBtn.removeClass('animated fadeInLeft fadeOutLeft hidden').addClass('animated fadeOutLeft').one 'webkitAnimationEnd', ->
+    prevBtn.removeClass('animated fadeInLeft fadeOutLeft hidden').addClass('animated fadeOutLeft').one 'webkitAnimationEnd', =>
       prevBtn.removeClass('animated fadeOutLeft')
       @endPrevButtonAnimation()
     @prevBtn = no
 
   endPrevButtonAnimation: ->
-    if @prevBtn is false
-      prevBtn = $('#prev-btn', @$el)
+    prevBtn = $('#prev-btn', @$el)
+    if @prevBtn
+      prevBtn.show()
+    else
       prevBtn.hide()
