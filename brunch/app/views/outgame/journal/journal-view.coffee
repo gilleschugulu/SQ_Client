@@ -21,4 +21,4 @@ module.exports = class JournalView extends View
     @$el.toggleClass('hiddened').toggleClass('shown')
 
   appear: ->
-    @$el.toggleClass('completely-hiddened').toggleClass('hiddened')
+    @$el.toggleClass('completely-hiddened').toggleClass('shown')
