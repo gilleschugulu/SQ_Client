@@ -7,6 +7,8 @@ module.exports = class TutorialView extends View
   container: '#page-container'
   template: template
 
+  prevBtn: no
+
   appendFirstSlides: (slides, swiper) ->
     $('#wrapper', @$el).css('position', 'static')
     for i in [0..2]
@@ -33,7 +35,27 @@ module.exports = class TutorialView extends View
         $('#next-btn', @$el).addClass('close')
       , 200
     else if indexPage == 0
-      $('#prev-btn', @$el).hide()
+      @disappearPrevButton()
     else
-      $('#prev-btn', @$el).removeClass('hidden').show()
+      @appearPrevButton()
       $('#next-btn', @$el).css('background-image', 'url(images/tutorial/next.png)').removeClass('close')
+
+  appearPrevButton: ->
+    return if @prevBtn
+
+    prevBtn = $('#prev-btn', @$el)
+    prevBtn.removeClass('animated fadeInLeft fadeOutLeft hidden').show().addClass('animated fadeInLeft').one 'webkitAnimationEnd', ->
+      prevBtn.removeClass('animated fadeInLeft')
+    @prevBtn = yes
+
+  disappearPrevButton: ->
+    prevBtn = $('#prev-btn', @$el)
+    prevBtn.removeClass('animated fadeInLeft fadeOutLeft hidden').addClass('animated fadeOutLeft').one 'webkitAnimationEnd', ->
+      prevBtn.removeClass('animated fadeOutLeft')
+      @endPrevButtonAnimation()
+    @prevBtn = no
+
+  endPrevButtonAnimation: ->
+    if @prevBtn is false
+      prevBtn = $('#prev-btn', @$el)
+      prevBtn.hide()
