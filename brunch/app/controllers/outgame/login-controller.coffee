@@ -1,17 +1,18 @@
-Controller         = require 'controllers/base/controller'
-utils              = require 'lib/utils'
-LocalStorageHelper = require 'helpers/local-storage-helper'
-LoginView          = require 'views/outgame/login-view'
-mediator           = require 'mediator'
-PopUpHelper        = require 'helpers/pop-up-helper'
-FacebookHelper     = require 'helpers/facebook-helper'
-User               = require 'models/outgame/user-model'
-i18n               = require 'lib/i18n'
-AnalyticsHelper    = require 'helpers/analytics-helper'
-config             = require 'config/environment-config'
-SpinnerHelper      = require 'helpers/spinner-helper'
-LequipeSSOHelper   = require 'helpers/lequipe-sso-helper'
-ConfigHelper       = require 'helpers/config-helper'
+Controller          = require 'controllers/base/controller'
+utils               = require 'lib/utils'
+LocalStorageHelper  = require 'helpers/local-storage-helper'
+DeviceHelper        = require 'helpers/device-helper'
+LoginView           = require 'views/outgame/login-view'
+mediator            = require 'mediator'
+PopUpHelper         = require 'helpers/pop-up-helper'
+FacebookHelper      = require 'helpers/facebook-helper'
+User                = require 'models/outgame/user-model'
+i18n                = require 'lib/i18n'
+AnalyticsHelper     = require 'helpers/analytics-helper'
+config              = require 'config/environment-config'
+SpinnerHelper       = require 'helpers/spinner-helper'
+LequipeSSOHelper    = require 'helpers/lequipe-sso-helper'
+ConfigHelper        = require 'helpers/config-helper'
 
 module.exports = class LoginController extends Controller
   historyURL: ''
@@ -20,13 +21,20 @@ module.exports = class LoginController extends Controller
   # Login the player if exists or show login view
   # ---------------------------------------------
   index: =>
-    if Parse.User.current()
-      @bindPlayer()
+    if DeviceHelper.isConnected()
+      PopUpHelper.disposePopup 'no-connection'
+      if Parse.User.current()
+        @bindPlayer()
+      else
+        @showLoginView()
+      # Suscribe to Events
+      @subscribeEvent 'login:gotPlayer', @bindPlayer
     else
-      @showLoginView()
-
-    # Suscribe to Events
-    @subscribeEvent 'login:gotPlayer', @bindPlayer
+      console.log 'DEVICE NOT CONNECTED'
+      if PopUpHelper.numberOfPopup() is 0
+        PopUpHelper.initialize {message: i18n.t('helper.apiCall.error.connection'), title: i18n.t('helper.apiCall.error.title'), key: 'no-connection', info: no, confirmation: no}
+        @showLoginView()
+      setTimeout @index, 3000
 
   loginToParse: (user, params) =>
     manageError = (child, error, opts) ->
@@ -88,7 +96,6 @@ module.exports = class LoginController extends Controller
     error = (response) =>
       SpinnerHelper.stop()
       PopUpHelper.initialize {message: 'Erreur avec Facebook', title: 400, key: 'api-error'}
-
 
     FacebookHelper.logIn success, error
 

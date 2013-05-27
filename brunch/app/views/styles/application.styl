@@ -25,6 +25,22 @@ body.box-align
   box-pack: center
   box-align: center
 
+.alert-connection
+  width: 100%
+  height: 10%
+  background: linear-gradient(top, #ed1c24 0%, #aa1317)
+  absolute: top 0 left 0
+  border-bottom: 3px solid rgba(62, 57, 61, 0.25)
+  text-align: center
+  padding: 1.7%
+  color: #fff
+  font: 1.4em dax
+  stroke: rgba(62, 57, 61, 0.25)
+  transition: transform 300ms ease-out
+  transform: translate(0, -100%)
+  &.active
+    transform: translate(0, 0)
+
 .clearfix
   -webkit-perspective: 0
 
