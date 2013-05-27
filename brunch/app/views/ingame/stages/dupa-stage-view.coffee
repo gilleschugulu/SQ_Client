@@ -29,7 +29,7 @@ module.exports = class DupaView extends View
 
     progress = duration / (@options.time) * 100
     progress = 100 if progress > 100
-    progressEl = $('.chrono-container .chrono-filler', @$el).css('height', progress + '%')
+    $('.chrono-container .chrono-filler', @$el).css('height', progress + '%')
 
   clearTimer: ->
     $('.chrono-container #time', @$el).empty()
