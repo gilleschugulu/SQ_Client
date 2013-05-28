@@ -35,6 +35,7 @@ module.exports =
           good_answers: 'Bonnes réponses'
           wrong_answers: 'Mauvaises réponses'
           best_row: 'Plus longue série'
+          game_row: 'Nombre de parties cette semaine'
       profile:
         stats:
           best_score: 'Meilleur score'

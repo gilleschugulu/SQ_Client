@@ -18,7 +18,6 @@ module.exports = class GameOverController extends Controller
 
       jackpot = parseInt(params.jackpot)
       user = @updateUser(Parse.User.current(), jackpot)
-      jackpot += user.get('game_row') unless @bestJackpot
 
       params.jackpot =
         value: jackpot
@@ -26,12 +25,16 @@ module.exports = class GameOverController extends Controller
         bonus: user.get('game_row')
         bestJackpot: @bestJackpot
 
-      params.stats = _.map GameStatHelper.getEndGameScoreStat(), (val, key) ->
+      stats = GameStatHelper.getEndGameScoreStat()
+      stats.game_row = user.get('game_row')
+      params.stats = _.map stats, (val, key) ->
         name: key
         number: val
         text: I18n.t('controller.game_over.stats.' + key)
 
-      new GameOverView {success, params, player: {health: user.get('health'), credits: user.get('credits')}}
+      view = new GameOverView {success, params, player: {health: user.get('health'), credits: user.get('credits')}}
+      user.increment('score', user.get('game_row')).save()
+      view
 
     , (view) =>
       view.delegate 'click', '#replay', => @redirectTo 'game'
@@ -52,7 +55,5 @@ module.exports = class GameOverController extends Controller
     if jackpot > user.get('score')
       user.set('score', jackpot)
       @bestJackpot = yes
-    user.increment('score', user.get('game_row'))
 
-    user.save()
     user
