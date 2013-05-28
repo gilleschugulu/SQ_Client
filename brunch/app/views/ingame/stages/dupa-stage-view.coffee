@@ -29,8 +29,9 @@ module.exports = class DupaView extends View
 
     progress = duration / (@options.time) * 100
     progress = 100 if progress > 100
-    $('.chrono-container .chrono-filler', @$el).css('height', progress + '%')
+    progress = Math.abs(100 - progress)
 
+    $('.chrono-container .chrono-filler', @$el).css('top', progress + '%')
 
   updateCountdownTimer: (duration) ->
     countdown = $('#countdown', @$el)
