@@ -5,6 +5,7 @@ ConfigHelper    = require 'helpers/config-helper'
 AnalyticsHelper = require 'helpers/analytics-helper'
 FacebookHelper  = require 'helpers/facebook-helper'
 i18n            = require 'lib/i18n'
+_               = require 'underscore'
 
 module.exports = class HallOfFameController extends Controller
   historyURL: 'hall-of-fame'
@@ -13,37 +14,45 @@ module.exports = class HallOfFameController extends Controller
   request : null
   nextRoute: null
 
-  fetchPlayers: (withFriends) =>
+  displayPlayers: (withFriends) =>
     ranking = if withFriends then @friendsArray else @globalArray
-    @collection = []
+    players = []
 
     playerPosition = 0
-    for entry, i in ranking
-      @collection.push
-        friend     : if entry.fb_id is Parse.User.current().get('fb_id') then false else withFriends
+    user = Parse.User.current()
+    players = _.map ranking, (entry, index) ->
+      if entry.username is user.get('username')
+        playerPosition = index
+      data = 
+        friend     : if entry.fb_id is user.get('fb_id') then false else withFriends
         rank       : entry.rank
         username   : entry.username
         jackpot    : entry.score
         id         : entry.fb_id
-        profilepic : if !!entry.fb_id then 'https://graph.facebook.com/'+entry.fb_id+'/picture' else null
-      if entry.username is @user.get('username')
-        playerPosition = i
+        profilepic : if !!entry.fb_id then 'https://graph.facebook.com/' + entry.fb_id + '/picture' else null
 
-    fbConnected = FacebookHelper.isLinked()
-    noFriends = @collection.length <= 1
-    @updateRanking(playerPosition, noFriends, fbConnected, withFriends)
+    if withFriends and FacebookHelper.isLinked() is false
+      @view?.updateRankingListNotConnected()
+    else if withFriends and players.length <= 1
+      @view?.updateRankingListNoFriends()
+    else
+      options = 
+        fbConnected:    FacebookHelper.isLinked()
+        playerPosition: playerPosition
 
-  index: (params) ->
-    @nextRoute = params.nextRoute
-    @user = Parse.User.current()
-    @friendsArray = []
-    @globalArray = []
+      @view?.updateRankingList players, @friendsToInvite, options
+
+  fetchGlobalPlayers: ->
+    Parse.Cloud.run 'getAllScore' , {rank : @user.get('rank'), userId : @user.id},
+      success: (players) =>
+        Parse.Cloud.run 'getRanksPercentages' , {rank : @user.get('rank')},
+          success: (percentages) =>
+            @percentages = percentages
+            @globalArray = players
+      error: ->
+
+  fetchFriends: ->
     FacebookHelper.getOtherFriends (friends) =>
-      @friendsToInvite(friends)
-      Parse.Cloud.run 'getAllScore' , {rank : @user.get('rank'), userId : @user.id},
-        success: (players) =>
-          @globalArray = players
-        error: ->
       FacebookHelper.getFriends (friends) =>
         friendsId = _.pluck(friends, 'id')
         Parse.Cloud.run 'getFriendsScore' , {friendsId: friendsId},
@@ -52,7 +61,15 @@ module.exports = class HallOfFameController extends Controller
             players = players.sort (f1, f2) ->
               f2.score - f1.score
             @friendsArray = players
-            @fetchPlayers yes
+            @displayPlayers yes
+
+  index: (params) ->
+    @nextRoute = params.nextRoute
+    @user = Parse.User.current()
+    @friendsArray = null
+    @globalArray = null
+    @fetchGlobalPlayers()
+    @fetchFriends()
 
     @targetDate = @getDate()
     @loadView null
@@ -71,24 +88,21 @@ module.exports = class HallOfFameController extends Controller
       view.delegate 'click', '#no-fb-connected', @connectFacebook
       view.delegate 'click', '.invite-btn', @FacebookInvite
       view.delegate 'click', '.home-btn', @onClickHomeBtn
-      @updateRanking() if @collection
+      # @updateRanking() if @collection
     , {viewTransition: yes}
-
-  updateRanking: (i, noFriends, fbConnected, withFriends) =>
-    @view?.updateRankingList @collection, i, noFriends, fbConnected, withFriends, @friendsToInvite
 
   onClickFriends: (e) =>
     if !$(e.target).hasClass('active')
       # Track Event
       AnalyticsHelper.trackEvent 'HallOfFame', 'Affichage des amis'
-      @fetchPlayers yes
+      @displayPlayers yes
       @view.chooseList e.target
 
   onClickGlobal: (e) =>
     if !$(e.target).hasClass('active')
       # Track Event
       AnalyticsHelper.trackEvent 'HallOfFame', 'Affichage adversaires'
-      @fetchPlayers no
+      @displayPlayers no
       @view.chooseList e.target
 
   getDate: =>

@@ -8,6 +8,8 @@ module.exports = class HallOfFameView extends View
   template: template
   iphone5Class: 'hall-of-fame-page-568h'
 
+  picSize: 40
+
   getTemplateData: ->
     s = super
     @interval = setInterval =>
@@ -19,17 +21,9 @@ module.exports = class HallOfFameView extends View
 
 
   # TODO : Clean dat' shit
-  newPlayerHTML: (player, picSize, position, players) ->
-    #separators
-    separator = '<div class="separator"></div>'
-    if position > 0
-      if players[position - 1].rank + 1 is player.rank or players[position - 1].rank is player.rank
-        separator = ''
-    else
-      separator = ''
-    alredySend = ''
-
+  newPlayerHTML: (player, position) ->
     # TODO : Move this loop out. Only do once.
+    alredySend = ''
     for friend in (Parse.User.current().get("life_given") | [])
       if friend is player.id
         alredySend = 'asked'
@@ -47,21 +41,47 @@ module.exports = class HallOfFameView extends View
       rank = '<div class="rank third"></div>'
 
     pic = if player.profilepic then player.profilepic else 'http://profile.ak.fbcdn.net/static-ak/rsrc.php/v2/yo/r/UlIqmHJn-SK.gif'
-    separator+'<div class="div-ranking">'+rank+'<img class="profilepic" src="'+pic+'" width="'+picSize+'" height="'+picSize+'"/><span class="username resize">'+player.username+'</span><span class="money">'+player.jackpot+'</span>'+friend+'</div>'
+    '<div class="div-ranking">'+rank+'<img class="profilepic" src="'+pic+'" width="'+@picSize+'" height="'+@picSize+'"/><span class="username resize">'+player.username+'</span><span class="money">'+player.jackpot+'</span>'+friend+'</div>'
 
-
-  updateRankingList: (players, playerPosition, noFriends, fbConnected, withFriends, friendsToInvite) ->
-    el = $('.ranking-container', @$el).empty()
-    if !fbConnected and withFriends
-      el.append '<a id="no-fb-connected"></a>'
-    else if noFriends and withFriends
-      el.append '<a id="no-friends"></a>'
+  addSeparator: (player, position)->
+    if position > 0
+      previousPlayer = @players[position - 1]
+      if previousPlayer.rank + 1 is player.rank or previousPlayer.rank is player.rank
+        return ''
     else
-      el.append @newPlayerHTML(player, 40, i, players) for player, i in players
-      el.append @suggestFriends(friendsToInvite) if withFriends
-      @scrollTo(playerPosition)
-      @autoSizeText()
+      return ''
+    '<div class="separator"></div>'
 
+  suggestFriends: (friends) =>
+    moreFriends = "<div class='redSeparator'>"
+    for friend in friends
+      moreFriends+="</div><div class='div-ranking moreFriends'><img class='profilepic' src='https://graph.facebook.com/#{friend.id}/picture'/><span class='username resize'>#{friend.name}</span><div data-id='#{friend.id}' class='invite-btn'></div></div>"
+    moreFriends
+
+  takeOffFriend: (target) =>
+    $(target).parent().css('display', 'none')
+    $(".life-value").innerHTML(Parse.User.current().get('health'))
+
+  updateRankingList: (@players, friendsToInvite, options) ->
+    el = $('.ranking-container', @$el).empty()
+    for player, i in @players
+      el.append @addSeparator(player, i)
+      el.append @newPlayerHTML(player, i)
+
+    el.append @suggestFriends(friendsToInvite) if friendsToInvite
+    @scrollTo(options.playerPosition)
+    @autoSizeText()
+
+    $(".spinner").css('display','none')
+
+  updateRankingListNotConnected: ->
+    el = $('.ranking-container', @$el).empty()
+    el.append '<a id="no-fb-connected"></a>'
+    $(".spinner").css('display','none')
+
+  updateRankingListNoFriends: ->
+    el = $('.ranking-container', @$el).empty()
+    el.append '<a id="no-friends"></a>'
     $(".spinner").css('display','none')
 
   chooseList: (eventTargetEl) ->
@@ -103,13 +123,3 @@ module.exports = class HallOfFameView extends View
   dispose: ->
     clearInterval @interval if @interval?
     super
-
-  suggestFriends: (friends) =>
-    moreFriends = "<div class='redSeparator'>"
-    for friend in friends
-      moreFriends+="</div><div class='div-ranking moreFriends'><img class='profilepic' src='https://graph.facebook.com/#{friend.id}/picture'/><span class='username resize'>#{friend.name}</span><div data-id='#{friend.id}' class='invite-btn'></div></div>"
-    moreFriends
-
-  takeOffFriend: (target) =>
-    $(target).parent().css('display', 'none')
-    $(".life-value").innerHTML(Parse.User.current().get('health'))
