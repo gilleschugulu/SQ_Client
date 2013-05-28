@@ -96,13 +96,13 @@ module.exports = class GameStatHelper
     sports = @getStats().sports
 
     real_sports = {}
-    for sport in ['Football fr.', 'Football int.', 'Rugby', 'Cyclisme', 'Sports Auto', 'Tennis', 'Tous Sports']
+    for sport in ['Football Français', 'Football int.', 'Rugby', 'Cyclisme', 'Sports Auto', 'Tennis', 'Tous Sports']
+      real_sports[sport] = 
+        name: sport
       if sports[sport]
-        real_sports[sport] = sports[sport]
+        real_sports[sport].percent = sports[sport].percent + '%'
       else
-        real_sports[sport] = 
-          name: sport
-          percent: 'Joue plus !'
+        real_sports[sport].percent = 'Joue plus !'
     real_sports
 
   @getPercentAnswer: ->

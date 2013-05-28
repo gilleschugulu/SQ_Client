@@ -33,7 +33,7 @@ module.exports = class ProfilesController extends Controller
         stats_stats.game_week_score = stats.score
         stats_sports = _.map stats.sports, (val, key) ->
           number: val.percent
-          text: val.name
+          text: val.name.substring(0, 12)
           name: key
 
         new ProfileView({ user : @user.attributes, stats: stats_stats, sports: stats_sports, bonus: @user.getBonuses(), avatar, is_linked: Parse.FacebookUtils.isLinked(Parse.User.current()) })
