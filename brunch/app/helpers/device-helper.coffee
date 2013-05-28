@@ -30,7 +30,6 @@ module.exports = class DeviceHelper
       'web'
 
   @isConnected = ->
-    console.log 'isConnected', @isMobile(), navigator?.connection?.type
     return true unless @isMobile()
     navigator?.connection?.type isnt 'unknown' and navigator?.connection?.type isnt 'none'
 
