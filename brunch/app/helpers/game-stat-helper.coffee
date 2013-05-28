@@ -1,5 +1,7 @@
 I18n = require 'lib/i18n'
 
+# This helper is used to track player data ingame, and display them when needed
+
 module.exports = class GameStatHelper
 
   @_stats = {}
@@ -87,7 +89,6 @@ module.exports = class GameStatHelper
 
   @getBestSport: ->
     return I18n.t('helper.stats.no_best_sport') if _.keys(sports = @getAllSports(yes)).length == 0
-
     best_sport = _.max sports, (sport) ->
       sport.percent
     best_sport.name

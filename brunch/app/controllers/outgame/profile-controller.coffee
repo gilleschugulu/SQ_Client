@@ -50,7 +50,6 @@ module.exports = class ProfilesController extends Controller
     AnalyticsHelper.trackEvent 'Profil', 'Liaison facebook'
 
     # Call Facebook for linking
-    # FacebookHelper.getLoginStatus(false, true)
     FacebookHelper.logIn =>
       @view.activateFbButton()
     , =>

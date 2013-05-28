@@ -59,28 +59,7 @@ module.exports = class LoginController extends Controller
           manageError.apply null, arguments
     }
 
-  loginWithTemp: =>
-    username = $('#temp-login-form input[name=username]', @view.$el)[0].value
-    SpinnerHelper.start()
-    Parse.User.signUp username, '123456', (new User).attributes, {
-      success: =>
-        SpinnerHelper.stop()
-        @bindPlayer()
-      error: =>
-        SpinnerHelper.stop()
-        manageError.apply null, arguments
-    }
-    return no
-
-    # LequipeSSOHelper.login params, (user) =>
-    #   console.log "GOT USER", user
-    #   @loginToParse user, params
-    # , (status, error) ->
-    #   console.log "LOGIN ERROR", status, error
-    # no
-
   loginWithFacebook: =>
-    console.log 'loginWithFacebook'
     AnalyticsHelper.trackEvent 'Login', 'Login with facebook'
 
     success = (response) =>
@@ -99,7 +78,6 @@ module.exports = class LoginController extends Controller
     FacebookHelper.logIn success, error
 
   loginWithSSO: =>
-    console.log "LOGIN YO"
     unless @validateForm('#sso-login-form')
       return no
     form = $('#sso-login-form', @view.$el).serializeArray()
@@ -107,14 +85,12 @@ module.exports = class LoginController extends Controller
     params[f.name] = f.value for f in form
     console.log params
     LequipeSSOHelper.login params, (user) =>
-      console.log "GOT USER", user
       @loginToParse user, params
     , (status, error) ->
       console.log "LOGIN ERROR", status, error
     no
 
   registerWithSSO: =>
-    console.log "REGISTER YO"
     unless @validateForm('#sso-register-form')
       return no
     form = $('#sso-register-form', @view.$el).serializeArray()
@@ -122,7 +98,6 @@ module.exports = class LoginController extends Controller
     params[f.name] = f.value for f in form
     console.log params
     LequipeSSOHelper.register params, (user) =>
-      console.log "GOT USER", user
       @loginToParse user, params
     , (status, error) ->
       console.log "LOGIN ERROR", status, error
@@ -130,7 +105,6 @@ module.exports = class LoginController extends Controller
 
   # check to see if email/username are available
   checkAvailabilityWithSSO: =>
-    console.log "CHECING AVAILABILITY YO"
     form = $('#sso-register-form', @view.$el).serializeArray()
     params = {}
     params[f.name] = f.value for f in form
@@ -181,15 +155,12 @@ module.exports = class LoginController extends Controller
       view.delegate 'click', '#register-btn', @registerWithSSO
       view.delegate 'click', "#facebook-login", @loginWithFacebook
       view.delegate 'click', '#login-btn', @loginWithSSO
-      view.delegate 'click', '#temp-btn', @loginWithTemp
       view.delegate 'keyup', '#sso-register-form input[name=email]', @checkAvailabilityWithSSO
       view.delegate 'keyup', '#sso-register-form input[name=username]', @checkAvailabilityWithSSO
       view.delegate 'click', '#close-btn', ->
         view.closeForms()
       view.delegate 'click', '#equipe-login', ->
         view.openForms()
-      view.delegate 'click', '#temp-login', ->
-        view.openTempForm()
     , {viewTransition: yes}
 
 
@@ -221,13 +192,10 @@ module.exports = class LoginController extends Controller
         buttonCancel: i18n.t('helper.push.how_about_no')
         buttonOK    : i18n.t('helper.push.kthx')
       PushNotifications.register (pushData) ->
-        console.log "GOT TOKEN"
-        console.log pushData
+        console.log 'Will register PushNotifications'
         data =
           deviceToken: pushData.token.replace(/\s+/g, '')
           deviceType : 'ios'
-        console.log "PUSH DATA"
-        console.log data
         $.ajax
             url        : 'https://api.parse.com/1/installations'
             dataType   : 'json'
