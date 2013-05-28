@@ -35,6 +35,8 @@ module.exports = class DupaStageController extends StageController
       ).start()
 
   afterCountdown: ->
+    @countdownTimer.stop()
+    delete @countdownTimer
     @timer.schedule @model.getConfigValue('answerTime'), 0, =>
       setTimeout =>
         @beforeFinishStage()
@@ -90,6 +92,12 @@ module.exports = class DupaStageController extends StageController
   beforeFinishStage: (player) =>
     GameStatHelper.setBestRow(@row) if @row > 0
     @finishStage()
+
+  dispose: ->
+    if @countdownTimer
+      @countdownTimer.stop()
+      delete @countdownTimer
+    super
 
 
   ### Bonus handling ###
