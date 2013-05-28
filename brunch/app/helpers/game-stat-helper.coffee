@@ -86,13 +86,13 @@ module.exports = class GameStatHelper
     }
 
   @getBestSport: ->
-    return I18n.t('helper.stats.no_best_sport') if _.keys(sports = @getAllSports()).length == 0
+    return I18n.t('helper.stats.no_best_sport') if _.keys(sports = @getAllSports(yes)).length == 0
 
     best_sport = _.max sports, (sport) ->
       sport.percent
     best_sport.name
 
-  @getAllSports: ->
+  @getAllSports: (numeric) ->
     sports = @getStats().sports
 
     real_sports = {}
@@ -100,7 +100,10 @@ module.exports = class GameStatHelper
       real_sports[sport] = 
         name: sport
       if sports[sport]
-        real_sports[sport].percent = sports[sport].percent + '%'
+        if numeric
+          real_sports[sport].percent = sports[sport].percent
+        else
+          real_sports[sport].percent = sports[sport].percent + '%'
       else
         real_sports[sport].percent = 'Joue plus !'
     real_sports
