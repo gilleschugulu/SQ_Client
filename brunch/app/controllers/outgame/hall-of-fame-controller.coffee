@@ -15,7 +15,7 @@ module.exports = class HallOfFameController extends Controller
   nextRoute: null
 
   displayPlayers: (withFriends) =>
-    ranking = if withFriends then @friendsArray else @globalArray
+    ranking = if withFriends then @friendsPlayers else @globalPlayers
     players = []
 
     playerPosition = 0
@@ -47,10 +47,12 @@ module.exports = class HallOfFameController extends Controller
   fetchGlobalPlayers: ->
     Parse.Cloud.run 'getAllScore' , {rank : @user.get('rank'), userId : @user.id},
       success: (players) =>
+        @globalPlayers = players
+
         Parse.Cloud.run 'getRanksPercentages' , {rank : @user.get('rank')},
           success: (percentages) =>
             @percentages = percentages
-            @globalArray = players
+          error: ->
       error: ->
 
   fetchFriends: ->
@@ -62,14 +64,14 @@ module.exports = class HallOfFameController extends Controller
             players.push Parse.User.current().attributes
             players = players.sort (f1, f2) ->
               f2.score - f1.score
-            @friendsArray = players
+            @friendsPlayers = players
             @displayPlayers yes
 
   index: (params) ->
     @nextRoute = params.nextRoute
     @user = Parse.User.current()
-    @friendsArray = null
-    @globalArray = null
+    @friendsPlayers = null
+    @globalPlayers = null
     @fetchGlobalPlayers()
     @fetchFriends()
 
