@@ -18,3 +18,6 @@ Parse.Cloud.define 'saveScore', (request, response) ->
 
 Parse.Cloud.define 'finishLeaderboard', (request, response) ->
   require('cloud/finish_leaderboard.js').task request, response
+
+Parse.Cloud.define 'getRanksPercentages', (request, response) ->
+  require('cloud/get_ranks_percentages.js').task request, response

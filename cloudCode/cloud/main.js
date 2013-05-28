@@ -26,3 +26,7 @@ Parse.Cloud.define('saveScore', function(request, response) {
 Parse.Cloud.define('finishLeaderboard', function(request, response) {
   return require('cloud/finish_leaderboard.js').task(request, response);
 });
+
+Parse.Cloud.define('getRanksPercentages', function(request, response) {
+  return require('cloud/get_ranks_percentages.js').task(request, response);
+});
