@@ -54,7 +54,7 @@ module.exports = class HallOfFameView extends View
 
   addPercentagesSeparator: (direction, rank)->
     msg = i18n.t("view.outgame.hall_of_fame.players_#{direction}_rank")
-    "<div class='rank_separator #{direction}'>#{msg}</div>"
+    "<div class='rank_separator #{direction}'>#{msg} #{rank}</div>"
 
   addRankSeparator: (player, position)->
     if position > 0
