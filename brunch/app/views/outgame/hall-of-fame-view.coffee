@@ -33,23 +33,23 @@ module.exports = class HallOfFameView extends View
 
     # TODO : Use css : nth-child(1), 2 or 3
     # medailles
-    position = '<span class="rank">#' + player.position + '</span>'
+    positionDiv = '<span class="rank">#' + player.position + '</span>'
     if player.position is 1
-      position = '<div class="rank first"></div>'
+      positionDiv = '<div class="rank first"></div>'
     else if player.position is 2
-      position = '<div class="rank second"></div>'
+      positionDiv = '<div class="rank second"></div>'
     else if player.position is 3
-      position = '<div class="rank third"></div>'
+      positionDiv = '<div class="rank third"></div>'
 
     pic = if player.profilepic then player.profilepic else 'http://profile.ak.fbcdn.net/static-ak/rsrc.php/v2/yo/r/UlIqmHJn-SK.gif'
-    '<div class="div-ranking">'+position+'<img class="profilepic" src="'+pic+'" width="'+@picSize+'" height="'+@picSize+'"/><span class="username resize">'+player.username+'</span><span class="money">'+player.jackpot+'</span>'+friend+'</div>'
+    '<div class="div-ranking">'+positionDiv+'<img class="profilepic" src="'+pic+'" width="'+@picSize+'" height="'+@picSize+'"/><span class="username resize">'+player.username+'</span><span class="money">'+player.jackpot+'</span>'+friend+'</div>'
 
-  addPercentagesSeparatorLogic: (uppedNumber, sameNumber, index, rank) ->
+  addPercentagesSeparatorLogic: (sameIndex, downIndex, index, rank) ->
     if index == 0
       @addPercentagesSeparator('up', rank + 1)
-    else if index == uppedNumber
+    else if index == sameIndex
       @addPercentagesSeparator('stay', rank)
-    else if index == sameNumber
+    else if index == downIndex
       @addPercentagesSeparator('down', rank - 1)
 
   addPercentagesSeparator: (direction, rank)->
@@ -79,13 +79,9 @@ module.exports = class HallOfFameView extends View
   updateRankingList: (@players, friendsToInvite, options) ->
     el = $('.ranking-container', @$el).empty()
 
-    if options.percentages
-      uppedNumber = Math.ceil(@players.length * options.percentages.up / 100)
-      sameNumber = Math.ceil(@players.length * options.percentages.down / 100) + uppedNumber
-
     for player, index in @players
       if options.percentages
-        el.append @addPercentagesSeparatorLogic(uppedNumber, sameNumber, index, player.rank)
+        el.append @addPercentagesSeparatorLogic(options.percentages.sameIndex, options.percentages.downIndex, index, player.rank)
       el.append @addRankSeparator(player, index)
       el.append @newPlayerHTML(player, index)
 

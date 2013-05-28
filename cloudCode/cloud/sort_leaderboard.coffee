@@ -14,18 +14,23 @@ exports.task = (request, response) ->
       while results[i].id isnt userId
         i++
 
+      data =
+        total: results.length
+
       if i < 8
-        response.success(fetchUsers(results, 0, 9))
+        data.players = fetchUsers(results, 0, 9)
+        response.success(data)
       else if i > results.length - 5
-        response.success(fetchUsers(results, 0, 2).concat fetchUsers(results, results.length - 7, results.length - 1))
+        data.players = fetchUsers(results, 0, 2).concat fetchUsers(results, results.length - 7, results.length - 1)
+        response.success(data)
       else
-        board = (fetchUsers(results, 0, 2).concat fetchUsers(results, i - 3, i + 3))
-        response.success(board)
+        data.players = (fetchUsers(results, 0, 2).concat fetchUsers(results, i - 3, i + 3))
+        response.success(data)
     error: (results) ->
       response.error('toto')
 
   fetchUsers = (users, minIndex, maxIndex) ->
-    board = (for user, i in users
+    players = (for user, i in users
       {
         username: user.get('username')
         object_id: user.id

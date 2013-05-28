@@ -13,19 +13,24 @@ exports.task = function(request, response) {
   query.descending('score');
   query.find({
     success: function(results) {
-      var board, i;
+      var data, i;
 
       i = 0;
       while (results[i].id !== userId) {
         i++;
       }
+      data = {
+        total: results.length
+      };
       if (i < 8) {
-        return response.success(fetchUsers(results, 0, 9));
+        data.players = fetchUsers(results, 0, 9);
+        return response.success(data);
       } else if (i > results.length - 5) {
-        return response.success(fetchUsers(results, 0, 2).concat(fetchUsers(results, results.length - 7, results.length - 1)));
+        data.players = fetchUsers(results, 0, 2).concat(fetchUsers(results, results.length - 7, results.length - 1));
+        return response.success(data);
       } else {
-        board = fetchUsers(results, 0, 2).concat(fetchUsers(results, i - 3, i + 3));
-        return response.success(board);
+        data.players = fetchUsers(results, 0, 2).concat(fetchUsers(results, i - 3, i + 3));
+        return response.success(data);
       }
     },
     error: function(results) {
@@ -33,9 +38,9 @@ exports.task = function(request, response) {
     }
   });
   return fetchUsers = function(users, minIndex, maxIndex) {
-    var board, i, user;
+    var i, players, user;
 
-    return board = ((function() {
+    return players = ((function() {
       var _i, _len, _results;
 
       _results = [];

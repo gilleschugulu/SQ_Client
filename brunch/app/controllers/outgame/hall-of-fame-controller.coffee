@@ -47,11 +47,24 @@ module.exports = class HallOfFameController extends Controller
 
   fetchGlobalPlayers: ->
     Parse.Cloud.run 'getAllScore' , {rank : @user.get('rank'), userId : @user.id},
-      success: (players) =>
+      success: (results) =>
         Parse.Cloud.run 'getRanksPercentages' , {rank : @user.get('rank')},
           success: (percentages) =>
-            @globalPlayers = players
-            @percentages = percentages
+            @globalPlayers = results.players
+            console.log 'total', results.total
+            console.log 'percentages original', percentages
+            
+            upNumber = Math.ceil(results.total * percentages.up / 100)
+            downNumber = Math.ceil(results.total * percentages.down / 100)
+
+            sameIndex = upNumber
+            downIndex = upNumber + downNumber
+
+            @percentages = {sameIndex, downIndex}
+
+            
+            console.log 'percentages generated', @percentages
+
           error: ->
       error: ->
 
