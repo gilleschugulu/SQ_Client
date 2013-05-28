@@ -1,5 +1,6 @@
-template = require 'views/templates/outgame/hall-of-fame'
-View = require 'views/base/view'
+template  = require 'views/templates/outgame/hall-of-fame'
+i18n      = require 'lib/i18n'
+View      = require 'views/base/view'
 
 module.exports = class HallOfFameView extends View
   autoRender: yes
@@ -43,7 +44,19 @@ module.exports = class HallOfFameView extends View
     pic = if player.profilepic then player.profilepic else 'http://profile.ak.fbcdn.net/static-ak/rsrc.php/v2/yo/r/UlIqmHJn-SK.gif'
     '<div class="div-ranking">'+rank+'<img class="profilepic" src="'+pic+'" width="'+@picSize+'" height="'+@picSize+'"/><span class="username resize">'+player.username+'</span><span class="money">'+player.jackpot+'</span>'+friend+'</div>'
 
-  addSeparator: (player, position)->
+  addPercentagesSeparatorLogic: (uppedNumber, sameNumber, index, rank) ->
+    if index == 0
+      @addPercentagesSeparator('up', rank + 1)
+    else if index == uppedNumber
+      @addPercentagesSeparator('stay', rank)
+    else if index == sameNumber
+      @addPercentagesSeparator('down', rank - 1)
+
+  addPercentagesSeparator: (direction, rank)->
+    msg = i18n.t("view.outgame.hall_of_fame.players_#{direction}_rank")
+    "<div class='rank_separator #{direction}'>#{msg}</div>"
+
+  addRankSeparator: (player, position)->
     if position > 0
       previousPlayer = @players[position - 1]
       if previousPlayer.rank + 1 is player.rank or previousPlayer.rank is player.rank
@@ -53,6 +66,7 @@ module.exports = class HallOfFameView extends View
     '<div class="separator"></div>'
 
   suggestFriends: (friends) =>
+    return '' unless friends.length > 0
     moreFriends = "<div class='redSeparator'>"
     for friend in friends
       moreFriends+="</div><div class='div-ranking moreFriends'><img class='profilepic' src='https://graph.facebook.com/#{friend.id}/picture'/><span class='username resize'>#{friend.name}</span><div data-id='#{friend.id}' class='invite-btn'></div></div>"
@@ -64,9 +78,16 @@ module.exports = class HallOfFameView extends View
 
   updateRankingList: (@players, friendsToInvite, options) ->
     el = $('.ranking-container', @$el).empty()
-    for player, i in @players
-      el.append @addSeparator(player, i)
-      el.append @newPlayerHTML(player, i)
+
+    if options.percentages
+      uppedNumber = Math.ceil(@players.length * options.percentages.up / 100)
+      sameNumber = Math.ceil(@players.length * options.percentages.down / 100) + uppedNumber
+
+    for player, index in @players
+      if options.percentages
+        el.append @addPercentagesSeparatorLogic(uppedNumber, sameNumber, index, player.rank)
+      el.append @addRankSeparator(player, index)
+      el.append @newPlayerHTML(player, index)
 
     el.append @suggestFriends(friendsToInvite) if friendsToInvite
     @scrollTo(options.playerPosition)

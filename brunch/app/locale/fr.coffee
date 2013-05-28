@@ -97,31 +97,10 @@ module.exports =
         login:
           already_email: "Un email vient d'être envoyé à {0} avec le code a renseigner."
           already_facebook: "Email déjà enregistré avec un compte facebook, on lance la connection facebook"
+        hall_of_fame:
+          players_up_rank: 'Ils vont monter au niveau'
+          players_stay_rank: 'Ils vont rester au niveau'
+          players_down_rank: 'Ils vont descendre au niveau'
       game:
         dupa:
           welcome: "Bienvenue aux 4 candidats qui vont jouer aujourd'hui à {0}. Tout de suite première question"
-    ranks:
-      rank_1:
-        name: "Maître des maîtres"
-        img_name: "maitre_maitres"
-      rank_2:
-        name: "Maître de diamant"
-        img_name: "maitre_diamant"
-      rank_3:
-        name: "Maître de platine"
-        img_name: "maitre_platine"
-      rank_4:
-        name: "Maître d'or"
-        img_name: "maitre_or"
-      rank_5:
-        name: "Maître d'argent"
-        img_name: "maitre_argent"
-      rank_6:
-        name: "Maître de bronze"
-        img_name: "maitre_bronze"
-      rank_7:
-        name: "Maitre de cuivre"
-        img_name: "maitre_cuivre"
-      rank_8:
-        name: "Maitre de fer"
-        img_name: "maitre_fer"

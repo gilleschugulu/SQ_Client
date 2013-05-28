@@ -31,15 +31,17 @@ module.exports = class HallOfFameController extends Controller
         id         : entry.fb_id
         profilepic : if !!entry.fb_id then 'https://graph.facebook.com/' + entry.fb_id + '/picture' else null
 
-    if withFriends and FacebookHelper.isLinked() is false
+    options = 
+      fbConnected:    FacebookHelper.isLinked()
+      playerPosition: playerPosition
+
+    options.percentages = @percentages if !withFriends
+
+    if withFriends and !options.fbConnected
       @view?.updateRankingListNotConnected()
     else if withFriends and players.length <= 1
       @view?.updateRankingListNoFriends()
     else
-      options = 
-        fbConnected:    FacebookHelper.isLinked()
-        playerPosition: playerPosition
-
       @view?.updateRankingList players, @friendsToInvite, options
 
   fetchGlobalPlayers: ->
