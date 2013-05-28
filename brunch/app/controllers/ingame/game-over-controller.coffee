@@ -34,7 +34,8 @@ module.exports = class GameOverController extends Controller
 
       view = new GameOverView {success, params, player: {health: user.get('health'), credits: user.get('credits')}}
       user.increment('score', user.get('game_row')).save()
-      view
+
+      view   # Must always return @view
 
     , (view) =>
       view.delegate 'click', '#replay', => @redirectTo 'game'
