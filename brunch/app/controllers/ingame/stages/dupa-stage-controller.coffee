@@ -17,26 +17,36 @@ module.exports = class DupaStageController extends StageController
   start: ->
     t = @model.getConfigValue('thresholds').slice(0).reverse()
     @view = new DupaStageView {stage : {@name, @type}, thresholds: t, bonus: @model.get('player').getBonuses(), time : @model.getConfigValue('answerTime')}
+
     @timer = new Timer((duration) =>
       @view.updateTimer(duration)
-      if duration == '8'
-        SoundHelper.play('acceleration')
+      SoundHelper.play('acceleration') if duration is '8'
     )
+    @countdownTimer = new Timer((duration) =>
+      @view.updateCountdownTimer(duration)
+    )
+
     GameStatHelper.incrementGamesPlayedCount()
     super
     @view.unDim =>
-      @timer.schedule @model.getConfigValue('answerTime'), 0, =>
-        setTimeout =>
-          @beforeFinishStage()
-        , 200
-      @view.updateJackpot(0, @model.getCurrentThreshold())
-      @view.welcome @askNextQuestion
+      @countdownTimer.schedule(3, 0, =>
+        @view.hideCountdownValue()
+        @afterCountdown()
+      ).start()
 
-      @view.delegate 'click', '.bonus', (event) =>
-        @view.chooseBonus event.currentTarget, (bonusName) =>
-          if @canUseBonus(bonusName) and @model.get('player').consumeBonus(bonusName)
-            @view.updateBonus event.currentTarget, @model.get('player').getBonusQuantity(bonusName)
-            @executeBonus(bonusName)
+  afterCountdown: ->
+    @timer.schedule @model.getConfigValue('answerTime'), 0, =>
+      setTimeout =>
+        @beforeFinishStage()
+      , 200
+    @view.updateJackpot(0, @model.getCurrentThreshold())
+    @view.welcome @askNextQuestion
+
+    @view.delegate 'click', '.bonus', (event) =>
+      @view.chooseBonus event.currentTarget, (bonusName) =>
+        if @canUseBonus(bonusName) and @model.get('player').consumeBonus(bonusName)
+          @view.updateBonus event.currentTarget, @model.get('player').getBonusQuantity(bonusName)
+          @executeBonus(bonusName)
 
   askNextQuestion: =>
     @startTime = new Date().getTime()

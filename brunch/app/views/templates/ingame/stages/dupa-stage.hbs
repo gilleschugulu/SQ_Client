@@ -1,4 +1,5 @@
 <div class="btn-menu"></div>
+
 <div class='chrono-container'>
   <div class='chrono-chrono'></div>
   <div class='chrono-time'></div>
@@ -6,6 +7,9 @@
     <div class='chrono-filler'></div>
   </div>
 </div>
+
+<div id='countdown' class='hidden'></div>
+
 <div class='question-container'>
   <div class='question-photo'></div>
   <div class='question-theme-container'>
@@ -17,6 +21,7 @@
   <div class='question-propositions-container'>
   </div>
 </div>
+
 <div class='bonus-container'>
   {{#each bonus}}
     <div class='bonus' id='{{name}}' style="background-image: url('images/ingame/{{name}}.png')">
@@ -24,6 +29,7 @@
     </div>
   {{/each}}
 </div>
+
 <div class='jackpot-container'>
   <div id="total-jackpot">0</div>
   {{#each thresholds}}

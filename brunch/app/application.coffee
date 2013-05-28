@@ -1,9 +1,10 @@
-Chaplin       = require 'chaplin'
-Layout        = require 'views/layout'
-mediator      = require 'mediator'
-routes        = require 'routes'
-config        = require 'config/environment-config'
-DeviceHelper  = require 'helpers/device-helper'
+Chaplin                 = require 'chaplin'
+Layout                  = require 'views/layout'
+mediator                = require 'mediator'
+routes                  = require 'routes'
+config                  = require 'config/environment-config'
+DeviceHelper            = require 'helpers/device-helper'
+ConnectivityController  = require 'controllers/connectivity-controller'
 
 # The application object
 module.exports = class Application extends Chaplin.Application
@@ -63,6 +64,7 @@ module.exports = class Application extends Chaplin.Application
     # or navigation views.
     # e.g. new NavigationController()
     # new LoginController()
+    new ConnectivityController()
 
   initHelpers: ->
     SoundHelper = require 'helpers/sound-helper'

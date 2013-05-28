@@ -47,13 +47,14 @@ module.exports = class PopUpHelper
     if data
       data.className = 'info' unless data.className
       data.title = 'specify a title' unless data.title
-      data.info = true unless data.info
-      data.info = false if data.confirmation is true
-      data.confirmation = true unless data.confirmation
-      data.confirmation = false if data.info is true
       data.level = 1 unless data.level
       data.key = 'foo' unless data.key
       data.template = 'popup' unless data.template
+
+      data.info = true if data.info is undefined
+      data.info = false if data.confirmation is true
+      data.confirmation = true if data.confirmation is undefined
+      data.confirmation = false if data.info is true
 
       # data.message must be an array
       if data.message?
@@ -80,3 +81,8 @@ module.exports = class PopUpHelper
       if $(container).children().length < 1
         $(container).empty().removeClass('active')
       mediator.publish 'popup:'+key+':disposed'
+
+  # Return the number of active pop-ups
+  # ------------------------------
+  @numberOfPopup: ->
+    $('.popup', container).length

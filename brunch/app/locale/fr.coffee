@@ -67,7 +67,7 @@ module.exports =
       apiCall:
         error:
           title: 'Erreur de connexion'
-          connection: 'Il est impossible de contacter le serveur. Veuillez vérifier votre connexion internet.'
+          connection: 'Vous devez être connecté à Internet pour pouvoir jouer à Sport Quiz'
           server: 'Il est impossible de contacter le serveur. Veuillez réessayer plus tard.'
           api: 'Une erreur est survenue. {0}.'
       purchase:

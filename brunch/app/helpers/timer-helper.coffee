@@ -48,6 +48,7 @@ module.exports = class TimerHelper
     @remaining = @duration
     @stop()
     @onTick?((@duration / @durationPrecisionCoef).toFixed(@precision))
+    @
 
   setDuration: (duration) =>
     @duration = duration
