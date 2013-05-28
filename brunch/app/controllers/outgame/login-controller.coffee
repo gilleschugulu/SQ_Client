@@ -30,7 +30,6 @@ module.exports = class LoginController extends Controller
       # Suscribe to Events
       @subscribeEvent 'login:gotPlayer', @bindPlayer
     else
-      console.log 'DEVICE NOT CONNECTED'
       if PopUpHelper.numberOfPopup() is 0
         PopUpHelper.initialize {message: i18n.t('helper.apiCall.error.connection'), title: i18n.t('helper.apiCall.error.title'), key: 'no-connection', info: no, confirmation: no}
         @showLoginView()
