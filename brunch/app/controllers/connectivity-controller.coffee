@@ -7,7 +7,6 @@ module.exports = class ConnectivityController extends Controller
 
   initialize: ->
     super
-    console.log 'initialize'
     @checkConnection()
     @getConnectionInterval = setInterval(@checkConnection, 30000)
 
