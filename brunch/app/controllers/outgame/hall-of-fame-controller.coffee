@@ -29,6 +29,7 @@ module.exports = class HallOfFameController extends Controller
         username   : entry.username
         jackpot    : entry.score
         id         : entry.fb_id
+        position   : entry.position
         profilepic : if !!entry.fb_id then 'https://graph.facebook.com/' + entry.fb_id + '/picture' else null
 
     options = 
@@ -47,10 +48,9 @@ module.exports = class HallOfFameController extends Controller
   fetchGlobalPlayers: ->
     Parse.Cloud.run 'getAllScore' , {rank : @user.get('rank'), userId : @user.id},
       success: (players) =>
-        @globalPlayers = players
-
         Parse.Cloud.run 'getRanksPercentages' , {rank : @user.get('rank')},
           success: (percentages) =>
+            @globalPlayers = players
             @percentages = percentages
           error: ->
       error: ->

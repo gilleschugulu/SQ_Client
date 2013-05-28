@@ -32,4 +32,5 @@ exports.task = (request, response) ->
         fb_id: user.get('fb_id')
         score: user.get('score')
         rank: userRank
+        position: i + 1
       })[minIndex..maxIndex]

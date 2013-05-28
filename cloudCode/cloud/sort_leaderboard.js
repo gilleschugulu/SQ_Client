@@ -8,10 +8,6 @@ exports.task = function(request, response) {
 
   userRank = request.params.rank;
   userId = request.params.userId;
-  console.log('userRank');
-  console.log(userRank);
-  console.log('userId');
-  console.log(userId);
   query = new Parse.Query('User');
   query.equalTo('rank', userRank);
   query.descending('score');
@@ -23,16 +19,6 @@ exports.task = function(request, response) {
       while (results[i].id !== userId) {
         i++;
       }
-      console.log('Player index');
-      console.log(i);
-      console.log(_.map(results, function(player) {
-        var a;
-
-        return a = {
-          name: player.get('username'),
-          rank: player.get('rank')
-        };
-      }));
       if (i < 8) {
         return response.success(fetchUsers(results, 0, 9));
       } else if (i > results.length - 5) {
@@ -60,7 +46,8 @@ exports.task = function(request, response) {
           object_id: user.id,
           fb_id: user.get('fb_id'),
           score: user.get('score'),
-          rank: userRank
+          rank: userRank,
+          position: i + 1
         });
       }
       return _results;

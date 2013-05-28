@@ -29,20 +29,20 @@ module.exports = class HallOfFameView extends View
       if friend is player.id
         alredySend = 'asked'
 
-    friend = if player.friend then "<div data-id='#{player.id}' class='ask-friend "+alredySend+"'></div>" else ''
+    friend = if player.friend then "<div data-id='#{player.id}' class='ask-friend " + alredySend + "'></div>" else ''
 
     # TODO : Use css : nth-child(1), 2 or 3
     # medailles
-    rank = '<span class="rank">'+player.rank+'</span>'
-    if player.rank is 1
-      rank = '<div class="rank first"></div>'
-    else if player.rank is 2
-      rank = '<div class="rank second"></div>'
-    else if player.rank is 3
-      rank = '<div class="rank third"></div>'
+    position = '<span class="rank">#' + player.position + '</span>'
+    if player.position is 1
+      position = '<div class="rank first"></div>'
+    else if player.position is 2
+      position = '<div class="rank second"></div>'
+    else if player.position is 3
+      position = '<div class="rank third"></div>'
 
     pic = if player.profilepic then player.profilepic else 'http://profile.ak.fbcdn.net/static-ak/rsrc.php/v2/yo/r/UlIqmHJn-SK.gif'
-    '<div class="div-ranking">'+rank+'<img class="profilepic" src="'+pic+'" width="'+@picSize+'" height="'+@picSize+'"/><span class="username resize">'+player.username+'</span><span class="money">'+player.jackpot+'</span>'+friend+'</div>'
+    '<div class="div-ranking">'+position+'<img class="profilepic" src="'+pic+'" width="'+@picSize+'" height="'+@picSize+'"/><span class="username resize">'+player.username+'</span><span class="money">'+player.jackpot+'</span>'+friend+'</div>'
 
   addPercentagesSeparatorLogic: (uppedNumber, sameNumber, index, rank) ->
     if index == 0
@@ -97,11 +97,13 @@ module.exports = class HallOfFameView extends View
 
   updateRankingListNotConnected: ->
     el = $('.ranking-container', @$el).empty()
+
     el.append '<a id="no-fb-connected"></a>'
     $(".spinner").css('display','none')
 
   updateRankingListNoFriends: ->
     el = $('.ranking-container', @$el).empty()
+
     el.append '<a id="no-friends"></a>'
     $(".spinner").css('display','none')
 
@@ -139,7 +141,7 @@ module.exports = class HallOfFameView extends View
   scrollTo: (i) ->
     el = $('.ranking-container')[0]
     height = $('.div-ranking').height()
-    if i>3 then el.scrollTop = (i-4)*height
+    if i > 3 then el.scrollTop = (i - 4)*height
 
   dispose: ->
     clearInterval @interval if @interval?
