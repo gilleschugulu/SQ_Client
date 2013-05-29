@@ -63,11 +63,8 @@ module.exports = class HallOfFameController extends Controller
     FacebookHelper.getOtherFriends (friends) =>
       FacebookHelper.getFriends (friends) =>
         friendsId = _.pluck(friends, 'id')
-        Parse.Cloud.run 'getFriendsScore' , {friendsId: friendsId},
+        Parse.Cloud.run 'getFriendsScore' , {friendsId: friendsId, userId: @user.id},
           success: (players) =>
-            players.push Parse.User.current().attributes
-            players = players.sort (f1, f2) ->
-              f2.score - f1.score
             @friendsPlayers = players
             @displayPlayers yes
 
