@@ -9,33 +9,36 @@ exports.task = (request, response) ->
 
   query.find
     success: (results) ->
-      i = 0
+      playerIndex = 0
 
-      while results[i].id isnt userId
-        i++
+      return response.success({players: [], total: 0}) if results.length is 0
+
+      _.find results, (user) ->
+        playerIndex++
+        user.id is userId
 
       data =
         total: results.length
 
-      if i < 8
+      if playerIndex < 8
         data.players = fetchUsers(results, 0, 9)
         response.success(data)
-      else if i > results.length - 5
+      else if playerIndex > results.length - 5
         data.players = fetchUsers(results, 0, 2).concat fetchUsers(results, results.length - 7, results.length - 1)
         response.success(data)
       else
-        data.players = (fetchUsers(results, 0, 2).concat fetchUsers(results, i - 3, i + 3))
+        data.players = (fetchUsers(results, 0, 2).concat fetchUsers(results, playerIndex - 3, playerIndex + 3))
         response.success(data)
     error: (results) ->
       response.error('toto')
 
   fetchUsers = (users, minIndex, maxIndex) ->
-    players = (for user, i in users
+    players = (for user, index in users
       {
         username: user.get('username')
         object_id: user.id
         fb_id: user.get('fb_id')
         score: user.get('score')
         rank: userRank
-        position: i + 1
+        position: index + 1
       })[minIndex..maxIndex]

@@ -13,23 +13,30 @@ exports.task = function(request, response) {
   query.descending('score');
   query.find({
     success: function(results) {
-      var data, i;
+      var data, playerIndex;
 
-      i = 0;
-      while (results[i].id !== userId) {
-        i++;
+      playerIndex = 0;
+      if (results.length === 0) {
+        return response.success({
+          players: [],
+          total: 0
+        });
       }
+      _.find(results, function(user) {
+        playerIndex++;
+        return user.id === userId;
+      });
       data = {
         total: results.length
       };
-      if (i < 8) {
+      if (playerIndex < 8) {
         data.players = fetchUsers(results, 0, 9);
         return response.success(data);
-      } else if (i > results.length - 5) {
+      } else if (playerIndex > results.length - 5) {
         data.players = fetchUsers(results, 0, 2).concat(fetchUsers(results, results.length - 7, results.length - 1));
         return response.success(data);
       } else {
-        data.players = fetchUsers(results, 0, 2).concat(fetchUsers(results, i - 3, i + 3));
+        data.players = fetchUsers(results, 0, 2).concat(fetchUsers(results, playerIndex - 3, playerIndex + 3));
         return response.success(data);
       }
     },
@@ -38,21 +45,21 @@ exports.task = function(request, response) {
     }
   });
   return fetchUsers = function(users, minIndex, maxIndex) {
-    var i, players, user;
+    var index, players, user;
 
     return players = ((function() {
       var _i, _len, _results;
 
       _results = [];
-      for (i = _i = 0, _len = users.length; _i < _len; i = ++_i) {
-        user = users[i];
+      for (index = _i = 0, _len = users.length; _i < _len; index = ++_i) {
+        user = users[index];
         _results.push({
           username: user.get('username'),
           object_id: user.id,
           fb_id: user.get('fb_id'),
           score: user.get('score'),
           rank: userRank,
-          position: i + 1
+          position: index + 1
         });
       }
       return _results;
