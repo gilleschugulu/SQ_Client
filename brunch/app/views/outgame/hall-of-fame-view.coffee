@@ -82,7 +82,7 @@ module.exports = class HallOfFameView extends View
     for player, index in @players
       if options.percentages
         el.append @addPercentagesSeparatorLogic(options.percentages.sameIndex, options.percentages.downIndex, index, player.rank)
-      el.append @addRankSeparator(player, index)
+        el.append @addRankSeparator(player, index)
       el.append @newPlayerHTML(player, index)
 
     el.append @suggestFriends(friendsToInvite) if friendsToInvite
