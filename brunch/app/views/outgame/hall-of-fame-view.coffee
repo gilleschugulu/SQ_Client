@@ -33,7 +33,7 @@ module.exports = class HallOfFameView extends View
 
     # TODO : Use css : nth-child(1), 2 or 3
     # medailles
-    positionDiv = '<span class="rank">#' + player.position + '</span>'
+    positionDiv = '<span class="rank">' + player.position + '</span>'
     if player.position is 1
       positionDiv = '<div class="rank first"></div>'
     else if player.position is 2
