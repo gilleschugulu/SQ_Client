@@ -115,10 +115,10 @@
       height: 20%
       width: 20%
       .category
-        margin-left: 3%
+        margin-left: 4%
         height: 50%
         width: 100%
-        background-size:contain
+        background-size: contain
         background-repeat: no-repeat
         cursor: pointer
         margin-top: -0.9%
@@ -133,13 +133,8 @@
           background-image: url('../images/hall-of-fame/global.png')
           cursor: default
 
-    // Iphone 5
-    @media only screen and (min-device-width: 560px) and (max-device-width: 1136px) and (-webkit-min-device-pixel-ratio: 2)
-      .ranking-container
-        width: 78% !important
-    .ranking-container
-      overflow-y: scroll
-      -webkit-overflow-scrolling: touch
+    .ranking-container-image
+      overflow-y: hidden
       width: 75%
       height: 84%
       absolute: right 0% bottom 0%
@@ -147,130 +142,132 @@
       background-size: contain
       background-image: url('../images/hall-of-fame/box_classements.png')
       padding-top: 1%
-      #no-friends
-        width: 40%
-        height:20%
-        background-image: url('../images/hall-of-fame/invite.png')
-        background-size: contain
-        background-repeat: no-repeat
-        absolute: left 40% top 40%
-      #no-fb-connected
-        width: 40%
-        height:20%
-        background-image: url('../images/hall-of-fame/linkfb.png')
-        background-size: contain
-        background-repeat: no-repeat
-        absolute: left 30% top 40%
-      .rank_separator
-        width: 98%
-        height: 6%
-        margin-left: 0.7%
-        background-size: 100%
-        &.up
-          background-color: #4bbb00
-        &.stay
-          background-color: #747474
-        &.down
-          background-color: #c80000
-
-      .separator
-        width: 99%
-        height: 2%
-        margin-left: 1%
-        background-image: url('../images/hall-of-fame/line.png')
-        background-size: 100%
-      .redSeparator
+      // Iphone 5
+      @media only screen and (min-device-width: 560px) and (max-device-width: 1136px) and (-webkit-min-device-pixel-ratio: 2)
+        .ranking-container
+          width: 78% !important
+      .ranking-container
+        overflow-y: scroll
+        -webkit-overflow-scrolling: touch
         width: 100%
-        height: 2%
-        margin-left: 0%
-        background-color: rgb(226, 23, 23)
-      .div-ranking
-        margin-left: 0.7%
-        width: 98%
-        height: 9.5%
-        color: #4e4e4e
-        font-family: ramblabold
-        background-size: 100%
-        &.moreFriends
-          border: 1px solid rgb(226, 23, 23)
-          background-color: rgb(250, 245, 242)
-        &:nth-child(even)
-          background-color: #f5d0d0
-        &:nth-child(odd)
-          background-color: #fef8f8
-        .invite-btn
-          cursor: pointer
-          margin-top: 1%
-          position: absolute
-          right: 0%
-          width: 9%
-          height: 7%
-          background-image: url('../images/hall-of-fame/icon-feature-invite.png')
+        height: 98%
+        #no-friends
+          width: 40%
+          height:20%
+          background-image: url('../images/hall-of-fame/invite.png')
           background-size: contain
           background-repeat: no-repeat
-        .rank
-          width 14%
-          text-align: center
-          font-size: 0.7em
-          display: inline-block
-          absolute: left 0% right 0%
-          margin-top: 3%
-          &.first
-            left: 5%
-            margin-top: 0%
-            width: 5%
-            height: 9%
-            background-image: url('../images/hall-of-fame/rank_1.png')
-            background-size: contain
-            background-repeat: no-repeat
-          &.second
-            left: 5%
-            margin-top: 0%
-            width: 5%
-            height: 9%
-            background-image: url('../images/hall-of-fame/rank_2.png')
-            background-size: contain
-            background-repeat: no-repeat
-          &.third
-            left: 5%
-            margin-top: 0%
-            width: 5%
-            height: 9%
-            background-image: url('../images/hall-of-fame/rank_3.png')
-            background-size: contain
-            background-repeat: no-repeat
-        .profilepic
-          display: inline-block
-          absolute: left 13% right 0
-          margin-top: 0.5%
-          height:8%
-          width: 7%
-          -webkit-transform: translateZ(0px)
-        .username
-          display:inline-block
-          position: absolute
-          left: 25%
-          width: 30%
-          height: 5%
-          margin-top: 3%
-          font-size: 1em
-          color: #2b2b2b
-        .money
-          position: absolute
-          right: 25%
-          margin-top: 2%
-          font-size: 1.2em
-          width: 18%
-          text-align: center
-        .ask-friend
-          cursor: pointer
-          margin-top: 1%
-          position: absolute
-          right: 1%
-          width: 9%
-          height: 9%
-          background-image: url('../images/hall-of-fame/vie_toask.png')
+          absolute: left 40% top 40%
+        #no-fb-connected
+          width: 40%
+          height:20%
+          background-image: url('../images/hall-of-fame/linkfb.png')
           background-size: contain
           background-repeat: no-repeat
-          &.asked
-            background-image: url('../images/hall-of-fame/vie_asked.png')
+          absolute: left 30% top 40%
+        .rank_separator
+          width: 98%
+          height: 6%
+          margin-left: 0.7%
+          background-size: 100%
+          font-family: ramblabold
+          &.up
+            background-color: #4bbb00
+          &.stay
+            background-color: #747474
+          &.down
+            background-color: #c80000
+
+        .separator
+          width: 99%
+          height: 2%
+          margin-left: 1%
+          background-image: url('../images/hall-of-fame/line.png')
+          background-size: 100%
+        .redSeparator
+          width: 100%
+          height: 2%
+          margin-left: 0%
+          background-color: rgb(226, 23, 23)
+        .div-ranking
+          margin-left: 0.7%
+          width: 98%
+          height: 9.5%
+          color: #4e4e4e
+          font-family: ramblabold
+          background-size: 100%
+          &.moreFriends
+            border: 1px solid rgb(226, 23, 23)
+            background-color: rgb(250, 245, 242)
+          &:nth-child(even)
+            background-color: #f5d0d0
+          &:nth-child(odd)
+            background-color: #fef8f8
+          .invite-btn
+            cursor: pointer
+            margin-top: 1%
+            position: absolute
+            right: 0%
+            width: 9%
+            height: 7%
+            background-image: url('../images/hall-of-fame/icon-feature-invite.png')
+            background-size: contain
+            background-repeat: no-repeat
+          .rank
+            width 5%
+            text-align: center
+            font-size: 0.7em
+            display: inline-block
+            relative: left 5% right 0%
+            margin-top: 3%
+            bottom: 33%  // strange
+            &.icon
+              margin-top: 0%
+              height: 88%
+              background-size: contain
+              background-repeat: no-repeat
+              bottom: 0
+            &.first
+              background-image: url('../images/hall-of-fame/rank_1.png')
+            &.second
+              background-image: url('../images/hall-of-fame/rank_2.png')
+            &.third
+              background-image: url('../images/hall-of-fame/rank_3.png')
+          .profilepic
+            display: inline-block
+            relative: left 10% right 0
+            margin-top: 0.5%
+            height: 89%
+            width: 7%
+            -webkit-transform: translateZ(0px)
+          .username
+            display: inline-block !important
+            position: relative !important
+            left: 15%
+            height: 90%
+            width: 40%
+            bottom: 25%
+            font-size: 1em
+            color: #2b2b2b
+          .money
+            position: relative
+            display: inline-block
+            left: 25%
+            font-size: 1.2em
+            width: 18%
+            height: 90%
+            bottom: 25%
+            text-align: center
+          .ask-friend
+            cursor: pointer
+            margin-top: 1%
+            position: relative
+            right: 2%
+            width: 9%
+            height: 88%
+            background-image: url('../images/hall-of-fame/vie_toask.png')
+            background-size: contain
+            background-repeat: no-repeat
+            display: inline-block
+            &.asked
+              background-image: url('../images/hall-of-fame/vie_asked.png')

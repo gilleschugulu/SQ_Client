@@ -35,11 +35,11 @@ module.exports = class HallOfFameView extends View
     # medailles
     positionDiv = '<span class="rank">' + player.position + '</span>'
     if player.position is 1
-      positionDiv = '<div class="rank first"></div>'
+      positionDiv = '<div class="rank first icon"></div>'
     else if player.position is 2
-      positionDiv = '<div class="rank second"></div>'
+      positionDiv = '<div class="rank second icon"></div>'
     else if player.position is 3
-      positionDiv = '<div class="rank third"></div>'
+      positionDiv = '<div class="rank third icon"></div>'
 
     pic = if player.profilepic then player.profilepic else 'http://profile.ak.fbcdn.net/static-ak/rsrc.php/v2/yo/r/UlIqmHJn-SK.gif'
     '<div class="div-ranking">'+positionDiv+'<img class="profilepic" src="'+pic+'" width="'+@picSize+'" height="'+@picSize+'"/><span class="username resize">'+player.username+'</span><span class="money">'+player.jackpot+'</span>'+friend+'</div>'
