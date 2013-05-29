@@ -112,17 +112,18 @@ module.exports = class LoginController extends Controller
       # alert('email/username sont pas dispo')
       $("#sso-register-form input[name=email]", @view.$el).addClass 'invalid'
       $("#sso-register-form input[name=username]", @view.$el).addClass 'invalid'
-      console.error 'email/username sont pas dispo'
+      PopUpHelper.initialize {message: i18n.t('view.login.sso_equipe.invalid'), title: i18n.t('view.login.sso_equipe.error_title'), key: 'sso_equipe_invalid', info: no, confirmation: no}
     , (code, error) =>
       if code is LequipeSSOHelper.error.alreadyUsed.USER_NOT_FOUND
         # dispo
         $("#sso-register-form input[name=email]", @view.$el).removeClass 'invalid'
         $("#sso-register-form input[name=username]", @view.$el).removeClass 'invalid'
+        PopUpHelper.initialize {message: i18n.t('view.login.sso_equipe.user_not_found'), title: i18n.t('view.login.sso_equipe.error_title'), key: 'sso_equipe_invalid', info: no, confirmation: no}
       else if code is LequipeSSOHelper.error.alreadyUsed.USED_BY_ANOTHER_USER
         # alert('email/username sont pas dispo')
         $("#sso-register-form input[name=email]", @view.$el).addClass 'invalid'
         $("#sso-register-form input[name=username]", @view.$el).addClass 'invalid'
-        console.error 'email/username sont pas dispo'
+        PopUpHelper.initialize {message: i18n.t('view.login.sso_equipe.already_used'), title: i18n.t('view.login.sso_equipe.error_title'), key: 'sso_equipe_invalid', info: no, confirmation: no}
 
   validateForm: (formId) =>
     validationRules =

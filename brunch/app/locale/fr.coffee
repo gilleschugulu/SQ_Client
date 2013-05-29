@@ -45,7 +45,11 @@ module.exports =
           games_played_count: 'Nombres partie'
           best_row: 'Combo réponse'
           best_sport: 'Sport favori'
-
+      login:
+        error_title: 'Erreur'
+        sso_equipe_invalid: 'Le pseudo ou le mot de passe est invalide'
+        user_not_found: "Ce pseudo n'existe pas"
+        already_used: 'Ce pseudo ou cet email est déjà utilisé'
     helper:
       app_store_link: "http://itunes.apple.com/app/les-12-coups-de-midi/id584885677?mt=8"
       game_icon: "https://midi-preproduction.chugulu.com/assets/Icon-72@2x.png"
