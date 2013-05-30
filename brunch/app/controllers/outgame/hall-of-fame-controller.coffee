@@ -93,7 +93,6 @@ module.exports = class HallOfFameController extends Controller
       view.delegate 'click', '#no-fb-connected', @connectFacebook
       view.delegate 'click', '.invite-btn', @FacebookInvite
       view.delegate 'click', '.home-btn', @onClickHomeBtn
-      # @updateRanking() if @collection
     , {viewTransition: yes}
 
   onClickFriends: (e) =>

@@ -34,7 +34,7 @@ module.exports = class DupaView extends View
     $('.chrono-container .chrono-filler', @$el).css('top', progress + '%')
 
   updateCountdownTimer: (duration) ->
-    countdown = $('#countdown', @$el)
+    countdown = $('#countdown #countdown-value', @$el)
     duration = parseInt(duration)
 
     if duration > 0
@@ -43,8 +43,10 @@ module.exports = class DupaView extends View
       @dispayNewCountdownValue('GO !', countdown)
 
   dispayNewCountdownValue: (duration, countdown) ->
-    countdown = $('#countdown', @$el) unless countdown
+    countdown = $('#countdown #countdown-value', @$el) unless countdown
+    countdown_container = countdown.parent()
 
+    countdown_container.removeClass('hidden')
     countdown.html(duration).removeClass('hidden animated fadeIn')
     setTimeout -> 
       countdown.addClass('animated fadeIn')
