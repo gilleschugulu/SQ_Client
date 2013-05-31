@@ -1,3 +1,11 @@
+# This task should return a number of players (given by request.params.size)
+# An array of offsets is set. 
+# For each entry, we will make a request to seek the player after the given offset
+
+# By default, we will take the first user (offset 0)
+# If there is at least 2 users, we add an offset equal to number of users - 1. So last user.
+# It there is more than 2 users, we add people at regular interval
+
 exports.task = (request, response) ->
   tasks   = request.params.size
   players = []
