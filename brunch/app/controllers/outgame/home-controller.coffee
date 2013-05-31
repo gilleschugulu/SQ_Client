@@ -26,6 +26,7 @@ module.exports = class HomeController extends Controller
           # Track event
           AnalyticsHelper.trackEvent 'Splash', "ChartBoost Splash"
           ChartBoost.showInterstitial (response) =>
+            @checkReloadPlayer(user)
             @viewLoaded view
         , 1000
       else
@@ -142,3 +143,11 @@ module.exports = class HomeController extends Controller
       participants: players
 
     new TwoplusFriendsJournalView options
+
+  checkReloadPlayer: (user) ->
+    # Rank can changed at the end of "contest". Contest is updated every week.
+    # Refetch user if week change
+    if mediator.isStillSameWeek() is false
+      Parse.User.current().fetch
+        success: ->
+          console.log 'Player reloaded'

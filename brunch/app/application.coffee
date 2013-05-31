@@ -94,12 +94,21 @@ module.exports = class Application extends Chaplin.Application
     mediator.analytics = require 'helpers/analytics-helper'
     mediator.justLaunched = yes
     mediator.user = {}
+    mediator.setBeginDayOfWeek()
 
     mediator.setJustLaunched = (value) ->
       mediator.justLaunched = value
 
     mediator.setUser = (User) ->
       mediator.user = User
+
+    mediator.setBeginDayOfWeek = ->
+      dayOfWeek = (new Date()).getDay()   # Range between 0 and 6
+      mediator.dayOfWeek = dayOfWeek
+
+    mediator.isStillSameWeek = ->
+      dayOfWeek = (new Date()).getDay()
+      mediator.dayOfWeek is dayOfWeek
 
     # Seal the mediator
     mediator.seal()
