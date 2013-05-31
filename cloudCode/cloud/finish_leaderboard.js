@@ -22,7 +22,7 @@ exports.task = function(request, response) {
       allPlayers = [];
       for (rank in playersPerRank) {
         players = playersPerRank[rank];
-        players = utls.sortByScoreAndAlphabetic(players);
+        players = utils.sortByScoreAndAlphabetic(players);
         playersNumber = players.length;
         if (!(players.length > 0)) {
           continue;

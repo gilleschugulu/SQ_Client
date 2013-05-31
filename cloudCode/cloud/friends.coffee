@@ -15,10 +15,6 @@ exports.task = (request, response) ->
           results.push player
 
           results = utils.sortByScoreAndAlphabetic(results)
-          # results.sort (p1, p2) ->
-          #   deltaScore = p2.get('score') - p1.get('score')
-          #   return deltaScore unless deltaScore is 0
-          #   strcmpNoLength(p1.get('username').toLowerCase(), p2.get('username').toLowerCase())
 
           players = (for user, index in results
             {

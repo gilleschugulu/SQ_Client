@@ -15,7 +15,7 @@ exports.task = (request, response) ->
       allPlayers = []
 
       for rank, players of playersPerRank
-        players = utls.sortByScoreAndAlphabetic(players)
+        players = utils.sortByScoreAndAlphabetic(players)
 
         playersNumber = players.length
         continue unless players.length > 0
