@@ -76,26 +76,6 @@ module.exports = class Application extends Chaplin.Application
   # -------------------------------------
   initMediator: ->
     # Add additional application-specific properties and methods
-
-    # Create a user property
-    # response =
-        # player:
-          # uuid: 'e999f160-42dc-0130-e782-38ac6f13ffa4'
-          # credits: 50
-          # email: "pierre@chugulu.com"
-          # gender: "male"
-          # nickname: "pierre"
-          # notifications:
-            # decrease_rank: false
-            # info: false
-            # ranking: false
-
-    # mediator.user = new (require('models/outgame/user-model'))(response.player)
-    mediator.analytics = require 'helpers/analytics-helper'
-    mediator.justLaunched = yes
-    mediator.user = {}
-    mediator.setBeginDayOfWeek()
-
     mediator.setJustLaunched = (value) ->
       mediator.justLaunched = value
 
@@ -109,6 +89,11 @@ module.exports = class Application extends Chaplin.Application
     mediator.isStillSameWeek = ->
       dayOfWeek = (new Date()).getDay()
       mediator.dayOfWeek is dayOfWeek
+
+    mediator.analytics = require 'helpers/analytics-helper'
+    mediator.justLaunched = yes
+    mediator.user = {}
+    mediator.setBeginDayOfWeek()
 
     # Seal the mediator
     mediator.seal()
