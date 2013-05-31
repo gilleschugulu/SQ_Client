@@ -55,9 +55,9 @@ module.exports = class DupaStageController extends StageController
     @view.doubleScoreDeactivated() if @bonusDoubleUsed
 
     @timer.start()
-    @bonusFiftyFiftyUsed = no
     @bonusMassUsed = no
     @bonusDoubleUsed = no
+    @bonusFiftyFiftyUsed = no
     player = @model.getHumanPlayer()
     question = @model.getNextQuestion()
 

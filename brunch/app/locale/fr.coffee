@@ -100,7 +100,7 @@ module.exports =
       outgame:
         login:
           already_email: "Un email vient d'être envoyé à {0} avec le code a renseigner."
-          already_facebook: "Email déjà enregistré avec un compte facebook, on lance la connection facebook"
+          already_facebook: "Email déjà enregistré avec un compte facebook, on lance la connexion facebook"
         hall_of_fame:
           players_up_rank: 'Ils vont monter au niveau'
           players_stay_rank: 'Ils vont rester au niveau'
