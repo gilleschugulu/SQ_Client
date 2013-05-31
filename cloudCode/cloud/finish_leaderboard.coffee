@@ -1,40 +1,43 @@
-ranks_percentages = require('cloud/ranks_percentages.js')
+ranks_percentages = require('cloud/ranks_percentages.js').data
+utils = require('cloud/utilities.js')
 _ = require('underscore')
 
 exports.task = (request, response) ->
-  increaseUsersRank = (numberToKeep, users) ->
-    guys = _.first(users, numberToKeep)
-    for user in guys
-      user.increment('rank')
-    guys
-
-  decreaseUsersRank = (numberToKeep, users) ->
-    guys = _.last(users, numberToKeep)
-    for user in guys
-      user.increment('rank', -1)
-    guys
 
   query = new Parse.Query('User')
-  query.descending('score')
   query.find
     success: (results) ->
       Parse.Cloud.useMasterKey()
 
+      # We split players in different arrays, to avoid moving twice a player
       playersPerRank = _.groupBy results, (player) ->
         player.get('rank')
+      allPlayers = []
 
       for rank, players of playersPerRank
+        players = utls.sortByScoreAndAlphabetic(players)
+
         playersNumber = players.length
-        return unless players.length > 0
+        continue unless players.length > 0
 
         percents = ranks_percentages[rank - 1]
-        return unless percents
+        continue unless percents
 
-        if (number = Math.ceil(playersNumber * percents.up / 100)) > 0
-          uppedGuys = increaseUsersRank(number, players)
+        uppedNumber = Math.ceil(playersNumber * percents.up / 100)
+        downedNumber = Math.ceil(playersNumber * percents.down / 100)
+        uppedIndex = uppedNumber
+        downedIndex = playersNumber - downedNumber
 
-        if (number = Math.ceil(playersNumber * percents.down / 100)) > 0
-          downedGuys = decreaseUsersRank(number, players)
+        for user, index in players
+          if index < uppedIndex
+            user.increment('rank')
+          else if index > downedIndex
+            user.increment('rank', -1)
+          user.set('score', 0). set('game_row', 0)
+          allPlayers.push user
 
-        for user in players
-          user.set('score', 0).set('game_row', 0).save()
+      Parse.Object.saveAll allPlayers,
+        success: ->
+          response.success('ok')
+        error: ->
+          response.error('no')

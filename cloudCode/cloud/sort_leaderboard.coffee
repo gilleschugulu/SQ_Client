@@ -1,3 +1,4 @@
+utils = require('cloud/utilities.js')
 _ = require("underscore")
 
 exports.task = (request, response) ->
@@ -5,13 +6,15 @@ exports.task = (request, response) ->
   userId = request.params.userId
   query = new Parse.Query('User')
   query.equalTo('rank', userRank)
-  query.descending('score')
 
   query.find
     success: (results) ->
       playerIndex = 0
 
       return response.success({players: [], total: 0}) if results.length is 0
+
+      # Sort users by score AND username
+      results = utils.sortByScoreAndAlphabetic(results)
 
       _.find results, (user) ->
         playerIndex++
