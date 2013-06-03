@@ -69,12 +69,6 @@ module.exports = class GameController extends Controller
     @initPlayers()
     @loaded = yes
     callback()
-      # , (response) =>
-      #   @subscribeEvent 'popup:api-error:disposed', => @redirectTo 'home'
-      #   PopUpHelper.initialize
-      #     title  : i18n.t('helper.apiCall.error.title')
-      #     message: apiResponse.error.messages
-      #     key    : 'api-error'
 
   finishGame: =>
     human = @players[0]
@@ -90,21 +84,6 @@ module.exports = class GameController extends Controller
       GameCenter?.reportScore human.get('jackpot'), ConfigHelper.config.gamecenter.leaderboard
 
     @redirectToRoute "game-won", {jackpot: human.get('jackpot'), reward: 10, rank: human.get('rank')}
-
-    # TODO : Check 'dat : Contact Parse
-    # ApiCallHelper.send.gameFinish data
-    #   , (response) =>
-    #     console.log "SUCCESS", response
-    #     score = parseInt(response.jackpot, 10)
-    #     unless isNaN(score)
-    #       FacebookHelper.postScore score
-    #     totalScore = parseInt(response.total_jackpot, 10)
-    #     unless isNaN(totalScore)
-    #       GameCenter?.reportScore totalScore, ConfigHelper.config.gamecenter.leaderboard
-    #     @redirectToRoute "game-#{if !human.isEliminated() then 'won' else 'lost'}", {jackpot: human.get('jackpot'), reward: 10, rank: human.get('rank')}
-    #   , (response) =>
-    #     console.log "ERROR", response
-    #     @redirectToRoute "game-#{if !human.isEliminated() then 'won' else 'lost'}", {jackpot: human.get('jackpot'), reward: 10, rank: human.get('rank')}
 
   # Load next stage
   # --------------------
