@@ -16,17 +16,17 @@ module.exports = class HomeController extends Controller
 
   index: ->
     PushNotifications?.unblock() # display any queued notifications
+    user = Parse.User.current()
     @loadView 'home'
     , =>
-      user = Parse.User.current()
       new HomePageView {hearts: user.get('health'), credits: user.get('credits')}
     , (view) =>
       if mediator.justLaunched and ChartBoost?
         setTimeout =>
           # Track event
           AnalyticsHelper.trackEvent 'Splash', "ChartBoost Splash"
+          @checkReloadPlayer(user)
           ChartBoost.showInterstitial (response) =>
-            @checkReloadPlayer(user)
             @viewLoaded view
         , 1000
       else
