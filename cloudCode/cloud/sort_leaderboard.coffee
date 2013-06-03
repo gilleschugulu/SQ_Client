@@ -1,3 +1,5 @@
+ranks_percentages = require('cloud/ranks_percentages.js').data
+
 utils = require('cloud/utilities.js')
 _ = require("underscore")
 
@@ -8,40 +10,97 @@ exports.task = (request, response) ->
   query.equalTo('rank', userRank)
 
   query.find
+    error: ->
+      response.error()
     success: (results) ->
-      playerIndex = 0
-
       return response.success({players: [], total: 0}) if results.length is 0
 
       # Sort users by score AND username
       results = utils.sortByScoreAndAlphabetic(results)
 
+      # Calculate player position. Not perfect way to do it
+      playerIndex = 0
       _.find results, (user) ->
-        playerIndex++
-        user.id is userId
+        if !(res = user.id is userId)
+          playerIndex++
+        res
+        
 
-      data =
-        total: results.length
+      # Count number of players
+      playersNumber = results.length
+      return unless results.length > 0
 
-      if playerIndex < 8
-        data.players = fetchUsers(results, 0, 9)
-        response.success(data)
-      else if playerIndex > results.length - 5
-        data.players = fetchUsers(results, 0, 2).concat fetchUsers(results, results.length - 7, results.length - 1)
-        response.success(data)
+      # Get the correct rank percentage
+      percents = ranks_percentages[userRank - 1]
+      return unless percents
+
+      indexOfLastUpping = Math.ceil(playersNumber * percents.up / 100)
+      indexOfFirstDowning = playersNumber - Math.ceil(playersNumber * percents.down / 100)
+
+      # TODO : Comment !
+
+      ranges =
+        up: []
+        stay: []
+        down: []
+
+      if indexOfLastUpping > 9
+        ranges.up.push [0, 10]
+        ranges.up.push [indexOfLastUpping]
       else
-        data.players = (fetchUsers(results, 0, 2).concat fetchUsers(results, playerIndex - 3, playerIndex + 3))
-        response.success(data)
-    error: (results) ->
-      response.error('toto')
+        ranges.up.push [0, indexOfLastUpping]
 
-  fetchUsers = (users, minIndex, maxIndex) ->
-    players = (for user, index in users
-      {
-        username: user.get('username')
-        object_id: user.id
-        fb_id: user.get('fb_id')
-        score: user.get('score')
-        rank: userRank
-        position: index + 1
-      })[minIndex..maxIndex]
+      ranges.stay.push [indexOfLastUpping + 1]
+      ranges.stay.push [indexOfFirstDowning - 1]
+      ranges.down.push [indexOfFirstDowning]
+      ranges.down.push [playersNumber - 1]
+
+      if playerIndex < indexOfLastUpping
+        ranges.up.push [playerIndex]
+      else if playerIndex > indexOfFirstDowning
+        ranges.down.push [playerIndex]
+      else
+        ranges.stay.push [playerIndex]
+
+      players = fetchUsersRanges(results, ranges)
+
+      response.success({players: players, total: playersNumber})
+
+  fetchUsersRanges = (users, blocks) ->
+    players = []
+
+
+    for range_name, ranges of blocks
+      for range in ranges
+        if isNaN(range)
+          players.push(fetchAndParseUsers(users, range, range_name))
+        else
+          players.push(fetchAndParseUser(users, range, range_name))
+
+    players = _.flatten(players, true)
+
+    players = players.sort (p1, p2) ->
+      p1.position - p2.position
+
+    players
+
+  fetchAndParseUsers = (users, range, range_name) ->
+    for user, index in users[range[0]..range[1]]
+      user = parseUser(user, range[0] + index, range_name)
+      user
+
+  fetchAndParseUser = (users, range, range_name) ->
+    index = range[0]
+    user = parseUser(users[index], index, range_name)
+    user
+
+  parseUser = (user, position, range_name) ->
+    {
+      username: user.get('username')
+      object_id: user.id
+      fb_id: user.get('fb_id')
+      score: user.get('score')
+      rank: userRank
+      position: parseInt(position) + 1
+      range_name: range_name
+    }

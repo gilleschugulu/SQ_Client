@@ -24,19 +24,21 @@ module.exports = class HallOfFameController extends Controller
       if entry.username is user.get('username')
         playerPosition = index
       data = 
-        friend     : if entry.fb_id is user.get('fb_id') then false else withFriends
-        rank       : entry.rank
-        username   : entry.username
-        jackpot    : entry.score
-        id         : entry.fb_id
-        position   : entry.position
-        profilepic : if !!entry.fb_id then 'https://graph.facebook.com/' + entry.fb_id + '/picture' else null
+        friend      : if entry.fb_id is user.get('fb_id') then false else withFriends
+        rank        : entry.rank
+        username    : entry.username
+        jackpot     : entry.score
+        id          : entry.fb_id
+        position    : entry.position
+        range       : if withFriends is undefined else entry.range_name
+        profilepic  : if !!entry.fb_id then 'https://graph.facebook.com/' + entry.fb_id + '/picture' else null
 
     options = 
       fbConnected:    FacebookHelper.isLinked()
       playerPosition: playerPosition
 
-    options.percentages = @percentages if !withFriends
+    # options.percentages = @percentages if !withFriends
+    options.percentages = ['wq'] if !withFriends
 
     if withFriends and !options.fbConnected
       @view?.updateRankingListNotConnected()
@@ -46,18 +48,20 @@ module.exports = class HallOfFameController extends Controller
       @view?.updateRankingList players, @friendsToInvite, options
 
   fetchGlobalPlayers: ->
-    Parse.Cloud.run 'getAllScore' , {rank : @user.get('rank'), userId : @user.id},
+    Parse.Cloud.run 'getAllScore', {rank : @user.get('rank'), userId : @user.id},
       success: (results) =>
-        Parse.Cloud.run 'getRanksPercentages' , {rank : @user.get('rank')},
-          success: (percentages) =>
-            @globalPlayers = results.players
-            upNumber = Math.ceil(results.total * percentages.up / 100)
-            downNumber = Math.ceil(results.total * percentages.down / 100)
-            @percentages = 
-              sameIndex: upNumber
-              downIndex: upNumber + downNumber
-          error: ->
-      error: ->
+        console.log 'results'
+        console.log results
+        @globalPlayers = results.players
+
+        # Parse.Cloud.run 'getRanksPercentages' , {rank : @user.get('rank')},
+          # success: (percentages) =>
+          #   @globalPlayers = results.players
+          #   upNumber = Math.ceil(results.total * percentages.up / 100)
+          #   downNumber = Math.ceil(results.total * percentages.down / 100)
+          #   @percentages = 
+          #     sameIndex: upNumber
+          #     downIndex: upNumber + downNumber
 
   fetchFriends: ->
     FacebookHelper.getOtherFriends (friends) =>

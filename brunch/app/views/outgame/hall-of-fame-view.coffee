@@ -44,17 +44,26 @@ module.exports = class HallOfFameView extends View
     pic = if player.profilepic then player.profilepic else 'http://profile.ak.fbcdn.net/static-ak/rsrc.php/v2/yo/r/UlIqmHJn-SK.gif'
     '<div class="div-ranking">'+positionDiv+'<img class="profilepic" src="'+pic+'" width="'+@picSize+'" height="'+@picSize+'"/><span class="username resize">'+player.username+'</span><span class="money">'+player.jackpot+'</span>'+friend+'</div>'
 
-  addPercentagesSeparatorLogic: (sameIndex, downIndex, index, rank) ->
-    if index == 0
-      @addPercentagesSeparator('up', rank + 1)
-    else if index == sameIndex
-      @addPercentagesSeparator('stay', rank)
-    else if index == downIndex
-      @addPercentagesSeparator('down', rank - 1)
+  addRangesSeparatorLogic: (player, lastPlayer, rank) ->
+    console.log 'addRangesSeparatorLogic'
+    unless lastPlayer
+      @addRangeSeparator('up', rank + 1)
+    else
+      if player.range isnt lastPlayer.range
+        new_rank = if player.range is 'stay' then rank else rank - 1
+        @addRangeSeparator(player.range, new_rank)
+      else if player.position - lastPlayer.position > 1
+        @addSplitRangeSeparator(player.position - lastPlayer.position)
 
-  addPercentagesSeparator: (direction, rank)->
+  addRangeSeparator: (direction, rank)->
     msg = i18n.t("view.outgame.hall_of_fame.players_#{direction}_rank")
     "<div class='rank_separator #{direction}'>#{msg} #{rank}</div>"
+
+  addSplitRangeSeparator: (range) ->
+    text = '... ' + range + ' personne'
+    text += 's' if range > 1
+    text += ' ...'
+    "<div class='range_separator'>#{text}</div>"
 
   addRankSeparator: (player, position)->
     if position > 0
@@ -79,11 +88,14 @@ module.exports = class HallOfFameView extends View
   updateRankingList: (@players, friendsToInvite, options) ->
     el = $('.ranking-container', @$el).empty()
 
+    lastPlayer = null
     for player, index in @players
+      console.log 'Player', player.position, player.range, player
       if options.percentages
-        el.append @addPercentagesSeparatorLogic(options.percentages.sameIndex, options.percentages.downIndex, index, player.rank)
+        el.append @addRangesSeparatorLogic(player, lastPlayer, player.rank)
         el.append @addRankSeparator(player, index)
       el.append @newPlayerHTML(player, index)
+      lastPlayer = player
 
     el.append @suggestFriends(friendsToInvite) if friendsToInvite
     @scrollTo(options.playerPosition)
