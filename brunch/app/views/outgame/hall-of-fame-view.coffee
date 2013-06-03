@@ -90,8 +90,7 @@ module.exports = class HallOfFameView extends View
 
     lastPlayer = null
     for player, index in @players
-      console.log 'Player', player.position, player.range, player
-      if options.percentages
+      if player.range
         el.append @addRangesSeparatorLogic(player, lastPlayer, player.rank)
         el.append @addRankSeparator(player, index)
       el.append @newPlayerHTML(player, index)

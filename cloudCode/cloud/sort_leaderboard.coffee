@@ -45,7 +45,7 @@ exports.task = (request, response) ->
         down: []
 
       if indexOfLastUpping > 9
-        ranges.up.push [0, 10]
+        ranges.up.push [0, 9]
         ranges.up.push [indexOfLastUpping]
       else
         ranges.up.push [0, indexOfLastUpping]
@@ -78,7 +78,9 @@ exports.task = (request, response) ->
           players.push(fetchAndParseUser(users, range, range_name))
 
     players = _.flatten(players, true)
-
+    player = _.compact(players)
+    player = _.uniq players, no, (player) ->
+      player.position
     players = players.sort (p1, p2) ->
       p1.position - p2.position
 
@@ -86,12 +88,15 @@ exports.task = (request, response) ->
 
   fetchAndParseUsers = (users, range, range_name) ->
     for user, index in users[range[0]..range[1]]
+      continue unless user
       user = parseUser(user, range[0] + index, range_name)
       user
 
   fetchAndParseUser = (users, range, range_name) ->
     index = range[0]
-    user = parseUser(users[index], index, range_name)
+    user = users[index]
+    return unless user
+    user = parseUser(user, index, range_name)
     user
 
   parseUser = (user, position, range_name) ->

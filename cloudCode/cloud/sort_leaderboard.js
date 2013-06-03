@@ -53,7 +53,7 @@ exports.task = function(request, response) {
         down: []
       };
       if (indexOfLastUpping > 9) {
-        ranges.up.push([0, 10]);
+        ranges.up.push([0, 9]);
         ranges.up.push([indexOfLastUpping]);
       } else {
         ranges.up.push([0, indexOfLastUpping]);
@@ -69,10 +69,6 @@ exports.task = function(request, response) {
       } else {
         ranges.stay.push([playerIndex]);
       }
-      console.log({
-        msg: 'Ranges',
-        val: ranges
-      });
       players = fetchUsersRanges(results, ranges);
       return response.success({
         players: players,
@@ -81,7 +77,7 @@ exports.task = function(request, response) {
     }
   });
   fetchUsersRanges = function(users, blocks) {
-    var players, range, range_name, ranges, _i, _len;
+    var player, players, range, range_name, ranges, _i, _len;
 
     players = [];
     for (range_name in blocks) {
@@ -96,6 +92,10 @@ exports.task = function(request, response) {
       }
     }
     players = _.flatten(players, true);
+    player = _.compact(players);
+    player = _.uniq(players, false, function(player) {
+      return player.position;
+    });
     players = players.sort(function(p1, p2) {
       return p1.position - p2.position;
     });
@@ -108,6 +108,9 @@ exports.task = function(request, response) {
     _results = [];
     for (index = _i = 0, _len = _ref.length; _i < _len; index = ++_i) {
       user = _ref[index];
+      if (!user) {
+        continue;
+      }
       user = parseUser(user, range[0] + index, range_name);
       _results.push(user);
     }
@@ -117,7 +120,11 @@ exports.task = function(request, response) {
     var index, user;
 
     index = range[0];
-    user = parseUser(users[index], index, range_name);
+    user = users[index];
+    if (!user) {
+      return;
+    }
+    user = parseUser(user, index, range_name);
     return user;
   };
   return parseUser = function(user, position, range_name) {

@@ -37,9 +37,6 @@ module.exports = class HallOfFameController extends Controller
       fbConnected:    FacebookHelper.isLinked()
       playerPosition: playerPosition
 
-    # options.percentages = @percentages if !withFriends
-    options.percentages = ['wq'] if !withFriends
-
     if withFriends and !options.fbConnected
       @view?.updateRankingListNotConnected()
     else if withFriends and players.length <= 1
@@ -50,18 +47,10 @@ module.exports = class HallOfFameController extends Controller
   fetchGlobalPlayers: ->
     Parse.Cloud.run 'getAllScore', {rank : @user.get('rank'), userId : @user.id},
       success: (results) =>
-        console.log 'results'
-        console.log results
-        @globalPlayers = results.players
+        @globalPlayers = _.uniq results.players, (player) ->
+          player.position
 
-        # Parse.Cloud.run 'getRanksPercentages' , {rank : @user.get('rank')},
-          # success: (percentages) =>
-          #   @globalPlayers = results.players
-          #   upNumber = Math.ceil(results.total * percentages.up / 100)
-          #   downNumber = Math.ceil(results.total * percentages.down / 100)
-          #   @percentages = 
-          #     sameIndex: upNumber
-          #     downIndex: upNumber + downNumber
+
 
   fetchFriends: ->
     FacebookHelper.getOtherFriends (friends) =>
