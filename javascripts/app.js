@@ -62820,8 +62820,7 @@ window.require.define({"controllers/outgame/login-controller": function(exports,
           parse_attributes = User.prototype.defaults;
           parse_attributes.username = fb_attributes.name;
           parse_attributes.fb_id = fb_attributes.id;
-          Parse.User.current().set(parse_attributes).save();
-          return _this.bindPlayer();
+          return _this.bindPlayer(parse_attributes);
         });
       };
       error = function(response) {
@@ -62974,11 +62973,15 @@ window.require.define({"controllers/outgame/login-controller": function(exports,
       });
     };
 
-    LoginController.prototype.bindPlayer = function() {
+    LoginController.prototype.bindPlayer = function(user_set_attributes) {
       var _this = this;
       return Parse.User.current().fetch({
         success: function(user, user_attributes) {
           console.log('BindPlayer with user', user.get('username'));
+          if (user_set_attributes) {
+            _.merge(user_set_attributes, user_attributes);
+            user.set(user_set_attributes).save();
+          }
           mediator.setUser(user);
           _this.initPushNotifications();
           SpinnerHelper.stop();
@@ -67509,7 +67512,8 @@ window.require.define({"views/outgame/hall-of-fame-view": function(exports, requ
       var new_rank;
       console.log('addRangesSeparatorLogic');
       if (!lastPlayer) {
-        return this.addRangeSeparator('up', rank + 1);
+        new_rank = player.range === 'stay' ? rank : rank + 1;
+        return this.addRangeSeparator(player.range, new_rank);
       } else {
         if (player.range !== lastPlayer.range) {
           new_rank = player.range === 'stay' ? rank : rank - 1;
