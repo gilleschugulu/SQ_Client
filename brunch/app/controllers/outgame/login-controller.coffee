@@ -170,11 +170,9 @@ module.exports = class LoginController extends Controller
   bindPlayer: (user_set_attributes) =>
     Parse.User.current().fetch
       success: (user, user_attributes) =>
-        console.log 'BindPlayer with user', user.get('username')
-
         if user_set_attributes
-          _.extend user_set_attributes, user_attributes
-          user.set(user_set_attributes).save()
+          _.extend user_attributes, user_set_attributes
+          user.set(user_attributes).save()
 
         # Save user to mediator
         mediator.setUser user
