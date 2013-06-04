@@ -62599,7 +62599,7 @@ window.require.define({"controllers/outgame/home-controller": function(exports, 
       friendsId = _.pluck(friends, 'id');
       return Parse.Cloud.run('getFriendsScore', {
         friendsId: friendsId,
-        playerId: Parse.User.current().id
+        userId: Parse.User.current().id
       }, {
         success: function(players) {
           players.push(Parse.User.current().attributes);
