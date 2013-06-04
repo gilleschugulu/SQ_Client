@@ -62602,7 +62602,6 @@ window.require.define({"controllers/outgame/home-controller": function(exports, 
         userId: Parse.User.current().id
       }, {
         success: function(players) {
-          players.push(Parse.User.current().attributes);
           players = players.sort(function(f1, f2) {
             return f2.score - f1.score;
           });
