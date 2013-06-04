@@ -62652,8 +62652,11 @@ window.require.define({"controllers/outgame/home-controller": function(exports, 
     };
 
     HomeController.prototype.getTwoplusFriendsJournalView = function(players) {
-      var name, options, rank, title;
-      rank = _.indexOf(players, Parse.User.current().attributes) + 1;
+      var name, options, rank, title, userId;
+      userId = Parse.User.current().id;
+      rank = _.find(players, function(player) {
+        return player.object_id === userId;
+      }).position;
       name = Parse.User.current().get('username');
       if (rank < 4) {
         title = i18n.t("controller.home.journal.twoplus.rank_" + rank, name);
