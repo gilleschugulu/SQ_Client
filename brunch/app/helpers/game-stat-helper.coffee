@@ -91,7 +91,7 @@ module.exports = class GameStatHelper
     return I18n.t('helper.stats.no_best_sport') if _.keys(sports = @getAllSports(yes)).length == 0
     best_sport = _.max sports, (sport) ->
       sport.percent
-    best_sport.name
+    best_sport.name?.substring(0, 12)
 
   @getAllSports: (numeric) ->
     sports = @getStats().sports
