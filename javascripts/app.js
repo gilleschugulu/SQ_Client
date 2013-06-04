@@ -64469,14 +64469,14 @@ window.require.define({"helpers/game-stat-helper": function(exports, require, mo
     };
 
     GameStatHelper.getBestSport = function() {
-      var best_sport, sports;
+      var best_sport, sports, _ref;
       if (_.keys(sports = this.getAllSports(true)).length === 0) {
         return I18n.t('helper.stats.no_best_sport');
       }
       best_sport = _.max(sports, function(sport) {
         return sport.percent;
       });
-      return best_sport.name.substring(0, 12);
+      return (_ref = best_sport.name) != null ? _ref.substring(0, 12) : void 0;
     };
 
     GameStatHelper.getAllSports = function(numeric) {
