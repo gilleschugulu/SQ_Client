@@ -62981,7 +62981,7 @@ window.require.define({"controllers/outgame/login-controller": function(exports,
         success: function(user, user_attributes) {
           console.log('BindPlayer with user', user.get('username'));
           if (user_set_attributes) {
-            _.merge(user_set_attributes, user_attributes);
+            _.extend(user_set_attributes, user_attributes);
             user.set(user_set_attributes).save();
           }
           mediator.setUser(user);
