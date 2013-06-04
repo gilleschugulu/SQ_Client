@@ -55,7 +55,7 @@ exports.task = function(request, response) {
       if (indexOfLastUpping > 9) {
         ranges.up.push([0, 9]);
         ranges.up.push([indexOfLastUpping]);
-      } else {
+      } else if (indexOfLastUpping > 0) {
         ranges.up.push([0, indexOfLastUpping]);
       }
       ranges.stay.push([indexOfLastUpping + 1]);

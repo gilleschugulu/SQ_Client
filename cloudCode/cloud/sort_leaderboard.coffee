@@ -44,14 +44,17 @@ exports.task = (request, response) ->
         stay: []
         down: []
 
+      # Up people
       if indexOfLastUpping > 9
         ranges.up.push [0, 9]
         ranges.up.push [indexOfLastUpping]
-      else
+      else if indexOfLastUpping > 0
         ranges.up.push [0, indexOfLastUpping]
 
+      # Stay people
       ranges.stay.push [indexOfLastUpping + 1]
       ranges.stay.push [indexOfFirstDowning - 1]
+      # Down people
       ranges.down.push [indexOfFirstDowning]
       ranges.down.push [playersNumber - 1]
 
@@ -74,7 +77,7 @@ exports.task = (request, response) ->
         if isNaN(range)
           players.push(fetchAndParseUsers(users, range, range_name))
         else
-          players.push(fetchAndParseUser(users, range, range_name))
+          players.push( fetchAndParseUser(users, range, range_name))
 
     players = _.flatten(players, true)
     players = _.compact(players)

@@ -47,7 +47,8 @@ module.exports = class HallOfFameView extends View
   addRangesSeparatorLogic: (player, lastPlayer, rank) ->
     console.log 'addRangesSeparatorLogic'
     unless lastPlayer
-      @addRangeSeparator('up', rank + 1)
+      new_rank = if player.range is 'stay' then rank else rank + 1
+      @addRangeSeparator(player.range, new_rank)
     else
       if player.range isnt lastPlayer.range
         new_rank = if player.range is 'stay' then rank else rank - 1
