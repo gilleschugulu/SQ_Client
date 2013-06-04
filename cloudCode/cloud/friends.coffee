@@ -1,4 +1,5 @@
 utils = require('cloud/utilities.js')
+_ = require("underscore")
 
 exports.task = (request, response) ->
   playerId = request.params.userId
@@ -14,6 +15,8 @@ exports.task = (request, response) ->
         success: (results) ->
           results.push player
 
+          results = _.uniq results, no, (user) ->
+            user.id
           results = utils.sortByScoreAndAlphabetic(results)
 
           players = (for user, index in results

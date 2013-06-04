@@ -50,8 +50,6 @@ module.exports = class HallOfFameController extends Controller
         @globalPlayers = _.uniq results.players, (player) ->
           player.position
 
-
-
   fetchFriends: ->
     FacebookHelper.getOtherFriends (friends) =>
       FacebookHelper.getFriends (friends) =>

@@ -69,7 +69,6 @@ exports.task = (request, response) ->
   fetchUsersRanges = (users, blocks) ->
     players = []
 
-
     for range_name, ranges of blocks
       for range in ranges
         if isNaN(range)
@@ -78,8 +77,8 @@ exports.task = (request, response) ->
           players.push(fetchAndParseUser(users, range, range_name))
 
     players = _.flatten(players, true)
-    player = _.compact(players)
-    player = _.uniq players, no, (player) ->
+    players = _.compact(players)
+    players = _.uniq players, no, (player) ->
       player.position
     players = players.sort (p1, p2) ->
       p1.position - p2.position

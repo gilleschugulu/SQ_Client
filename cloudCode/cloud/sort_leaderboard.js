@@ -77,7 +77,7 @@ exports.task = function(request, response) {
     }
   });
   fetchUsersRanges = function(users, blocks) {
-    var player, players, range, range_name, ranges, _i, _len;
+    var players, range, range_name, ranges, _i, _len;
 
     players = [];
     for (range_name in blocks) {
@@ -92,8 +92,8 @@ exports.task = function(request, response) {
       }
     }
     players = _.flatten(players, true);
-    player = _.compact(players);
-    player = _.uniq(players, false, function(player) {
+    players = _.compact(players);
+    players = _.uniq(players, false, function(player) {
       return player.position;
     });
     players = players.sort(function(p1, p2) {
