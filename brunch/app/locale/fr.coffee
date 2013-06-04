@@ -12,7 +12,7 @@ module.exports =
           error: "Le facteur s'est perdu"
         journal:
           twoplus:
-            rank_1 : '{0} est numero uno'
+            rank_1 : '{0} est numero un'
             rank_2 : '{0} y est presque'
             rank_3 : '{0} décroche le bronze'
             rank_n : '{0} n\'est qu\'a la position {1}'
