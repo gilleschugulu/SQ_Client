@@ -62822,9 +62822,6 @@ window.require.define({"controllers/outgame/login-controller": function(exports,
           parse_attributes = User.prototype.defaults;
           parse_attributes.username = fb_attributes.name;
           parse_attributes.fb_id = fb_attributes.id;
-          console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
-          console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
-          console.log('parse_attributes', parse_attributes);
           return _this.bindPlayer(parse_attributes);
         });
       };
@@ -62982,16 +62979,8 @@ window.require.define({"controllers/outgame/login-controller": function(exports,
       var _this = this;
       return Parse.User.current().fetch({
         success: function(user, user_attributes) {
-          console.log('BindPlayer with user', user.get('username'));
           if (user_set_attributes) {
-            console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
-            console.log('user_attributes', user_attributes);
             _.extend(user_attributes, user_set_attributes);
-            console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
-            console.log('user_set_attributes', user_set_attributes);
-            console.log('user_attributes', user_attributes);
-            console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
-            console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
             user.set(user_attributes).save();
           }
           mediator.setUser(user);
@@ -66672,7 +66661,7 @@ window.require.define({"models/outgame/user-model": function(exports, require, m
       uuid: null,
       avatar: null,
       credits: 50,
-      rank: 6,
+      rank: 1,
       score: 0,
       health: 25,
       game_row: 0,
