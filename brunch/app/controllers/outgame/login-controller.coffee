@@ -13,6 +13,7 @@ config              = require 'config/environment-config'
 SpinnerHelper       = require 'helpers/spinner-helper'
 LequipeSSOHelper    = require 'helpers/lequipe-sso-helper'
 ConfigHelper        = require 'helpers/config-helper'
+_                   = require 'underscore'
 
 module.exports = class LoginController extends Controller
   historyURL: ''
@@ -68,8 +69,7 @@ module.exports = class LoginController extends Controller
         parse_attributes.username = fb_attributes.name
         parse_attributes.fb_id = fb_attributes.id
 
-        Parse.User.current().set(parse_attributes).save()
-        @bindPlayer()
+        @bindPlayer(parse_attributes)
 
     error = (response) =>
       SpinnerHelper.stop()
@@ -167,10 +167,14 @@ module.exports = class LoginController extends Controller
 
   # Save player in the mediator and uuid in localStorage
   # ----------------------------------------------------
-  bindPlayer: =>
+  bindPlayer: (user_set_attributes) =>
     Parse.User.current().fetch
       success: (user, user_attributes) =>
         console.log 'BindPlayer with user', user.get('username')
+
+        if user_set_attributes
+          _.extend user_set_attributes, user_attributes
+          user.set(user_set_attributes).save()
 
         # Save user to mediator
         mediator.setUser user
