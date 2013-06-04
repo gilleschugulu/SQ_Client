@@ -62986,14 +62986,13 @@ window.require.define({"controllers/outgame/login-controller": function(exports,
           if (user_set_attributes) {
             console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
             console.log('user_attributes', user_attributes);
-            setTimeout(function() {
-              _.extend(user_set_attributes, user_attributes);
-              console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
-              console.log('user_set_attributes', user_set_attributes);
-              console.log('user_attributes', user_attributes);
-              console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
-              return console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
-            });
+            _.extend(user_attributes, user_set_attributes);
+            console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
+            console.log('user_set_attributes', user_set_attributes);
+            console.log('user_attributes', user_attributes);
+            console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
+            console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
+            user.set(user_attributes).save();
           }
           mediator.setUser(user);
           _this.initPushNotifications();
