@@ -59,7 +59,6 @@ module.exports = class HomeController extends Controller
       # Error callback, if facebook fail. Nothing to display. Retry ?
       @view?.setJournalMessage('error')
 
-
   onClickFacebook: =>
     FacebookHelper.getOtherFriends (friends) =>
       # Check if everyone is invited

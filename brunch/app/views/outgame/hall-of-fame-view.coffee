@@ -45,7 +45,6 @@ module.exports = class HallOfFameView extends View
     '<div class="div-ranking">'+positionDiv+'<img class="profilepic" src="'+pic+'" width="'+@picSize+'" height="'+@picSize+'"/><span class="username resize">'+player.username+'</span><span class="money">'+player.jackpot+'</span>'+friend+'</div>'
 
   addRangesSeparatorLogic: (player, lastPlayer, rank) ->
-    console.log 'addRangesSeparatorLogic'
     unless lastPlayer
       new_rank = if player.range is 'stay' then rank else rank + 1
       @addRangeSeparator(player.range, new_rank)
