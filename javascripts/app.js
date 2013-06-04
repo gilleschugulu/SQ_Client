@@ -62987,6 +62987,7 @@ window.require.define({"controllers/outgame/login-controller": function(exports,
             console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
             console.log('user_attributes', user_attributes);
             setTimeout(function() {
+              _.extend(user_set_attributes, user_attributes);
               console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
               console.log('user_set_attributes', user_set_attributes);
               console.log('user_attributes', user_attributes);
