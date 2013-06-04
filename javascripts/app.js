@@ -62981,8 +62981,16 @@ window.require.define({"controllers/outgame/login-controller": function(exports,
         success: function(user, user_attributes) {
           console.log('BindPlayer with user', user.get('username'));
           if (user_set_attributes) {
+            console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
+            console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
+            console.log('user_set_attributes', user_set_attributes);
+            console.log('user_attributes', user_attributes);
             _.extend(user_set_attributes, user_attributes);
-            user.set(user_set_attributes).save();
+            console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
+            console.log('user_set_attributes', user_set_attributes);
+            console.log('user_attributes', user_attributes);
+            console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
+            console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
           }
           mediator.setUser(user);
           _this.initPushNotifications();
@@ -67512,7 +67520,6 @@ window.require.define({"views/outgame/hall-of-fame-view": function(exports, requ
 
     HallOfFameView.prototype.addRangesSeparatorLogic = function(player, lastPlayer, rank) {
       var new_rank;
-      console.log('addRangesSeparatorLogic');
       if (!lastPlayer) {
         new_rank = player.range === 'stay' ? rank : rank + 1;
         return this.addRangeSeparator(player.range, new_rank);
