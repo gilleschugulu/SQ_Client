@@ -3583,10 +3583,10 @@ Handlebars.template = Handlebars.VM.template;
 
 var BuildVersion = {
   version     : '',
-  commit      : 'f9b8e0454a75a3d1545ff114b301891f96deccfe',
-  shortCommit : 'f9b8e04',
+  commit      : '7da98bdc4f31bf8a5225ec91441c233f07b05785',
+  shortCommit : '7da98bd',
   branch      : 'develop',
-  time        : '2013-06-04 10:08',
+  time        : '2013-06-05 08:55',
   author      : 'Pierre Boutbel',
 
   getCommitLink: function() {
@@ -62848,7 +62848,6 @@ window.require.define({"controllers/outgame/login-controller": function(exports,
         f = form[_i];
         params[f.name] = f.value;
       }
-      console.log(params);
       LequipeSSOHelper.login(params, function(user) {
         return _this.loginToParse(user, params);
       }, function(status, error) {
@@ -62869,7 +62868,6 @@ window.require.define({"controllers/outgame/login-controller": function(exports,
         f = form[_i];
         params[f.name] = f.value;
       }
-      console.log(params);
       LequipeSSOHelper.register(params, function(user) {
         return _this.loginToParse(user, params);
       }, function(status, error) {
@@ -62975,13 +62973,22 @@ window.require.define({"controllers/outgame/login-controller": function(exports,
       });
     };
 
-    LoginController.prototype.bindPlayer = function(user_set_attributes) {
+    LoginController.prototype.bindPlayer = function(parse_attributes) {
       var _this = this;
       return Parse.User.current().fetch({
         success: function(user, user_attributes) {
-          if (user_set_attributes) {
-            _.extend(user_attributes, user_set_attributes);
-            user.set(user_attributes).save();
+          var a, e, r;
+          if (parse_attributes) {
+            a = {};
+            for (e in user_attributes) {
+              r = user_attributes[e];
+              a[e] = r;
+            }
+            for (e in parse_attributes) {
+              r = parse_attributes[e];
+              a[e] = r;
+            }
+            user.set(a).save();
           }
           mediator.setUser(user);
           _this.initPushNotifications();
@@ -66007,7 +66014,7 @@ window.require.define({"locale/fr": function(exports, require, module) {
           },
           journal: {
             twoplus: {
-              rank_1: '{0} est numero uno',
+              rank_1: '{0} est numero un',
               rank_2: '{0} y est presque',
               rank_3: '{0} décroche le bronze',
               rank_n: '{0} n\'est qu\'a la position {1}'
