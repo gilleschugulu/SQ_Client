@@ -64092,8 +64092,14 @@ window.require.define({"helpers/facebook-helper": function(exports, require, mod
         });
       } else {
         return Parse.FacebookUtils.logIn(scope, {
-          success: success,
-          error: error
+          success: function() {
+            console.log('Parse.FacebookUtils.logIn web');
+            console.log(arguments);
+            return success();
+          },
+          error: function() {
+            return error();
+          }
         });
       }
     };
