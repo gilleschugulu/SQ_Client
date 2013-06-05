@@ -23,8 +23,10 @@ module.exports = class FacebookHelper
               expiration_date: new Date(response.authResponse.expirationTime).toISOString()
 
             Parse.FacebookUtils.logIn params,
-              success: =>
-                success()
+              success: (res, user_attributes) =>
+                console.log 'Parse.FacebookUtils.logIn'
+                console.log arguments
+                success(user_attributes)
               error: =>
                 error(response)
         else
@@ -32,7 +34,13 @@ module.exports = class FacebookHelper
       , {scope})
 
     else
-      Parse.FacebookUtils.logIn(scope, {success, error})
+      Parse.FacebookUtils.logIn scope,
+        success: (res, user_attributes) ->
+          console.log 'Parse.FacebookUtils.logIn web'
+          console.log arguments
+          success(user_attributes)
+        , error: ->
+          error()
 
   # Friends invite request
   # ----------------------

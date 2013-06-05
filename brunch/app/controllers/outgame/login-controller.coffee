@@ -63,13 +63,16 @@ module.exports = class LoginController extends Controller
   loginWithFacebook: =>
     AnalyticsHelper.trackEvent 'Login', 'Login with facebook'
 
-    success = (response) =>
-      FacebookHelper.getPersonalInfo (fb_attributes) =>
-        parse_attributes = User.prototype.defaults
-        parse_attributes.username = fb_attributes.name
-        parse_attributes.fb_id = fb_attributes.id
-
+    success = (user_attributes) =>
+      if user_attributes.bonus
         @bindPlayer(parse_attributes)
+      else
+        FacebookHelper.getPersonalInfo (fb_attributes) =>
+          parse_attributes = User.prototype.defaults
+          parse_attributes.username = fb_attributes.name
+          parse_attributes.fb_id = fb_attributes.id
+
+          @bindPlayer(parse_attributes)
 
     error = (response) =>
       SpinnerHelper.stop()
@@ -83,7 +86,6 @@ module.exports = class LoginController extends Controller
     form = $('#sso-login-form', @view.$el).serializeArray()
     params = {}
     params[f.name] = f.value for f in form
-    console.log params
     LequipeSSOHelper.login params, (user) =>
       @loginToParse user, params
     , (status, error) ->
@@ -96,7 +98,6 @@ module.exports = class LoginController extends Controller
     form = $('#sso-register-form', @view.$el).serializeArray()
     params = {}
     params[f.name] = f.value for f in form
-    console.log params
     LequipeSSOHelper.register params, (user) =>
       @loginToParse user, params
     , (status, error) ->
@@ -167,12 +168,17 @@ module.exports = class LoginController extends Controller
 
   # Save player in the mediator and uuid in localStorage
   # ----------------------------------------------------
-  bindPlayer: (user_set_attributes) =>
+  bindPlayer: (parse_attributes) =>
     Parse.User.current().fetch
       success: (user, user_attributes) =>
-        if user_set_attributes
-          _.extend user_attributes, user_set_attributes
-          user.set(user_attributes).save()
+        if parse_attributes
+          attr = {}
+          for k, v of user_attributes
+            attr[k] = v
+          for k, v of parse_attributes
+            attr[k] = v
+
+          user.set(attr).save()
 
         # Save user to mediator
         mediator.setUser user
@@ -214,4 +220,3 @@ module.exports = class LoginController extends Controller
             headers    : ConfigHelper.config.services.parse.headers
         # pushData.uuid = mediator.user.get('uuid')
         # ApiCallHelper.send.registerPushToken pushData
-
