@@ -62816,14 +62816,18 @@ window.require.define({"controllers/outgame/login-controller": function(exports,
       var error, success,
         _this = this;
       AnalyticsHelper.trackEvent('Login', 'Login with facebook');
-      success = function(response) {
-        return FacebookHelper.getPersonalInfo(function(fb_attributes) {
-          var parse_attributes;
-          parse_attributes = User.prototype.defaults;
-          parse_attributes.username = fb_attributes.name;
-          parse_attributes.fb_id = fb_attributes.id;
+      success = function(user_attributes) {
+        if (user_attributes.bonus) {
           return _this.bindPlayer(parse_attributes);
-        });
+        } else {
+          return FacebookHelper.getPersonalInfo(function(fb_attributes) {
+            var parse_attributes;
+            parse_attributes = User.prototype.defaults;
+            parse_attributes.username = fb_attributes.name;
+            parse_attributes.fb_id = fb_attributes.id;
+            return _this.bindPlayer(parse_attributes);
+          });
+        }
       };
       error = function(response) {
         SpinnerHelper.stop();
@@ -64074,10 +64078,10 @@ window.require.define({"helpers/facebook-helper": function(exports, require, mod
                 expiration_date: new Date(response.authResponse.expirationTime).toISOString()
               };
               return Parse.FacebookUtils.logIn(params, {
-                success: function() {
+                success: function(res, user_attributes) {
                   console.log('Parse.FacebookUtils.logIn');
                   console.log(arguments);
-                  return success();
+                  return success(user_attributes);
                 },
                 error: function() {
                   return error(response);
@@ -64092,10 +64096,10 @@ window.require.define({"helpers/facebook-helper": function(exports, require, mod
         });
       } else {
         return Parse.FacebookUtils.logIn(scope, {
-          success: function() {
+          success: function(res, user_attributes) {
             console.log('Parse.FacebookUtils.logIn web');
             console.log(arguments);
-            return success();
+            return success(user_attributes);
           },
           error: function() {
             return error();
