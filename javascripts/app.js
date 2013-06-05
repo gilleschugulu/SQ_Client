@@ -64075,6 +64075,8 @@ window.require.define({"helpers/facebook-helper": function(exports, require, mod
               };
               return Parse.FacebookUtils.logIn(params, {
                 success: function() {
+                  console.log('Parse.FacebookUtils.logIn');
+                  console.log(arguments);
                   return success();
                 },
                 error: function() {
