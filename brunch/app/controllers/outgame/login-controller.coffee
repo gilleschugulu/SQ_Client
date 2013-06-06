@@ -163,6 +163,7 @@ module.exports = class LoginController extends Controller
         view.closeForms()
       view.delegate 'click', '#equipe-login', ->
         view.openForms()
+
     , {viewTransition: yes}
 
 
@@ -194,7 +195,6 @@ module.exports = class LoginController extends Controller
   redirectHome: =>
     @redirectTo 'home'
 
-  # TODO : Adapth this with Parse (get token and call an api to store it)
   initPushNotifications: ->
     if PushNotifications?
       PushNotifications.configure
