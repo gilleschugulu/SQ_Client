@@ -145,6 +145,10 @@ module.exports = class DupaView extends View
     blockEl.append("<div class='highlighted'></div>")
     $('.highlighted', blockEl).addClass('animated fadeIn')
 
+    if (jackpotMarker = $('#jackpot-marker', el)).hasClass('hidden')
+      jackpotMarker.removeClass('hidden').addClass('animated bounceIn').one 'webkitAnimationEnd', ->
+        jackpotMarker.removeClass('animated bounceIn')
+
     @updateJackpotMarker(currentThresholdIndex, result?.result)
 
   # Update the jackpot marker. Move both block and arrow
