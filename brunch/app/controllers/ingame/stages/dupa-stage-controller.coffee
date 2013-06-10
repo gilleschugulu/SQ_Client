@@ -29,7 +29,7 @@ module.exports = class DupaStageController extends StageController
     GameStatHelper.incrementGamesPlayedCount()
     super
     @view.unDim =>
-      @countdownTimer.schedule(3, 0, =>
+      @countdownTimer.schedule(@model.getConfigValue('timeCountdown'), 0, =>
         @view.hideCountdownValue()
         @afterCountdown()
       ).start()
