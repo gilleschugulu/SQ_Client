@@ -10,6 +10,8 @@
   &.iphone5
     .hall-of-fame-page
       background: none
+    #btn_HoF
+      left: 8.7%
 
 .hall-of-fame-page
   width: 100%
@@ -139,13 +141,9 @@
       height: 84%
       absolute: right 0% bottom 0%
       background-repeat: no-repeat
-      background-size: contain
+      background-size: cover
       background-image: url('../images/hall-of-fame/box_classements.png')
       padding-top: 1%
-      // Iphone 5
-      @media only screen and (min-device-width: 560px) and (max-device-width: 1136px) and (-webkit-min-device-pixel-ratio: 2)
-        .ranking-container
-          width: 78% !important
       .ranking-container
         overflow-y: scroll
         -webkit-overflow-scrolling: touch

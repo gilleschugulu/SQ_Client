@@ -40,6 +40,31 @@
   &.iphone5
     .dupa-page
       background: none
+    .bonus-container
+      top: 83.5%
+    .threshold
+      padding: 18% 4% !important
+      .highlighted
+        width: 107% !important
+        height: 105% !important
+        top: 24% !important
+        left: 0% !important
+
+#countdown
+  absolute: top 0% left 0%
+  width: 100%
+  height: 100%
+  text-align: center
+  font-family: grilled
+  z-index: 5000
+  background-color: rgba(0, 0, 0, 0.3)
+  #countdown-value
+    absolute: top 22% left 0
+    color: #c80000
+    font-size: 15em
+    stroke(black)
+    width: 100%
+
 
 .dupa-stage
   position: relative
@@ -57,21 +82,6 @@
     background-repeat: no-repeat
     background-size: contain
     cursor: pointer
-
-  #countdown
-    absolute: top 0% left 0%
-    width: 100%
-    height: 100%
-    text-align: center
-    font-family: grilled
-    z-index: 5000
-    background-color: rgba(0, 0, 0, 0.3)
-    #countdown-value
-      absolute: top 22% left 0
-      color: #c80000
-      font-size: 15em
-      stroke(black)
-      width: 100%
 
   .chrono-container
     absolute: top 17% left 7%
@@ -288,15 +298,6 @@
           height: 105%
           top: 9%
           left: 2%
-    // Iphone 5
-    @media only screen and (min-device-width: 560px) and (max-device-width: 1136px) and (-webkit-min-device-pixel-ratio: 2)
-      .threshold
-        padding: 12% 0
-        .highlighted
-          width: 102%
-          height: 105%
-          top: -4%
-          left: 0%
 
     #jackpot-marker
       absolute: top 91% left 68%
