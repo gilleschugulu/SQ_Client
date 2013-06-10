@@ -3841,14 +3841,14 @@ body.box-align {
 .credits {
   width: 100%;
   height: 100%;
-  background: #fff;
+  background-image: url("../images/common/background.png");
 }
 .credits .background {
-  width: 100%;
-  height: 100%;
+  width: 86%;
+  height: 73%;
   position: absolute;
-  left: 0%;
-  top: 0%;
+  left: 7%;
+  top: 4%;
   background-image: url("../images/credits/credits.png");
   -webkit-background-size: contain;
   -moz-background-size: contain;
