@@ -35,10 +35,7 @@ module.exports = class DupaView extends View
 
   updateCountdownTimer: (duration) ->
     countdown = $('#countdown #countdown-value', (@$el).parent())
-    if countdown.length is 0
-      countdown = '<div id="countdown" class="hidden"><div id="countdown-value"></div></div>'
-      (@$el).parent().prepend(countdown)
-      countdown = $('#countdown #countdown-value', (@$el).parent())
+    countdown = @initCountdownTimer() if countdown.length is 0
 
     duration = parseInt(duration)
 
@@ -46,6 +43,15 @@ module.exports = class DupaView extends View
       @dispayNewCountdownValue(duration, countdown)
     else if duration is 0
       @dispayNewCountdownValue('GO !', countdown)
+
+  initCountdownTimer: ->
+    div = '<div id="countdown">'
+    div += '<div id="countdown-container">'
+    div += '<div id="countdown-value"></div>'
+    div += '</div>'
+    div += '</div>'
+    (@$el).parent().prepend(div)
+    $('#countdown #countdown-value', (@$el).parent())
 
   dispayNewCountdownValue: (duration, countdown) ->
     countdown = $('#countdown #countdown-value', @$el) unless countdown
