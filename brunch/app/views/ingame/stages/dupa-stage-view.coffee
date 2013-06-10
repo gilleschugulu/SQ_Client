@@ -34,7 +34,12 @@ module.exports = class DupaView extends View
     $('.chrono-container .chrono-filler', @$el).css('top', progress + '%')
 
   updateCountdownTimer: (duration) ->
-    countdown = $('#countdown #countdown-value', @$el)
+    countdown = $('#countdown #countdown-value', (@$el).parent())
+    if countdown.length is 0
+      countdown = '<div id="countdown" class="hidden"><div id="countdown-value"></div></div>'
+      (@$el).parent().prepend(countdown)
+      countdown = $('#countdown #countdown-value', (@$el).parent())
+
     duration = parseInt(duration)
 
     if duration > 0
