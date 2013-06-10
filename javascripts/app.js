@@ -3302,8 +3302,8 @@ PxLoader.prototype.addImage = function(url, tags, priority) {
 };;
 
 var AssetsList = {
-  assets: { '': ["images/placeholder.png"],
-'common/': ["images/common/background.png", "images/common/close.png", "images/common/close_a.png", "images/common/facebook-default.jpg", "images/common/home.png"],
+  assets: { 'common/': ["images/common/background.png", "images/common/close.png", "images/common/close_a.png", "images/common/facebook-default.jpg", "images/common/home.png"],
+'credits/': ["images/credits/credits.png"],
 'game-over/': ["images/game-over/high_score.png", "images/game-over/replay.png", "images/game-over/replay_a.png", "images/game-over/score.png", "images/game-over/small-background.png", "images/game-over/title.png"],
 'hall-of-fame/': ["images/hall-of-fame/amis.png", "images/hall-of-fame/amis_inactive.png", "images/hall-of-fame/background.png", "images/hall-of-fame/box_classements.png", "images/hall-of-fame/global.png", "images/hall-of-fame/global_inactive.png", "images/hall-of-fame/icon-feature-invite.png", "images/hall-of-fame/invite.png", "images/hall-of-fame/line.png", "images/hall-of-fame/linkfb.png", "images/hall-of-fame/rank1.png", "images/hall-of-fame/rank2.png", "images/hall-of-fame/rank3.png", "images/hall-of-fame/rank_1.png", "images/hall-of-fame/rank_2.png", "images/hall-of-fame/rank_3.png", "images/hall-of-fame/rankadversaire.png", "images/hall-of-fame/tournoi.png", "images/hall-of-fame/vie_asked.png", "images/hall-of-fame/vie_toask.png"],
 'home/+2amis/': ["images/home/+2amis/inviter.png", "images/home/+2amis/inviter_a.png", "images/home/+2amis/ranking.png", "images/home/+2amis/ranking_a.png", "images/home/+2amis/title.png"],
@@ -3583,10 +3583,10 @@ Handlebars.template = Handlebars.VM.template;
 
 var BuildVersion = {
   version     : '',
-  commit      : '7da98bdc4f31bf8a5225ec91441c233f07b05785',
-  shortCommit : '7da98bd',
+  commit      : '235a951674931aefa2e9dd57505050a3a46bffc6',
+  shortCommit : '235a951',
   branch      : 'develop',
-  time        : '2013-06-05 08:55',
+  time        : '2013-06-10 16:47',
   author      : 'Pierre Boutbel',
 
   getCommitLink: function() {
@@ -61349,7 +61349,8 @@ window.require.define({"config/stages/dupa-stage-config": function(exports, requ
     stage: {
       answerTime: 99,
       thresholds: [100, 200, 300, 400, 500, 1000, 2000, 3000, 4000, 5000],
-      timeBonus: 10
+      timeBonus: 10,
+      timeCountdown: 3
     },
     player: {}
   };
@@ -61996,7 +61997,7 @@ window.require.define({"controllers/ingame/stages/dupa-stage-controller": functi
       GameStatHelper.incrementGamesPlayedCount();
       DupaStageController.__super__.start.apply(this, arguments);
       return this.view.unDim(function() {
-        return _this.countdownTimer.schedule(3, 0, function() {
+        return _this.countdownTimer.schedule(_this.model.getConfigValue('timeCountdown'), 0, function() {
           _this.view.hideCountdownValue();
           return _this.afterCountdown();
         }).start();
@@ -62855,7 +62856,16 @@ window.require.define({"controllers/outgame/login-controller": function(exports,
       LequipeSSOHelper.login(params, function(user) {
         return _this.loginToParse(user, params);
       }, function(status, error) {
-        return console.log("LOGIN ERROR", status, error);
+        console.log({
+          msg: "LOGIN ERROR",
+          status: status,
+          error: error
+        });
+        return PopUpHelper.initialize({
+          message: i18n.t('helper.sso_equipe.error.login'),
+          title: i18n.t('helper.apiCall.error.title'),
+          key: 'error-login'
+        });
       });
       return false;
     };
@@ -62875,7 +62885,27 @@ window.require.define({"controllers/outgame/login-controller": function(exports,
       LequipeSSOHelper.register(params, function(user) {
         return _this.loginToParse(user, params);
       }, function(status, error) {
-        return console.log("LOGIN ERROR", status, error);
+        var error_msg;
+        console.log({
+          msg: "REGISTER ERROR",
+          status: status,
+          error: error
+        });
+        error_msg = (function() {
+          switch (error.description) {
+            case 'ERROR EMAIL':
+              return 'wrong_email';
+          }
+        })();
+        console.log({
+          msg: 'error msg',
+          error_msg: error_msg
+        });
+        return PopUpHelper.initialize({
+          message: i18n.t('helper.sso_equipe.error.connection'),
+          title: i18n.t('helper.apiCall.error.title'),
+          key: 'error-connection'
+        });
       });
       return false;
     };
@@ -62891,35 +62921,14 @@ window.require.define({"controllers/outgame/login-controller": function(exports,
       }
       return LequipeSSOHelper.alreadyUsed(params, function(user) {
         $("#sso-register-form input[name=email]", _this.view.$el).addClass('invalid');
-        $("#sso-register-form input[name=username]", _this.view.$el).addClass('invalid');
-        return PopUpHelper.initialize({
-          message: i18n.t('view.login.sso_equipe.invalid'),
-          title: i18n.t('view.login.sso_equipe.error_title'),
-          key: 'sso_equipe_invalid',
-          info: false,
-          confirmation: false
-        });
+        return $("#sso-register-form input[name=username]", _this.view.$el).addClass('invalid');
       }, function(code, error) {
         if (code === LequipeSSOHelper.error.alreadyUsed.USER_NOT_FOUND) {
           $("#sso-register-form input[name=email]", _this.view.$el).removeClass('invalid');
-          $("#sso-register-form input[name=username]", _this.view.$el).removeClass('invalid');
-          return PopUpHelper.initialize({
-            message: i18n.t('view.login.sso_equipe.user_not_found'),
-            title: i18n.t('view.login.sso_equipe.error_title'),
-            key: 'sso_equipe_invalid',
-            info: false,
-            confirmation: false
-          });
+          return $("#sso-register-form input[name=username]", _this.view.$el).removeClass('invalid');
         } else if (code === LequipeSSOHelper.error.alreadyUsed.USED_BY_ANOTHER_USER) {
           $("#sso-register-form input[name=email]", _this.view.$el).addClass('invalid');
-          $("#sso-register-form input[name=username]", _this.view.$el).addClass('invalid');
-          return PopUpHelper.initialize({
-            message: i18n.t('view.login.sso_equipe.already_used'),
-            title: i18n.t('view.login.sso_equipe.error_title'),
-            key: 'sso_equipe_invalid',
-            info: false,
-            confirmation: false
-          });
+          return $("#sso-register-form input[name=username]", _this.view.$el).addClass('invalid');
         }
       });
     };
@@ -62981,18 +62990,18 @@ window.require.define({"controllers/outgame/login-controller": function(exports,
       var _this = this;
       return Parse.User.current().fetch({
         success: function(user, user_attributes) {
-          var a, e, r;
+          var attr, k, v;
           if (parse_attributes) {
-            a = {};
-            for (e in user_attributes) {
-              r = user_attributes[e];
-              a[e] = r;
+            attr = {};
+            for (k in user_attributes) {
+              v = user_attributes[k];
+              attr[k] = v;
             }
-            for (e in parse_attributes) {
-              r = parse_attributes[e];
-              a[e] = r;
+            for (k in parse_attributes) {
+              v = parse_attributes[k];
+              attr[k] = v;
             }
-            user.set(a).save();
+            user.set(attr).save();
           }
           mediator.setUser(user);
           _this.initPushNotifications();
@@ -66111,6 +66120,12 @@ window.require.define({"locale/fr": function(exports, require, module) {
             api: 'Une erreur est survenue. {0}.'
           }
         },
+        sso_equipe: {
+          error: {
+            connection: "Erreur lors de la connexion",
+            login: "Erreur lors de l'inscription"
+          }
+        },
         purchase: {
           apple: {
             cancel: {
@@ -67087,13 +67102,32 @@ window.require.define({"views/ingame/stages/dupa-stage-view": function(exports, 
 
     DupaView.prototype.updateCountdownTimer = function(duration) {
       var countdown;
-      countdown = $('#countdown #countdown-value', this.$el);
       duration = parseInt(duration);
+      console.log('updateCountdownTimer');
+      countdown = $('#countdown #countdown-value', this.$el.parent());
+      if (countdown.length === 0 && duration > 0) {
+        countdown = this.initCountdownTimer();
+      }
       if (duration > 0) {
         return this.dispayNewCountdownValue(duration, countdown);
       } else if (duration === 0) {
         return this.dispayNewCountdownValue('GO !', countdown);
+      } else {
+        console.log('countdown.remove()');
+        return countdown.remove();
       }
+    };
+
+    DupaView.prototype.initCountdownTimer = function() {
+      var div;
+      console.log('initCountdownTimer');
+      div = '<div id="countdown">';
+      div += '<div id="countdown-container">';
+      div += '<div id="countdown-value"></div>';
+      div += '</div>';
+      div += '</div>';
+      this.$el.parent().prepend(div);
+      return $('#countdown #countdown-value', this.$el.parent());
     };
 
     DupaView.prototype.dispayNewCountdownValue = function(duration, countdown) {
@@ -67192,7 +67226,7 @@ window.require.define({"views/ingame/stages/dupa-stage-view": function(exports, 
     };
 
     DupaView.prototype.updateJackpot = function(jackpot, currentThresholdValue, options) {
-      var blockEl, currentThresholdIndex, el;
+      var blockEl, currentThresholdIndex, el, jackpotMarker;
       if (options == null) {
         options = {};
       }
@@ -67209,6 +67243,11 @@ window.require.define({"views/ingame/stages/dupa-stage-view": function(exports, 
       blockEl.addClass('highlighted');
       blockEl.append("<div class='highlighted'></div>");
       $('.highlighted', blockEl).addClass('animated fadeIn');
+      if ((jackpotMarker = $('#jackpot-marker', el)).hasClass('hidden')) {
+        jackpotMarker.removeClass('hidden').addClass('animated bounceIn').one('webkitAnimationEnd', function() {
+          return jackpotMarker.removeClass('animated bounceIn');
+        });
+      }
       return this.updateJackpotMarker(currentThresholdIndex, typeof result !== "undefined" && result !== null ? result.result : void 0);
     };
 
@@ -68448,7 +68487,7 @@ window.require.define({"views/templates/ingame/stages/dupa-stage": function(expo
     buffer += escapeExpression(depth0) + "</span></div>\n  ";
     return buffer;}
 
-    buffer += "<div class=\"btn-menu\"></div>\n\n<div class='chrono-container'>\n  <div class='chrono-chrono'></div>\n  <div class='chrono-time'></div>\n  <div class='chrono-filler-container'>\n    <div class='chrono-filler'></div>\n  </div>\n</div>\n\n<div id='countdown' class='hidden'>\n  <div id='countdown-value'></div>\n</div>\n\n<div class='question-container'>\n  <div class='question-photo'></div>\n  <div class='question-theme-container'>\n    <div class='question-theme resize'></div>\n  </div>\n  <div class='question-content-container'>\n    <div class='question-content resize'></div>\n  </div>\n  <div class='question-propositions-container'>\n  </div>\n</div>\n\n<div class='bonus-container'>\n  ";
+    buffer += "<div class=\"btn-menu\"></div>\n\n<div class='chrono-container'>\n  <div class='chrono-chrono'></div>\n  <div class='chrono-time'></div>\n  <div class='chrono-filler-container'>\n    <div class='chrono-filler'></div>\n  </div>\n</div>\n\n<div class='question-container'>\n  <div class='question-photo'></div>\n  <div class='question-theme-container'>\n    <div class='question-theme resize'></div>\n  </div>\n  <div class='question-content-container'>\n    <div class='question-content resize'></div>\n  </div>\n  <div class='question-propositions-container'>\n  </div>\n</div>\n\n<div class='bonus-container'>\n  ";
     stack1 = depth0.bonus;
     stack1 = helpers.each.call(depth0, stack1, {hash:{},inverse:self.noop,fn:self.program(1, program1, data)});
     if(stack1 || stack1 === 0) { buffer += stack1; }
@@ -68456,7 +68495,7 @@ window.require.define({"views/templates/ingame/stages/dupa-stage": function(expo
     stack1 = depth0.thresholds;
     stack1 = helpers.each.call(depth0, stack1, {hash:{},inverse:self.noop,fn:self.program(3, program3, data)});
     if(stack1 || stack1 === 0) { buffer += stack1; }
-    buffer += "\n  <div id='jackpot-marker'>\n</div>\n";
+    buffer += "\n  <div id='jackpot-marker' class='hidden'>\n</div>\n";
     return buffer;});
 }});
 
@@ -68596,7 +68635,7 @@ window.require.define({"views/templates/outgame/journal/no-friends-journal": fun
     stack1 = depth0.fb_id;
     stack1 = helpers['if'].call(depth0, stack1, {hash:{},inverse:self.program(3, program3, data),fn:self.program(1, program1, data)});
     if(stack1 || stack1 === 0) { buffer += stack1; }
-    buffer += "\n</div>\n<div id='message'>joue a sport quiz mais n'a toujours pas d'amis !</div>\n<a id='invite-btn'></a>\n<div id='countdown'>\n  <span id='days' class='number'>00</span>\n  <span id='hours' class='number'>00</span>\n  <span id='minutes' class='number'>00</span>\n</div>\n<div id='ranking'>\n  ";
+    buffer += "\n</div>\n<div id='message'>joue a sport quiz mais n'a toujours pas d'amis !</div>\n<a id='invite-btn'></a>\n<div id='countdown-contest'>\n  <span id='days' class='number'>00</span>\n  <span id='hours' class='number'>00</span>\n  <span id='minutes' class='number'>00</span>\n</div>\n<div id='ranking'>\n  ";
     stack1 = depth0.participants;
     stack1 = helpers.each.call(depth0, stack1, {hash:{},inverse:self.noop,fn:self.program(5, program5, data)});
     if(stack1 || stack1 === 0) { buffer += stack1; }

@@ -3849,7 +3849,7 @@ body.box-align {
   position: absolute;
   left: 0%;
   top: 0%;
-  background-image: url("../images/placeholder.png");
+  background-image: url("../images/credits/credits.png");
   -webkit-background-size: contain;
   -moz-background-size: contain;
   background-size: contain;
@@ -3934,6 +3934,15 @@ body.box-align {
 }
 #global-container.iphone5 .hall-of-fame-page {
   background: none;
+}
+#global-container.iphone5 #btn_HoF {
+  left: 9.2%;
+}
+#global-container.iphone5 .div-ranking {
+  width: 98.8%;
+}
+#global-container.iphone5 .rank-separator {
+  width: 98.8%;
 }
 .hall-of-fame-page {
   width: 100%;
@@ -4119,16 +4128,11 @@ body.box-align {
   right: 0%;
   bottom: 0%;
   background-repeat: no-repeat;
-  -webkit-background-size: contain;
-  -moz-background-size: contain;
-  background-size: contain;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  background-size: cover;
   background-image: url("../images/hall-of-fame/box_classements.png");
   padding-top: 1%;
-}
-@media only screen and (min-device-width: 560px) and (max-device-width: 1136px) and (-webkit-min-device-pixel-ratio: 2) {
-  .hall-of-fame-page .content-container .ranking-container-image .ranking-container {
-    width: 78% !important;
-  }
 }
 .hall-of-fame-page .content-container .ranking-container-image .ranking-container {
   overflow-y: scroll;
@@ -4322,6 +4326,20 @@ body.box-align {
   bottom: 0;
   right: -10%;
 }
+#global-container.iphone5 #countdown-contest .number {
+  letter-spacing: 0.25em;
+  font-size: 0.8em;
+  bottom: 10%;
+}
+#global-container.iphone5 #countdown-contest #days {
+  margin-left: 50.3%;
+}
+#global-container.iphone5 #countdown-contest #hours {
+  margin-left: 4%;
+}
+#global-container.iphone5 #countdown-contest #minutes {
+  margin-left: 4%;
+}
 #numbers {
   width: 100%;
   height: 6%;
@@ -4511,7 +4529,7 @@ body.box-align {
   -moz-background-size: 100% 100%;
   background-size: 100% 100%;
 }
-.home-page .journal-container.no-friends #countdown {
+.home-page .journal-container.no-friends #countdown-contest {
   width: 73.5%;
   height: 9%;
   position: absolute;
@@ -4524,7 +4542,7 @@ body.box-align {
   -moz-background-size: contain;
   background-size: contain;
 }
-.home-page .journal-container.no-friends #countdown .number {
+.home-page .journal-container.no-friends #countdown-contest .number {
   position: relative;
   display: inline-block;
   height: 90%;
@@ -4532,17 +4550,17 @@ body.box-align {
   font-weight: bold;
   letter-spacing: 0.3em;
 }
-.home-page .journal-container.no-friends #countdown #days {
+.home-page .journal-container.no-friends #countdown-contest #days {
   margin-left: 50.4%;
 }
-.home-page .journal-container.no-friends #countdown #hours {
+.home-page .journal-container.no-friends #countdown-contest #hours {
   margin-left: 1%;
 }
-.home-page .journal-container.no-friends #countdown #minutes {
+.home-page .journal-container.no-friends #countdown-contest #minutes {
   margin-left: 1.5%;
 }
 @media screen and (min-width: 960px) and (max-width: 1023px) {
-  .home-page .journal-container.no-friends #countdown {
+  .home-page .journal-container.no-friends #countdown-contest {
     padding-top: 2.5%;
   }
 }
@@ -5100,6 +5118,68 @@ body.box-align {
 #global-container.iphone5 .dupa-page {
   background: none;
 }
+#global-container.iphone5 .bonus-container {
+  top: 83.5%;
+}
+#global-container.iphone5 .threshold {
+  padding: 18% 4% !important;
+}
+#global-container.iphone5 .threshold .highlighted {
+  width: 107% !important;
+  height: 105% !important;
+  top: 24% !important;
+  left: 0% !important;
+}
+#global-container.iphone5 .btn-menu {
+  left: -5%;
+}
+#global-container.iphone5 .chrono-container {
+  left: -5%;
+}
+#global-container.iphone5 .jackpot-container {
+  left: 90%;
+}
+#global-container.iphone5 .question-container {
+  top: 6%;
+  left: 12%;
+  width: 75%;
+  height: 77%;
+}
+#countdown {
+  position: absolute;
+  top: 0%;
+  left: 0%;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  font-family: grilled;
+  z-index: 5000;
+  background-color: rgba(0,0,0,0.5);
+}
+#countdown #countdown-container {
+  position: relative;
+  top: 13%;
+  left: 14%;
+  width: 72%;
+  height: 80%;
+  background-image: url("../images/pause/popup.png");
+  background-repeat: no-repeat;
+  -webkit-background-size: contain;
+  -moz-background-size: contain;
+  background-size: contain;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+#countdown #countdown-container #countdown-value {
+  color: #c80000;
+  font-size: 15em;
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  text-align: center;
+  top: 15%;
+}
 .dupa-stage {
   position: relative;
   width: 100%;
@@ -5123,26 +5203,6 @@ body.box-align {
   -moz-background-size: contain;
   background-size: contain;
   cursor: pointer;
-}
-.dupa-stage #countdown {
-  position: absolute;
-  top: 0%;
-  left: 0%;
-  width: 100%;
-  height: 100%;
-  text-align: center;
-  font-family: grilled;
-  z-index: 5000;
-  background-color: rgba(0,0,0,0.3);
-}
-.dupa-stage #countdown #countdown-value {
-  position: absolute;
-  top: 22%;
-  left: 0;
-  color: #c80000;
-  font-size: 15em;
-  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
-  width: 100%;
 }
 .dupa-stage .chrono-container {
   position: absolute;
@@ -5464,17 +5524,6 @@ body.box-align {
     height: 105%;
     top: 9%;
     left: 2%;
-  }
-}
-@media only screen and (min-device-width: 560px) and (max-device-width: 1136px) and (-webkit-min-device-pixel-ratio: 2) {
-  .dupa-stage .jackpot-container .threshold {
-    padding: 12% 0;
-  }
-  .dupa-stage .jackpot-container .threshold .highlighted {
-    width: 102%;
-    height: 105%;
-    top: -4%;
-    left: 0%;
   }
 }
 .dupa-stage .jackpot-container #jackpot-marker {
@@ -6642,9 +6691,9 @@ body.box-align {
   height: 100%;
   position: relative;
   background-repeat: no-repeat;
-  -webkit-background-size: contain;
-  -moz-background-size: contain;
-  background-size: contain;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  background-size: cover;
   cursor: pointer;
 }
 .shop-page .tabs-container #credits {
