@@ -64196,6 +64196,9 @@ window.require.define({"helpers/facebook-helper": function(exports, require, mod
           message: message,
           to: [friend]
         }, function(response) {
+          if (!response.to) {
+            return;
+          }
           user.set("fb_invited", _.uniq(response.to.concat(user.get('fb_invited'))));
           if (giveLife) {
             Parse.Cloud.run('giveLife', {
