@@ -3583,10 +3583,10 @@ Handlebars.template = Handlebars.VM.template;
 
 var BuildVersion = {
   version     : '',
-  commit      : '235a951674931aefa2e9dd57505050a3a46bffc6',
-  shortCommit : '235a951',
+  commit      : '685bf03f4d7f1e9161a9c0562d99d99c6eb4616d',
+  shortCommit : '685bf03',
   branch      : 'develop',
-  time        : '2013-06-10 16:47',
+  time        : '2013-06-11 14:17',
   author      : 'Pierre Boutbel',
 
   getCommitLink: function() {
@@ -62250,6 +62250,7 @@ window.require.define({"controllers/outgame/hall-of-fame-controller": function(e
 
     HallOfFameController.prototype.displayPlayers = function(withFriends) {
       var options, playerPosition, players, ranking, user, _ref, _ref1, _ref2;
+      console.log('will display players');
       ranking = withFriends ? this.friendsPlayers : this.globalPlayers;
       players = [];
       playerPosition = 0;
@@ -64176,6 +64177,10 @@ window.require.define({"helpers/facebook-helper": function(exports, require, mod
       if (giveLife == null) {
         giveLife = false;
       }
+      console.log({
+        mtd: 'friendRequestTo',
+        arg: arguments
+      });
       doRequest = function() {
         var user,
           _this = this;
@@ -64189,7 +64194,7 @@ window.require.define({"helpers/facebook-helper": function(exports, require, mod
         return FB.ui({
           method: 'apprequests',
           message: message,
-          to: friend
+          to: [friend]
         }, function(response) {
           user.set("fb_invited", _.uniq(response.to.concat(user.get('fb_invited'))));
           if (giveLife) {
@@ -67218,11 +67223,9 @@ window.require.define({"views/ingame/stages/dupa-stage-view": function(exports, 
     };
 
     DupaView.prototype.playQuestionSound = function(currentThresholdIndex, result) {
-      if (result) {
-        return SoundHelper.play('good_answer_' + currentThresholdIndex);
-      } else {
-        return SoundHelper.play('wrong_answer');
-      }
+      var key;
+      key = result ? 'good_answer_' + currentThresholdIndex : 'wrong_answer';
+      return SoundHelper.play(key);
     };
 
     DupaView.prototype.updateJackpot = function(jackpot, currentThresholdValue, options) {
@@ -67269,6 +67272,9 @@ window.require.define({"views/ingame/stages/dupa-stage-view": function(exports, 
     DupaView.prototype.updateBonus = function(targetElement, quantity, callback) {
       targetElement = $(targetElement, this.$el);
       $('.quantity', targetElement).html(quantity);
+      targetElement.addClass('animated bounceIn').one('webkitAnimationEnd', function() {
+        return targetElement.removeClass('animated bounceIn');
+      });
       return typeof callback === "function" ? callback() : void 0;
     };
 

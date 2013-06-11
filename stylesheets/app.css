@@ -3842,13 +3842,16 @@ body.box-align {
   width: 100%;
   height: 100%;
   background-image: url("../images/common/background.png");
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  background-size: cover;
 }
 .credits .background {
   width: 86%;
   height: 73%;
   position: absolute;
-  left: 7%;
-  top: 4%;
+  left: 11%;
+  top: 8%;
   background-image: url("../images/credits/credits.png");
   -webkit-background-size: contain;
   -moz-background-size: contain;
@@ -3943,6 +3946,11 @@ body.box-align {
 }
 #global-container.iphone5 .rank-separator {
   width: 98.8%;
+}
+@media screen and (min-width: 1024px) {
+  #global-container .ranking-container-image {
+    padding-top: 0.6%;
+  }
 }
 .hall-of-fame-page {
   width: 100%;
@@ -4122,23 +4130,23 @@ body.box-align {
 }
 .hall-of-fame-page .content-container .ranking-container-image {
   overflow-y: hidden;
-  width: 75%;
+  width: 77%;
   height: 84%;
   position: absolute;
-  right: 0%;
+  right: -2%;
   bottom: 0%;
   background-repeat: no-repeat;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   background-size: cover;
   background-image: url("../images/hall-of-fame/box_classements.png");
-  padding-top: 1%;
+  padding-top: 0.5%;
 }
 .hall-of-fame-page .content-container .ranking-container-image .ranking-container {
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
   width: 100%;
-  height: 98%;
+  height: 100%;
 }
 .hall-of-fame-page .content-container .ranking-container-image .ranking-container #no-friends {
   width: 40%;
@@ -4165,7 +4173,7 @@ body.box-align {
   top: 40%;
 }
 .hall-of-fame-page .content-container .ranking-container-image .ranking-container .rank_separator {
-  width: 98%;
+  width: 98.8%;
   height: 6%;
   margin-left: 0.7%;
   padding-left: 3%;
@@ -4177,7 +4185,7 @@ body.box-align {
   color: #fff;
 }
 .hall-of-fame-page .content-container .ranking-container-image .ranking-container .range_separator {
-  width: 98%;
+  width: 98.8%;
   height: 6%;
   margin-left: 0.7%;
   -webkit-background-size: 100%;
@@ -4205,7 +4213,7 @@ body.box-align {
 }
 .hall-of-fame-page .content-container .ranking-container-image .ranking-container .div-ranking {
   margin-left: 0.7%;
-  width: 98%;
+  width: 98.8%;
   height: 9.5%;
   color: #4e4e4e;
   font-family: ramblabold;
@@ -5145,6 +5153,10 @@ body.box-align {
   width: 75%;
   height: 77%;
 }
+#global-container.iphone5 #countdown-container {
+  left: 18%;
+  width: 65%;
+}
 #countdown {
   position: absolute;
   top: 0%;
@@ -5159,8 +5171,8 @@ body.box-align {
 #countdown #countdown-container {
   position: relative;
   top: 13%;
-  left: 14%;
-  width: 72%;
+  left: 15%;
+  width: 74%;
   height: 80%;
   background-image: url("../images/pause/popup.png");
   background-repeat: no-repeat;
