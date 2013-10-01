@@ -47,7 +47,7 @@ module.exports = class HomeController extends Controller
 
     FacebookHelper.getFriends (friends) =>
       @getJournalView friends, =>
-        @view?.setJournalMessage('touch')
+        @view?.setJournalMessage('touch', yes)
 
       # All these links are present on the journal
       @view.delegate 'click', '#equipe-btn', =>

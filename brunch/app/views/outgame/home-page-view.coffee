@@ -21,5 +21,9 @@ module.exports = class HomePageView extends View
     @subview('journal').autoSizeText()
     @subview('journal').appear()
 
-  setJournalMessage: (key) ->
+  setJournalMessage: (key, fadeOut) ->
     $('#touch-me').text(I18n.t('controller.home.touch_me.' + key))
+    if fadeOut
+      setTimeout ->
+        $('#touch-me').animate {opacity:0}, 500
+      , 3000
