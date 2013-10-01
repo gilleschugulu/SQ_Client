@@ -58,7 +58,7 @@
   #logo
     width: 38%
     height: 37%
-    absolute: top 12% right 10%
+    absolute: top 12% right 6%
     background-image: url(../images/home/common/logo.png)
     background-size: contain
     background-repeat: no-repeat
@@ -467,7 +467,7 @@
   #menu
     width: 31%
     height: 50%
-    absolute: top 49% right 13%
+    absolute: top 49% right 10%
     .item
       display: block
       cursor: pointer
@@ -509,3 +509,12 @@
 
 .blaze
   overflow: hidden
+
+@media only screen and (min-width: 560px) and (max-width: 1136px)
+  .home-page
+    #numbers
+      absolute: right -10% !important
+    #logo
+      right: 2% !important
+    #menu
+      right: 6% !important
