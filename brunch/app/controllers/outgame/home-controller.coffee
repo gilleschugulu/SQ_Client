@@ -53,7 +53,7 @@ module.exports = class HomeController extends Controller
       @view.delegate 'click', '#equipe-btn', =>
         @view.toggleJournal()
       @view.delegate 'click', '#invite-btn', @onClickFacebook
-      @view.delegate 'click', '#hall-of-fame', =>
+      @view.delegate 'click', '#ranking', =>
         @view.dim => @redirectTo 'hall-of-fame/home'
     , =>
       # Error callback, if facebook fail. Nothing to display. Retry ?
