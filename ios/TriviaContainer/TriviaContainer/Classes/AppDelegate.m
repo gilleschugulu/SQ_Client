@@ -64,11 +64,11 @@ NSString * const NSURLIsExcludedFromBackupKey = @"NSURLIsExcludedFromBackupKey";
         [[AVAudioSession sharedInstance] setActive:YES error:NULL];
 
     [TestFlight takeOff:TestFlightTeamToken];
-#ifdef TESTFLIGHT_UDID
-    UIDevice* device = [UIDevice currentDevice];
-    if ([device respondsToSelector:@selector(uniqueIdentifier)])
-        [TestFlight setDeviceIdentifier:device.uniqueIdentifier];
-#endif
+//#ifdef TESTFLIGHT_UDID
+//    UIDevice* device = [UIDevice currentDevice];
+//    if ([device respondsToSelector:@selector(uniqueIdentifier)])
+//        [TestFlight setDeviceIdentifier:device.uniqueIdentifier];
+//#endif
 
     NSHTTPCookieStorage* cookieStorage = [NSHTTPCookieStorage sharedHTTPCookieStorage];
 

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>BEAFE9AE-A928-49FA-B8F2-E6D8AB976905</string>
+	<key>IDESourceControlProjectName</key>
+	<string>TriviaContainer</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>6794AEF8-27E7-45DE-9AE7-0A580DDB4A13</key>
+		<string>ssh://github.com/ChuguluGames/sports_quiz_client.git</string>
+		<key>C8611D7C-A6AF-4428-9349-67007CFBD51F</key>
+		<string>ssh://github.com/ChuguluGames/MKStoreKit.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>ios/TriviaContainer/TriviaContainer.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>6794AEF8-27E7-45DE-9AE7-0A580DDB4A13</key>
+		<string>../../../..</string>
+		<key>C8611D7C-A6AF-4428-9349-67007CFBD51F</key>
+		<string>../../TriviaContainer/libs/MKStoreKit</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>ssh://github.com/ChuguluGames/sports_quiz_client.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>6794AEF8-27E7-45DE-9AE7-0A580DDB4A13</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>C8611D7C-A6AF-4428-9349-67007CFBD51F</string>
+			<key>IDESourceControlWCCName</key>
+			<string>MKStoreKit</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>6794AEF8-27E7-45DE-9AE7-0A580DDB4A13</string>
+			<key>IDESourceControlWCCName</key>
+			<string>sports_quiz_client</string>
+		</dict>
+	</array>
+</dict>
+</plist>
