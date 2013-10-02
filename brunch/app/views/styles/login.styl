@@ -1,6 +1,30 @@
 @import 'nib'
 @import 'mixins'
 
+
+#global-container
+  &.iphone5
+    .login-page-container
+      #sso-login-form, #sso-register-form
+        width: 33% !important
+        .submit-btn
+          left: 36% !important
+        .form-title
+          margin-left: 25% !important
+      #sso-login-form
+        left: 9% !important
+        .form-title
+          margin-bottom: 27% !important
+      #sso-register-form
+        right: 9% !important
+        .form-title
+          margin-bottom: 19% !important
+      .or
+        width: 2.5% !important
+      #flipper
+        .btn-container
+          width: 47% !important
+
 .login-page-container
   width: 100%
   height: 100%
@@ -131,16 +155,3 @@
 
       #temp-btn
         margin-top 2%
-
-@media only screen and (min-width: 560px) and (max-device-width: 1136px)
-  .login-page-container
-    #sso-login-form, #sso-register-form
-      width: 33% !important
-    #sso-login-form
-      left: 9% !important
-    #sso-register-form
-      right: 9% !important
-      .form-title
-        margin-bottom: 18% !important
-    .or
-      width: 2.5% !important
