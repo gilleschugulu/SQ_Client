@@ -3,16 +3,6 @@
 <!--HEADER BLOCK-->
   <div class="header">
     <a href="#home" class="home-btn"></a>
-    <div class="informations">
-      <div class="cash">
-        <div class='cash-value'>{{user.credits}}</div>
-        <div class="cash-icone"></div>
-      </div>
-      <div class="lifes">
-        <div class="lifes-value">{{user.health}}</div>
-        <div class="lifes-icone"></div>
-      </div>
-    </div>
   </div>
   <div class='picture-container'>
     {{#if is_linked }}
@@ -28,7 +18,9 @@
   </div>
   <div class='buttons'>
     <a href="#hall-of-fame/profile" class='hall-of-fame'></a>
-    <div class='game-center'></div>
+    {{#if gamecenter}}
+      <div class='game-center'></div>
+    {{/if}}
   </div>
   <div class='stats'>
     <div class='stat1'>
@@ -60,13 +52,25 @@
   </div>
 </div>
 
-<!--BONUS BLOCK-->
-<div class='bonus'>
-  {{#each bonus}}
-    <a href='#shop' class='elem {{name}}'>
-      <div class='number'>{{quantity}}</div>
-    </a>
-  {{/each}}
+<div id='right-block'>
+  <div class="informations">
+    <div class="cash">
+      <div class='cash-value'>{{user.credits}}</div>
+      <div class="cash-icone"></div>
+    </div>
+    <div class="lifes">
+      <div class="lifes-value">{{user.health}}</div>
+      <div class="lifes-icone"></div>
+    </div>
+  </div>
+  <!--BONUS BLOCK-->
+  <div class='bonus'>
+    {{#each bonus}}
+      <a href='#shop' class='elem {{name}}'>
+        <div class='number'>{{quantity}}</div>
+      </a>
+    {{/each}}
+  </div>
 </div>
 
 <!-- CONTENT BLOCK BEGIN

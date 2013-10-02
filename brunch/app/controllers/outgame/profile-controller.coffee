@@ -36,7 +36,7 @@ module.exports = class ProfilesController extends Controller
           text: val.name.substring(0, 12)
           name: key
 
-        new ProfileView({ user : @user.attributes, stats: stats_stats, sports: stats_sports, bonus: @user.getBonuses(), avatar, is_linked: Parse.FacebookUtils.isLinked(Parse.User.current()) })
+        new ProfileView({ user : @user.attributes, stats: stats_stats, sports: stats_sports, bonus: @user.getBonuses(), avatar, is_linked: Parse.FacebookUtils.isLinked(Parse.User.current()), gamecenter: GameCenter? })
 
       , (view) =>
         view.delegate 'click', '.facebook-link', @linkFacebook
