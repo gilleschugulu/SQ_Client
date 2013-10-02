@@ -53,7 +53,7 @@ module.exports = class HallOfFameView extends View
         new_rank = if player.range is 'stay' then rank else rank - 1
         @addRangeSeparator(player.range, new_rank)
       else if player.position - lastPlayer.position > 1
-        @addSplitRangeSeparator(player.position - lastPlayer.position)
+        @addSplitRangeSeparator(player.position - lastPlayer.position - 1)
 
   addRangeSeparator: (direction, rank)->
     msg = i18n.t("view.outgame.hall_of_fame.players_#{direction}_rank")
