@@ -1,6 +1,12 @@
 #!/usr/bin/env ruby
 
-puts 'Will parse "./questions.xlsx" file. Please wait'
+xlsdir = ARGV[0]
+if xlsdir.nil? or xlsdir.empty?
+  puts "Usage : ./script <XLS folder path>"
+  exit
+end
+
+puts "Will search in #{xlsdir} file. Please wait"
 
 require 'rubygems'
 require 'json'
@@ -24,53 +30,75 @@ def extract_answer col
   text
 end
 
-excel_klass = nil ; begin excel_klass = Excelx rescue excel_klass = Roo::Excelx end
-
-# Find and read excel file to get correspondance answer <-> name. Only read first sheet
-data = excel_klass.new('questions.xlsx')
-data.default_sheet = data.sheets.first
+excelx_klass = nil ; begin excelx_klass = Excelx rescue excelx_klass = Roo::Excelx end
+excel_klass = nil ; begin excel_klass = Excel rescue excel_klass = Roo::Excel end
 
 questions = []
-for i in 2..data.last_row
+unique_question_id = 1
 
-  # Row look like : 
-  # enonce | answer A | answer B | answer C | answer D | Good answer | category | real_category | level | une
+Dir["#{xlsdir}/*.{xls,xlsx}"].each do |f|
+  puts f
+  # exit
+  # Find and read excel file to get correspondance answer <-> name. Only read first sheet
+  data =  f.match(/xlsx$/) ? excelx_klass.new(f) : excel_klass.new(f)
+  data.default_sheet = data.sheets.first
 
-  begin
-    @row = data.row(i)
+  column_indexes = {}
+  column_names   = data.row(1)
+  [ 'Question', 'A', 'B', 'C', 'D', 'Answer', 'Category', 'Vaste categorie', 'Level', 'Photo' ].each do |name|
+    column_indexes[name] = column_names.index(name)
+    puts "nil index for #{name} !!!!!" if column_indexes[name].nil?
+    # eval("column_indexes['#{name.gsub(' ','_').upcase} = column_names.index(name)") # column_indexes['QUESTION = column_names.index("Question")
+  end
+  # exit
 
-    good_answer_index = ['A', 'B', 'C', 'D'].index(extract_answer(5)) + 1
-    propositions =  []
-    for j in 1..4
-      answer = extract_answer(j)
-      propositions.push({
-        id: j,
-        text: answer,
-        is_valid: j == good_answer_index
-      })
+  for i in 2..data.last_row
+
+    # Row look like : 
+    # enonce | answer A | answer B | answer C | answer D | Good answer | category | real_category | level | une
+
+    begin
+      @row = data.row(i)
+
+      good_answer_index = column_names.index(extract_answer(column_indexes['Answer']))
+      propositions =  []
+      has_answer = false
+      for j in [ column_indexes['A'], column_indexes['B'], column_indexes['C'], column_indexes['D'] ]
+        answer = extract_answer(j)
+        propositions.push({
+          id: j,
+          text: answer,
+          is_valid: j == good_answer_index
+        })
+        has_answer |= j == good_answer_index
+      end
+
+      question = {
+        id: unique_question_id,
+        text: extract_answer(column_indexes['Question']),
+        category: extract_answer(column_indexes['Vaste categorie']),
+        difficulty: @row[column_indexes['Level']].to_i || 1,
+        sub_category: extract_answer(column_indexes['Category']),
+        une_id: extract_answer(column_indexes['Photo']) || 0,
+        propositions: propositions
+      }
+
+      # puts "NO ASWER #{question.inspect}" unless has_answer
+      unless question[:text].nil? or question[:text].empty? or !has_answer
+        questions << question
+        unique_question_id += 1
+      end
+
+    rescue
+      puts "Row failed : #{@row.inspect}"
     end
-
-    question = {
-      id: i,
-      text: extract_answer(0),
-      category: extract_answer(6),
-      difficulty: @row[8].to_i,
-      sub_category: extract_answer(7),
-      une_id: extract_answer(9),
-      propositions: propositions
-    }
-
-    questions << question
-  rescue
-    puts "Row failed : #{@row.inspect}"
   end
 end
 
 json = "module.exports =\n  "
 json += JSON::generate(questions)
-
 File.open('generated.coffee', 'w') do |file|
   file.write(json)
 end
 
-puts 'Ok !'
+puts "Ok ! #{unique_question_id} questions"
