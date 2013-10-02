@@ -17,6 +17,7 @@ _                   = require 'underscore'
 
 module.exports = class LoginController extends Controller
   historyURL: ''
+  checkAvailabilityWithSSOTimeout : null
   params = {}
 
   # Login the player if exists or show login view
@@ -157,8 +158,12 @@ module.exports = class LoginController extends Controller
       view.delegate 'click', '#register-btn', @registerWithSSO
       view.delegate 'click', "#facebook-login", @loginWithFacebook
       view.delegate 'click', '#login-btn', @loginWithSSO
-      view.delegate 'keyup', '#sso-register-form input[name=email]', @checkAvailabilityWithSSO
-      view.delegate 'keyup', '#sso-register-form input[name=username]', @checkAvailabilityWithSSO
+
+      check = (e) =>
+        clearTimeout @checkAvailabilityWithSSOTimeout
+        @checkAvailabilityWithSSOTimeout = setTimeout @checkAvailabilityWithSSO, 1000
+      view.delegate 'keyup', '#sso-register-form input[name=email]', check
+      view.delegate 'keyup', '#sso-register-form input[name=username]', check
       view.delegate 'click', '#close-btn', ->
         view.closeForms()
       view.delegate 'click', '#equipe-login', ->
