@@ -1,6 +1,5 @@
 <div id='equipe-btn'></div>
 <div id='date'>EDITION DU {{date}}</div>
-<div id='title'><span id='exculsive'>exclusif !</span> <span id='username' class='resize'>{{username}}</span></div>
 <div id='photo-container'>
   {{#if fb_id}}
     <div id='photo' style='background-image:url(https://graph.facebook.com/{{fb_id}}/picture?width=90&height=90)'></div>
@@ -8,7 +7,7 @@
     <div id='photo' style='background-image:url(images/common/facebook-default.jpg)'></div>
   {{/if}}
 </div>
-<div id='message'>joue a sport quiz mais n'a toujours pas d'amis !</div>
+<div id='message'><span id='exculsive'>exclusif !</span> <span id='username'>{{username}}</span> joue a sport quiz mais n'a toujours pas d'amis !</div>
 <a id='invite-btn'></a>
 <div id='countdown-contest'>
   <span id='days' class='number'>00</span>
