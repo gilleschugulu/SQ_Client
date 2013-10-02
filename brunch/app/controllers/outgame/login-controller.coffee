@@ -163,6 +163,7 @@ module.exports = class LoginController extends Controller
         view.closeForms()
       view.delegate 'click', '#equipe-login', ->
         view.openForms()
+      view.openForms()
 
     , {viewTransition: yes}
 

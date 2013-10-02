@@ -55,29 +55,58 @@
       width: 100%
       height: 100%
       absolute: top 0 left 0
-      padding-top: 13%
       .invalid
         color: red
         border: 1px solid red
 
       input
-        margin-bottom: 0.7%
+        margin-bottom: 12%
 
       .or
         background-repeat: no-repeat
         background-image: url("../images/login/or.png")
         background-size: 100% 100%
-        width: 66%
-        height: 4%
-        relative: top 3% left 0
+        width: 3%
+        height: 93%
+        relative: top -1% left 0
         margin: 3% auto 5%
 
-      #login-btn, #register-btn
-        // relative: top 3%
-        margin-top: 1%
-        margin-bottom: 0
-
     #equipe-forms, #temp-form
+      #sso-login-form, #sso-register-form
+        width: 40%
+        height: 80%
+        absolute: top 13%
+        text-align: center
+        .form-title
+          background-repeat: no-repeat
+          background-size: contain
+          width: 57%
+          height: 13%
+          margin: 0 auto
+        .submit-btn
+          width: 31%
+          height: 14%
+          // margin: 0 auto
+          absolute: bottom 10% left 32%
+          background-image: url(../images/login/ok.png)
+          background-size: contain
+          background-repeat: no-repeat
+          &:active
+            background-image: url(../images/login/ok_a.png)
+      #sso-login-form
+        left: 5%
+        input
+          margin-bottom: 16%
+        .form-title
+          margin-bottom: 27%
+          background-image: url(../images/login/se_connecter.png)
+        .submit-btn
+          margin-top: 5%
+      #sso-register-form
+        right: 5%
+        .form-title
+          margin-bottom: 20%
+          background-image: url(../images/login/creer_compte.png)
       #close-btn
         cursor: pointer
         width: 4.7%
@@ -102,3 +131,16 @@
 
       #temp-btn
         margin-top 2%
+
+@media only screen and (min-width: 560px) and (max-device-width: 1136px)
+  .login-page-container
+    #sso-login-form, #sso-register-form
+      width: 33% !important
+    #sso-login-form
+      left: 9% !important
+    #sso-register-form
+      right: 9% !important
+      .form-title
+        margin-bottom: 18% !important
+    .or
+      width: 2.5% !important
