@@ -90,7 +90,7 @@ module.exports = class DupaView extends View
       $('.proposition-container', @$el).addClass('animated pulse').one 'webkitAnimationEnd', ->
         $(@).removeClass('animated pulse')
 
-      theme = question.get('theme')
+      theme = question.get('category')
       theme = 'Question' unless theme
       $('.question-theme').text(theme)
       $('.question-content').text question.get('text')
@@ -182,12 +182,15 @@ module.exports = class DupaView extends View
 
   # Bonus fifty_fifty. Hide some propositions, with some animation. Also hide concerned massOpinion block
   hideSomeAnswers: (propositions, callback) ->
+    callback?() unless propositions and propositions.length > 0
+    i = propositions.length
     for proposition in propositions
-      $(".proposition[data-id='#{proposition.id}']").addClass('animated fadeOut').one 'webkitAnimationEnd', ->
-        $(@).hide().removeClass('animated fadeOut')
-      $(".proposition-container[data-id='#{proposition.id}'] .massOpinion").addClass('animated fadeOut').one 'webkitAnimationEnd', ->
-        $(@).hide().removeClass('animated fadeOut')
-    callback?()
+      $(".proposition-container[data-id='#{proposition.id}']").addClass('animated fadeOut').one 'webkitAnimationEnd', ->
+        callback?() if --i < 1
+        #$(@).removeClass('animated fadeOut')#.addClass('hidden')
+      # $(".proposition-container[data-id='#{proposition.id}'] .massOpinion").addClass('animated fadeOut').one 'webkitAnimationEnd', ->
+      #   $(@).addClass('hidden').removeClass('animated fadeOut')
+    # callback?()
 
   # Bonus mass. Display red dots, with given numbers inside
   displayMass: (propositions, callback) ->

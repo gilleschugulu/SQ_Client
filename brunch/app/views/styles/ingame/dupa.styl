@@ -42,24 +42,27 @@
       background: none
     .bonus-container
       top: 83.5%
-    .threshold
-      padding: 18% 4% !important
-      .highlighted
-        width: 107% !important
-        height: 105% !important
-        top: 24% !important
-        left: 0% !important
     .btn-menu
-      left: -5%
+      left: -5.5%
     .chrono-container
       left: -5%
     .jackpot-container
-      left: 90%
+      left: 92%
     .question-container
       top: 6%
-      left: 12%
-      width: 75%
+      left: 5%
+      width: 88%
       height: 77%
+      .question-photo
+        width: 38%
+      .question-content-container
+        background-size: 100% 100%
+        width: 57%
+      .question-propositions-container
+        width: 60%
+        .proposition-container
+          width: 46%
+          margin: 2%
 
 #countdown
   absolute: top 0% left 0%
@@ -96,7 +99,7 @@
   background-size: 100% 100%
   color: white
   .btn-menu
-    absolute: top 1% left 6%
+    absolute: top 1% left 4%
     width: 8%
     height: 11%
     display: inline-block
@@ -106,7 +109,7 @@
     cursor: pointer
 
   .chrono-container
-    absolute: top 17% left 7%
+    absolute: top 17% left 4.5%
     width: 6%
     height: 81%
     background-image: url("../images/ingame/timer.png")
@@ -155,9 +158,11 @@
       width: 45%
       height: 93%
       float: left
-      background-image: url("../images/ingame/photo.png")
+      background-image: url("http://www.karim-benzema.net/wp-content/uploads/2009/06/une_lequipe.jpg")
       background-repeat: no-repeat
-      background-size: contain
+      background-size: 100% 100%
+      border: 0.3em solid black
+      border-radius: 0.5em
 
     .question-theme-container
       relative: top 4% left 3%
@@ -260,66 +265,50 @@
     absolute: top 2% left 83%
     width: 15%
     height: 96%
-    background-image: url("../images/ingame/score.png")
-    background-repeat: no-repeat
-    background-size: contain
     font-family: grilled
     #total-jackpot
-      relative: top .8% left 2%
-      width: 95%
-      height: 8%
+      background-image: url("../images/ingame/box_score.png")
+      background-repeat: no-repeat
+      background-size: contain
+      z-index: 50
+      margin: 0 auto
+      font-size: 1.4em
+      width: 91%
+      height: 8.5%
       text-align: center
-      padding: 7% 0
+      padding-top: 7%
+      absolute: top 2% left 3%
 
     // Default
-    .threshold
-      relative: top 1% left 26.5%
-      width: 45.3%
-      height: 9.01%
-      padding: 10% 0
-      text-align: center
+    #threshold-container
       z-index: 1
-      color: #75634e
-      &.highlighted
-        .value
-          color: #f9e4f3
-        &.gold
-          color: #744141
-      .value
-        position: relative
-        z-index: 10
-      .highlighted
-        absolute: top 0% left 0%
-        z-index: 5
-        width: 102%
-        height: 100%
-        background-image: url("../images/ingame/timer_in.png")
+      width: 56%
+      height: 93%
+      absolute: top 10% left 21%
+      .threshold
+        width: 100%
+        height: 9.5%
+        padding-top: 18%
+        z-index: 1
+        color: #75634e
+        border-right: 0.2em solid #b3b3b3
+        border-left: 0.2em solid #b3b3b3
+        border-bottom: 0.1em solid #5f5f5f
         background-repeat: no-repeat
         background-size: 100% 100%
+        background-image: url("../images/ingame/threshold_box.png")
+        text-align: center
+        &:nth-child(0)
+          border-top: 0.2em solid #b3b3b3
+        &:nth-last-child(1)
+          border-bottom: 0.2em solid #b3b3b3
+        &.highlighted
+          z-index: 5
+          color: #f9e4f3
+          background-image: url("../images/ingame/threshold_box_highlighted.png")
         &.gold
-          background-image: url("../images/ingame/gold_timer_in.png")
-    // Iphone
-    @media screen and (max-width: 959px)
-      .threshold
-        padding: 19% 0
-        .highlighted
-          top: 25%
-          left: 5%
-    // Web
-    @media screen and (min-width: 960px) and (max-width: 1023px)
-      .threshold
-        .highlighted
-          top: 0%
-          left: 0%
-    // Ipad
-    @media screen and (min-width: 1024px)
-      .threshold
-        padding: 17% 0
-        .highlighted
-          width: 102%
-          height: 105%
-          top: 9%
-          left: 2%
+          background-image: url("../images/ingame/threshold_box_gold.png")
+          color: #744141
 
     #jackpot-marker
       absolute: top 91% left 68%

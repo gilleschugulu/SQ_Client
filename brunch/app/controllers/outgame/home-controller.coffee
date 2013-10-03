@@ -21,7 +21,7 @@ module.exports = class HomeController extends Controller
     , =>
       new HomePageView {hearts: user.get('health'), credits: user.get('credits')}
     , (view) =>
-      if mediator.justLaunched and ChartBoost?
+      if mediator.justLaunched and ChartBoost? and no
         setTimeout =>
           # Track event
           AnalyticsHelper.trackEvent 'Splash', "ChartBoost Splash"
