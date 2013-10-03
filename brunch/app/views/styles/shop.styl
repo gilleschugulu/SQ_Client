@@ -10,6 +10,17 @@
   &.iphone5
     .shop-page
       background: none
+      .home-btn
+        left: -8%
+      #numbers
+        width: 110%
+      .paid-pack
+        .marker
+          top: -12% !important
+        .value
+          top: -12% !important
+        .credit-icon
+          top: -6% !important
 
 .shop-page
   width: 100%
@@ -66,36 +77,49 @@
       height: 100%
 
     #credits
-      .paid-offers
-        absolute: top 4% left 48%
+      .title
+        background-repeat: no-repeat
+        background-size: contain
+        margin-bottom: 5%
+        margin-left: 8%
+        width: 84%
+        height: 13%
+      .offers
+        absolute: top 4%
         width: 45%
-        height: 72%
+        height: 90%
         display: inline-block
-        .paid-pack
-          relative: top 4% left 6%
-          display: block
-          width: 91%
-          height: 25%
+        .pack
+          relative: top 4%
+          width: 100%
+          height: 15%
+          margin-bottom: 5%
           background-repeat: no-repeat
           background-size: contain
+          display: block
           cursor: pointer
+      .paid-offers
+        right: 3%
+        .title
+          background-image: url(../images/shop/Jetons/payants.png)
+        .paid-pack
           .marker
-            relative: top 4% left 7%
+            relative: top -4% left 7%
             font-size: 2.3em
             color: white
           .value
-            relative: top 4% left 8%
+            relative: top -5% left 6%
             font-size: 1.6em
             font-family: dax
-            color: orange
+            color: white
             display: inline-block
             width: 30%
-            text-align: center
+            text-align: right
           .credit-icon
-            relative: top 4% left 5%
+            relative: top 3% left 5%
             display: inline-block
-            width: 9%
-            height: 32%
+            width: 9.2%
+            height: 53.5%
             background-image: url("../images/home/common/credit.png")
             background-repeat: no-repeat
             background-size: contain
@@ -103,18 +127,10 @@
           opacity : 0.6
 
       .free-offers
-        absolute: top 3% left 3%
-        width: 40%
-        height: 90%
-        display: inline-block
+        left: 3%
+        .title
+          background-image: url(../images/shop/Jetons/gratuits.png)
         .free-pack
-          relative: top 4% left 7%
-          width: 90%
-          height: 16%
-          background-repeat: no-repeat
-          background-size: contain
-          display: block
-          cursor: pointer
           &:nth-child(3)
             margin-top: 1%
           span
@@ -129,38 +145,39 @@
         #invite_friends
           background-image: url("../images/shop/Jetons/invite.png")
         #facebook_like
-          background-image: url("../images/shop/Jetons/like.png")
+          background-image: url("../images/shop/Jetons/like_us.png")
         #twitter
           background-image: url("../images/shop/Jetons/twitter.png")
         #app_store_rating
-          background-image: url("../images/shop/Jetons/note.png")
+          background-image: url("../images/shop/Jetons/rate.png")
 
     #bonus
       .life-container
         display: inline-block
-        relative: top 4% left 3%
+        absolute: top 6% left 4%
         width: 29%
         height: 86%
         .life-pack
-          relative: top 2% left 2%
+          relative: left 2%
           width: 100%
           height: 21%
           background-repeat: no-repeat
           background-size: contain
           cursor: pointer
-
-      .bonus-pack
-        display: inline-block
-        relative: top 4% left 7%
-        width: 18.6%
+      #bonus-packs
+        width: 55%
         height: 86%
-        margin-right: 1.4%
-        background-repeat: no-repeat
-        background-size: contain
-        cursor: pointer
-        &.small
-          background-image: url("../images/shop/life_and_bonus/50.png")
-        &.medium
-          background-image: url("../images/shop/life_and_bonus/300.png")
-        &.big
-          background-image: url("../images/shop/life_and_bonus/1000.png")
+        absolute: top 6% right 6%
+        .bonus-pack
+          width: 100%
+          height: 30%
+          margin-bottom: 4%
+          background-repeat: no-repeat
+          background-size: contain
+          cursor: pointer
+          &.small
+            background-image: url("../images/shop/life_and_bonus/5_bonus.png")
+          &.medium
+            background-image: url("../images/shop/life_and_bonus/25_bonus.png")
+          &.big
+            background-image: url("../images/shop/life_and_bonus/50_bonus.png")
