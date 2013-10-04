@@ -43,23 +43,24 @@
     .bonus-container
       top: 83.5%
     .btn-menu
-      left: -5.5%
+      left: -8.5%
     .chrono-container
-      left: -5%
+      left: -8%
     .jackpot-container
-      left: 92%
+      left: 94%
     .question-container
       top: 6%
-      left: 5%
-      width: 88%
+      left: 0%
+      width: 95%
       height: 77%
+      .question-theme-container
+        width: 25%
       .question-photo
-        width: 38%
+        width: 32.5%
       .question-content-container
-        background-size: 100% 100%
-        width: 57%
+        width: 64%
       .question-propositions-container
-        width: 60%
+        width: 67%
         .proposition-container
           width: 46%
           margin: 2%
@@ -68,28 +69,29 @@
   absolute: top 0% left 0%
   width: 100%
   height: 100%
-  text-align: center
-  font-family: grilled
   z-index: 5000
-  background-color: rgba(0, 0, 0, 0.3)
+  background-color: rgba(0, 0, 0, 0.4)
   #countdown-container
-    relative: top 13% left 14%
-    width: 72%
-    height: 80%
-    background-image: url('../images/pause/popup.png')
-    background-repeat: no-repeat
-    background-size: contain
-    border-radius: none
-    box-shadow: none
+    relative: top 26%
+    margin: 0 auto
+    width: 13.7em
+    height: 13.7em
+    background-color: #c5020d
+    border-radius: 50%
     #countdown-value
-      color: #c80000
-      font-size: 15em
-      stroke(black)
+      font-family: open_sansextrabold
+      color: #fff
+      font-size: 0em
+      overflow: hidden
+      // stroke(black)
       width: 100%
       height: 100%
-      position: relative
+      padding-top 45%
       text-align: center
-      top: 15%
+      &.big
+        transition: all 0.2s ease
+        font-size: 6em
+        padding-top: 15%
 
 .dupa-stage
   position: relative
@@ -99,7 +101,7 @@
   background-size: 100% 100%
   color: white
   .btn-menu
-    absolute: top 1% left 4%
+    absolute: top 1% left 1%
     width: 8%
     height: 11%
     display: inline-block
@@ -109,7 +111,7 @@
     cursor: pointer
 
   .chrono-container
-    absolute: top 17% left 4.5%
+    absolute: top 17% left 1.5%
     width: 6%
     height: 81%
     background-image: url("../images/ingame/timer.png")
@@ -149,13 +151,13 @@
         absolute: bottom 1.4% left 9.7%
 
   .question-container
-    absolute: top 7% left 16%
-    width: 68%
+    absolute: top 7% left 10%
+    width: 76%
     height: 71%
 
     .question-photo
       relative: top 5% left 1%
-      width: 45%
+      width: 39.9%
       height: 93%
       float: left
       background-image: url("http://www.karim-benzema.net/wp-content/uploads/2009/06/une_lequipe.jpg")
@@ -180,12 +182,12 @@
 
     .question-content-container
       relative: top 3.7% left 3%
-      width: 50%
+      width: 56%
       height: 30%
       float: left
       background-image: url("../images/ingame/box_question.png")
       background-repeat: no-repeat
-      background-size: contain
+      background-size: 100% 100%
       .question-content
         relative: top 3% left 3%
         width: 94%
@@ -194,7 +196,7 @@
 
     .question-propositions-container
       relative: top 7% left 2%
-      width: 54%
+      width: 60%
       height: 60%
       float: left
 
@@ -262,7 +264,7 @@
         font-family: grilled
 
   .jackpot-container
-    absolute: top 2% left 83%
+    absolute: top 2% left 85%
     width: 15%
     height: 96%
     font-family: grilled
@@ -311,7 +313,7 @@
           color: #744141
 
     #jackpot-marker
-      absolute: top 91% left 68%
+      absolute: top 91% left 56%
       width: 45%
       height: 7%
       z-index: 50

@@ -58,9 +58,9 @@ module.exports = class DupaView extends View
     countdown_container = countdown.parent()
 
     countdown_container.removeClass('hidden')
-    countdown.html(duration).removeClass('hidden animated fadeIn')
+    countdown.text(duration).removeClass('hidden big')
     setTimeout -> 
-      countdown.addClass('animated fadeIn')
+      countdown.addClass('big')
     , 0
 
   hideCountdownValue: ->
