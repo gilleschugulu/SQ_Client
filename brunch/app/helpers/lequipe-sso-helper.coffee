@@ -70,7 +70,8 @@ module.exports = class LequipeSSOHelper
     params.checksum = @calculateChecksum params, order
     if encode
       params[k] = @utf8_encode(v) for k,v of params
-    url = "http://api.lequipe.fr/Compte/appels_tiers.php?F=#{fn}"
+    # url = "http://api.lequipe.fr/Compte/appels_tiers.php?F=#{fn}"
+    url = "http://www.lequipe.fr/jeux/chugulu/sso.php?F=#{fn}"
     $.ajax
       type    : 'POST'
       url     : url
