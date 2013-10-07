@@ -83,17 +83,24 @@ module.exports = class DupaView extends View
       $('.proposition-container', propositionsEl).remove()
       for proposition in question.getPropositions()
         propositionsEl.prepend "<div class='proposition-container box-align' data-id='#{proposition.id}'>
-            <span class='proposition resize' data-id='#{proposition.id}'>#{proposition.text}</span>
+              <div class='proposition' data-id='#{proposition.id}'>
+                <div class='left part'></div>
+                <div class='mid part resize'>#{proposition.text}</div>
+                <div class='right part'></div>
+              </div>
             <div class='massOpinion'></div>
           </div>"
-
       $('.proposition-container', @$el).addClass('animated pulse').one 'webkitAnimationEnd', ->
         $(@).removeClass('animated pulse')
 
       theme = question.get('category')
       theme = 'Question' unless theme
-      $('.question-theme').text(theme)
-      $('.question-content').text question.get('text')
+      if theme isnt $('.question-theme-ghost', @$el).text()
+        ghost = $('.question-theme-ghost', @$el).text(theme)
+        $('.question-theme', @$el).addClass('hidden-text').one 'webkitTransitionEnd', ->
+          $(@).width(ghost.width()).one 'webkitTransitionEnd', ->
+            $(@).text(theme).removeClass('hidden-text')
+      $('.question-content', @$el).text question.get('text')
       @autoSizeText()
       callback()
     , 0
