@@ -10,11 +10,13 @@ puts "Will search in #{xlsdir} file. Please wait"
 
 require 'rubygems'
 require 'json'
+require 'i18n'
 begin
   require 'roo'
 rescue
   raise 'You should install the gem "roo"'
 end
+
 
 def extract_answer col
   text = @row[col]
@@ -76,9 +78,9 @@ Dir["#{xlsdir}/*.{xls,xlsx}"].each do |f|
       question = {
         id: unique_question_id,
         text: extract_answer(column_indexes['Question']),
-        category: extract_answer(column_indexes['Vaste categorie']),
+        category: I18n.transliterate(extract_answer(column_indexes['Vaste categorie'])),
         difficulty: @row[column_indexes['Level']].to_i || 1,
-        sub_category: extract_answer(column_indexes['Category']),
+        sub_category: I18n.transliterate(extract_answer(column_indexes['Category'])),
         une_id: extract_answer(column_indexes['Photo']) || 0,
         propositions: propositions
       }
@@ -89,7 +91,9 @@ Dir["#{xlsdir}/*.{xls,xlsx}"].each do |f|
         unique_question_id += 1
       end
 
-    rescue
+    rescue Exception => e
+      puts e.message
+      puts e.backtrace.inspect
       puts "Row failed : #{@row.inspect}"
     end
   end
