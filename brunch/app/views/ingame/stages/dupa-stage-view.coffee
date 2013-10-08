@@ -69,13 +69,6 @@ module.exports = class DupaView extends View
   clearTimer: ->
     $('.chrono-container #time', @$el).empty()
 
-  # Remove question text, and 4 propositions. Also remove theme
-  removeQuestion: (callback) ->
-    $('#text-block', @$el).removeClass('active')
-    $('.proposition', @$el).removeClass('success error')
-    $('#question', @$el).empty()
-    callback?()
-
   # Display question text, and 4 propositions. Also display theme
   showQuestion: (question, callback) ->
     setTimeout =>
@@ -93,8 +86,7 @@ module.exports = class DupaView extends View
       $('.proposition-container', @$el).addClass('animated pulse').one 'webkitAnimationEnd', ->
         $(@).removeClass('animated pulse')
 
-      theme = question.get('category')
-      theme = 'Question' unless theme
+      theme = question.get('category') ? 'Question'
       if theme isnt $('.question-theme-ghost', @$el).text()
         ghost = $('.question-theme-ghost', @$el).text(theme)
         $('.question-theme', @$el).addClass('hidden-text').one 'webkitTransitionEnd', ->
@@ -102,7 +94,7 @@ module.exports = class DupaView extends View
             $(@).text(theme).removeClass('hidden-text')
       $('.question-content', @$el).text question.get('text')
       @autoSizeText()
-      callback()
+      callback?()
     , 0
 
   # Getter method
