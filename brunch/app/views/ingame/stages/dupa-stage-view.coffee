@@ -194,7 +194,7 @@ module.exports = class DupaView extends View
   # Bonus mass. Display red dots, with given numbers inside
   displayMass: (propositions, callback) ->
     for proposition in propositions
-      $(".proposition-container[data-id='#{proposition.id}'] .massOpinion").html(proposition.massOpinion + '%').show().addClass('animated rotateIn').one 'webkitAnimationEnd', ->
+      $(".proposition-container[data-id='#{proposition.id}'] .massOpinion").text(proposition.massOpinion + '%').show().addClass('animated rotateIn').one 'webkitAnimationEnd', ->
         $(@).removeClass('animated rotateIn')
     callback?()
 
