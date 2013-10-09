@@ -9,6 +9,9 @@
 //
 
 #import "GoogleAnalyticsPlugin.h"
+#import "GAI.h"
+#import "GAIDictionaryBuilder.h"
+#import "GAIFields.h"
 
 @interface GoogleAnalyticsPlugin ()
 
@@ -27,7 +30,8 @@
     // Optional: set Google Analytics dispatch interval to e.g. 20 seconds.
     [GAI sharedInstance].dispatchInterval = 20;
     // Optional: set debug to YES for extra debugging information.
-    //    [GAI sharedInstance].debug = YES;
+    [[GAI sharedInstance].logger setLogLevel:kGAILogLevelVerbose];
+//    [GAI sharedInstance].dryRun = YES;
     // Create tracker instance.
     NSArray* accountIDs = [options objectForKey:@"accountIds"];
     if ([accountIDs count] < 1)
@@ -37,7 +41,7 @@
         id<GAITracker> tracker = [[GAI sharedInstance] trackerWithTrackingId:accountID];
         [self.trackers addObject:tracker];
     }
-    [GAI sharedInstance].defaultTracker = [self.trackers objectAtIndex:0];
+    [GAI sharedInstance].defaultTracker = self.trackers[0];
 }
 
 - (void) trackEvent:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options
@@ -49,12 +53,14 @@
 	NSString* label     = [options valueForKey:@"label"];
 	NSNumber* value     = @([[options valueForKey:@"value"] integerValue]);
 
-    for (id<GAITracker> tracker in self.trackers)
-        [tracker trackEventWithCategory:category
-                             withAction:action
-                              withLabel:label
-                              withValue:value];
 
+    for (id<GAITracker> tracker in self.trackers) {
+        GAIDictionaryBuilder* db = [GAIDictionaryBuilder createEventWithCategory:category
+                                                                          action:action
+                                                                           label:label
+                                                                           value:value];
+        [tracker send:[db build]];
+    }
 	NSLog(@"GoogleAnalytics.trackEvent::%@, %@, %@, %@", category, action, label, value);
 }
 
@@ -63,28 +69,46 @@
     if (self.trackers == nil)
         return;
 
-    NSString* orderId       = [options objectForKey:@"orderId"];
-    NSString* affiliation   = [options objectForKey:@"affiliation"];
+    NSLog(@"omg %@", options);
+    NSDictionary* transaction = options[@"transaction"];
+    if ([transaction[@"revenue"] isKindOfClass:[NSNumber class]])
+        NSLog(@"OMG NS NUMBER");
+    else
+        NSLog(@"NOT NS NUMBER LOL");
+    GAIDictionaryBuilder* transactionDB = [GAIDictionaryBuilder createTransactionWithId:transaction[@"id"]
+                                                                            affiliation:transaction[@"affiliation"]
+                                                                                revenue:transaction[@"revenue"]
+                                                                                    tax:transaction[@"tax"]
+                                                                               shipping:transaction[@"shipping"]
+                                                                           currencyCode:transaction[@"currency"]];
 
-    GAITransaction* transaction = [GAITransaction transactionWithId:orderId withAffiliation:affiliation];
+    NSMutableArray* itemDBs = [NSMutableArray arrayWithCapacity:[options[@"items"] count]];
+    for (NSDictionary* item in options[@"items"]) {
+        GAIDictionaryBuilder* itemDB = [GAIDictionaryBuilder createItemWithTransactionId:transaction[@"id"]
+                                                                                    name:item[@"name"]
+                                                                                     sku:item[@"sku"]
+                                                                                category:item[@"category"]
+                                                                                   price:item[@"price"]
+                                                                                quantity:item[@"quantity"]
+                                                                            currencyCode:item[@"currency"]];
+        [itemDBs addObject:itemDB];
+    }
 
-    for (NSDictionary* item in [options objectForKey:@"items"])
-        [transaction addItemWithCode:[item objectForKey:@"SKU"]
-                                name:[options objectForKey:@"name"]
-                            category:[options objectForKey:@"category"]
-                         priceMicros:[(NSNumber *)[options objectForKey:@"price"] doubleValue]
-                            quantity:[[options objectForKey:@"quantity"] integerValue]];
-
-    for (id<GAITracker> tracker in self.trackers)
-        [tracker trackTransaction:transaction];
+    for (id<GAITracker> tracker in self.trackers) {
+        [tracker send:[transactionDB build]];
+        for (GAIDictionaryBuilder *itemDB in itemDBs)
+            [tracker send:[itemDB build]];
+    }
 }
 
 - (void) trackPageview:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options
 {
     if (self.trackers == nil)
         return;
-    for (id<GAITracker> tracker in self.trackers)
-        [tracker trackView:[options objectForKey:@"pageUri"]];
+    for (id<GAITracker> tracker in self.trackers) {
+        [tracker set:kGAIScreenName value:options[@"pageUri"]];
+        [tracker send:[[GAIDictionaryBuilder createAppView] build]];
+    }
 }
 
 @end

@@ -2,22 +2,26 @@ module.exports =
   credit_packs: [
     value: 100
     product_id: "1.79SportQuiz"
-    price: 1.79
+    price: 0.89
+    tax : 0.3 # 30%
     image: "images/shop/Jetons/pack_1.png"
   ,
     value: 250
     product_id: "2.69SportQuiz"
-    price: 2.59
+    price: 3.59
+    tax : 0.3
     image: "images/shop/Jetons/pack_2.png"
   ,
     value: 700
     product_id: "9.99SportQuiz"
-    price: 9.99
+    price: 8.99
+    tax : 0.3
     image: "images/shop/Jetons/pack_3.png"
   ,
     value: 2000
     product_id: "19.99SportQuiz"
-    price: 19.99
+    price: 17.99
+    tax : 0.3
     image: "images/shop/Jetons/pack_4.png"
   ]
 

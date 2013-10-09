@@ -6,8 +6,8 @@
 Parent = require 'config/preprod-config'
 
 class LocalConfig extends Parent
-  @analytics:
-    enabled: no
+  # @analytics:
+  #   enabled: no
 
   @pay_game: false
 

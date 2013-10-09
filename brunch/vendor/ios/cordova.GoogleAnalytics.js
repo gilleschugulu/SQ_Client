@@ -23,15 +23,23 @@ var GoogleAnalytics = {
 
   /*
   data = {
-    orderId     : 'XXXX',
-    affiliation : (paypal,allopass,in-app,etc)
+    transaction = {
+      id          : 'XXXX', // transaction id REQUIRED
+      affiliation : (paypal,allopass,in-app,etc)
+      revenue     : 42.0, // total (tax incl)
+      tax         : 12.2, // total tax
+      shipping    : 11.1, // total shipping cost
+      currency    : 'EUR' // https://developers.google.com/analytics/devguides/platform/features/currencies
+    },
     items : [
       {
-        SKU       : 'XXX',
-        name      : 'XXX',
+        id        : 'XXX', // transaction id ! REQUIRED
+        sku       : 'XXX',
+        name      : 'XXX', // REQUIRED
         category  : 'XXX',
-        price     : 420, // integer => (4.20 * 100)
-        quantity  : 10
+        price     : 4.20,
+        quantity  : 10,
+        currency  : 'EUR'
       }
     ]
   }

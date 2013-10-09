@@ -11,6 +11,13 @@
 		230CE430158736E500A6CDFD /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 230CE42F158736E500A6CDFD /* MessageUI.framework */; };
 		2319355615F7ABEE00A9F0B9 /* TapjoyConnectPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 2319355515F7ABEE00A9F0B9 /* TapjoyConnectPlugin.m */; };
 		2319355C15F7B0A900A9F0B9 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2319355B15F7B0A900A9F0B9 /* CoreTelephony.framework */; };
+		2319422B180457FA00AB6DE0 /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 23194227180457FA00AB6DE0 /* libTestFlight.a */; };
+		231942321804582500AB6DE0 /* libChartboost.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 231942311804582500AB6DE0 /* libChartboost.a */; };
+		231942381804584700AB6DE0 /* TapjoyPublisherLibrary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 231942361804584700AB6DE0 /* TapjoyPublisherLibrary.a */; };
+		231942391804584700AB6DE0 /* TapjoyResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 231942371804584700AB6DE0 /* TapjoyResources.bundle */; };
+		231942671804585D00AB6DE0 /* libCordova.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 231942661804585D00AB6DE0 /* libCordova.a */; };
+		231942721804586900AB6DE0 /* libGoogleAnalyticsServices.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 231942701804586900AB6DE0 /* libGoogleAnalyticsServices.a */; };
+		231942761804588800AB6DE0 /* libAdColony.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 231942751804588800AB6DE0 /* libAdColony.a */; };
 		2320B8671637E194005CC24C /* ATInternet.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 2320B8631637E194005CC24C /* ATInternet.sqlite */; };
 		2320B8681637E194005CC24C /* ATiOSLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2320B8641637E194005CC24C /* ATiOSLib.a */; };
 		2320B86C1637E1F2005CC24C /* XitiAnalyticsPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 2320B86B1637E1F2005CC24C /* XitiAnalyticsPlugin.m */; };
@@ -53,22 +60,16 @@
 		23569BBD15862B2200255812 /* GameCenterPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 23569BBC15862B2200255812 /* GameCenterPlugin.m */; };
 		23569BC51586357700255812 /* GameCenterManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 23569BC41586357700255812 /* GameCenterManager.m */; };
 		23569BC81586458B00255812 /* BasePlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 23569BC71586458B00255812 /* BasePlugin.m */; };
-		2359307916A0356C0009CF9F /* libAdColony.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2359307816A0356C0009CF9F /* libAdColony.a */; };
 		2359307D16A0357B0009CF9F /* AdColonyPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 2359307C16A0357B0009CF9F /* AdColonyPlugin.m */; };
 		236001CD15876F8F00E9A1C9 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 236001CC15876F8F00E9A1C9 /* libz.dylib */; };
-		236001D415876FE300E9A1C9 /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 236001D015876FE300E9A1C9 /* libTestFlight.a */; };
 		237AE3D2169F1A1B00A94A7E /* config.xml in Resources */ = {isa = PBXBuildFile; fileRef = 237AE3D1169F1A1B00A94A7E /* config.xml */; };
 		237AE3D9169F1CF600A94A7E /* ChartBoostPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 237AE3D8169F1CF600A94A7E /* ChartBoostPlugin.m */; };
-		237DC5AC16A9ABAC00F6E715 /* libGoogleAnalytics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 237DC5AA16A9ABAC00F6E715 /* libGoogleAnalytics.a */; };
 		237DC5AF16A9BFC700F6E715 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 237DC5AE16A9BFC700F6E715 /* CoreData.framework */; };
 		23814DB816D3D48F00011C6E /* PermaKeyboardPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 23814DB716D3D48F00011C6E /* PermaKeyboardPlugin.m */; };
 		239284C615B59961000812EC /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 239284C415B59960000812EC /* Accounts.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		239284C715B59961000812EC /* Twitter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 239284C515B59960000812EC /* Twitter.framework */; };
 		239906D4157F5B2D00411D6C /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 239906D3157F5B2D00411D6C /* Security.framework */; };
 		239906D6157F5B3400411D6C /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 239906D5157F5B3400411D6C /* StoreKit.framework */; };
-		239A63C916CD6197001F381A /* libCordova.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 239A63C816CD6197001F381A /* libCordova.a */; };
-		23A5718116D7D889009C34C3 /* TapjoyPublisherLibrary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 23A5717F16D7D889009C34C3 /* TapjoyPublisherLibrary.a */; };
-		23A5718216D7D889009C34C3 /* TapjoyResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 23A5718016D7D889009C34C3 /* TapjoyResources.bundle */; };
 		23A9F90D161336D90018E46F /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23A9F90C161336D90018E46F /* FacebookSDK.framework */; };
 		23A9F910161336F10018E46F /* FacebookSDKResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 23A9F90E161336F10018E46F /* FacebookSDKResources.bundle */; };
 		23A9F953161338310018E46F /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 23A9F952161338310018E46F /* libsqlite3.0.dylib */; };
@@ -84,7 +85,6 @@
 		23C6DDAB16A4523C00D7238A /* EventKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23C6DDAA16A4523C00D7238A /* EventKit.framework */; };
 		23C857DE159C48E100A83247 /* AppStoreRatingPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 23C857DD159C48E100A83247 /* AppStoreRatingPlugin.m */; };
 		23C8580F159CCBA000A83247 /* PushNotificationsPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 23C8580E159CCBA000A83247 /* PushNotificationsPlugin.m */; };
-		23DB5C0D159B657E005B8985 /* libChartboost.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 23DB5C0C159B657E005B8985 /* libChartboost.a */; };
 		23E7706215B5776D00CEEF2F /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 23E7706015B5776D00CEEF2F /* Localizable.strings */; };
 		23F57DBA157E59AD00F7847A /* MKStorePlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 23F57DB9157E59AD00F7847A /* MKStorePlugin.m */; };
 		23F57DE8157E5A8A00F7847A /* NSDictionary+data.m in Sources */ = {isa = PBXBuildFile; fileRef = 23F57DC5157E5A8A00F7847A /* NSDictionary+data.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -110,6 +110,68 @@
 		2319355415F7ABEE00A9F0B9 /* TapjoyConnectPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TapjoyConnectPlugin.h; path = Plugins/TapjoyConnectPlugin.h; sourceTree = "<group>"; };
 		2319355515F7ABEE00A9F0B9 /* TapjoyConnectPlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TapjoyConnectPlugin.m; path = Plugins/TapjoyConnectPlugin.m; sourceTree = "<group>"; };
 		2319355B15F7B0A900A9F0B9 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
+		23194227180457FA00AB6DE0 /* libTestFlight.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libTestFlight.a; sourceTree = "<group>"; };
+		2319422A180457FA00AB6DE0 /* TestFlight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestFlight.h; sourceTree = "<group>"; };
+		2319422F1804582500AB6DE0 /* CBAnalytics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBAnalytics.h; sourceTree = "<group>"; };
+		231942301804582500AB6DE0 /* Chartboost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Chartboost.h; sourceTree = "<group>"; };
+		231942311804582500AB6DE0 /* libChartboost.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libChartboost.a; sourceTree = "<group>"; };
+		231942341804584700AB6DE0 /* TapjoyConnect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TapjoyConnect.h; sourceTree = "<group>"; };
+		231942351804584700AB6DE0 /* TapjoyConnectConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TapjoyConnectConstants.h; sourceTree = "<group>"; };
+		231942361804584700AB6DE0 /* TapjoyPublisherLibrary.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = TapjoyPublisherLibrary.a; sourceTree = "<group>"; };
+		231942371804584700AB6DE0 /* TapjoyResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = TapjoyResources.bundle; sourceTree = "<group>"; };
+		2319423C1804585D00AB6DE0 /* CDV.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDV.h; sourceTree = "<group>"; };
+		2319423D1804585D00AB6DE0 /* CDVAccelerometer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDVAccelerometer.h; sourceTree = "<group>"; };
+		2319423E1804585D00AB6DE0 /* CDVAvailability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDVAvailability.h; sourceTree = "<group>"; };
+		2319423F1804585D00AB6DE0 /* CDVBattery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDVBattery.h; sourceTree = "<group>"; };
+		231942401804585D00AB6DE0 /* CDVCamera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDVCamera.h; sourceTree = "<group>"; };
+		231942411804585D00AB6DE0 /* CDVCapture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDVCapture.h; sourceTree = "<group>"; };
+		231942421804585D00AB6DE0 /* CDVCommandDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDVCommandDelegate.h; sourceTree = "<group>"; };
+		231942431804585D00AB6DE0 /* CDVCommandDelegateImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDVCommandDelegateImpl.h; sourceTree = "<group>"; };
+		231942441804585D00AB6DE0 /* CDVCommandQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDVCommandQueue.h; sourceTree = "<group>"; };
+		231942451804585D00AB6DE0 /* CDVConfigParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDVConfigParser.h; sourceTree = "<group>"; };
+		231942461804585D00AB6DE0 /* CDVConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDVConnection.h; sourceTree = "<group>"; };
+		231942471804585D00AB6DE0 /* CDVContact.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDVContact.h; sourceTree = "<group>"; };
+		231942481804585D00AB6DE0 /* CDVContacts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDVContacts.h; sourceTree = "<group>"; };
+		231942491804585D00AB6DE0 /* CDVDebug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDVDebug.h; sourceTree = "<group>"; };
+		2319424A1804585D00AB6DE0 /* CDVDebugConsole.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDVDebugConsole.h; sourceTree = "<group>"; };
+		2319424B1804585D00AB6DE0 /* CDVDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDVDevice.h; sourceTree = "<group>"; };
+		2319424C1804585D00AB6DE0 /* CDVEcho.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDVEcho.h; sourceTree = "<group>"; };
+		2319424D1804585D00AB6DE0 /* CDVFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDVFile.h; sourceTree = "<group>"; };
+		2319424E1804585D00AB6DE0 /* CDVFileTransfer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDVFileTransfer.h; sourceTree = "<group>"; };
+		2319424F1804585D00AB6DE0 /* CDVGlobalization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDVGlobalization.h; sourceTree = "<group>"; };
+		231942501804585D00AB6DE0 /* CDVInAppBrowser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDVInAppBrowser.h; sourceTree = "<group>"; };
+		231942511804585D00AB6DE0 /* CDVInvokedUrlCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDVInvokedUrlCommand.h; sourceTree = "<group>"; };
+		231942521804585D00AB6DE0 /* CDVJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDVJSON.h; sourceTree = "<group>"; };
+		231942531804585D00AB6DE0 /* CDVLocalStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDVLocalStorage.h; sourceTree = "<group>"; };
+		231942541804585D00AB6DE0 /* CDVLocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDVLocation.h; sourceTree = "<group>"; };
+		231942551804585D00AB6DE0 /* CDVLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDVLogger.h; sourceTree = "<group>"; };
+		231942561804585D00AB6DE0 /* CDVNotification.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDVNotification.h; sourceTree = "<group>"; };
+		231942571804585D00AB6DE0 /* CDVPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDVPlugin.h; sourceTree = "<group>"; };
+		231942581804585D00AB6DE0 /* CDVPluginResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDVPluginResult.h; sourceTree = "<group>"; };
+		231942591804585D00AB6DE0 /* CDVReachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDVReachability.h; sourceTree = "<group>"; };
+		2319425A1804585D00AB6DE0 /* CDVScreenOrientationDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDVScreenOrientationDelegate.h; sourceTree = "<group>"; };
+		2319425B1804585D00AB6DE0 /* CDVSound.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDVSound.h; sourceTree = "<group>"; };
+		2319425C1804585D00AB6DE0 /* CDVSplashScreen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDVSplashScreen.h; sourceTree = "<group>"; };
+		2319425D1804585D00AB6DE0 /* CDVURLProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDVURLProtocol.h; sourceTree = "<group>"; };
+		2319425E1804585D00AB6DE0 /* CDVUserAgentUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDVUserAgentUtil.h; sourceTree = "<group>"; };
+		2319425F1804585D00AB6DE0 /* CDVViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDVViewController.h; sourceTree = "<group>"; };
+		231942601804585D00AB6DE0 /* CDVWhitelist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDVWhitelist.h; sourceTree = "<group>"; };
+		231942611804585D00AB6DE0 /* NSArray+Comparisons.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+Comparisons.h"; sourceTree = "<group>"; };
+		231942621804585D00AB6DE0 /* NSData+Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+Base64.h"; sourceTree = "<group>"; };
+		231942631804585D00AB6DE0 /* NSDictionary+Extensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+Extensions.h"; sourceTree = "<group>"; };
+		231942641804585D00AB6DE0 /* NSMutableArray+QueueAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+QueueAdditions.h"; sourceTree = "<group>"; };
+		231942651804585D00AB6DE0 /* UIDevice+Extensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIDevice+Extensions.h"; sourceTree = "<group>"; };
+		231942661804585D00AB6DE0 /* libCordova.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libCordova.a; sourceTree = "<group>"; };
+		231942691804586900AB6DE0 /* GAI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAI.h; sourceTree = "<group>"; };
+		2319426A1804586900AB6DE0 /* GAIDictionaryBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAIDictionaryBuilder.h; sourceTree = "<group>"; };
+		2319426B1804586900AB6DE0 /* GAIFields.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAIFields.h; sourceTree = "<group>"; };
+		2319426C1804586900AB6DE0 /* GAILogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAILogger.h; sourceTree = "<group>"; };
+		2319426D1804586900AB6DE0 /* GAITrackedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAITrackedViewController.h; sourceTree = "<group>"; };
+		2319426E1804586900AB6DE0 /* GAITracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAITracker.h; sourceTree = "<group>"; };
+		2319426F1804586900AB6DE0 /* libGoogleAnalytics_debug.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libGoogleAnalytics_debug.a; sourceTree = "<group>"; };
+		231942701804586900AB6DE0 /* libGoogleAnalyticsServices.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libGoogleAnalyticsServices.a; sourceTree = "<group>"; };
+		231942741804588800AB6DE0 /* AdColonyPublic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdColonyPublic.h; sourceTree = "<group>"; };
+		231942751804588800AB6DE0 /* libAdColony.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libAdColony.a; sourceTree = "<group>"; };
 		2320B8631637E194005CC24C /* ATInternet.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = ATInternet.sqlite; sourceTree = "<group>"; };
 		2320B8641637E194005CC24C /* ATiOSLib.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = ATiOSLib.a; sourceTree = "<group>"; };
 		2320B8651637E194005CC24C /* ATParams.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATParams.h; sourceTree = "<group>"; };
@@ -167,23 +229,12 @@
 		23569BC41586357700255812 /* GameCenterManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameCenterManager.m; sourceTree = "<group>"; };
 		23569BC61586458B00255812 /* BasePlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BasePlugin.h; path = Plugins/BasePlugin.h; sourceTree = "<group>"; };
 		23569BC71586458B00255812 /* BasePlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BasePlugin.m; path = Plugins/BasePlugin.m; sourceTree = "<group>"; };
-		2359307716A0356C0009CF9F /* AdColonyPublic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdColonyPublic.h; sourceTree = "<group>"; };
-		2359307816A0356C0009CF9F /* libAdColony.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libAdColony.a; sourceTree = "<group>"; };
 		2359307B16A0357B0009CF9F /* AdColonyPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AdColonyPlugin.h; path = Plugins/AdColonyPlugin.h; sourceTree = "<group>"; };
 		2359307C16A0357B0009CF9F /* AdColonyPlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AdColonyPlugin.m; path = Plugins/AdColonyPlugin.m; sourceTree = "<group>"; };
 		236001CC15876F8F00E9A1C9 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
-		236001D015876FE300E9A1C9 /* libTestFlight.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libTestFlight.a; sourceTree = "<group>"; };
-		236001D315876FE300E9A1C9 /* TestFlight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestFlight.h; sourceTree = "<group>"; };
 		237AE3D1169F1A1B00A94A7E /* config.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = config.xml; sourceTree = "<group>"; };
 		237AE3D7169F1CF600A94A7E /* ChartBoostPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChartBoostPlugin.h; path = Plugins/ChartBoostPlugin.h; sourceTree = "<group>"; };
 		237AE3D8169F1CF600A94A7E /* ChartBoostPlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ChartBoostPlugin.m; path = Plugins/ChartBoostPlugin.m; sourceTree = "<group>"; };
-		237DC5A516A9ABAC00F6E715 /* GAI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAI.h; sourceTree = "<group>"; };
-		237DC5A616A9ABAC00F6E715 /* GAITrackedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAITrackedViewController.h; sourceTree = "<group>"; };
-		237DC5A716A9ABAC00F6E715 /* GAITracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAITracker.h; sourceTree = "<group>"; };
-		237DC5A816A9ABAC00F6E715 /* GAITransaction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAITransaction.h; sourceTree = "<group>"; };
-		237DC5A916A9ABAC00F6E715 /* GAITransactionItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAITransactionItem.h; sourceTree = "<group>"; };
-		237DC5AA16A9ABAC00F6E715 /* libGoogleAnalytics.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libGoogleAnalytics.a; sourceTree = "<group>"; };
-		237DC5AB16A9ABAC00F6E715 /* libGoogleAnalytics_debug.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libGoogleAnalytics_debug.a; sourceTree = "<group>"; };
 		237DC5AE16A9BFC700F6E715 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		23814DB616D3D48E00011C6E /* PermaKeyboardPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PermaKeyboardPlugin.h; path = Plugins/PermaKeyboardPlugin.h; sourceTree = "<group>"; };
 		23814DB716D3D48F00011C6E /* PermaKeyboardPlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PermaKeyboardPlugin.m; path = Plugins/PermaKeyboardPlugin.m; sourceTree = "<group>"; };
@@ -191,53 +242,6 @@
 		239284C515B59960000812EC /* Twitter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Twitter.framework; path = System/Library/Frameworks/Twitter.framework; sourceTree = SDKROOT; };
 		239906D3157F5B2D00411D6C /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		239906D5157F5B3400411D6C /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
-		239A639E16CD6197001F381A /* CDV.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDV.h; sourceTree = "<group>"; };
-		239A639F16CD6197001F381A /* CDVAccelerometer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDVAccelerometer.h; sourceTree = "<group>"; };
-		239A63A016CD6197001F381A /* CDVAvailability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDVAvailability.h; sourceTree = "<group>"; };
-		239A63A116CD6197001F381A /* CDVBattery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDVBattery.h; sourceTree = "<group>"; };
-		239A63A216CD6197001F381A /* CDVCamera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDVCamera.h; sourceTree = "<group>"; };
-		239A63A316CD6197001F381A /* CDVCapture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDVCapture.h; sourceTree = "<group>"; };
-		239A63A416CD6197001F381A /* CDVCommandDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDVCommandDelegate.h; sourceTree = "<group>"; };
-		239A63A516CD6197001F381A /* CDVCommandDelegateImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDVCommandDelegateImpl.h; sourceTree = "<group>"; };
-		239A63A616CD6197001F381A /* CDVCommandQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDVCommandQueue.h; sourceTree = "<group>"; };
-		239A63A716CD6197001F381A /* CDVConfigParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDVConfigParser.h; sourceTree = "<group>"; };
-		239A63A816CD6197001F381A /* CDVConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDVConnection.h; sourceTree = "<group>"; };
-		239A63A916CD6197001F381A /* CDVContact.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDVContact.h; sourceTree = "<group>"; };
-		239A63AA16CD6197001F381A /* CDVContacts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDVContacts.h; sourceTree = "<group>"; };
-		239A63AB16CD6197001F381A /* CDVDebug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDVDebug.h; sourceTree = "<group>"; };
-		239A63AC16CD6197001F381A /* CDVDebugConsole.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDVDebugConsole.h; sourceTree = "<group>"; };
-		239A63AD16CD6197001F381A /* CDVDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDVDevice.h; sourceTree = "<group>"; };
-		239A63AE16CD6197001F381A /* CDVEcho.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDVEcho.h; sourceTree = "<group>"; };
-		239A63AF16CD6197001F381A /* CDVFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDVFile.h; sourceTree = "<group>"; };
-		239A63B016CD6197001F381A /* CDVFileTransfer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDVFileTransfer.h; sourceTree = "<group>"; };
-		239A63B116CD6197001F381A /* CDVGlobalization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDVGlobalization.h; sourceTree = "<group>"; };
-		239A63B216CD6197001F381A /* CDVInAppBrowser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDVInAppBrowser.h; sourceTree = "<group>"; };
-		239A63B316CD6197001F381A /* CDVInvokedUrlCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDVInvokedUrlCommand.h; sourceTree = "<group>"; };
-		239A63B416CD6197001F381A /* CDVJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDVJSON.h; sourceTree = "<group>"; };
-		239A63B516CD6197001F381A /* CDVLocalStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDVLocalStorage.h; sourceTree = "<group>"; };
-		239A63B616CD6197001F381A /* CDVLocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDVLocation.h; sourceTree = "<group>"; };
-		239A63B716CD6197001F381A /* CDVLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDVLogger.h; sourceTree = "<group>"; };
-		239A63B816CD6197001F381A /* CDVNotification.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDVNotification.h; sourceTree = "<group>"; };
-		239A63B916CD6197001F381A /* CDVPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDVPlugin.h; sourceTree = "<group>"; };
-		239A63BA16CD6197001F381A /* CDVPluginResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDVPluginResult.h; sourceTree = "<group>"; };
-		239A63BB16CD6197001F381A /* CDVReachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDVReachability.h; sourceTree = "<group>"; };
-		239A63BC16CD6197001F381A /* CDVScreenOrientationDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDVScreenOrientationDelegate.h; sourceTree = "<group>"; };
-		239A63BD16CD6197001F381A /* CDVSound.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDVSound.h; sourceTree = "<group>"; };
-		239A63BE16CD6197001F381A /* CDVSplashScreen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDVSplashScreen.h; sourceTree = "<group>"; };
-		239A63BF16CD6197001F381A /* CDVURLProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDVURLProtocol.h; sourceTree = "<group>"; };
-		239A63C016CD6197001F381A /* CDVUserAgentUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDVUserAgentUtil.h; sourceTree = "<group>"; };
-		239A63C116CD6197001F381A /* CDVViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDVViewController.h; sourceTree = "<group>"; };
-		239A63C216CD6197001F381A /* CDVWhitelist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDVWhitelist.h; sourceTree = "<group>"; };
-		239A63C316CD6197001F381A /* NSArray+Comparisons.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+Comparisons.h"; sourceTree = "<group>"; };
-		239A63C416CD6197001F381A /* NSData+Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+Base64.h"; sourceTree = "<group>"; };
-		239A63C516CD6197001F381A /* NSDictionary+Extensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+Extensions.h"; sourceTree = "<group>"; };
-		239A63C616CD6197001F381A /* NSMutableArray+QueueAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+QueueAdditions.h"; sourceTree = "<group>"; };
-		239A63C716CD6197001F381A /* UIDevice+Extensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIDevice+Extensions.h"; sourceTree = "<group>"; };
-		239A63C816CD6197001F381A /* libCordova.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libCordova.a; sourceTree = "<group>"; };
-		23A5717D16D7D889009C34C3 /* TapjoyConnect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TapjoyConnect.h; sourceTree = "<group>"; };
-		23A5717E16D7D889009C34C3 /* TapjoyConnectConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TapjoyConnectConstants.h; sourceTree = "<group>"; };
-		23A5717F16D7D889009C34C3 /* TapjoyPublisherLibrary.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = TapjoyPublisherLibrary.a; sourceTree = "<group>"; };
-		23A5718016D7D889009C34C3 /* TapjoyResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = TapjoyResources.bundle; sourceTree = "<group>"; };
 		23A9F90C161336D90018E46F /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = TriviaContainer/libs/FacebookSDK.framework; sourceTree = "<group>"; };
 		23A9F90E161336F10018E46F /* FacebookSDKResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = FacebookSDKResources.bundle; path = TriviaContainer/libs/FacebookSDK.framework/Versions/A/Resources/FacebookSDKResources.bundle; sourceTree = "<group>"; };
 		23A9F933161337CE0018E46F /* Facebook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Facebook.h; sourceTree = "<group>"; };
@@ -286,9 +290,6 @@
 		23C857DD159C48E100A83247 /* AppStoreRatingPlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppStoreRatingPlugin.m; path = Plugins/AppStoreRatingPlugin.m; sourceTree = "<group>"; };
 		23C8580D159CCBA000A83247 /* PushNotificationsPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PushNotificationsPlugin.h; path = Plugins/PushNotificationsPlugin.h; sourceTree = "<group>"; };
 		23C8580E159CCBA000A83247 /* PushNotificationsPlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PushNotificationsPlugin.m; path = Plugins/PushNotificationsPlugin.m; sourceTree = "<group>"; };
-		23DB5C0A159B657E005B8985 /* CBAnalytics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBAnalytics.h; sourceTree = "<group>"; };
-		23DB5C0B159B657E005B8985 /* Chartboost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Chartboost.h; sourceTree = "<group>"; };
-		23DB5C0C159B657E005B8985 /* libChartboost.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libChartboost.a; sourceTree = "<group>"; };
 		23E7706115B5776D00CEEF2F /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = Localizable.strings; sourceTree = "<group>"; };
 		23F57DB8157E59AD00F7847A /* MKStorePlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MKStorePlugin.h; path = Plugins/MKStorePlugin.h; sourceTree = "<group>"; };
 		23F57DB9157E59AD00F7847A /* MKStorePlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MKStorePlugin.m; path = Plugins/MKStorePlugin.m; sourceTree = "<group>"; };
@@ -343,6 +344,7 @@
 				232C2CF8160C5C8D006DF2CD /* AdSupport.framework in Frameworks */,
 				2319355C15F7B0A900A9F0B9 /* CoreTelephony.framework in Frameworks */,
 				235451EF156174B700A821D6 /* CoreLocation.framework in Frameworks */,
+				231942671804585D00AB6DE0 /* libCordova.a in Frameworks */,
 				235033C215F601380092AF88 /* CoreMotion.framework in Frameworks */,
 				239284C615B59961000812EC /* Accounts.framework in Frameworks */,
 				239284C715B59961000812EC /* Twitter.framework in Frameworks */,
@@ -359,24 +361,135 @@
 				235451EB156174B700A821D6 /* AudioToolbox.framework in Frameworks */,
 				235451ED156174B700A821D6 /* AVFoundation.framework in Frameworks */,
 				235451F1156174B700A821D6 /* MediaPlayer.framework in Frameworks */,
+				231942381804584700AB6DE0 /* TapjoyPublisherLibrary.a in Frameworks */,
 				235451F3156174B700A821D6 /* QuartzCore.framework in Frameworks */,
+				231942761804588800AB6DE0 /* libAdColony.a in Frameworks */,
 				235451F5156174B700A821D6 /* SystemConfiguration.framework in Frameworks */,
+				2319422B180457FA00AB6DE0 /* libTestFlight.a in Frameworks */,
 				235451F7156174B700A821D6 /* MobileCoreServices.framework in Frameworks */,
 				235451F9156174B700A821D6 /* CoreMedia.framework in Frameworks */,
-				236001D415876FE300E9A1C9 /* libTestFlight.a in Frameworks */,
-				23DB5C0D159B657E005B8985 /* libChartboost.a in Frameworks */,
+				231942721804586900AB6DE0 /* libGoogleAnalyticsServices.a in Frameworks */,
 				23A9F90D161336D90018E46F /* FacebookSDK.framework in Frameworks */,
 				2320B8681637E194005CC24C /* ATiOSLib.a in Frameworks */,
-				2359307916A0356C0009CF9F /* libAdColony.a in Frameworks */,
-				237DC5AC16A9ABAC00F6E715 /* libGoogleAnalytics.a in Frameworks */,
-				239A63C916CD6197001F381A /* libCordova.a in Frameworks */,
-				23A5718116D7D889009C34C3 /* TapjoyPublisherLibrary.a in Frameworks */,
+				231942321804582500AB6DE0 /* libChartboost.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		23194226180457FA00AB6DE0 /* TestFlight */ = {
+			isa = PBXGroup;
+			children = (
+				23194227180457FA00AB6DE0 /* libTestFlight.a */,
+				2319422A180457FA00AB6DE0 /* TestFlight.h */,
+			);
+			path = TestFlight;
+			sourceTree = "<group>";
+		};
+		2319422E1804582500AB6DE0 /* ChartBoost */ = {
+			isa = PBXGroup;
+			children = (
+				2319422F1804582500AB6DE0 /* CBAnalytics.h */,
+				231942301804582500AB6DE0 /* Chartboost.h */,
+				231942311804582500AB6DE0 /* libChartboost.a */,
+			);
+			path = ChartBoost;
+			sourceTree = "<group>";
+		};
+		231942331804584700AB6DE0 /* TapjoyPublisherLibrary */ = {
+			isa = PBXGroup;
+			children = (
+				231942341804584700AB6DE0 /* TapjoyConnect.h */,
+				231942351804584700AB6DE0 /* TapjoyConnectConstants.h */,
+				231942361804584700AB6DE0 /* TapjoyPublisherLibrary.a */,
+				231942371804584700AB6DE0 /* TapjoyResources.bundle */,
+			);
+			path = TapjoyPublisherLibrary;
+			sourceTree = "<group>";
+		};
+		2319423A1804585D00AB6DE0 /* Cordova */ = {
+			isa = PBXGroup;
+			children = (
+				2319423B1804585D00AB6DE0 /* Cordova */,
+				231942661804585D00AB6DE0 /* libCordova.a */,
+			);
+			path = Cordova;
+			sourceTree = "<group>";
+		};
+		2319423B1804585D00AB6DE0 /* Cordova */ = {
+			isa = PBXGroup;
+			children = (
+				2319423C1804585D00AB6DE0 /* CDV.h */,
+				2319423D1804585D00AB6DE0 /* CDVAccelerometer.h */,
+				2319423E1804585D00AB6DE0 /* CDVAvailability.h */,
+				2319423F1804585D00AB6DE0 /* CDVBattery.h */,
+				231942401804585D00AB6DE0 /* CDVCamera.h */,
+				231942411804585D00AB6DE0 /* CDVCapture.h */,
+				231942421804585D00AB6DE0 /* CDVCommandDelegate.h */,
+				231942431804585D00AB6DE0 /* CDVCommandDelegateImpl.h */,
+				231942441804585D00AB6DE0 /* CDVCommandQueue.h */,
+				231942451804585D00AB6DE0 /* CDVConfigParser.h */,
+				231942461804585D00AB6DE0 /* CDVConnection.h */,
+				231942471804585D00AB6DE0 /* CDVContact.h */,
+				231942481804585D00AB6DE0 /* CDVContacts.h */,
+				231942491804585D00AB6DE0 /* CDVDebug.h */,
+				2319424A1804585D00AB6DE0 /* CDVDebugConsole.h */,
+				2319424B1804585D00AB6DE0 /* CDVDevice.h */,
+				2319424C1804585D00AB6DE0 /* CDVEcho.h */,
+				2319424D1804585D00AB6DE0 /* CDVFile.h */,
+				2319424E1804585D00AB6DE0 /* CDVFileTransfer.h */,
+				2319424F1804585D00AB6DE0 /* CDVGlobalization.h */,
+				231942501804585D00AB6DE0 /* CDVInAppBrowser.h */,
+				231942511804585D00AB6DE0 /* CDVInvokedUrlCommand.h */,
+				231942521804585D00AB6DE0 /* CDVJSON.h */,
+				231942531804585D00AB6DE0 /* CDVLocalStorage.h */,
+				231942541804585D00AB6DE0 /* CDVLocation.h */,
+				231942551804585D00AB6DE0 /* CDVLogger.h */,
+				231942561804585D00AB6DE0 /* CDVNotification.h */,
+				231942571804585D00AB6DE0 /* CDVPlugin.h */,
+				231942581804585D00AB6DE0 /* CDVPluginResult.h */,
+				231942591804585D00AB6DE0 /* CDVReachability.h */,
+				2319425A1804585D00AB6DE0 /* CDVScreenOrientationDelegate.h */,
+				2319425B1804585D00AB6DE0 /* CDVSound.h */,
+				2319425C1804585D00AB6DE0 /* CDVSplashScreen.h */,
+				2319425D1804585D00AB6DE0 /* CDVURLProtocol.h */,
+				2319425E1804585D00AB6DE0 /* CDVUserAgentUtil.h */,
+				2319425F1804585D00AB6DE0 /* CDVViewController.h */,
+				231942601804585D00AB6DE0 /* CDVWhitelist.h */,
+				231942611804585D00AB6DE0 /* NSArray+Comparisons.h */,
+				231942621804585D00AB6DE0 /* NSData+Base64.h */,
+				231942631804585D00AB6DE0 /* NSDictionary+Extensions.h */,
+				231942641804585D00AB6DE0 /* NSMutableArray+QueueAdditions.h */,
+				231942651804585D00AB6DE0 /* UIDevice+Extensions.h */,
+			);
+			path = Cordova;
+			sourceTree = "<group>";
+		};
+		231942681804586900AB6DE0 /* GoogleAnalytics */ = {
+			isa = PBXGroup;
+			children = (
+				231942691804586900AB6DE0 /* GAI.h */,
+				2319426A1804586900AB6DE0 /* GAIDictionaryBuilder.h */,
+				2319426B1804586900AB6DE0 /* GAIFields.h */,
+				2319426C1804586900AB6DE0 /* GAILogger.h */,
+				2319426D1804586900AB6DE0 /* GAITrackedViewController.h */,
+				2319426E1804586900AB6DE0 /* GAITracker.h */,
+				2319426F1804586900AB6DE0 /* libGoogleAnalytics_debug.a */,
+				231942701804586900AB6DE0 /* libGoogleAnalyticsServices.a */,
+			);
+			path = GoogleAnalytics;
+			sourceTree = "<group>";
+		};
+		231942731804588800AB6DE0 /* AdColony */ = {
+			isa = PBXGroup;
+			children = (
+				231942741804588800AB6DE0 /* AdColonyPublic.h */,
+				231942751804588800AB6DE0 /* libAdColony.a */,
+			);
+			path = AdColony;
+			sourceTree = "<group>";
+		};
 		2320B8621637E194005CC24C /* Xiti */ = {
 			isa = PBXGroup;
 			children = (
@@ -587,107 +700,6 @@
 			path = GameCenterManager;
 			sourceTree = "<group>";
 		};
-		2359307616A0356C0009CF9F /* AdColony */ = {
-			isa = PBXGroup;
-			children = (
-				2359307716A0356C0009CF9F /* AdColonyPublic.h */,
-				2359307816A0356C0009CF9F /* libAdColony.a */,
-			);
-			path = AdColony;
-			sourceTree = "<group>";
-		};
-		236001CF15876FE300E9A1C9 /* TestFlight */ = {
-			isa = PBXGroup;
-			children = (
-				236001D015876FE300E9A1C9 /* libTestFlight.a */,
-				236001D315876FE300E9A1C9 /* TestFlight.h */,
-			);
-			path = TestFlight;
-			sourceTree = "<group>";
-		};
-		237DC5A416A9ABAC00F6E715 /* GoogleAnalytics */ = {
-			isa = PBXGroup;
-			children = (
-				237DC5A516A9ABAC00F6E715 /* GAI.h */,
-				237DC5A616A9ABAC00F6E715 /* GAITrackedViewController.h */,
-				237DC5A716A9ABAC00F6E715 /* GAITracker.h */,
-				237DC5A816A9ABAC00F6E715 /* GAITransaction.h */,
-				237DC5A916A9ABAC00F6E715 /* GAITransactionItem.h */,
-				237DC5AA16A9ABAC00F6E715 /* libGoogleAnalytics.a */,
-				237DC5AB16A9ABAC00F6E715 /* libGoogleAnalytics_debug.a */,
-			);
-			path = GoogleAnalytics;
-			sourceTree = "<group>";
-		};
-		239A639C16CD6197001F381A /* Cordova */ = {
-			isa = PBXGroup;
-			children = (
-				239A639D16CD6197001F381A /* Cordova */,
-				239A63C816CD6197001F381A /* libCordova.a */,
-			);
-			path = Cordova;
-			sourceTree = "<group>";
-		};
-		239A639D16CD6197001F381A /* Cordova */ = {
-			isa = PBXGroup;
-			children = (
-				239A639E16CD6197001F381A /* CDV.h */,
-				239A639F16CD6197001F381A /* CDVAccelerometer.h */,
-				239A63A016CD6197001F381A /* CDVAvailability.h */,
-				239A63A116CD6197001F381A /* CDVBattery.h */,
-				239A63A216CD6197001F381A /* CDVCamera.h */,
-				239A63A316CD6197001F381A /* CDVCapture.h */,
-				239A63A416CD6197001F381A /* CDVCommandDelegate.h */,
-				239A63A516CD6197001F381A /* CDVCommandDelegateImpl.h */,
-				239A63A616CD6197001F381A /* CDVCommandQueue.h */,
-				239A63A716CD6197001F381A /* CDVConfigParser.h */,
-				239A63A816CD6197001F381A /* CDVConnection.h */,
-				239A63A916CD6197001F381A /* CDVContact.h */,
-				239A63AA16CD6197001F381A /* CDVContacts.h */,
-				239A63AB16CD6197001F381A /* CDVDebug.h */,
-				239A63AC16CD6197001F381A /* CDVDebugConsole.h */,
-				239A63AD16CD6197001F381A /* CDVDevice.h */,
-				239A63AE16CD6197001F381A /* CDVEcho.h */,
-				239A63AF16CD6197001F381A /* CDVFile.h */,
-				239A63B016CD6197001F381A /* CDVFileTransfer.h */,
-				239A63B116CD6197001F381A /* CDVGlobalization.h */,
-				239A63B216CD6197001F381A /* CDVInAppBrowser.h */,
-				239A63B316CD6197001F381A /* CDVInvokedUrlCommand.h */,
-				239A63B416CD6197001F381A /* CDVJSON.h */,
-				239A63B516CD6197001F381A /* CDVLocalStorage.h */,
-				239A63B616CD6197001F381A /* CDVLocation.h */,
-				239A63B716CD6197001F381A /* CDVLogger.h */,
-				239A63B816CD6197001F381A /* CDVNotification.h */,
-				239A63B916CD6197001F381A /* CDVPlugin.h */,
-				239A63BA16CD6197001F381A /* CDVPluginResult.h */,
-				239A63BB16CD6197001F381A /* CDVReachability.h */,
-				239A63BC16CD6197001F381A /* CDVScreenOrientationDelegate.h */,
-				239A63BD16CD6197001F381A /* CDVSound.h */,
-				239A63BE16CD6197001F381A /* CDVSplashScreen.h */,
-				239A63BF16CD6197001F381A /* CDVURLProtocol.h */,
-				239A63C016CD6197001F381A /* CDVUserAgentUtil.h */,
-				239A63C116CD6197001F381A /* CDVViewController.h */,
-				239A63C216CD6197001F381A /* CDVWhitelist.h */,
-				239A63C316CD6197001F381A /* NSArray+Comparisons.h */,
-				239A63C416CD6197001F381A /* NSData+Base64.h */,
-				239A63C516CD6197001F381A /* NSDictionary+Extensions.h */,
-				239A63C616CD6197001F381A /* NSMutableArray+QueueAdditions.h */,
-				239A63C716CD6197001F381A /* UIDevice+Extensions.h */,
-			);
-			path = Cordova;
-			sourceTree = "<group>";
-		};
-		23A5717C16D7D889009C34C3 /* TapjoyPublisherLibrary */ = {
-			isa = PBXGroup;
-			children = (
-				23A5717D16D7D889009C34C3 /* TapjoyConnect.h */,
-				23A5717E16D7D889009C34C3 /* TapjoyConnectConstants.h */,
-				23A5717F16D7D889009C34C3 /* TapjoyPublisherLibrary.a */,
-				23A5718016D7D889009C34C3 /* TapjoyResources.bundle */,
-			);
-			path = TapjoyPublisherLibrary;
-			sourceTree = "<group>";
-		};
 		23A9F932161337CE0018E46F /* DeprecatedHeaders */ = {
 			isa = PBXGroup;
 			children = (
@@ -745,16 +757,6 @@
 			path = Resources/icons;
 			sourceTree = "<group>";
 		};
-		23DB5C09159B657E005B8985 /* ChartBoost */ = {
-			isa = PBXGroup;
-			children = (
-				23DB5C0A159B657E005B8985 /* CBAnalytics.h */,
-				23DB5C0B159B657E005B8985 /* Chartboost.h */,
-				23DB5C0C159B657E005B8985 /* libChartboost.a */,
-			);
-			path = ChartBoost;
-			sourceTree = "<group>";
-		};
 		23E7705F15B5776D00CEEF2F /* fr.lproj */ = {
 			isa = PBXGroup;
 			children = (
@@ -767,14 +769,14 @@
 		23F57DBC157E5A8A00F7847A /* libs */ = {
 			isa = PBXGroup;
 			children = (
-				23A5717C16D7D889009C34C3 /* TapjoyPublisherLibrary */,
-				239A639C16CD6197001F381A /* Cordova */,
-				237DC5A416A9ABAC00F6E715 /* GoogleAnalytics */,
-				2359307616A0356C0009CF9F /* AdColony */,
+				231942731804588800AB6DE0 /* AdColony */,
+				231942681804586900AB6DE0 /* GoogleAnalytics */,
+				2319423A1804585D00AB6DE0 /* Cordova */,
+				231942331804584700AB6DE0 /* TapjoyPublisherLibrary */,
+				2319422E1804582500AB6DE0 /* ChartBoost */,
+				23194226180457FA00AB6DE0 /* TestFlight */,
 				2320B8621637E194005CC24C /* Xiti */,
 				23A9F932161337CE0018E46F /* DeprecatedHeaders */,
-				23DB5C09159B657E005B8985 /* ChartBoost */,
-				236001CF15876FE300E9A1C9 /* TestFlight */,
 				23569BC21586357700255812 /* GameCenterManager */,
 				23F57DBD157E5A8A00F7847A /* MKStoreKit */,
 			);
@@ -889,6 +891,7 @@
 				2354520D156174B700A821D6 /* Localizable.strings in Resources */,
 				23545211156174B700A821D6 /* Localizable.strings in Resources */,
 				23545215156174B800A821D6 /* Localizable.strings in Resources */,
+				231942391804584700AB6DE0 /* TapjoyResources.bundle in Resources */,
 				23545223156174B800A821D6 /* Capture.bundle in Resources */,
 				2354522E156174B800A821D6 /* ViewController.xib in Resources */,
 				2354523D1561789C00A821D6 /* www in Resources */,
@@ -911,7 +914,6 @@
 				23220E07166682B900C6ADCB /* Default-Landscape.png in Resources */,
 				23220E08166682B900C6ADCB /* Default@2x.png in Resources */,
 				237AE3D2169F1A1B00A94A7E /* config.xml in Resources */,
-				23A5718216D7D889009C34C3 /* TapjoyResources.bundle in Resources */,
 				BF52D6E217257132007CD290 /* Default-568h@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1116,13 +1118,19 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/TriviaContainer/libs/Cordova\"",
-					"\"$(SRCROOT)/TriviaContainer/libs/TestFlight\"",
-					"\"$(SRCROOT)/TriviaContainer/libs/ChartBoost\"",
-					"\"$(SRCROOT)/TriviaContainer/libs/GoogleAnalytics\"",
-					"\"$(SRCROOT)/TriviaContainer/libs/Xiti\"",
-					"\"$(SRCROOT)/TriviaContainer/libs/TapjoyPublisherLibrary\"",
-					"\"$(SRCROOT)/TriviaContainer/libs/AdColony\"",
+					"\\\"$(SRCROOT)/TriviaContainer/libs/Cordova\\\"",
+					"\\\"$(SRCROOT)/TriviaContainer/libs/TestFlight\\\"",
+					"\\\"$(SRCROOT)/TriviaContainer/libs/ChartBoost\\\"",
+					"\\\"$(SRCROOT)/TriviaContainer/libs/GoogleAnalytics\\\"",
+					"\\\"$(SRCROOT)/TriviaContainer/libs/Xiti\\\"",
+					"\\\"$(SRCROOT)/TriviaContainer/libs/TapjoyPublisherLibrary\\\"",
+					"\\\"$(SRCROOT)/TriviaContainer/libs/AdColony\\\"",
+					/Users/sergiokunats/Sites/sports_quiz_client/ios/TriviaContainer/TriviaContainer/libs/GoogleAnalytics,
+					/Users/sergiokunats/Sites/sports_quiz_client/ios/TriviaContainer/TriviaContainer/libs/TestFlight,
+					/Users/sergiokunats/Sites/sports_quiz_client/ios/TriviaContainer/TriviaContainer/libs/ChartBoost,
+					/Users/sergiokunats/Sites/sports_quiz_client/ios/TriviaContainer/TriviaContainer/libs/TapjoyPublisherLibrary,
+					/Users/sergiokunats/Sites/sports_quiz_client/ios/TriviaContainer/TriviaContainer/libs/Cordova,
+					/Users/sergiokunats/Sites/sports_quiz_client/ios/TriviaContainer/TriviaContainer/libs/AdColony,
 				);
 				OTHER_LDFLAGS = (
 					"-weak_framework",
@@ -1135,8 +1143,8 @@
 					"-ObjC",
 				);
 				PRODUCT_NAME = TriviaContainer;
-				PROVISIONING_PROFILE = "6C9C1B80-0C93-4BED-900A-95C059F238D9";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "6C9C1B80-0C93-4BED-900A-95C059F238D9";
+				PROVISIONING_PROFILE = "6E91E7B8-66CC-4780-A1FF-A1109ED9F77C";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "6E91E7B8-66CC-4780-A1FF-A1109ED9F77C";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
@@ -1164,13 +1172,19 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/TriviaContainer/libs/Cordova\"",
-					"\"$(SRCROOT)/TriviaContainer/libs/TestFlight\"",
-					"\"$(SRCROOT)/TriviaContainer/libs/ChartBoost\"",
-					"\"$(SRCROOT)/TriviaContainer/libs/GoogleAnalytics\"",
-					"\"$(SRCROOT)/TriviaContainer/libs/Xiti\"",
-					"\"$(SRCROOT)/TriviaContainer/libs/TapjoyPublisherLibrary\"",
-					"\"$(SRCROOT)/TriviaContainer/libs/AdColony\"",
+					"\\\"$(SRCROOT)/TriviaContainer/libs/Cordova\\\"",
+					"\\\"$(SRCROOT)/TriviaContainer/libs/TestFlight\\\"",
+					"\\\"$(SRCROOT)/TriviaContainer/libs/ChartBoost\\\"",
+					"\\\"$(SRCROOT)/TriviaContainer/libs/GoogleAnalytics\\\"",
+					"\\\"$(SRCROOT)/TriviaContainer/libs/Xiti\\\"",
+					"\\\"$(SRCROOT)/TriviaContainer/libs/TapjoyPublisherLibrary\\\"",
+					"\\\"$(SRCROOT)/TriviaContainer/libs/AdColony\\\"",
+					/Users/sergiokunats/Sites/sports_quiz_client/ios/TriviaContainer/TriviaContainer/libs/GoogleAnalytics,
+					/Users/sergiokunats/Sites/sports_quiz_client/ios/TriviaContainer/TriviaContainer/libs/TestFlight,
+					/Users/sergiokunats/Sites/sports_quiz_client/ios/TriviaContainer/TriviaContainer/libs/ChartBoost,
+					/Users/sergiokunats/Sites/sports_quiz_client/ios/TriviaContainer/TriviaContainer/libs/TapjoyPublisherLibrary,
+					/Users/sergiokunats/Sites/sports_quiz_client/ios/TriviaContainer/TriviaContainer/libs/Cordova,
+					/Users/sergiokunats/Sites/sports_quiz_client/ios/TriviaContainer/TriviaContainer/libs/AdColony,
 				);
 				OTHER_LDFLAGS = (
 					"-weak_framework",
@@ -1246,13 +1260,19 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/TriviaContainer/libs/Cordova\"",
-					"\"$(SRCROOT)/TriviaContainer/libs/TestFlight\"",
-					"\"$(SRCROOT)/TriviaContainer/libs/ChartBoost\"",
-					"\"$(SRCROOT)/TriviaContainer/libs/GoogleAnalytics\"",
-					"\"$(SRCROOT)/TriviaContainer/libs/Xiti\"",
-					"\"$(SRCROOT)/TriviaContainer/libs/TapjoyPublisherLibrary\"",
-					"\"$(SRCROOT)/TriviaContainer/libs/AdColony\"",
+					"\\\"$(SRCROOT)/TriviaContainer/libs/Cordova\\\"",
+					"\\\"$(SRCROOT)/TriviaContainer/libs/TestFlight\\\"",
+					"\\\"$(SRCROOT)/TriviaContainer/libs/ChartBoost\\\"",
+					"\\\"$(SRCROOT)/TriviaContainer/libs/GoogleAnalytics\\\"",
+					"\\\"$(SRCROOT)/TriviaContainer/libs/Xiti\\\"",
+					"\\\"$(SRCROOT)/TriviaContainer/libs/TapjoyPublisherLibrary\\\"",
+					"\\\"$(SRCROOT)/TriviaContainer/libs/AdColony\\\"",
+					/Users/sergiokunats/Sites/sports_quiz_client/ios/TriviaContainer/TriviaContainer/libs/GoogleAnalytics,
+					/Users/sergiokunats/Sites/sports_quiz_client/ios/TriviaContainer/TriviaContainer/libs/TestFlight,
+					/Users/sergiokunats/Sites/sports_quiz_client/ios/TriviaContainer/TriviaContainer/libs/ChartBoost,
+					/Users/sergiokunats/Sites/sports_quiz_client/ios/TriviaContainer/TriviaContainer/libs/TapjoyPublisherLibrary,
+					/Users/sergiokunats/Sites/sports_quiz_client/ios/TriviaContainer/TriviaContainer/libs/Cordova,
+					/Users/sergiokunats/Sites/sports_quiz_client/ios/TriviaContainer/TriviaContainer/libs/AdColony,
 				);
 				OTHER_LDFLAGS = (
 					"-weak_framework",
@@ -1265,8 +1285,8 @@
 					"-ObjC",
 				);
 				PRODUCT_NAME = TriviaContainer;
-				PROVISIONING_PROFILE = "BBC5612E-5977-46DA-B372-1DABA9FD444C";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "BBC5612E-5977-46DA-B372-1DABA9FD444C";
+				PROVISIONING_PROFILE = "D77CF34F-0D55-450F-A0BE-07CAEB6238B7";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "D77CF34F-0D55-450F-A0BE-07CAEB6238B7";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 				WRAPPER_EXTENSION = app;

@@ -6,7 +6,7 @@ I18n            = require 'lib/i18n'
 GameStatHelper  = require 'helpers/game-stat-helper'
 
 module.exports = class GameOverController extends Controller
-
+  title: 'Game Over'
   bestJackpot: no
 
   index: (success, params) ->

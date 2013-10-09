@@ -34,6 +34,7 @@ module.exports = class GameController extends Controller
   #  | Listen on event stage:finish, to increment currentStageIndex, and launch new loop
   # ------------------------------------------------------------------------------------
   index: =>
+    AnalyticsHelper.trackPageView @title
     PushNotifications?.block() # dont show push stuff while playing
     @subscribeEvent 'stage:finish', @finishGame
     @subscribeEvent 'game:finish', @finishGame
@@ -74,7 +75,7 @@ module.exports = class GameController extends Controller
     human = @players[0]
 
     # Track endgames
-    AnalyticsHelper.trackPageView "EndGame - #{@i18nStageName}"
+    # AnalyticsHelper.trackPageView "EndGame - #{@i18nStageName}"
 
     data =
       jackpot : human.get('jackpot')
@@ -98,7 +99,7 @@ module.exports = class GameController extends Controller
     @currentController.start()
 
     # Track start stages
-    AnalyticsHelper.trackPageView @i18nStageName
+    # AnalyticsHelper.trackPageView @i18nStageName
 
   initPlayers: =>
     @players = [new Player(Parse.User.current().attributes)]

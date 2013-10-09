@@ -38,7 +38,7 @@ module.exports = class ShopController extends Controller
       view.delegate 'click', '#credits.inactive', =>
         @onToggleTab 'credits'
 
-      view.delegate 'click', '.paid-pack.ios', @onClickApplePack
+      view.delegate 'click', '.paid-pack.ios', @onClickAllopassPack#@onClickApplePack
       view.delegate 'click', '.paid-pack.web', @onClickAllopassPack
       view.delegate 'click', '.free-pack', @onClickFreePack
       view.delegate 'click', '.life-pack', @onClickLifePack
@@ -66,7 +66,10 @@ module.exports = class ShopController extends Controller
         message: i18n.t 'controller.shop.unavailable_pack.message'
         key    : 'pack-error'
 
-  onClickAllopassPack: (pack) ->
+  onClickAllopassPack: (e) =>
+    packId = @view.chooseApplePack(e.currentTarget)
+    pack = (p for p in @packs.credit_packs when p.product_id is packId)?[0]
+    AnalyticsHelper.trackTransaction AnalyticsHelper.getTransactionHash([pack], Parse.User.current().id)
     return console.log('Yep, you clicked')
     # dataSend = AllopassHelper.generateData(pack.id, ConnectionHelper.getUUID(), pack.name, pack.price)
     # url = 'https://payment.allopass.com/buy/buy.apu?' + AllopassHelper.productUrl(pack.product_id) + '&data=' + dataSend

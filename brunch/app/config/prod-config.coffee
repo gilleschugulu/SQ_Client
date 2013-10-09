@@ -11,8 +11,10 @@ class ProdConfig
   @long_version_format:  false
 
   @analytics:
-    enabled: no
-    google : ['']
+    enabled: yes
+    google :
+      web    : ['UA-44691623-1']
+      mobile : ['UA-44691219-1']
 
   @pay_game: true
 

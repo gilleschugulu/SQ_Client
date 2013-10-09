@@ -14,7 +14,6 @@
 #else
 #import "CDVPlugin.h"
 #endif
-#import "GAI.h"
 
 @interface GoogleAnalyticsPlugin : CDVPlugin {
 
