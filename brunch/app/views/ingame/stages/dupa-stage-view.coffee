@@ -92,7 +92,8 @@ module.exports = class DupaView extends View
         $('.question-theme', @$el).addClass('hidden-text').one 'webkitTransitionEnd', ->
           $(@).width(ghost.width()).one 'webkitTransitionEnd', ->
             $(@).text(theme).removeClass('hidden-text')
-        $('.question-photo', @$el).css {'background-image' : "url(../images/ingame/sports/#{question.get('sportCode')}.jpg)"}
+        $('.question-photo', @$el).addClass('hidden-photo').one 'webkitTransitionEnd', ->
+          $(@).css({'background-image' : "url(../images/ingame/sports/#{question.get('sportCode')}.jpg)"}).removeClass('hidden-photo')
 
       $('.question-content', @$el).text question.get('text')
 
