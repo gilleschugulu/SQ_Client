@@ -46,8 +46,21 @@ module.exports = class DupaStage extends Stage
     ++@questionIndex
 
     questions = @get('questions')[@questionDifficulty]
-    questions[@questionIndex % questions.length]
+    q = questions[@questionIndex % questions.length]
+    q.set 'sportCode', @getSportCode(q.get('category'))
+    q
 
   getCurrentQuestion: ->
     questions = @get('questions')[@questionDifficulty]
     questions[@questionIndex % questions.length]
+
+  getSportCode: (category) ->
+    sports =
+      "Auto Moto"             : 'auto'
+      "Cyclisme"              : 'velal'
+      "Football Francais"     : 'foot_fr'
+      "Football International": 'foot_int'
+      "Rugby"                 : 'rugby'
+      "Tennis"                : 'tennis'
+    return sports[category] if sports[category]?
+    'multi'
