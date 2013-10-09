@@ -13,7 +13,7 @@ routeList = {
   ]
   ingame: [
     ['game', 'game#index']
-    ['game-won/:jackpot/:rank/:reward', 'game-over#won', name: 'game-won']
+    ['game-won/:jackpot/:rank', 'game-over#won', name: 'game-won']
     ['game-lost/:jackpot/:rank', 'game-over#lost', name: 'game-lost']
   ]
 }

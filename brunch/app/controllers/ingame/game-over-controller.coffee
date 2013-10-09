@@ -15,9 +15,11 @@ module.exports = class GameOverController extends Controller
       GameStatHelper.setBestScore(params.jackpot)
       GameStatHelper.incrementSumScore(params.jackpot)
       GameStatHelper.saveStats()
-
-      jackpot = parseInt(params.jackpot)
-      user = @updateUser(Parse.User.current(), jackpot)
+      
+      jackpot    = parseInt(params.jackpot)
+      reward     = @getRewardAmount jackpot
+      endMessage = I18n.t "controller.game_over.end_message.#{@getEndMessageKey(jackpot)}"
+      user       = @updateUser(Parse.User.current(), jackpot)
 
       params.jackpot =
         value: jackpot
@@ -32,7 +34,7 @@ module.exports = class GameOverController extends Controller
         number: val
         text: I18n.t('controller.game_over.stats.' + key)
 
-      view = new GameOverView {success, params, player: {health: user.get('health'), credits: user.get('credits')}}
+      view = new GameOverView {success, params, reward, endMessage, player: {health: user.get('health'), credits: user.get('credits')}}
       user.increment('score', user.get('game_row')).save()
 
       view   # Must always return @view
@@ -50,6 +52,19 @@ module.exports = class GameOverController extends Controller
   won: (params) ->
     @index yes, params
 
+  getRewardAmount: (score) ->
+    return 0 if score <= 2000
+    return 10 if score <= 5000
+    return 20 if score <= 10000
+    return 40 if score <= 25000
+    75
+
+  getEndMessageKey: (score) ->
+    return 'msg2k' if score <= 2000
+    return 'msg5k' if score <= 5000
+    return 'msg10k' if score <= 10000
+    return 'msg25k' if score <= 25000
+    'msg25kplus'
 
   updateUser: (user, jackpot) ->
     user.increment('credits', 10).increment('game_row')

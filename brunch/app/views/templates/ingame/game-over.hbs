@@ -13,7 +13,10 @@
 
 <div class="content-container">
   <h1 class="title box-align">
-    Bravo, tu as gagné <span class="jetons-number">{{params.reward}}</span> <span class="jetons"></span> !
+    {{endMessage}}<br />
+    {{#if reward}}
+      Tu as gagné <span class="jetons-number">{{reward}}</span> <span class="jetons"></span> !
+    {{/if}}
   </h1>
 
   <div class="blocks-container">

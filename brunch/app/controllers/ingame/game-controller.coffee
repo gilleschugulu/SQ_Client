@@ -84,7 +84,7 @@ module.exports = class GameController extends Controller
     unless isNaN(human.get('jackpot'))
       GameCenter?.reportScore human.get('jackpot'), ConfigHelper.config.gamecenter.leaderboard
 
-    @redirectToRoute "game-won", {jackpot: human.get('jackpot'), reward: 10, rank: human.get('rank')}
+    @redirectToRoute "game-won", {jackpot: human.get('jackpot'), rank: human.get('rank')}
 
   # Load next stage
   # --------------------
