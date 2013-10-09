@@ -110,8 +110,12 @@ module.exports = class PurchaseHelper
   @purchaseLife: (pack, successCallback) ->
     user = Parse.User.current()
 
-    user.increment('health', pack.value).increment('credits', -pack.price).save()
-    successCallback?(user.get('credits'), user.get('health'))
+    user.increment('health', pack.value).increment('credits', -pack.price).save null
+    , (user) -> # success
+      AnalyticsHelper.trackEvent 'Boutique', "Pack de vie #{pack.value}", 'Achat confirmé', pack.price
+      successCallback?(user.get('credits'), user.get('health'))
+    , (user, error) ->
+      AnalyticsHelper.trackEvent 'Boutique', "Pack de vie #{pack.value}", 'Error parse', pack.price
 
   @purchaseBonus: (pack, successCallback) ->
     user = Parse.User.current()
@@ -121,9 +125,12 @@ module.exports = class PurchaseHelper
     for name, value of user.get('bonus')
       bonuses[name] = value + bonus_added
 
-    user.set('bonus', bonuses).increment('credits', -pack.price).save()
-
-    successCallback?(user.get('credits'))
+    user.set('bonus', bonuses).increment('credits', -pack.price).save null
+    , (user) -> # success
+      AnalyticsHelper.trackEvent 'Boutique', "Pack de bonus #{pack.value}", 'Achat confirmé', pack.price
+      successCallback?(user.get('credits'))
+    , (user, error) ->
+      AnalyticsHelper.trackEvent 'Boutique', "Pack de bonus #{pack.value}", 'Error parse', pack.price
 
   @purchaseApple: (pack, successCallback) ->
     if pack.product_id and MKStore? and MKStore.gotProducts
@@ -136,11 +143,11 @@ module.exports = class PurchaseHelper
         # AnalyticsHelper.trackTransaction AnalyticsHelper.getTransactionHash([pack], ConnectionHelper.getUUID())
         Parse.User.current().set 'credits', response.credits
         successCallback?(Parse.User.current().get('credits'))
+        AnalyticsHelper.trackEvent 'Boutique', "Pack payant #{pack.name}", 'Achat confirmé', pack.price
         SpinnerHelper.stop()
       , (error) =>
         # Track event
-        AnalyticsHelper.trackEvent 'Boutique', "Achat du pack #{pack.name} sucess", '', pack.price
-
+        AnalyticsHelper.trackEvent 'Boutique', "Pack payant #{pack.name}", 'Error ' + MKStore.getErrorName(error.code), pack.price
         PopUpHelper.initialize
           title  : i18n.t 'helper.purchase.apple.error.title'
           message: i18n.t 'helper.purchase.apple.error.message'
@@ -151,7 +158,7 @@ module.exports = class PurchaseHelper
         SpinnerHelper.stop()
       , =>
         # Track event
-        AnalyticsHelper.trackEvent 'Boutique', "Achat du pack #{pack.name} error", '', pack.price
+        AnalyticsHelper.trackEvent 'Boutique', "Pack payant #{pack.name}", 'Achat annulé', pack.price
 
         PopUpHelper.initialize
           title  : i18n.t 'helper.purchase.apple.cancel.title'

@@ -31,7 +31,6 @@ module.exports = class HomeController extends Controller
         , 1000
       else
         @viewLoaded view
-      mediator.setJustLaunched no
     , {viewTransition: yes}
 
   viewLoaded: (view) =>
@@ -39,10 +38,12 @@ module.exports = class HomeController extends Controller
     @view?.setJournalMessage('loading')
 
     @view.delegate 'click', '#game-link', =>
+      AnalyticsHelper.trackEvent 'Home', 'Click', 'Jouer'
       user = Parse.User.current()
       if user.get('health') > 0
         @view.dim => @redirectTo 'game'
       else
+        AnalyticsHelper.trackEvent 'Home', 'Jouer', 'Pas assez de Jetons'
         popUp.initialize {template: 'no-more-coins'}
 
     FacebookHelper.getFriends (friends) =>
@@ -51,15 +52,19 @@ module.exports = class HomeController extends Controller
 
       # All these links are present on the journal
       @view.delegate 'click', '#equipe-btn', =>
+        AnalyticsHelper.trackEvent 'Home', 'Click', 'Journal'
         @view.toggleJournal()
+      @view.delegate 'click', 'a', @onClickALink
       @view.delegate 'click', '#invite-btn', @onClickFacebook
       @view.delegate 'click', '#ranking', =>
+        AnalyticsHelper.trackEvent 'Home', 'Click', 'Classement'
         @view.dim => @redirectTo 'hall-of-fame/home'
     , =>
       # Error callback, if facebook fail. Nothing to display. Retry ?
       @view?.setJournalMessage('error')
 
   onClickFacebook: =>
+    AnalyticsHelper.trackEvent 'Home', 'Click', 'Inviter amis'
     FacebookHelper.getOtherFriends (friends) =>
       # Check if everyone is invited
       if _.difference(_.pluck(friends, 'id'), Parse.User.current().get('fb_invited')).length < 1 and FacebookHelper.isLinked()
@@ -73,10 +78,19 @@ module.exports = class HomeController extends Controller
 
   getJournalView: (friends, callback) ->
     switch friends.length
-      when 0 then @getSmallLeaderboard @getNoFriendsJournalView, callback
-      when 1 then @getFriendsScore friends, @getOneFriendJournalView, callback
-      when 2 then @getFriendsScore friends, @getTwoFriendsJournalView, callback
-      else        @getFriendsScore friends, @getTwoplusFriendsJournalView, callback
+      when 0
+        @getSmallLeaderboard @getNoFriendsJournalView, callback
+        AnalyticsHelper.trackEvent 'Home', 'Journal', 'Pas d\'amis' if mediator.justLaunched
+      when 1
+        @getFriendsScore friends, @getOneFriendJournalView, callback
+        AnalyticsHelper.trackEvent 'Home', 'Journal', '1 ami' if mediator.justLaunched
+      when 2
+        @getFriendsScore friends, @getTwoFriendsJournalView, callback
+        AnalyticsHelper.trackEvent 'Home', 'Journal', '2 amis' if mediator.justLaunched
+      else
+        @getFriendsScore friends, @getTwoplusFriendsJournalView, callback
+        AnalyticsHelper.trackEvent 'Home', 'Journal', 'Plus de 2 amis' if mediator.justLaunched
+    mediator.setJustLaunched no
 
   getNoFriendsJournalView: (people) ->
     targetDate = new Date()
@@ -100,7 +114,7 @@ module.exports = class HomeController extends Controller
         players = players.sort (f1, f2) ->
           f2.score - f1.score
         callback()
-        @view.addJournalView journalView(players)
+        @view?.addJournalView journalView(players)
       error: (error) ->
         console.log 'ERROR : ', error
 
@@ -109,7 +123,7 @@ module.exports = class HomeController extends Controller
       success: (players) =>
         players = players.sort (f1, f2) ->
           f2.score - f1.score
-        @view.addJournalView journalView(players)
+        @view?.addJournalView journalView(players)
         callback()
       error: (error) ->
         console.log 'ERROR : ', error
@@ -153,3 +167,10 @@ module.exports = class HomeController extends Controller
       Parse.User.current().fetch
         success: ->
           console.log 'Player reloaded'
+
+  onClickALink: (e) =>
+    links =
+      '#options' : 'Options'
+      '#profile' : 'Profil'
+      '#shop'    : 'Boutique'
+    super e, 'Home', links

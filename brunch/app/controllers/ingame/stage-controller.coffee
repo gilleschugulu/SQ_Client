@@ -1,6 +1,7 @@
-Controller  = require 'controllers/base/controller'
-PopUpHelper = require 'helpers/pop-up-helper'
-SoundHelper = require 'helpers/sound-helper'
+Controller      = require 'controllers/base/controller'
+PopUpHelper     = require 'helpers/pop-up-helper'
+SoundHelper     = require 'helpers/sound-helper'
+AnalyticsHelper = require 'helpers/analytics-helper'
 
 module.exports = class StageController extends Controller
   model   : null # stage model
@@ -34,6 +35,7 @@ module.exports = class StageController extends Controller
 
   pause: =>
     return if @paused
+    AnalyticsHelper.trackEvent 'Jeu', 'Click', 'Pause'
     @paused = yes
     console.log "paused"
     @subscribeEvent 'popup:pause:ok', @resume
@@ -45,6 +47,7 @@ module.exports = class StageController extends Controller
 
   resume: =>
     return unless @paused
+    AnalyticsHelper.trackEvent 'Jeu', 'Click', 'Reprendre'
     @paused = no
     console.log "resumed"
     @onResume?()

@@ -47,7 +47,7 @@ module.exports = class ProfilesController extends Controller
   linkFacebook: ->
     return if Parse.FacebookUtils.isLinked(Parse.User.current())
     # Track Event
-    AnalyticsHelper.trackEvent 'Profil', 'Liaison facebook'
+    AnalyticsHelper.trackEvent 'Profil', 'Click', 'Liaison facebook'
 
     # Call Facebook for linking
     FacebookHelper.logIn =>
@@ -57,7 +57,7 @@ module.exports = class ProfilesController extends Controller
 
   onClickGameCenter: =>
     # Track Event
-    AnalyticsHelper.trackEvent 'Profil', 'Affichage de Game Center'
+    AnalyticsHelper.trackEvent 'Profil', 'Click', 'Affichage de Game Center'
 
     lb = ConfigHelper.config.gamecenter.leaderboard
     console.log GameCenter?.showLeaderboard

@@ -39,6 +39,7 @@ module.exports = class GameOverController extends Controller
 
     , (view) =>
       view.delegate 'click', '#replay', => @redirectTo 'game'
+      view.delegate 'click', 'a', @onClickALink
       setTimeout view.bonusAppear, 200
     , {viewTransition: yes}
 
@@ -58,3 +59,9 @@ module.exports = class GameOverController extends Controller
       @bestJackpot = yes
 
     user
+
+  onClickALink: (e) =>
+    links =
+      '#home' : 'Home'
+      '#game' : 'Rejouer'
+    super e, 'Game Over', links

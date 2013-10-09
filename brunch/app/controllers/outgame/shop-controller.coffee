@@ -34,8 +34,10 @@ module.exports = class ShopController extends Controller
       new ShopView {@packs, @bonuses, health: user.get('health'), credits: user.get('credits'), like_page_url: ConfigHelper.config.services.facebook.like_page_url}
     , (view) =>
       view.delegate 'click', '#bonuses.inactive', =>
+        AnalyticsHelper.trackEvent 'Boutique', 'Click', 'Bonus & vies'
         @onToggleTab 'bonus'
       view.delegate 'click', '#credits.inactive', =>
+        AnalyticsHelper.trackEvent 'Boutique', 'Click', 'Jetons'
         @onToggleTab 'credits'
 
       view.delegate 'click', '.paid-pack.ios', @onClickAllopassPack#@onClickApplePack
@@ -58,9 +60,13 @@ module.exports = class ShopController extends Controller
   onClickApplePack: (e) =>
     packId = @view.chooseApplePack(e.currentTarget)
     pack = (p for p in @packs.credit_packs when p.product_id is packId)?[0]
+
+    AnalyticsHelper.trackEvent 'Boutique', 'Click', 'Pack payant ' + pack.name, pack.price
+
     if @availableProducts[pack.product_id]?
       PurchaseHelper.purchaseApple pack, @onSuccessfulTransaction
     else
+      AnalyticsHelper.trackEvent 'Boutique', 'Pack payant ' + packId, 'Pas disponnible'
       PopUpHelper.initialize
         title  : i18n.t 'controller.shop.unavailable_pack.title'
         message: i18n.t 'controller.shop.unavailable_pack.message'
@@ -104,13 +110,13 @@ module.exports = class ShopController extends Controller
 
   onClickAdcolony: (pack) =>
     # Track event
-    AnalyticsHelper.trackEvent 'Boutique', 'Achat du pack AdColony'
+    AnalyticsHelper.trackEvent 'Boutique', 'Click', 'Achat du pack AdColony'
 
     PurchaseHelper.purchaseAdcolony pack, ConfigHelper.config.services.adcolony.zones.SHOP, @onSuccessfulTransaction
 
   onClickTwitter: (pack) =>
     # Track event
-    AnalyticsHelper.trackEvent 'Boutique', 'Suis Nous sur Twitter'
+    AnalyticsHelper.trackEvent 'Boutique', 'Click', 'Suis Nous sur Twitter'
 
     PurchaseHelper.purchaseTwitter pack, ConfigHelper.config.services.twitter, (credits) =>
       @onSuccessfulTransaction credits
@@ -118,20 +124,20 @@ module.exports = class ShopController extends Controller
 
   onClickTapjoy: (pack) =>
     # Track event
-    AnalyticsHelper.trackEvent 'Boutique', 'Achat du pack Tapjoy'
+    AnalyticsHelper.trackEvent 'Boutique', 'Click', 'Achat du pack Tapjoy'
 
     PurchaseHelper.purchaseTapjoy pack, ConfigHelper.config.services.tapjoy.currency, @onSuccessfulTransaction
 
   onClickInviteFriends: (pack) =>
     # Track event
-    AnalyticsHelper.trackEvent 'Boutique', 'Achat du pack FaceBookInvitation'
+    AnalyticsHelper.trackEvent 'Boutique', 'Click', 'Achat du pack FaceBookInvitation'
 
     console.log "facebook invitation"
     PurchaseHelper.purchaseFacebookInvitation pack, @onSuccessfulTransaction
 
   onClickAppStoreRating: (pack) =>
     # Track event
-    AnalyticsHelper.trackEvent 'Boutique', 'Achat du pack AppStoreRating'
+    AnalyticsHelper.trackEvent 'Boutique', 'Click', 'Noter le jeu'
 
     PurchaseHelper.purchaseAppstoreRating pack, (credits) =>
       @onSuccessfulTransaction credits
@@ -139,7 +145,7 @@ module.exports = class ShopController extends Controller
 
   onClickFacebookLike: (pack) =>
     # Track event
-    AnalyticsHelper.trackEvent 'Boutique', 'Achat du pack FacebookLike'
+    AnalyticsHelper.trackEvent 'Boutique', 'Click', 'Achat du pack FacebookLike'
 
     console.log "facebook like"
     PurchaseHelper.purchaseFacebookLike pack, (credits) =>
@@ -159,6 +165,7 @@ module.exports = class ShopController extends Controller
   onClickLifePack: (e) =>
     pack = BonusPacks.life_packs[@view.chooseLifePackIndex e.currentTarget]
     return unless pack
+    AnalyticsHelper.trackEvent 'Boutique', 'Click', "Pack de vie #{pack.value}", pack.price
 
     if Parse.User.current().get('credits') >= pack.price
       PurchaseHelper.purchaseLife pack, @onSuccessfulTransaction
@@ -169,6 +176,7 @@ module.exports = class ShopController extends Controller
         confirmation: false
         key: 'life-pack-ok'
     else
+      AnalyticsHelper.trackEvent 'Boutique', "Pack de vie #{pack.value}", 'Pas assez de jetons', pack.price
       PopUpHelper.initialize
         title  : i18n.t 'controller.shop.not_enough_credits.title'
         message: i18n.t 'controller.shop.not_enough_credits.message'
@@ -177,6 +185,8 @@ module.exports = class ShopController extends Controller
   onClickBonusPack: (e) =>
     pack = BonusPacks.bonus_packs[@view.chooseBonusPackIndex e.currentTarget]
     return unless pack
+
+    AnalyticsHelper.trackEvent 'Boutique', 'Click', "Pack de bonus #{pack.value}", pack.price
 
     if Parse.User.current().get('credits') >= pack.price
       PurchaseHelper.purchaseBonus pack, @onSuccessfulTransaction
@@ -187,7 +197,13 @@ module.exports = class ShopController extends Controller
         confirmation: false
         key: 'bonus-pack-ok'
     else
+      AnalyticsHelper.trackEvent 'Boutique', "Pack de bonus #{pack.value}", 'Pas assez de jetons', pack.price
       PopUpHelper.initialize
         title  : i18n.t 'controller.shop.not_enough_credits.title'
         message: i18n.t 'controller.shop.not_enough_credits.message'
         key    : 'pack-error'
+
+  onClickALink: (e) =>
+    links =
+      '#home' : 'Home'
+    super e, 'Boutique', links

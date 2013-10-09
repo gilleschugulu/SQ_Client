@@ -16,7 +16,6 @@ module.exports = class TutorialController extends Controller
   ]
 
   index: =>
-    AnalyticsHelper.trackEvent 'Tutorial', 'Affichage du Tutorial'
     window.localStorage.setItem('firstTime', false)
     @loadView 'tutorial'
     , =>
@@ -27,14 +26,20 @@ module.exports = class TutorialController extends Controller
   initializeSwiper: =>
     @swiper = new SwipeView('#wrapper', {numberOfPages: @slides.length, hastyPageFlip: true, loop: false})
     @view.delegate 'click', '#prev-btn', =>
-      AnalyticsHelper.trackEvent 'Tutorial', 'Page suivant Tutorial'
+      AnalyticsHelper.trackEvent 'Tutorial', 'Click', 'Page précédente'
       @swiper.prev()
     @view.delegate 'click', '#next-btn', =>
-      AnalyticsHelper.trackEvent 'Tutorial', 'Page suivant Tutorial'
+      AnalyticsHelper.trackEvent 'Tutorial', 'Click', 'Page suivante'
       @swiper.next()
     @view.delegate 'click', '.close', =>
-      AnalyticsHelper.trackEvent 'Tutorial', 'Quitter le tutorial'
+      AnalyticsHelper.trackEvent 'Tutorial', 'Click', 'Quitter'
       @redirectTo 'home'
+    @view.delegate 'click', 'a', @onClickALink
 
     @view.appendFirstSlides @slides, @swiper
     @swiper.onFlip => @view.appendNewSlides(@slides, @swiper)
+
+  onClickALink: (e) =>
+    links =
+      '#options' : 'Quitter'
+    super e, @title, links

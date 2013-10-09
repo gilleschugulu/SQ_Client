@@ -13,6 +13,13 @@ var MKStoreError = {
 var MKStore = {
   gotProducts: false,
 
+  getErrorName: function(errCode) {
+    for (errName in MKStoreError)
+      if (MKStoreError[errName] == errName)
+        return errName;
+    return null;
+  },
+
   buyFeature: function(productID, success, fail, cancel, extra) {
     var errorCallback = function(error) {
       error.code === MKStoreError.PURCHASE_CANCELLED ? cancel() : fail(error);

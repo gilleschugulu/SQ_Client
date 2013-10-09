@@ -9,7 +9,7 @@ _               = require 'underscore'
 
 module.exports = class HallOfFameController extends Controller
   historyURL: 'hall-of-fame'
-  title: 'Hall of Fame'
+  title: 'Classement'
   collection: null
   request : null
   nextRoute: null
@@ -89,14 +89,14 @@ module.exports = class HallOfFameController extends Controller
   onClickFriends: (e) =>
     if !$(e.target).hasClass('active')
       # Track Event
-      AnalyticsHelper.trackEvent 'HallOfFame', 'Affichage des amis'
+      AnalyticsHelper.trackEvent 'Classement', 'Click', 'Affichage des amis'
       @displayPlayers yes
       @view.chooseList e.target
 
   onClickGlobal: (e) =>
     if !$(e.target).hasClass('active')
       # Track Event
-      AnalyticsHelper.trackEvent 'HallOfFame', 'Affichage adversaires'
+      AnalyticsHelper.trackEvent 'Classement', 'Click', 'Affichage adversaires'
       @displayPlayers no
       @view.chooseList e.target
 

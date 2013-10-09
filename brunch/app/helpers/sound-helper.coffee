@@ -60,19 +60,14 @@ module.exports = class SoundHelper
   @toggleSound = ->
     @soundMuted = !@soundMuted
 
-    # Track event
-    AnalyticsHelper.trackEvent 'Options', "Son = #{@soundMuted}"
-
     LocalStorageHelper.set('soundMuted', @soundMuted) # @soundMuted is a boolean, but will be stocked as string : 'true' or 'false'
     for key, sound of @sounds
       @stop(key) if @soundMuted
     @play(@currentMusicKey) if @currentMusicKey and not @soundMuted
+    @soundMuted
 
   @toggleMusic = ->
     @musicMuted = !@musicMuted
-
-    # Track event
-    AnalyticsHelper.trackEvent 'Options', "Musique = #{@musicMuted}"
 
     LocalStorageHelper.set('musicMuted', @musicMuted) # @musicMuted is a boolean, but will be stocked as string : 'true' or 'false'
     for key, sound of @sounds when sound.type is 'music' or sound.type is 'jingle'
@@ -81,9 +76,6 @@ module.exports = class SoundHelper
 
   @toggleSFX = ->
     @sfxMuted = !@sfxMuted
-
-    # Track event
-    AnalyticsHelper.trackEvent 'Options', "SoundFX = #{@sfxMuted}"
 
     LocalStorageHelper.set('sfxMuted', @sfxMuted) # @sfxMuted is a boolean, but will be stocked as string : 'true' or 'false'
     for key, sound of @sounds when sound.type is 'sfx'

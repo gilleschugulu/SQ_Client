@@ -28,7 +28,9 @@ module.exports = class PopUpHelper
     if data.template is 'pause'
       $("[data-key=#{data.key}]", $(container)).on 'click', '.sound', ->
         $(this).toggleClass 'off'
-        SoundHelper.toggleSound()
+        r = SoundHelper.toggleSound()
+        mediator.analytics.trackEvent 'Pause', 'Click', if r then 'Désactiver son' else 'Activer son'
+
 
     # bind btn to publish events
     $("[data-key=#{data.key}]", $(container)).on 'click', '.ok', -> mediator.publish 'popup:'+data.key+':ok'
@@ -36,7 +38,9 @@ module.exports = class PopUpHelper
     $("[data-key=#{data.key}]", $(container)).on 'click', '.no', -> mediator.publish 'popup:'+data.key+':no'
 
     # automatically dispose popup on click on btn
-    $("[data-key=#{data.key}]", $(container)).on 'click', '.remove', => @disposePopup data.key
+    $("[data-key=#{data.key}]", $(container)).on 'click', '.remove', =>
+      mediator.analytics.trackEvent 'Pause', 'Click', 'Quitter' if data.template is 'pause'
+      @disposePopup data.key
 
     # callback
     callback?()

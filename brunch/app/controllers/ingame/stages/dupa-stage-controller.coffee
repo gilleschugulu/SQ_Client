@@ -5,6 +5,7 @@ i18n            = require 'lib/i18n'
 utils           = require 'lib/utils'
 GameStatHelper  = require 'helpers/game-stat-helper'
 SoundHelper     = require 'helpers/sound-helper'
+mediator        = require 'mediator'
 
 module.exports = class DupaStageController extends StageController
   timer: null
@@ -74,9 +75,11 @@ module.exports = class DupaStageController extends StageController
     oldJackpot = @model.getCurrentThreshold()
 
     if result
+      mediator.analytics.trackEvent 'Jeu', 'Click', 'Bonne réponse'
       @model.playerMadeSuccess(player, @bonusDoubleUsed)
       @row++
     else
+      mediator.analytics.trackEvent 'Jeu', 'Click', 'Mauvaise réponse'
       @model.playerMadeError(player)
       GameStatHelper.setBestRow(@row) if @row > 0
       @row = 0
@@ -103,15 +106,16 @@ module.exports = class DupaStageController extends StageController
   ### Bonus handling ###
 
   canUseBonus: (bonusName) ->
-    return no if bonusName == 'mass' and @bonusMassUsed
-    return no if bonusName == 'fifty_fifty' and @bonusFiftyFiftyUsed
-    return no if bonusName == 'double' and @bonusDoubleUsed
-    return no if bonusName == 'add_time' and @model.getConfigValue('timeBonus') + Math.floor(@timer.duration) > @model.getConfigValue('answerTime')
+    return no if bonusName is 'mass' and @bonusMassUsed
+    return no if bonusName is 'fifty_fifty' and @bonusFiftyFiftyUsed
+    return no if bonusName is 'double' and @bonusDoubleUsed
+    return no if bonusName is 'add_time' and @model.getConfigValue('timeBonus') + Math.floor(@timer.duration) > @model.getConfigValue('answerTime')
     true
 
   executeBonus: (bonusName) ->
     SoundHelper.play(bonusName)
     @[$.camelCase('executeBonus-' + utils.dasherize(bonusName))]?()
+    mediator.analytics.trackEvent 'Jeu', 'Bonus', bonusName
 
   # Remove 2 answers
   executeBonusFiftyFifty: ->

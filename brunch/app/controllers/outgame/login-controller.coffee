@@ -17,6 +17,7 @@ _                   = require 'underscore'
 
 module.exports = class LoginController extends Controller
   historyURL: ''
+  title: 'Login'
   checkAvailabilityWithSSOTimeout : null
   params = {}
 
@@ -84,6 +85,7 @@ module.exports = class LoginController extends Controller
   loginWithSSO: =>
     unless @validateForm('#sso-login-form')
       return no
+    AnalyticsHelper.trackEvent 'Login', 'Login with SSO', 'Submit'
     form = $('#sso-login-form', @view.$el).serializeArray()
     params = {}
     params[f.name] = f.value for f in form
@@ -91,11 +93,13 @@ module.exports = class LoginController extends Controller
       @loginToParse user, params
     , (status, error) ->
       console.log "LOGIN ERROR", status, error
+      AnalyticsHelper.trackEvent 'Login', 'Login with SSO', 'Error ' + status + ' ' + error.description
     no
 
   registerWithSSO: =>
     unless @validateForm('#sso-register-form')
       return no
+    AnalyticsHelper.trackEvent 'Login', 'Register with SSO', 'Submit'
     form = $('#sso-register-form', @view.$el).serializeArray()
     params = {}
     params[f.name] = f.value for f in form
@@ -103,6 +107,7 @@ module.exports = class LoginController extends Controller
       @loginToParse user, params
     , (status, error) ->
       console.log "LOGIN ERROR", status, error
+      AnalyticsHelper.trackEvent 'Login', 'Register with SSO', 'Error ' + status + ' ' + error.description
     no
 
   # check to see if email/username are available
@@ -167,6 +172,7 @@ module.exports = class LoginController extends Controller
       view.delegate 'click', '#close-btn', ->
         view.closeForms()
       view.delegate 'click', '#equipe-login', ->
+        AnalyticsHelper.trackEvent 'Login', 'Login/Register with SSO', 'Click'
         view.openForms()
 
     , {viewTransition: yes}

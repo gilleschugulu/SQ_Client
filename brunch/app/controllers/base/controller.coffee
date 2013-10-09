@@ -40,3 +40,8 @@ module.exports = class Controller extends Chaplin.Controller
     if @assetKey
       PreloadHelper.removeAssets @assetKey
     super
+
+  onClickALink: (e, name, links = {}) =>
+    link = $(e.currentTarget).attr('href')
+    if links[link]?
+      mediator.analytics.trackEvent name, 'Click', links[link]

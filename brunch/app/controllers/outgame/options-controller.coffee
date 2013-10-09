@@ -31,6 +31,7 @@ module.exports = class OptionsController extends Controller
       view.delegate 'click', '#option-info-notif',       @onClickToggleInfoNotif
       view.delegate 'click', '#option-help',             @onClickHelp
       view.delegate 'click', '#option-facebook-connect', @onClickFacebookConnect
+      view.delegate 'click', 'a',                        @onClickALink
     , {viewTransition: yes}
 
 
@@ -47,7 +48,7 @@ module.exports = class OptionsController extends Controller
 
   onClickHelp: =>
     # Track Event
-    AnalyticsHelper.trackEvent 'Options', "Demander de l'aide"
+    AnalyticsHelper.trackEvent 'Options', 'Click', "Demander de l'aide"
     rawurlencode: (str) ->
       str = (str + '').toString();
       encodeURIComponent(str).replace(/!/g, '%21').replace(/'/g, '%27').replace(/\(/g, '%28').replace(/\)/g, '%29').replace(/\*/g, '%2A')
@@ -68,16 +69,18 @@ module.exports = class OptionsController extends Controller
   # link account
   onClickFacebookConnect: =>
     # Track Event
-    AnalyticsHelper.trackEvent 'Options', "Liaison facebook"
+    AnalyticsHelper.trackEvent 'Options', 'Click', "Liaison facebook"
     FacebookHelper.linkPlayer() unless FacebookHelper.isLinked()
 
   onClickToggleSound: =>
     @view.toggleButton 'option-sound'
-    SoundHelper.toggleSound()
+    r = SoundHelper.toggleSound()
+    AnalyticsHelper.trackEvent 'Options', 'Click', if r then 'Desactiver sons' else 'Activer sons'
 
   onClickToggleInfoNotif: =>
     user = Parse.User.current()
     newVal = !user.get('notifications')
+    AnalyticsHelper.trackEvent 'Options', 'Click', if newVal then 'Activer notifications' else 'Desactiver notifications'
     user.set 'notifications', newVal
     SpinnerHelper.start()
     user.save null,
@@ -87,3 +90,6 @@ module.exports = class OptionsController extends Controller
         @view.toggleButton 'option-info-notif'
       error : =>
         SpinnerHelper.stop()
+
+  onClickALink: (e) =>
+    super e, 'Options', {'#tutorial' : 'Tutoriel', '#home' : 'Home'}
