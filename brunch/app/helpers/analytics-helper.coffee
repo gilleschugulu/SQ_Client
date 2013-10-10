@@ -20,7 +20,6 @@ module.exports = class AnalyticsHelper
     if GoogleAnalytics?
       GoogleAnalytics.trackPageview page
     else
-      console.log "GA", page
       ga 'send', 'pageview', {title:page}
 
   @trackEvent: (category, action, label = '', value = 0) ->
@@ -34,8 +33,6 @@ module.exports = class AnalyticsHelper
   # Price is the full price (send by server)
   @trackTransaction: (transactionHash) ->
     # return unless ENV.prod
-    console.log "NEW TRANSACTION", transactionHash
-    # return
     if GoogleAnalytics?
       GoogleAnalytics.trackTransaction transactionHash
     else
@@ -44,17 +41,16 @@ module.exports = class AnalyticsHelper
       ga 'ecommerce:send'
 
   @getTransactionHash: (packs, uuid) ->
-    console.log "ADDING PACKS", packs
     transaction =
       id      : uuid + '_' + (new Date()).getTime()
       revenue : 0
       currency: 'EUR'
     items = []
     for pack in packs
-      console.log "ADDING PACK", pack
       item =
         id      : transaction.id
         name    : pack.product_id
+        sku     : pack.product_id
         category: 'Credits'
         price   : Math.round(pack.price * (1 - (pack.tax || 0)) * 1000000) / 1000000
         quantity: 1
