@@ -47,7 +47,7 @@ Dir["#{xlsdir}/*.{xls,xlsx}"].each do |f|
 
   column_indexes = {}
   column_names   = data.row(1)
-  [ 'Question', 'A', 'B', 'C', 'D', 'Answer', 'Category', 'Vaste categorie', 'Level', 'Photo' ].each do |name|
+  [ 'Question', 'A', 'B', 'C', 'D', 'Answer', 'Vaste categorie', 'Level' ].each do |name|
     column_indexes[name] = column_names.index(name)
     puts "nil index for #{name} !!!!!" if column_indexes[name].nil?
     # eval("column_indexes['#{name.gsub(' ','_').upcase} = column_names.index(name)") # column_indexes['QUESTION = column_names.index("Question")
@@ -80,8 +80,8 @@ Dir["#{xlsdir}/*.{xls,xlsx}"].each do |f|
         text: extract_answer(column_indexes['Question']),
         category: I18n.transliterate(extract_answer(column_indexes['Vaste categorie'])),
         difficulty: @row[column_indexes['Level']].to_i || 1,
-        sub_category: I18n.transliterate(extract_answer(column_indexes['Category'])),
-        une_id: extract_answer(column_indexes['Photo']) || 0,
+        # sub_category: I18n.transliterate(extract_answer(column_indexes['Category'])),
+        # une_id: extract_answer(column_indexes['Photo']) || 0,
         propositions: propositions
       }
 
