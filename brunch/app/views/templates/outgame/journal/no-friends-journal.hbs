@@ -1,11 +1,10 @@
 <div id='equipe-btn'></div>
 <div id='date'>EDITION DU {{date}}</div>
-<div id='photo-container'>
+<div id='photo-container'
   {{#if fb_id}}
-    <div id='photo' style='background-image:url(https://graph.facebook.com/{{fb_id}}/picture?width=90&height=90)'></div>
-  {{else}}
-    <div id='photo' style='background-image:url(images/common/facebook-default.jpg)'></div>
+    style='background-image:url(https://graph.facebook.com/{{fb_id}}/picture?width=149&height=149)'
   {{/if}}
+>
 </div>
 <div id='message'><span id='username'>{{username}}</span> joue a sport quiz mais n'a toujours pas d'amis !</div>
 <a id='invite-btn'></a>
@@ -18,11 +17,11 @@
   {{#each participants}}
     <span class='participant'>
       <div class='rank'>{{position}}</div>
-      {{#if fb_id}}
-        <div class='photo' style='background-image:url(https://graph.facebook.com/{{fb_id}}/picture?width=90&height=90)'></div>
-      {{else}}
-        <div class='photo' style='background-image:url(images/common/facebook-default.jpg)'></div>
-      {{/if}}
+        <div class='photo'
+        {{#if fb_id}}
+          style='background-image:url(https://graph.facebook.com/{{fb_id}}/picture?width=65&height=65)'
+        {{/if}}
+        ></div>
       <div class='blaze resize'>{{username}}</div>
       <div class='score'>{{score}}</div>
     </span>

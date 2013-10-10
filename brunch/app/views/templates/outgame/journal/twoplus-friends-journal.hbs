@@ -7,11 +7,11 @@
     <tr class='participant'>
       <td class='rank'>{{iPlus1}}</td>
       <td class='photo'>
-      {{#if fb_id}}
-        <div style='background-image:url(https://graph.facebook.com/{{fb_id}}/picture?width=90&height=90)'></div>
-      {{else}}
-        <div style='background-image:url(images/common/facebook-default.jpg)'></div>
-      {{/if}}
+        <div
+        {{#if fb_id}}
+          style='background-image:url(https://graph.facebook.com/{{fb_id}}/picture?width=42&height=42)'
+        {{/if}}
+        ></div>
       </td>
       <td class='blaze resize'>{{username}}</td>
       <td class='score'>{{score}}</td>
