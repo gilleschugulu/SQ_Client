@@ -102,6 +102,8 @@ module.exports = class LoginController extends Controller
         when LequipeSSOHelper.error.login.INCORRECT_PASSWORD
           $("#sso-login-form input[name=password]", @view.$el).addClass 'invalid'
           msg = 'incorrect_password'
+        when LequipeSSOHelper.error.login.INVALID_PARAMETERS
+          msg = 'invalid_login_params'
       PopUpHelper.initialize
         title  : i18n.t 'controller.login.sso_equipe.error_title'
         message: i18n.t "controller.login.sso_equipe.#{msg}"
@@ -127,7 +129,7 @@ module.exports = class LoginController extends Controller
           $("#sso-register-form input[name=email]", @view.$el).addClass 'invalid'
           $("#sso-register-form input[name=username]", @view.$el).addClass 'invalid'
         when LequipeSSOHelper.error.register.INVALID_PARAMETERS
-          msg = 'invalid_params'
+          msg = 'invalid_register_params'
       PopUpHelper.initialize
         title  : i18n.t 'controller.login.sso_equipe.error_title'
         message: i18n.t "controller.login.sso_equipe.#{msg}"
@@ -191,6 +193,8 @@ module.exports = class LoginController extends Controller
       view.delegate 'click', '#register-btn', @registerWithSSO
       view.delegate 'click', "#facebook-login", @loginWithFacebook
       view.delegate 'click', '#login-btn', @loginWithSSO
+      view.delegate 'submit', '#sso-login-form', @loginWithSSO
+      view.delegate 'submit', '#sso-register-form', @registerWithSSO
 
       check = (e) =>
         clearTimeout @checkAvailabilityWithSSOTimeout

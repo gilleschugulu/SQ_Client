@@ -16,8 +16,9 @@ module.exports = class LequipeSSOHelper
       success?(user)
     @request 'plac_login', params, yes, order, callback, error
   @error.login =
-    INCORRECT_MAIL    : 404
+    INVALID_PARAMETERS: 400
     INCORRECT_PASSWORD: 403
+    INCORRECT_MAIL    : 404
 
   # params : hash
   #   username : string

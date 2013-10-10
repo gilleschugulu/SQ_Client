@@ -62,7 +62,8 @@ module.exports =
           unknown : 'Une erreur inconnue est survenue, veuillez réessayer plus tard'
           field_error_email : 'Veuillez rentrer un email correct'
           field_error_username : 'Votre pseudo doit être composé d\'au moins 6 lettres et/ou de chiffres'
-          invalid_params : 'Veuillez remplir tous les champs'
+          invalid_register_params : 'Veuillez remplir tous les champs'
+          invalid_login_params : 'Votre pseudo ou mot de passe est incorrect'
     helper:
       app_store_link: "http://itunes.apple.com/app/les-12-coups-de-midi/id584885677?mt=8"
       game_icon: "https://midi-preproduction.chugulu.com/assets/Icon-72@2x.png"
