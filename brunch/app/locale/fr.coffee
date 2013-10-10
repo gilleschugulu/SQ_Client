@@ -52,10 +52,11 @@ module.exports =
           best_row: 'Combo réponse'
           best_sport: 'Sport favori'
       login:
-        error_title: 'Erreur'
-        sso_equipe_invalid: 'Le pseudo ou le mot de passe est invalide'
-        user_not_found: "Ce pseudo n'existe pas"
-        already_used: 'Ce pseudo ou cet email est déjà utilisé'
+        sso_equipe:
+          error_title: 'Erreur'
+          invalid: 'Le pseudo ou le mot de passe est invalide'
+          user_not_found: "Ce pseudo n'existe pas"
+          already_used: 'Ce pseudo ou cet email est déjà utilisé'
     helper:
       app_store_link: "http://itunes.apple.com/app/les-12-coups-de-midi/id584885677?mt=8"
       game_icon: "https://midi-preproduction.chugulu.com/assets/Icon-72@2x.png"
@@ -103,14 +104,6 @@ module.exports =
       stats:
         no_best_sport: 'Aucun'
     view:
-      outgame:
-        login:
-          already_email: "Un email vient d'être envoyé à {0} avec le code a renseigner."
-          already_facebook: "Email déjà enregistré avec un compte facebook, on lance la connexion facebook"
-        hall_of_fame:
-          players_up_rank: 'Ils vont monter au niveau'
-          players_stay_rank: 'Ils vont rester au niveau'
-          players_down_rank: 'Ils vont descendre au niveau'
       game:
         dupa:
           welcome: "Bienvenue aux 4 candidats qui vont jouer aujourd'hui à {0}. Tout de suite première question"
