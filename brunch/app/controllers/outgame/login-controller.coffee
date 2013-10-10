@@ -91,9 +91,21 @@ module.exports = class LoginController extends Controller
     params[f.name] = f.value for f in form
     LequipeSSOHelper.login params, (user) =>
       @loginToParse user, params
-    , (status, error) ->
+    , (status, error) =>
       console.log "LOGIN ERROR", status, error
       AnalyticsHelper.trackEvent 'Login', 'Login with SSO', 'Error ' + status + ' ' + error.description
+      msg = 'unknown'
+      switch status
+        when LequipeSSOHelper.error.login.INCORRECT_MAIL
+          $("#sso-login-form input[name=username]", @view.$el).addClass 'invalid'
+          msg = 'incorrect_mail'
+        when LequipeSSOHelper.error.login.INCORRECT_PASSWORD
+          $("#sso-login-form input[name=password]", @view.$el).addClass 'invalid'
+          msg = 'incorrect_password'
+      PopUpHelper.initialize
+        title  : i18n.t 'controller.login.sso_equipe.error_title'
+        message: i18n.t "controller.login.sso_equipe.#{msg}"
+        key    : 'sso_equipe_invalid'
     no
 
   registerWithSSO: =>
@@ -105,9 +117,21 @@ module.exports = class LoginController extends Controller
     params[f.name] = f.value for f in form
     LequipeSSOHelper.register params, (user) =>
       @loginToParse user, params
-    , (status, error) ->
-      console.log "LOGIN ERROR", status, error
+    , (status, error) =>
+      console.log "REGISTER ERROR", status, error
       AnalyticsHelper.trackEvent 'Login', 'Register with SSO', 'Error ' + status + ' ' + error.description
+      msg = 'unknown'
+      switch status
+        when LequipeSSOHelper.error.register.NOT_AVAILABLE
+          msg = 'already_used'
+          $("#sso-register-form input[name=email]", @view.$el).addClass 'invalid'
+          $("#sso-register-form input[name=username]", @view.$el).addClass 'invalid'
+        when LequipeSSOHelper.error.register.INVALID_PARAMETERS
+          msg = 'invalid_params'
+      PopUpHelper.initialize
+        title  : i18n.t 'controller.login.sso_equipe.error_title'
+        message: i18n.t "controller.login.sso_equipe.#{msg}"
+        key    : 'sso_equipe_invalid'
     no
 
   # check to see if email/username are available
@@ -119,18 +143,19 @@ module.exports = class LoginController extends Controller
       # alert('email/username sont pas dispo')
       $("#sso-register-form input[name=email]", @view.$el).addClass 'invalid'
       $("#sso-register-form input[name=username]", @view.$el).addClass 'invalid'
-      PopUpHelper.initialize {message: i18n.t('controller.login.sso_equipe.invalid'), title: i18n.t('controller.login.sso_equipe.error_title'), key: 'sso_equipe_invalid', info: yes, confirmation: no}
+      PopUpHelper.initialize
+        title  : i18n.t 'controller.login.sso_equipe.error_title'
+        message: i18n.t 'controller.login.sso_equipe.invalid'
+        key    : 'sso_equipe_invalid'
     , (code, error) =>
-      if code is LequipeSSOHelper.error.alreadyUsed.USER_NOT_FOUND
-        # dispo
-        # $("#sso-register-form input[name=email]", @view.$el).removeClass 'invalid'
-        # $("#sso-register-form input[name=username]", @view.$el).removeClass 'invalid'
-        # PopUpHelper.initialize {message: i18n.t('controller.login.sso_equipe.user_not_found'), title: i18n.t('controller.login.sso_equipe.error_title'), key: 'sso_equipe_invalid', info: no, confirmation: no}
-      else if code is LequipeSSOHelper.error.alreadyUsed.USED_BY_ANOTHER_USER
+      if code is LequipeSSOHelper.error.alreadyUsed.USED_BY_ANOTHER_USER
         # alert('email/username sont pas dispo')
         $("#sso-register-form input[name=email]", @view.$el).addClass 'invalid'
         $("#sso-register-form input[name=username]", @view.$el).addClass 'invalid'
-        PopUpHelper.initialize {message: i18n.t('controller.login.sso_equipe.already_used'), title: i18n.t('controller.login.sso_equipe.error_title'), key: 'sso_equipe_invalid', info: yes, confirmation: no}
+        PopUpHelper.initialize
+          title  : i18n.t 'controller.login.sso_equipe.error_title'
+          message: i18n.t 'controller.login.sso_equipe.already_used'
+          key    : 'sso_equipe_invalid'
 
   validateForm: (formId) =>
     validationRules =
@@ -147,8 +172,11 @@ module.exports = class LoginController extends Controller
           $("#{formId} input[name=#{f.name}]", @view.$el).removeClass 'invalid'
     console.log "INVALID", invalidFields
     if invalidFields.length > 0
-      console.error invalidFields.join(',') + ' pas bon'
-      # alert(invalidFields.join(',') + ' pas bon')
+      # console.error invalidFields.join(',') + ' pas bon'
+      PopUpHelper.initialize
+        title  : i18n.t 'controller.login.sso_equipe.error_title'
+        message: (i18n.t("controller.login.sso_equipe.field_error_#{field}") for field in invalidFields)
+        key    : 'sso_equipe_invalid'
       return no
     yes
 
