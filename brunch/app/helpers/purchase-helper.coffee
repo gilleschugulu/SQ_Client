@@ -140,7 +140,7 @@ module.exports = class PurchaseHelper
       # alert 'wait for it...'
       MKStore.buyFeature pack.product_id, (response) =>
         # Used by Google to track pack bought
-        # AnalyticsHelper.trackTransaction AnalyticsHelper.getTransactionHash([pack], ConnectionHelper.getUUID())
+        AnalyticsHelper.trackTransaction AnalyticsHelper.getTransactionHash([pack], Parse.User.current().id)
         Parse.User.current().set 'credits', response.credits
         successCallback?(Parse.User.current().get('credits'))
         AnalyticsHelper.trackEvent 'Boutique', "Pack payant #{pack.name}", 'Achat confirmé', pack.price
