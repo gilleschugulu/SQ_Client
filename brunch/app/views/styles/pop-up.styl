@@ -14,71 +14,77 @@
   &.backgroundTransition
     background-color: rgba(0,0,0,0.6)
   .popup
-    relative: top 7% left 0
+    margin: 0 auto
     width: 72.2%
-    padding: 3.3% 8% 8% 8.3%
-    height: 97.6%
-    background-image: url('../images/pause/popup.png')
-    background-repeat: no-repeat
+    padding: 3% 8%
+    background-color: #ebebea
     background-size: contain
-    border-radius: none
+    border-radius: 1em
+    border: 0.3em solid rgba(0,0,0,0.3)
     box-shadow: none
     transform: translate(-9999px, 0) translateZ(0)
     &.animated
       transform: translate(0, 0) translateZ(0)
-    .title
+    .title, h1
       width: 100%
       text-align: center
       text-transform: uppercase
       margin: 2% 0 0 0
       font: 2.4em grilled
-    .text-container
-      width: 80%
-      margin: 0 auto 0 auto
+    .messages, .text-container
+      margin: 5% auto
       text-align: center
-      font: 1.7em grilled
+      font: 1.5em grilled
+      list-style-type: none
+      padding: 0
+    &.pause
+      .btn-container
+        height: 8em
+        .btn
+          &.resume
+            background-image: url('../images/pause/reprendre.png')
+            background-repeat: no-repeat
+            background-size: contain
+            width: 54.2%
+            height: 41.4%
+            float: left
+            &:active
+              background-image: url('../images/pause/reprendre_a.png')
+          &.quit
+            background-image: url('../images/pause/quitter.png')
+            background-repeat: no-repeat
+            background-size: contain
+            width: 42.7%
+            height: 36%
+            margin-top: 1.5%
+            float: right
+            &:active
+              background-image: url('../images/pause/quitter_a.png')
+          &.sound
+            background-image: url('../images/pause/sound.png')
+            background-repeat: no-repeat
+            background-size: contain
+            width: 65%
+            height: 44%
+            margin-top: 5%
+            &.off
+              background-image: url('../images/pause/sound_a.png')
+
     .btn-container
       width: 80%
-      height: 55%
-      margin: 5% auto 0 auto
+      height: 4em
+      margin: 0 auto
       text-align: center
       .btn
         color: #fff
         cursor: pointer
         display: inline-block
         &.ok
-          relative: top 5% left 0
+          // relative: top 5% left 0
           background-image: url('../images/pause/ok.png')
           background-repeat: no-repeat
           background-size: contain
           width: 22%
-          height: 37%
+          height: 100%
           &:active
             background-image: url('../images/pause/ok_a.png')
-        &.resume
-          background-image: url('../images/pause/reprendre.png')
-          background-repeat: no-repeat
-          background-size: contain
-          width: 54.2%
-          height: 37.4%
-          float: left
-          &:active
-            background-image: url('../images/pause/reprendre_a.png')
-        &.quit
-          background-image: url('../images/pause/quitter.png')
-          background-repeat: no-repeat
-          background-size: contain
-          width: 42.7%
-          height: 30%
-          margin-top: 4.5%
-          float: right
-          &:active
-            background-image: url('../images/pause/quitter_a.png')
-        &.sound
-          background-image: url('../images/pause/sound.png')
-          background-repeat: no-repeat
-          background-size: contain
-          width: 65%
-          height: 27%
-          &.off
-            background-image: url('../images/pause/sound_a.png')
