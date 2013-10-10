@@ -170,7 +170,8 @@ module.exports = class HomeController extends Controller
 
   onClickALink: (e) =>
     links =
-      '#options' : 'Options'
-      '#profile' : 'Profil'
-      '#shop'    : 'Boutique'
+      '#hall-of-fame/home' : 'Classemenet'
+      '#options'           : 'Options'
+      '#profile'           : 'Profil'
+      '#shop'              : 'Boutique'
     super e, 'Home', links
