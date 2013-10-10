@@ -21,8 +21,6 @@
 		2320B8671637E194005CC24C /* ATInternet.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 2320B8631637E194005CC24C /* ATInternet.sqlite */; };
 		2320B8681637E194005CC24C /* ATiOSLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2320B8641637E194005CC24C /* ATiOSLib.a */; };
 		2320B86C1637E1F2005CC24C /* XitiAnalyticsPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 2320B86B1637E1F2005CC24C /* XitiAnalyticsPlugin.m */; };
-		23220E07166682B900C6ADCB /* Default-Landscape.png in Resources */ = {isa = PBXBuildFile; fileRef = 23220E05166682B900C6ADCB /* Default-Landscape.png */; };
-		23220E08166682B900C6ADCB /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 23220E06166682B900C6ADCB /* Default@2x.png */; };
 		232C2CF8160C5C8D006DF2CD /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 232C2CF7160C5C8D006DF2CD /* AdSupport.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		232C2CFC160CAB12006DF2CD /* SocialPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 232C2CFB160CAB12006DF2CD /* SocialPlugin.m */; };
 		232C2CFE160CAB26006DF2CD /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 232C2CFD160CAB26006DF2CD /* Social.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
@@ -93,7 +91,6 @@
 		23F57DF3157E5A8A00F7847A /* README.mdown in Resources */ = {isa = PBXBuildFile; fileRef = 23F57DDE157E5A8A00F7847A /* README.mdown */; };
 		23FD1C5B159A30F700D19DD8 /* FacebookConnectPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 23FD1C5A159A30F700D19DD8 /* FacebookConnectPlugin.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		8F574DD81746761D00BAAACD /* TransitionScreenPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F574DD71746761D00BAAACD /* TransitionScreenPlugin.m */; };
-		BF52D6E217257132007CD290 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BF52D6E117257132007CD290 /* Default-568h@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -171,8 +168,6 @@
 		2320B8661637E194005CC24C /* ATTag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATTag.h; sourceTree = "<group>"; };
 		2320B86A1637E1F2005CC24C /* XitiAnalyticsPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XitiAnalyticsPlugin.h; path = Plugins/XitiAnalyticsPlugin.h; sourceTree = "<group>"; };
 		2320B86B1637E1F2005CC24C /* XitiAnalyticsPlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = XitiAnalyticsPlugin.m; path = Plugins/XitiAnalyticsPlugin.m; sourceTree = "<group>"; };
-		23220E05166682B900C6ADCB /* Default-Landscape.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Landscape.png"; sourceTree = "<group>"; };
-		23220E06166682B900C6ADCB /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		232C2CF7160C5C8D006DF2CD /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 		232C2CFA160CAB12006DF2CD /* SocialPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SocialPlugin.h; path = Plugins/SocialPlugin.h; sourceTree = "<group>"; };
 		232C2CFB160CAB12006DF2CD /* SocialPlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SocialPlugin.m; path = Plugins/SocialPlugin.m; sourceTree = "<group>"; };
@@ -314,7 +309,6 @@
 		23FD1C5A159A30F700D19DD8 /* FacebookConnectPlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FacebookConnectPlugin.m; path = Plugins/FacebookConnectPlugin.m; sourceTree = "<group>"; };
 		8F574DD61746761D00BAAACD /* TransitionScreenPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransitionScreenPlugin.h; sourceTree = "<group>"; };
 		8F574DD71746761D00BAAACD /* TransitionScreenPlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransitionScreenPlugin.m; sourceTree = "<group>"; };
-		BF52D6E117257132007CD290 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -487,20 +481,9 @@
 			path = Xiti;
 			sourceTree = "<group>";
 		};
-		23220E04166682B900C6ADCB /* splash */ = {
-			isa = PBXGroup;
-			children = (
-				23220E05166682B900C6ADCB /* Default-Landscape.png */,
-				23220E06166682B900C6ADCB /* Default@2x.png */,
-			);
-			name = splash;
-			path = Resources/splash;
-			sourceTree = "<group>";
-		};
 		235451CE156174B700A821D6 = {
 			isa = PBXGroup;
 			children = (
-				BF52D6E117257132007CD290 /* Default-568h@2x.png */,
 				235451FA156174B700A821D6 /* TriviaContainer */,
 				23F57DBC157E5A8A00F7847A /* libs */,
 				235451DF156174B700A821D6 /* Frameworks */,
@@ -583,7 +566,6 @@
 			isa = PBXGroup;
 			children = (
 				235A3D741807023500608D43 /* Images.xcassets */,
-				23220E04166682B900C6ADCB /* splash */,
 				23E7705F15B5776D00CEEF2F /* fr.lproj */,
 				23C1B85D15935BDB000E94DA /* icons */,
 				23545222156174B800A821D6 /* Capture.bundle */,
@@ -883,10 +865,7 @@
 				23A9F910161336F10018E46F /* FacebookSDKResources.bundle in Resources */,
 				2352458116144A8100CF4A74 /* FBUserSettingsViewResources.bundle in Resources */,
 				2320B8671637E194005CC24C /* ATInternet.sqlite in Resources */,
-				23220E07166682B900C6ADCB /* Default-Landscape.png in Resources */,
-				23220E08166682B900C6ADCB /* Default@2x.png in Resources */,
 				237AE3D2169F1A1B00A94A7E /* config.xml in Resources */,
-				BF52D6E217257132007CD290 /* Default-568h@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1069,6 +1048,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Pierre LEGRAS (934GZSZF7E)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Pierre LEGRAS (934GZSZF7E)";
@@ -1128,6 +1108,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
@@ -1213,6 +1194,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: L'Equipe 24/24";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: L'Equipe 24/24";
