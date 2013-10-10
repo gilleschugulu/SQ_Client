@@ -101,8 +101,13 @@
       .paid-offers
         right: 3%
         .title
+          background-repeat: no-repeat
+          background-size: contain
           background-image: url(../images/shop/Jetons/payants.png)
         .paid-pack
+          background-image: url("../images/shop/Jetons/pack_x.png")
+          background-repeat: no-repeat
+          background-size: contain
           .marker
             relative: top -4% left 7%
             font-size: 2.3em
@@ -123,6 +128,14 @@
             background-image: url("../images/home/common/credit.png")
             background-repeat: no-repeat
             background-size: contain
+          .price
+            color: white
+            font-size: 1.3em
+            font-family: open_sansextrabold
+            text-align: right
+            absolute: right 7%
+            height: 100%
+            padding: 2.5% 0
         .unavailable
           opacity : 0.6
 
@@ -160,10 +173,28 @@
         .life-pack
           relative: left 2%
           width: 100%
-          height: 21%
+          height: 15%
+          margin-bottom: 11%
           background-repeat: no-repeat
           background-size: contain
+          background-image: url(../images/shop/life_and_bonus/x_vies.png)
           cursor: pointer
+          .value, .price
+            color: white
+            text-align: right
+            height: 100%
+            position: absolute
+            font-family: open_sansextrabold
+          .value
+            left: 2%
+            width: 30%
+            padding: 2% 0
+            font-size: 1.4em
+          .price
+            width: 29%
+            right: 19%
+            padding: 5% 0
+            font-size: 1.1em
       #bonus-packs
         width: 55%
         height: 86%
@@ -174,10 +205,22 @@
           margin-bottom: 4%
           background-repeat: no-repeat
           background-size: contain
+          background-image: url("../images/shop/life_and_bonus/x_bonus.png")
           cursor: pointer
-          &.small
-            background-image: url("../images/shop/life_and_bonus/5_bonus.png")
-          &.medium
-            background-image: url("../images/shop/life_and_bonus/25_bonus.png")
-          &.big
-            background-image: url("../images/shop/life_and_bonus/50_bonus.png")
+          .value, .price
+            color: white
+            height: 100%
+            position: absolute
+            font-family: open_sansextrabold
+          .value
+            text-align: center
+            left: 48%
+            width: 16%
+            padding: 9% 0
+            font-size: 1.4em
+          .price
+            text-align: right
+            width: 23%
+            right: 11.5%
+            padding: 7% 0
+            font-size: 2em
