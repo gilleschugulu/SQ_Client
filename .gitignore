@@ -2,5 +2,8 @@
 *#
 .DS_Store
 brunch/app/config/environment-config.coffee
+brunch/vendor/scripts/assets_list.js
 deployment
 scripts/generated.coffee
+script/questions
+cloudCode/cloud/*.js

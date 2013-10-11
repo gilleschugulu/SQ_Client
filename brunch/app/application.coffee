@@ -94,6 +94,7 @@ module.exports = class Application extends Chaplin.Application
     mediator.justLaunched = yes
     mediator.user = {}
     mediator.setBeginDayOfWeek()
+    mediator.packs = null
 
     # Seal the mediator
     mediator.seal()

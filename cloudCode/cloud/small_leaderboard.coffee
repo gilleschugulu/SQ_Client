@@ -14,7 +14,7 @@ exports.task = (request, response) ->
     (new Parse.Query('User')).greaterThan('score', 0)
 
   taskDone = (max) ->
-    if --tasks < 1
+    if --tasks is 0
       # Sort of uniqueness
       players.slice(0, max)
 

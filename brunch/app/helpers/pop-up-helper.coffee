@@ -33,9 +33,9 @@ module.exports = class PopUpHelper
 
 
     # bind btn to publish events
-    $("[data-key=#{data.key}]", $(container)).on 'click', '.ok', -> mediator.publish 'popup:'+data.key+':ok'
-    $("[data-key=#{data.key}]", $(container)).on 'click', '.yes', -> mediator.publish 'popup:'+data.key+':yes'
-    $("[data-key=#{data.key}]", $(container)).on 'click', '.no', -> mediator.publish 'popup:'+data.key+':no'
+    $("[data-key=#{data.key}]", $(container)).on 'click', '.ok', -> data.ok?() #-> mediator.publish 'popup:'+data.key+':ok'
+    $("[data-key=#{data.key}]", $(container)).on 'click', '.yes', -> data.yes?() #-> mediator.publish 'popup:'+data.key+':yes'
+    $("[data-key=#{data.key}]", $(container)).on 'click', '.no', -> data.no?() #-> mediator.publish 'popup:'+data.key+':no'
 
     # automatically dispose popup on click on btn
     $("[data-key=#{data.key}]", $(container)).on 'click', '.remove', =>

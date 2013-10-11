@@ -8,9 +8,8 @@ i18n               = require 'lib/i18n'
 LocalStorageHelper = require 'helpers/local-storage-helper'
 PopUpHelper        = require 'helpers/pop-up-helper'
 AnalyticsHelper    = require 'helpers/analytics-helper'
-PurchasePacks      = require 'config/purchase-config'
-BonusPacks         = require 'config/bonus-config'
 SoundHelper        = require 'helpers/sound-helper'
+SpinnerHelper      = require 'helpers/spinner-helper'
 
 module.exports = class ShopController extends Controller
   historyURL       : 'shop'
@@ -19,19 +18,37 @@ module.exports = class ShopController extends Controller
   availableProducts: {}
 
   index: =>
-    @packs = PurchasePacks
+    if mediator.packs?
+      @displayPacks()
+    else
+      SpinnerHelper.start()
+      Parse.Cloud.run 'getShopConfig', {},
+        success: (packs) =>
+          SpinnerHelper.stop()
+          mediator.packs = packs
+          @displayPacks()
+        error: (error) =>
+          SpinnerHelper.stop()
+          console.log 'ERROR : ', error
+          PopUpHelper.initialize
+            title  : i18n.t 'controller.shop.fetch_packs_error.title'
+            message: i18n.t 'controller.shop.fetch_packs_error.message'
+            key    : 'fetch-packs-error'
+            ok     : => @redirectTo 'home'
+
+
+  displayPacks: =>
+    @packs = mediator.packs
     @packs.type = (if DeviceHelper.isIOS() then 'ios' else 'web')
     if fp = @packs.free_packs[@packs.type]
       @packs.free_packs = fp
       for p,index in @packs.free_packs
         @packs.free_packs[index].disabled = LocalStorageHelper.exists "store_pack_#{p.name}"
-    @bonuses = BonusPacks
     user = Parse.User.current()
-    PurchaseHelper.initTapPoints()
 
     @loadView 'shop'
     , =>
-      new ShopView {@packs, @bonuses, health: user.get('health'), credits: user.get('credits'), like_page_url: ConfigHelper.config.services.facebook.like_page_url}
+      new ShopView {@packs, health: user.get('health'), credits: user.get('credits'), like_page_url: ConfigHelper.config.services.facebook.like_page_url}
     , (view) =>
       view.delegate 'click', '#bonuses.inactive', =>
         AnalyticsHelper.trackEvent 'Boutique', 'Click', 'Bonus & vies'
@@ -40,16 +57,13 @@ module.exports = class ShopController extends Controller
         AnalyticsHelper.trackEvent 'Boutique', 'Click', 'Jetons'
         @onToggleTab 'credits'
 
-      view.delegate 'click', '.paid-pack.ios', @onClickAllopassPack#@onClickApplePack
+      view.delegate 'click', '.paid-pack.ios', @onClickApplePack
       view.delegate 'click', '.paid-pack.web', @onClickAllopassPack
       view.delegate 'click', '.free-pack', @onClickFreePack
       view.delegate 'click', '.life-pack', @onClickLifePack
       view.delegate 'click', '.bonus-pack', @onClickBonusPack
       PurchaseHelper.fetchAppleProducts @packs.credit_packs, (@availableProducts) =>
         view.disableUnavailablePacks (pack.id for pack in @packs.credit_packs when !@availableProducts[pack.product_id])
-
-      # test faster, harder, stronger :D
-      # @onToggleTab()
 
     , {viewTransition: yes}
 

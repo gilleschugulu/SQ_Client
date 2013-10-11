@@ -48,7 +48,7 @@
   <!-- BONUSES CONTENT BLOCK BEGIN -->
   <div class="content-container" id='bonus' style='display: none'>
     <div class='life-container'>
-      {{#each bonuses.life_packs}}
+      {{#each packs.life_packs}}
         <div class="life-pack" data-position='{{@index}}'>
           <div class='value'>{{value}}</div>
           <div class='price'>{{price}}</div>
@@ -56,7 +56,7 @@
       {{/each}}
     </div>
     <div id='bonus-packs'>
-      {{#each bonuses.bonus_packs}}
+      {{#each packs.bonus_packs}}
         <div data-position='{{@index}}' class='bonus-pack'>
           <div class='value'>X {{value}}</div>
           <div class='price'>{{price}}</div>

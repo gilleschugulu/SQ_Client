@@ -17,12 +17,15 @@ module.exports =
             rank_3 : '{0} décroche le bronze'
             rank_n : '{0} n\'est qu\'a la position {1}'
       shop:
+        fetch_packs_error:
+          title: 'Erreur'
+          message: 'La boutique est indisponnible pour le moment. Veuillez réessayer plus tard.'
         unavailable_pack:
-          title: 'erreur'
-          message: 'pack indisponible'
+          title: 'Erreur'
+          message: 'Ce pack est indisponible'
         not_enough_credits:
           title: 'Erreur'
-          message: 'pas assez de crédits'
+          message: 'Vous n\'avez pas assez de jetons'
         bonus_pack_bought:
           title: 'Achat confirmé'
           message: "Tout c'est bien passé, bon jeu !"

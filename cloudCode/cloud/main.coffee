@@ -16,8 +16,11 @@ Parse.Cloud.define 'clean', (request, response) ->
 Parse.Cloud.define 'saveScore', (request, response) ->
   require('cloud/save_score.js').task request, response
 
-Parse.Cloud.define 'finishLeaderboard', (request, response) ->
+Parse.Cloud.job 'finishLeaderboard', (request, response) ->
   require('cloud/finish_leaderboard.js').task request, response
 
 Parse.Cloud.define 'getRanksPercentages', (request, response) ->
   require('cloud/get_ranks_percentages.js').task request, response
+
+Parse.Cloud.define 'getShopConfig', (request, response) ->
+  require('cloud/shop_config.js').task request, response
