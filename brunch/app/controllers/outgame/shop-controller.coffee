@@ -90,7 +90,7 @@ module.exports = class ShopController extends Controller
     packId = @view.chooseApplePack(e.currentTarget)
     pack = (p for p in @packs.credit_packs when p.product_id is packId)?[0]
     AnalyticsHelper.trackTransaction AnalyticsHelper.getTransactionHash([pack], Parse.User.current().id)
-    return console.log('Yep, you clicked')
+    return console.log('Yep, you clicked', pack)
     # dataSend = AllopassHelper.generateData(pack.id, ConnectionHelper.getUUID(), pack.name, pack.price)
     # url = 'https://payment.allopass.com/buy/buy.apu?' + AllopassHelper.productUrl(pack.product_id) + '&data=' + dataSend
     # allopassChild = window.open(url, 'Sport Quiz 2 - Allopass', 'width=700,height=500,menubar=no') if window
@@ -177,7 +177,7 @@ module.exports = class ShopController extends Controller
 
 
   onClickLifePack: (e) =>
-    pack = BonusPacks.life_packs[@view.chooseLifePackIndex e.currentTarget]
+    pack = @packs.life_packs[@view.chooseLifePackIndex e.currentTarget]
     return unless pack
     AnalyticsHelper.trackEvent 'Boutique', 'Click', "Pack de vie #{pack.value}", pack.price
 
@@ -197,7 +197,7 @@ module.exports = class ShopController extends Controller
         key    : 'pack-error'
 
   onClickBonusPack: (e) =>
-    pack = BonusPacks.bonus_packs[@view.chooseBonusPackIndex e.currentTarget]
+    pack = @packs.bonus_packs[@view.chooseBonusPackIndex e.currentTarget]
     return unless pack
 
     AnalyticsHelper.trackEvent 'Boutique', 'Click', "Pack de bonus #{pack.value}", pack.price
