@@ -1,5 +1,11 @@
 @import 'nib'
 
+@-webkit-keyframes numbers_pulse {
+  0% { -webkit-transform: scale(1); }
+  50% { -webkit-transform: scale(1.4); }
+  100% { -webkit-transform: scale(1); }
+}
+
 #iphone5bg
   &.home-page-568h
     background-image: url('../images/home/common/background.jpg')
@@ -7,6 +13,10 @@
 
 #global-container
   &.iphone5
+    #numbers
+      right: -3.7em
+      .icon
+        bottom: -15%
     .home-page
       background: none
       .more-games-link
@@ -25,9 +35,15 @@
         margin-left: 4%
 
 #numbers
-  width: 100%
+  absolute: top 0 right 0.3em
   height: 6%
   text-align: right
+  &.pulsing
+    -webkit-animation-name: 'numbers_pulse'
+    -webkit-animation-duration: 150ms
+    -webkit-transform-origin: 94% 22%
+    // -webkit-animation-iteration-count: infinite
+    -webkit-animation-timing-function: ease
   span
     height: 100%
   .number
@@ -38,9 +54,9 @@
     text-align: right
   .icon
     display: inline-block
-    width: 5%
-    height: 80%
-    relative: bottom -12% top 0
+    width: 1.4em
+    height: 1.4em
+    relative: bottom -10%
     background-size: contain
     background-repeat: no-repeat
   #heart-icon
@@ -511,8 +527,6 @@
 
 @media only screen and (min-width: 560px) and (max-device-width: 1136px)
   .home-page
-    #numbers
-      absolute: right -10% !important
     #logo
       right: 2% !important
     #menu

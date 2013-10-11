@@ -17,8 +17,11 @@ module.exports = class ShopView extends View
     super
 
   updateWallet: (credits, health) ->
-    $('#numbers #credits', @$el).text credits
-    $('#numbers #hearts',  @$el).text health
+    numEl = $('#numbers', @$el)
+    $('#credits', numEl).text credits
+    $('#hearts',  numEl).text health
+    numEl.addClass('pulsing').one 'webkitAnimationEnd', ->
+      $(this).removeClass 'pulsing'
 
   chooseApplePack: (targetElement) ->
     $(targetElement, @$el).data('id')
