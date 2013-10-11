@@ -4,9 +4,13 @@
 <div id='vs'>
   {{#each participants}}
   <div class='participant'>
-      <div class='photo'
+      <div
       {{#if fb_id}}
-        style='background-image:url(https://graph.facebook.com/{{fb_id}}/picture?width=69&height=69)'
+        data-fbid='{{fb_id}}'
+        data-size='69'
+        class='photo not-loaded'
+      {{else}}
+        class='photo'
       {{/if}}
       ></div>
     <div class='blaze resize'>{{username}}</div>

@@ -1,13 +1,18 @@
-View = require 'views/base/view'
+View          = require 'views/base/view'
+PreloadHelper = require 'helpers/preload-helper'
 
 module.exports = class JournalView extends View
-  autoRender: yes
   className: 'journal-container completely-hiddened'
   container: '.home-page'
 
   getTemplateData: ->
     @options.date = @getDate()
     @options
+
+  render: ->
+    r = super
+    @preloadFacebookAvatars()
+    r
 
   getDate: ->
     date = new Date()
@@ -22,3 +27,15 @@ module.exports = class JournalView extends View
 
   appear: ->
     @$el.toggleClass('completely-hiddened').toggleClass('shown')
+
+  preloadFacebookAvatars: =>
+    $('.photo.not-loaded', @$el).each (index, elem) ->
+      elem = $(elem)
+      elem.addClass 'loading'
+      fbid = elem.data('fbid')
+      size = elem.data('size')
+      url  = "https://graph.facebook.com/#{fbid}/picture?width=#{size}&height=#{size}"
+      # console.log url
+      PreloadHelper.preloadAsset url, (result) ->
+        elem.removeClass('loading not-loaded')
+        elem.css {'background-image':"url(#{url})"} if result.loaded

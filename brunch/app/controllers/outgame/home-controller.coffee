@@ -99,6 +99,8 @@ module.exports = class HomeController extends Controller
     targetDate.setSeconds(0)
     targetDate.setDate(targetDate.getDate() - targetDate.getDay() + 7)
 
+    pip.fb_id = Math.round(Math.random()*1000000) for pip in people when not pip.fb_id
+
     options =
       targetDate  : targetDate
       username    : Parse.User.current().get('username')

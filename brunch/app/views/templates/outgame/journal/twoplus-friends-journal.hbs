@@ -6,10 +6,14 @@
     {{#each_with_index participants}}
     <tr class='participant'>
       <td class='rank'>{{iPlus1}}</td>
-      <td class='photo'>
+      <td class='fb-photo'>
         <div
         {{#if fb_id}}
-          style='background-image:url(https://graph.facebook.com/{{fb_id}}/picture?width=42&height=42)'
+          data-fbid='{{fb_id}}'
+          data-size='42'
+          class='photo not-loaded'
+        {{else}}
+          class='photo'
         {{/if}}
         ></div>
       </td>

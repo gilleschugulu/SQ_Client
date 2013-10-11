@@ -113,6 +113,11 @@
       font-style: italic
       background-repeat: no-repeat
       background-size: contain
+    .photo
+      &.loading
+        background-position: center !important
+        background-size: 1.5em 1.5em !important
+        background-image:url(../images/spinner/smallspinner.gif) !important
     &.no-friends
       #title
         left: 25%
@@ -411,7 +416,7 @@
               font-weight: bold
               padding-left: 2%
               text-align:center
-            .photo
+            .fb-photo
               width: 22%
               div
                 width: 83%

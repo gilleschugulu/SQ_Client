@@ -62,7 +62,8 @@ module.exports = class PreloadHelper
   @preloadAsset: (url, callback) ->
     loader = new PxLoader()
     loader.addImage url
-    loader.addCompletionListener callback if callback
+    # loader.addCompletionListener 
+    loader.addProgressListener callback if callback
     loader.start()
 
   # internal convenience method

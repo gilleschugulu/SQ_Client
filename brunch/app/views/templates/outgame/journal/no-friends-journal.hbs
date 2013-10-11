@@ -2,7 +2,9 @@
 <div id='date'>EDITION DU {{date}}</div>
 <div id='photo-container'
   {{#if fb_id}}
-    style='background-image:url(https://graph.facebook.com/{{fb_id}}/picture?width=149&height=149)'
+    data-fbid='{{fb_id}}'
+    data-size='149'
+    class='photo not-loaded'
   {{/if}}
 >
 </div>
@@ -17,9 +19,13 @@
   {{#each participants}}
     <span class='participant'>
       <div class='rank'>{{position}}</div>
-        <div class='photo'
+        <div
         {{#if fb_id}}
-          style='background-image:url(https://graph.facebook.com/{{fb_id}}/picture?width=65&height=65)'
+          data-fbid='{{fb_id}}'
+          data-size='65'
+          class='photo not-loaded'
+        {{else}}
+          class='photo'
         {{/if}}
         ></div>
       <div class='blaze resize'>{{username}}</div>

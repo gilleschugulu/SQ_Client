@@ -4,10 +4,14 @@
 <div id='podium'>
   {{#each participants}}
   <div class='participant' id='{{medal}}'>
-    <div class='photo'
-      {{#if fb_id}}
-        style='background-image:url(https://graph.facebook.com/{{fb_id}}/picture?width=69&height=69)'
-      {{/if}}
+    <div
+    {{#if fb_id}}
+      data-fbid='{{fb_id}}'
+      data-size='69'
+      class='photo not-loaded'
+    {{else}}
+      class='photo'
+    {{/if}}
     ></div>
     <div class='rank'>{{rank}}</div>
     <div class='blaze resize'>{{username}}</div>
