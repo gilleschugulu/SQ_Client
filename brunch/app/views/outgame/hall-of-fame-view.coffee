@@ -41,7 +41,7 @@ module.exports = class HallOfFameView extends View
     else if player.position is 3
       positionDiv = '<div class="rank third icon"></div>'
 
-    pic = if player.profilepic then player.profilepic else 'images/common/facebook-default.jpg'
+    pic = if player.profilepic then player.profilepic + '?width=40&height=40' else 'images/common/facebook-default.jpg'
     '<div class="div-ranking">'+positionDiv+'<img class="profilepic" src="'+pic+'" width="'+@picSize+'" height="'+@picSize+'"/><span class="username resize">'+player.username+'</span><span class="money">'+player.jackpot+'</span>'+friend+'</div>'
 
   addRangesSeparatorLogic: (player, lastPlayer, rank) ->
@@ -78,7 +78,7 @@ module.exports = class HallOfFameView extends View
     return '' unless friends.length > 0
     moreFriends = "<div class='redSeparator'>"
     for friend in friends
-      moreFriends+="</div><div class='div-ranking moreFriends'><img class='profilepic' src='https://graph.facebook.com/#{friend.id}/picture'/><span class='username resize'>#{friend.name}</span><div data-id='#{friend.id}' class='invite-btn'></div></div>"
+      moreFriends+="</div><div class='div-ranking moreFriends'><img class='profilepic' src='https://graph.facebook.com/#{friend.id}/picture?width=40&height=40'/><span class='username resize'>#{friend.name}</span><div data-id='#{friend.id}' class='invite-btn'></div></div>"
     moreFriends
 
   takeOffFriend: (target) =>
