@@ -6,6 +6,12 @@
   100% { -webkit-transform: scale(1); }
 }
 
+@-webkit-keyframes heart_pulse {
+  0% { -webkit-transform: scale(0.9); }
+  50% { -webkit-transform: scale(1.1); }
+  100% { -webkit-transform: scale(0.9); }
+}
+
 #iphone5bg
   &.home-page-568h
     background-image: url('../images/home/common/background.jpg')
@@ -61,6 +67,11 @@
     background-repeat: no-repeat
   #heart-icon
     background-image: url(../images/home/common/heart.png)
+    -webkit-animation-name: 'heart_pulse'
+    -webkit-animation-duration: 1200ms
+    -webkit-transform-origin: 50% 50%
+    -webkit-animation-iteration-count: infinite
+    -webkit-animation-timing-function: ease
   #credit-icon
     background-image: url(../images/home/common/credit.png)
 
