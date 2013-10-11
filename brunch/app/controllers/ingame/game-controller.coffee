@@ -35,6 +35,16 @@ module.exports = class GameController extends Controller
   # ------------------------------------------------------------------------------------
   index: =>
     AnalyticsHelper.trackPageView @title
+
+    unless @payGame()
+      AnalyticsHelper.trackEvent @title, 'Erreur', 'Pas assez de vies'
+      PopUpHelper.initialize
+        title  : i18n.t 'controller.game.not_enough_health.title'
+        message: i18n.t 'controller.game.not_enough_health.message'
+        key    : 'game-ko'
+        ok     : => @redirectTo 'shop'
+      return
+
     PushNotifications?.block() # dont show push stuff while playing
     @subscribeEvent 'stage:finish', @finishGame
     @subscribeEvent 'game:finish', @finishGame
@@ -49,12 +59,9 @@ module.exports = class GameController extends Controller
     user = Parse.User.current()
     return false if user.get('health') <= 0
     # This will save the new health locally and at distance
-    user.set('health', user.get('health') - 1).save()
+    user.increment('health', -1).save()
 
-  loadGame: (callback) ->
-    # TODO : No more 'coins' screen !
-    return unless @payGame()
-
+  loadGame: (callback) =>
     GameStatHelper.reset()
 
     # TODO : Check 'dat : Read json offline

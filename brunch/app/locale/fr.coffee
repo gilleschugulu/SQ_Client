@@ -16,6 +16,10 @@ module.exports =
             rank_2 : '{0} y est presque'
             rank_3 : '{0} décroche le bronze'
             rank_n : '{0} n\'est qu\'a la position {1}'
+      game:
+        not_enough_health:
+          title: 'Oups...'
+          message: 'Vous n\'avez plus de vies pour jouer !'
       shop:
         fetch_packs_error:
           title: 'Erreur'
