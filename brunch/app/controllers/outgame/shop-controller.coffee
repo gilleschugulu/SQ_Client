@@ -68,8 +68,10 @@ module.exports = class ShopController extends Controller
     , {viewTransition: yes}
 
   onSuccessfulTransaction: (credits, life) =>
-    @view.updateWallet credits, life
-    SoundHelper.play('buy')
+    setTimeout =>
+      @view.updateWallet credits, life
+      SoundHelper.play('buy')
+    , 0
 
   onClickApplePack: (e) =>
     packId = @view.chooseApplePack(e.currentTarget)
