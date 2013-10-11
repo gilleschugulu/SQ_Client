@@ -114,6 +114,10 @@ module.exports =
       stats:
         no_best_sport: 'Aucun'
     view:
+      hall_of_fame:
+        players_up_rank: 'Ils vont monter au niveau'
+        players_stay_rank: 'Ils vont rester au niveau'
+        players_down_rank: 'Ils vont descendre au niveau' 
       game:
         dupa:
           welcome: "Bienvenue aux 4 candidats qui vont jouer aujourd'hui à {0}. Tout de suite première question"

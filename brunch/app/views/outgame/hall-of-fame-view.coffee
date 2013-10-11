@@ -41,7 +41,7 @@ module.exports = class HallOfFameView extends View
     else if player.position is 3
       positionDiv = '<div class="rank third icon"></div>'
 
-    pic = if player.profilepic then player.profilepic else 'http://profile.ak.fbcdn.net/static-ak/rsrc.php/v2/yo/r/UlIqmHJn-SK.gif'
+    pic = if player.profilepic then player.profilepic else 'images/common/facebook-default.jpg'
     '<div class="div-ranking">'+positionDiv+'<img class="profilepic" src="'+pic+'" width="'+@picSize+'" height="'+@picSize+'"/><span class="username resize">'+player.username+'</span><span class="money">'+player.jackpot+'</span>'+friend+'</div>'
 
   addRangesSeparatorLogic: (player, lastPlayer, rank) ->
@@ -56,7 +56,7 @@ module.exports = class HallOfFameView extends View
         @addSplitRangeSeparator(player.position - lastPlayer.position - 1)
 
   addRangeSeparator: (direction, rank)->
-    msg = i18n.t("view.outgame.hall_of_fame.players_#{direction}_rank")
+    msg = i18n.t("view.hall_of_fame.players_#{direction}_rank")
     "<div class='rank_separator #{direction}'>#{msg} #{rank}</div>"
 
   addSplitRangeSeparator: (range) ->
