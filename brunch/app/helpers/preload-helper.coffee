@@ -60,7 +60,8 @@ module.exports = class PreloadHelper
 
   # preloads single asset (contest banner etc)
   @preloadAsset: (url, callback) ->
-    loader = new PxLoader()
+    loader = new PxLoader
+      noProgressTimeout : 10000
     loader.addImage url
     # loader.addCompletionListener 
     loader.addProgressListener callback if callback
