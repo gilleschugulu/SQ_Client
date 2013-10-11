@@ -5,5 +5,6 @@ brunch/app/config/environment-config.coffee
 brunch/vendor/scripts/assets_list.js
 deployment
 scripts/generated.coffee
-script/questions
+scripts/questions/
+scripts/*.js
 cloudCode/cloud/*.js
