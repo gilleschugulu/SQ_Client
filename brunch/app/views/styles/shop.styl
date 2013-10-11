@@ -14,13 +14,6 @@
         left: -8%
       #numbers
         width: 110%
-      .paid-pack
-        .marker
-          top: -12% !important
-        .value
-          top: -12% !important
-        .credit-icon
-          top: -6% !important
 
 .shop-page
   width: 100%
@@ -40,35 +33,33 @@
     cursor: pointer
 
   .tabs-container
-    absolute: top 14% left 18%
-    width: 39%
-    height: 7%
+    absolute: top 5% left 18%
+    width: 44%
+    height: 12%
     .tab
+      color: white
+      font-family: open_sansextrabold
+      font-size: 1.5em
+      text-align: center
+      padding: 3% 4%
       display: inline-block
-      width: 40%
       height: 100%
       position: relative
-      background-repeat: no-repeat
-      background-size: cover
       cursor: pointer
-    #credits
-      width: 33.1%
-      &.active
-        background-image: url("../images/shop/jeton.png")
+      background-color: #c70000
       &.inactive
-        background-image: url("../images/shop/jeton_inactive.png")
+        background-color: grey
+        color: #eee
+    #credits
+      border-top-left-radius: 0.2em
     #bonuses
       left: -2.2%
-      width: 50%
-      &.active
-        background-image: url("../images/shop/bonusvies.png")
-      &.inactive
-        background-image: url("../images/shop/bonusvies_inactive.png")
+      border-top-right-radius: 0.2em
 
   .tab-container
-    absolute: top 20% left 8%
-    width: 81%
-    height: 72%
+    absolute: top 16% left 4%
+    width: 41em
+    height: 24em
     background-image: url("../images/shop/box2.png")
     background-repeat: no-repeat
     background-size: contain
@@ -99,7 +90,7 @@
           display: block
           cursor: pointer
       .paid-offers
-        right: 3%
+        right: 5%
         .title
           background-repeat: no-repeat
           background-size: contain
@@ -109,20 +100,23 @@
           background-repeat: no-repeat
           background-size: contain
           .marker
-            relative: top -4% left 7%
+            absolute: left 3%
             font-size: 2.3em
             color: white
+            padding: 2.5% 4%
+            height: 100%
+            font-family: dax
           .value
-            relative: top -5% left 6%
-            font-size: 1.6em
+            absolute: left 19%
+            font-size: 2em
             font-family: dax
             color: white
-            display: inline-block
+            padding: 3.5% 0
             width: 30%
+            height: 100%
             text-align: right
           .credit-icon
-            relative: top 3% left 5%
-            display: inline-block
+            absolute: top 20% left 52%
             width: 9.2%
             height: 53.5%
             background-image: url("../images/home/common/credit.png")
@@ -130,10 +124,10 @@
             background-size: contain
           .price
             color: white
-            font-size: 1.3em
+            font-size: 1.4em
             font-family: open_sansextrabold
             text-align: right
-            absolute: right 7%
+            absolute: right 8.5%
             height: 100%
             padding: 2.5% 0
         .unavailable
@@ -146,11 +140,16 @@
         .free-pack
           &:nth-child(3)
             margin-top: 1%
-          span
-            relative: top 13% left 59%
-            font-size: 1.8em
-            color: yellow
-            font-family: dax
+          .value
+            absolute: right 17%
+            font-size: 1.4em
+            font-family: open_sansextrabold
+            color: white
+            display: inline-block
+            width: 17%
+            height: 100%
+            padding: 3% 0
+            text-align: center
         #adcolony
           background-image: url("../images/shop/Jetons/video.png")
         #tapjoy
@@ -171,7 +170,6 @@
         width: 29%
         height: 86%
         .life-pack
-          relative: left 2%
           width: 100%
           height: 15%
           margin-bottom: 11%
@@ -189,11 +187,11 @@
             left: 2%
             width: 30%
             padding: 2% 0
-            font-size: 1.4em
+            font-size: 1.6em
           .price
             width: 29%
             right: 19%
-            padding: 5% 0
+            padding: 6.5% 0
             font-size: 1.1em
       #bonus-packs
         width: 55%
@@ -214,13 +212,13 @@
             font-family: open_sansextrabold
           .value
             text-align: center
-            left: 48%
+            left: 47.5%
             width: 16%
             padding: 9% 0
-            font-size: 1.4em
+            font-size: 1.6em
           .price
             text-align: right
             width: 23%
-            right: 11.5%
+            right: 12%
             padding: 7% 0
-            font-size: 2em
+            font-size: 2.1em

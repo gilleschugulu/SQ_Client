@@ -1,8 +1,8 @@
 <!-- HEADER BLOCK BEGIN -->
 <a href="#home" class="home-btn"></a>
 <div class='tabs-container'>
-  <div class='tab active' id='credits'></div>
-  <div class='tab inactive' id='bonuses'></div>
+  <div class='tab active' id='credits'>Jetons</div>
+  <div class='tab inactive' id='bonuses'>Bonus &amp; Vies</div>
 </div>
 
 <div id='numbers'>
@@ -23,7 +23,9 @@
       <div class='title'></div>
       {{#each packs.free_packs}}
         {{#unless disabled}}
-          <a class="free-pack pack" id="{{name}}"></a>
+          <a class="free-pack pack" id="{{name}}">
+            <span class='value'>+{{value}}</span>
+          </a>
         {{/unless}}
       {{/each}}
     </div>
