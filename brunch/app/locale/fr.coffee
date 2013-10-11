@@ -26,12 +26,6 @@ module.exports =
         not_enough_credits:
           title: 'Erreur'
           message: 'Vous n\'avez pas assez de jetons'
-        bonus_pack_bought:
-          title: 'Achat confirmé'
-          message: "Tout c'est bien passé, bon jeu !"
-        life_pack_bought:
-          title: 'Achat confirmé'
-          message: "Tout c'est bien passé, bon jeu !"
       game_over:
         stats:
           nb_questions: 'Nombre de questions'
@@ -111,6 +105,12 @@ module.exports =
           invitation:
             text: 'accepte'
             reward : "Youpi ! tu as des credits en plus...ou pas"
+        pack_bought:
+          title: 'Achat confirmé'
+          message: "Tout c'est bien passé, bon jeu !"
+        unknown_error:
+          title: 'Erreur'
+          message: 'Une erreur est survenue, veuillez réessayer plus tard.'
       stats:
         no_best_sport: 'Aucun'
     view:

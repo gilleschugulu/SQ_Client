@@ -89,7 +89,7 @@ module.exports = class ShopController extends Controller
   onClickAllopassPack: (e) =>
     packId = @view.chooseApplePack(e.currentTarget)
     pack = (p for p in @packs.credit_packs when p.product_id is packId)?[0]
-    AnalyticsHelper.trackTransaction AnalyticsHelper.getTransactionHash([pack], Parse.User.current().id)
+    # AnalyticsHelper.trackTransaction AnalyticsHelper.getTransactionHash([pack], Parse.User.current().id)
     return console.log('Yep, you clicked', pack)
     # dataSend = AllopassHelper.generateData(pack.id, ConnectionHelper.getUUID(), pack.name, pack.price)
     # url = 'https://payment.allopass.com/buy/buy.apu?' + AllopassHelper.productUrl(pack.product_id) + '&data=' + dataSend
@@ -183,12 +183,6 @@ module.exports = class ShopController extends Controller
 
     if Parse.User.current().get('credits') >= pack.price
       PurchaseHelper.purchaseLife pack, @onSuccessfulTransaction
-      PopUpHelper.initialize
-        title: i18n.t 'controller.shop.life_pack_bought.title'
-        message: i18n.t 'controller.shop.life_pack_bought.message'
-        info: true
-        confirmation: false
-        key: 'life-pack-ok'
     else
       AnalyticsHelper.trackEvent 'Boutique', "Pack de vie #{pack.value}", 'Pas assez de jetons', pack.price
       PopUpHelper.initialize
@@ -204,12 +198,6 @@ module.exports = class ShopController extends Controller
 
     if Parse.User.current().get('credits') >= pack.price
       PurchaseHelper.purchaseBonus pack, @onSuccessfulTransaction
-      PopUpHelper.initialize
-        title: i18n.t 'controller.shop.bonus_pack_bought.title'
-        message: i18n.t 'controller.shop.bonus_pack_bought.message'
-        info: true
-        confirmation: false
-        key: 'bonus-pack-ok'
     else
       AnalyticsHelper.trackEvent 'Boutique', "Pack de bonus #{pack.value}", 'Pas assez de jetons', pack.price
       PopUpHelper.initialize

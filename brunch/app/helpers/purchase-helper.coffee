@@ -13,22 +13,34 @@ module.exports = class PurchaseHelper
     user = Parse.User.current()
 
     AppStoreRating?.openRatingsPage (appVersion) ->
-      user.increment('credits', pack.value).save()
-      successCallback?(user.get('credits'))
+      user.increment('credits', pack.value).save null,
+        success: (user) -> successCallback?(user.get('credits'))
+        error: (user, error) ->
+          PopUpHelper.initialize
+            title  : i18n.t 'helper.purchase.unknown_error.title'
+            message: i18n.t 'helper.purchase.unknown_error.message'
+            key    : 'rating-pack-ko'
 
   @purchaseTwitter: (pack, twitterConfig, successCallback) ->
-    window.open('http://twitter.com', '_blank')
-    successCallback?(Parse.User.current().get('credits'))
+    # TODO implement properly when needed (user.save etc)
+    # window.open('http://twitter.com', '_blank')
+    # successCallback?(Parse.User.current().get('credits'))
 
 
   @purchaseFacebookLike: (pack, successCallback) ->
     window.open('http://facebook.com', '_blank')
-    user = Parse.User.current()
-    user.increment('credits', pack.value).save()
-    successCallback?(user.get('credits'))
+    Parse.User.current().increment('credits', pack.value).save null,
+      success: (user) -> successCallback?(user.get('credits'))
+      error: (user, error) ->
+        PopUpHelper.initialize
+          title  : i18n.t 'helper.purchase.unknown_error.title'
+          message: i18n.t 'helper.purchase.unknown_error.message'
+          key    : 'fblike-pack-ko'
 
 
   @purchaseFacebookInvitation: (pack, successCallback) ->
+    # TODO implement properly when needed (user.save etc)
+    return
     user = Parse.User.current()
 
     FacebookHelper.friendRequest i18n.t('helper.purchase.facebook.invitation.text'), (response) =>
@@ -108,14 +120,20 @@ module.exports = class PurchaseHelper
         PopUpHelper.initialize popupStuff
 
   @purchaseLife: (pack, successCallback) ->
-    user = Parse.User.current()
-
-    user.increment('health', pack.value).increment('credits', -pack.price).save null
-    , (user) -> # success
-      AnalyticsHelper.trackEvent 'Boutique', "Pack de vie #{pack.value}", 'Achat confirmé', pack.price
-      successCallback?(user.get('credits'), user.get('health'))
-    , (user, error) ->
-      AnalyticsHelper.trackEvent 'Boutique', "Pack de vie #{pack.value}", 'Error parse', pack.price
+    Parse.User.current().increment('health', pack.value).increment('credits', -pack.price).save null,
+      success: (user) -> # success
+        AnalyticsHelper.trackEvent 'Boutique', "Pack de vie #{pack.value}", 'Achat confirmé', pack.price
+        successCallback?(user.get('credits'), user.get('health'))
+        PopUpHelper.initialize
+          title  : i18n.t 'helper.purchase.pack_bought.title'
+          message: i18n.t 'helper.purchase.pack_bought.message'
+          key    : 'life-pack-ok'
+      error: (user, error) ->
+        AnalyticsHelper.trackEvent 'Boutique', "Pack de vie #{pack.value}", 'Error parse', pack.price
+        PopUpHelper.initialize
+          title  : i18n.t 'helper.purchase.unknown_error.title'
+          message: i18n.t 'helper.purchase.unknown_error.message'
+          key    : 'life-pack-ko'
 
   @purchaseBonus: (pack, successCallback) ->
     user = Parse.User.current()
@@ -125,26 +143,44 @@ module.exports = class PurchaseHelper
     for name, value of user.get('bonus')
       bonuses[name] = value + bonus_added
 
-    user.set('bonus', bonuses).increment('credits', -pack.price).save null
-    , (user) -> # success
-      AnalyticsHelper.trackEvent 'Boutique', "Pack de bonus #{pack.value}", 'Achat confirmé', pack.price
-      successCallback?(user.get('credits'))
-    , (user, error) ->
-      AnalyticsHelper.trackEvent 'Boutique', "Pack de bonus #{pack.value}", 'Error parse', pack.price
+    user.set('bonus', bonuses).increment('credits', -pack.price).save null,
+      success: (user) -> # success
+        AnalyticsHelper.trackEvent 'Boutique', "Pack de bonus #{pack.value}", 'Achat confirmé', pack.price
+        successCallback?(user.get('credits'))
+        PopUpHelper.initialize
+          title  : i18n.t 'helper.purchase.pack_bought.title'
+          message: i18n.t 'helper.purchase.pack_bought.message'
+          key    : 'bonus-pack-ok'
+      error: (user, error) ->
+        AnalyticsHelper.trackEvent 'Boutique', "Pack de bonus #{pack.value}", 'Error parse', pack.price
+        PopUpHelper.initialize
+          title  : i18n.t 'helper.purchase.unknown_error.title'
+          message: i18n.t 'helper.purchase.unknown_error.message'
+          key    : 'bonus-pack-ko'
 
   @purchaseApple: (pack, successCallback) ->
     if pack.product_id and MKStore? and MKStore.gotProducts
-      # AnalyticsHelper.item('Pack de crédits In App', 'click', pack.name, pack.price)
       SpinnerHelper.start()
-      console.log pack.product_id
       # alert 'wait for it...'
       MKStore.buyFeature pack.product_id, (response) =>
-        # Used by Google to track pack bought
-        AnalyticsHelper.trackTransaction AnalyticsHelper.getTransactionHash([pack], Parse.User.current().id)
-        Parse.User.current().set 'credits', response.credits
-        successCallback?(Parse.User.current().get('credits'))
-        AnalyticsHelper.trackEvent 'Boutique', "Pack payant #{pack.name}", 'Achat confirmé', pack.price
-        SpinnerHelper.stop()
+        Parse.User.current().increment('credits', pack.value).save null,
+          success: (user) ->
+            # Used by Google to track pack bought
+            AnalyticsHelper.trackTransaction AnalyticsHelper.getTransactionHash([pack], user.id)
+            successCallback?(user.get('credits'))
+            AnalyticsHelper.trackEvent 'Boutique', "Pack payant #{pack.name}", 'Achat confirmé', pack.price
+            SpinnerHelper.stop()
+            PopUpHelper.initialize
+              title  : i18n.t 'helper.purchase.pack_bought.title'
+              message: i18n.t 'helper.purchase.pack_bought.message'
+              key    : 'apple-pack-ok'
+          error: (user, error) ->
+            SpinnerHelper.stop()
+            AnalyticsHelper.trackEvent 'Boutique', "Pack payant #{pack.name}", 'Error Parse', pack.price
+            PopUpHelper.initialize
+              title  : i18n.t 'helper.purchase.apple.error.title'
+              message: i18n.t 'helper.purchase.apple.error.message'
+              key    : 'purchase-fail'    
       , (error) =>
         # Track event
         AnalyticsHelper.trackEvent 'Boutique', "Pack payant #{pack.name}", 'Error ' + MKStore.getErrorName(error.code), pack.price
