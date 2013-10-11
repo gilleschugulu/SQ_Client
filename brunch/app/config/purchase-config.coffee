@@ -28,12 +28,12 @@ module.exports =
   free_packs:
     web: [
       name: 'facebook_like'
-      value: 5
+      value: 150
     ]
     ios: [
       name: 'facebook_like'
-      value: 5
+      value: 150
     ,
       name: 'app_store_rating'
-      value: 5
+      value: 150
     ]
