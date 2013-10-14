@@ -41,8 +41,9 @@ module.exports = class GameStatHelper
     user = Parse.User.current()
     stats = user.get('stats')
     sport = sport.replace /\w\S*/g, (txt) => 
-      return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase()
+      txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase()
 
+    stats.sports = {} unless stats.sports
     unless stats.sports[sport]
       stats.sports[sport] =
         percent: 0
@@ -54,8 +55,7 @@ module.exports = class GameStatHelper
     stats.sports[sport].total += 1
 
     # stats.sports[sport].total will never be 0, since += 1. So no / 0
-    percent = (stats.sports[sport].good / stats.sports[sport].total) * 100
-    stats.sports[sport].percent = parseFloat(percent.toFixed(2))
+    stats.sports[sport].percent = Math.round((stats.sports[sport].good / stats.sports[sport].total) * 10000) / 100
 
     user.set('stats', stats)
     @
@@ -73,44 +73,53 @@ module.exports = class GameStatHelper
 
   @getProfileStat: ->
     @_stats = Parse.User.current().get('stats')
-    answers_count = (@_getStat('wrong_answers_count') + @_getStat('good_answers_count')) | 1
+    sports = @getAllSports()
+    answers_count = (@_getStat('wrong_answers_count') + @_getStat('good_answers_count'))
     {
       stats:
-        best_score: @_getStat('best_score')
-        avg_score: parseFloat((@_getStat('sum_score') / (@_getStat('games_played_count') | 1)).toFixed(2))
-        percent_answer: @getPercentAnswer() + '%'
-        average_time: parseInt(@_getStat('sum_time_question') / answers_count, 10) + ' ms'
+        best_score        : @_getStat('best_score')
+        avg_score         : Math.round((@_getStat('sum_score') / (@_getStat('games_played_count') || 1)) * 100) / 100
+        percent_answer    : @getPercentAnswer() + '%'
+        average_time      : Math.round(@_getStat('sum_time_question') / (answers_count || 1)) + ' ms'
         games_played_count: @_getStat('games_played_count')
-        best_row: @_getStat('best_row')
-        best_sport: @getBestSport()
+        best_row          : @_getStat('best_row')
+        best_sport        : @getBestSport(sports)
       score: @_getStat('game_week_score')
-      sports: @getAllSports()
+      sports: sports
     }
 
-  @getBestSport: ->
-    return I18n.t('helper.stats.no_best_sport') if _.keys(sports = @getAllSports(yes)).length == 0
+  @getBestSport: (sports) ->
+    return I18n.t('helper.stats.no_best_sport') if _.keys(sports).length == 0
     best_sport = _.max sports, (sport) ->
       sport.percent
-    best_sport.name?.substring(0, 12)
+    if best_sport.percent
+      best_sport.name?.substring(0, 12)
+    else
+      null
 
-  @getAllSports: (numeric) ->
+  @getAllSports: () ->
     sports = @getStats().sports
 
+    defaultSport = 'Tous Sports'
     real_sports = {}
-    for sport in ['Football Français', 'Football int.', 'Rugby', 'Cyclisme', 'Sports Auto', 'Tennis', 'Tous Sports']
+    for sport in ["Auto Moto", "Cyclisme", "Football Francais", "Football International", "Rugby", "Tennis", defaultSport]
       real_sports[sport] = 
-        name: sport
-      if sports[sport]
-        if numeric
-          real_sports[sport].percent = sports[sport].percent
-        else
-          real_sports[sport].percent = sports[sport].percent + '%'
+        name   : sport
+        percent: 0
+
+    defcnt = 0
+    for sportName, sportValue of sports
+      if real_sports[sportName]?
+        real_sports[sportName].percent = sportValue.percent
       else
-        real_sports[sport].percent = 'Joue plus !'
+        real_sports[defaultSport].percent += sportValue.percent
+        defcnt++
+    
+    real_sports[defaultSport].percent = Math.round(real_sports[defaultSport].percent / defcnt * 100) / 100 if defcnt > 0
     real_sports
 
   @getPercentAnswer: ->
-    parseFloat(((@_getStat('good_answers_count') / (@_getStat('wrong_answers_count') + @_getStat('good_answers_count'))) * 100).toFixed(2)) | 0
+    Math.round(@_getStat('good_answers_count') / ((@_getStat('wrong_answers_count') + @_getStat('good_answers_count')) || 1) * 10000) / 100
 
   @reset: ->
     @_stats = Parse.User.current().get('stats')
@@ -124,11 +133,11 @@ module.exports = class GameStatHelper
 
     real_stats = {}
     for stat_name in ['best_score', 'sum_score', 'games_played_count', 'wrong_answers_count', 'good_answers_count', 'sum_time_question', 'games_played_count', 'best_row', 'sports', 'game_week_score', 'week_score']
-      real_stats[stat_name] = stats[stat_name]
+      real_stats[stat_name] = if typeof stats[stat_name] is 'object' then stats[stat_name] else stats[stat_name] | 0
 
-    real_stats.good_answers_count += @_stats.game_good_answers_count
+    real_stats.good_answers_count  += @_stats.game_good_answers_count
     real_stats.wrong_answers_count += @_stats.game_wrong_answers_count
-    real_stats.best_row = @_stats.game_best_row if @_stats.game_best_row > real_stats.best_row
+    real_stats.best_row            = @_stats.game_best_row if @_stats.game_best_row > real_stats.best_row
 
     user.set('stats', real_stats).save()
 
@@ -146,8 +155,7 @@ module.exports = class GameStatHelper
       @_setStat(key, value)
 
   @_setStat: (key, value) ->
-    @_stats[key] = value
-    @_stats[key]
+    (@_stats[key] = value)
 
   @_getStat: (key) ->
     @_stats[key] | 0
