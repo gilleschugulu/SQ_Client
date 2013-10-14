@@ -80,7 +80,7 @@ module.exports = class GameStatHelper
         best_score        : @_getStat('best_score')
         avg_score         : Math.round((@_getStat('sum_score') / (@_getStat('games_played_count') || 1)) * 100) / 100
         percent_answer    : @getPercentAnswer() + '%'
-        average_time      : Math.round(@_getStat('sum_time_question') / (answers_count || 1)) + ' ms'
+        average_time      : Math.round(@_getStat('sum_time_question') / (answers_count || 1)) / 1000 + ' s'
         games_played_count: @_getStat('games_played_count')
         best_row          : @_getStat('best_row')
         best_sport        : @getBestSport(sports)
