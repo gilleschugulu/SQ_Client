@@ -33,6 +33,9 @@ module.exports = class DupaView extends View
 
     $('.chrono-container .chrono-filler', @$el).css('top', progress + '%')
 
+    degrees = progress * 3.6
+    $('.chrono-container .chrono-arrow', @$el).css('-webkit-transform', "rotate(#{degrees}deg)")
+
   updateCountdownTimer: (duration) ->
     countdown = $('#countdown #countdown-value', (@$el).parent())
     countdown = @initCountdownTimer() if countdown.length is 0
