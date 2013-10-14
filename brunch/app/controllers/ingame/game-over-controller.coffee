@@ -19,7 +19,7 @@ module.exports = class GameOverController extends Controller
       jackpot    = parseInt(params.jackpot)
       reward     = @getRewardAmount jackpot
       endMessage = I18n.t "controller.game_over.end_message.#{@getEndMessageKey(jackpot)}"
-      user       = @updateUser(Parse.User.current(), jackpot)
+      user       = @updateUser(Parse.User.current(), jackpot, reward)
 
       params.jackpot =
         value: jackpot
@@ -66,8 +66,8 @@ module.exports = class GameOverController extends Controller
     return 'msg25k' if score <= 25000
     'msg25kplus'
 
-  updateUser: (user, jackpot) ->
-    user.increment('credits', 10).increment('game_row')
+  updateUser: (user, jackpot, reward) ->
+    user.increment('credits', reward).increment('game_row')
 
     if jackpot > user.get('score')
       user.set('score', jackpot)
