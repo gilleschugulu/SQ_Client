@@ -20,6 +20,9 @@ module.exports =
         not_enough_health:
           title: 'Oups...'
           message: 'Vous n\'avez plus de vies pour jouer !'
+        could_not_pay:
+          title: 'Erreur'
+          message: 'Pas pu dépenser la vie pour jouer'
       shop:
         fetch_packs_error:
           title: 'Erreur'
