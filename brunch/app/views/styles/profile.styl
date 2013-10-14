@@ -58,11 +58,12 @@
       background-image: url(../images/profile/photo_pseudo.png)
       background-repeat: no-repeat
       background-size: contain
+      padding-top: 0.1em
       .picture
-        relative: top 0.6% left 14.2%
-        height: 73.8%;
-        width: 73.3%;
-        background-size: contain
+        margin: 0 auto
+        height: 6.5em
+        width: 6.9em
+        background-size: 100% 100%
         background-repeat: no-repeat
       .name
         width: 90%
@@ -201,6 +202,11 @@
           background-size: contain
           background-repeat: no-repeat
           background-image: url('../images/home/common/heart.png')
+          -webkit-animation-name: 'heart_pulse'
+          -webkit-animation-duration: 1200ms
+          -webkit-transform-origin: 50% 50%
+          -webkit-animation-iteration-count: infinite
+          -webkit-animation-timing-function: ease
     .bonus
       absolute: right 15% bottom 2%
       height: 79%
