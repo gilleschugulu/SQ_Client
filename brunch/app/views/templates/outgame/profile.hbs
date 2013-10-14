@@ -42,7 +42,11 @@
           {{#each sports}}
             <tr>
               <td class='left'>{{text}}</td>
-              <td>{{number}}</td>
+              {{#if number}}
+                <td>{{number}}%</td>
+              {{else}}
+                <td>Joue plus !</td>
+              {{/if}}
             </tr>
           {{/each}}
 
