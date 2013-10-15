@@ -10,37 +10,49 @@ module.exports = class FacebookHelper
 
   @logIn: (success, error) ->
     scope = 'email, user_location, user_birthday, publish_stream'
-
+    s = ->
+      spinner.stop()
+      success?.apply null, arguments
+    e = ->
+      spinner.stop()
+      error?.apply null, arguments
+    spinner.start()
     if DeviceHelper.isIOS()
-      spinner.start()
-
-      FB.login( (response) =>
-        if response.authResponse
-          FB.api '/me', (res) =>
-            params =
-              id: res.id
-              access_token: response.authResponse.accessToken
-              expiration_date: new Date(response.authResponse.expirationTime).toISOString()
-
-            Parse.FacebookUtils.logIn params,
-              success: (res, user_attributes) =>
-                console.log 'Parse.FacebookUtils.logIn'
-                console.log arguments
-                success(user_attributes)
-              error: =>
-                error(response)
-        else
-          error(response)
-      , {scope})
-
+      @fetchAuthData scope, (authData) ->
+        Parse.FacebookUtils.logIn scope,
+          authData : authData
+          success: (user) =>
+            console.log 'Parse.FacebookUtils.logIn ios'
+            console.log user
+            s(user)
+          error: e
+      , e
     else
       Parse.FacebookUtils.logIn scope,
-        success: (res, user_attributes) ->
+        success: (user) ->
           console.log 'Parse.FacebookUtils.logIn web'
-          console.log arguments
-          success(user_attributes)
-        , error: ->
-          error()
+          console.log user
+          s(user)
+        , error: e
+
+  @fetchAuthData: (scope, success, error) =>
+    console.log "IOS LOGIN"
+    FB.login( (response) =>
+      # console.log "IOS LOGIN reposnse"
+      # console.log response
+      if response.authResponse
+        FB.api '/me', (res) =>
+          # console.log "IOS LOGIN ME response"
+          # console.log res
+          authData =
+            id: res.id
+            access_token: response.authResponse.accessToken
+            expiration_date: new Date(response.authResponse.expirationTime).toISOString()
+          success?(authData)
+      else
+        error?(response)
+    , {scope})
+
 
   # Friends invite request
   # ----------------------
@@ -119,8 +131,25 @@ module.exports = class FacebookHelper
 
   # Link player from profile page
   # -----------------------------
-  @linkPlayer: (success, error) ->
-    Parse.FacebookUtils.link Parse.User.current(), 'email, user_location, user_birthday, publish_stream', {success, error}
+  @linkPlayer: (successCallback, errorCallback) ->
+    scope = 'email, user_location, user_birthday, publish_stream'
+    success = (user) ->
+      fb_id = user.get('authData').facebook.id
+      user.set('fb_id', fb_id).save()
+      successCallback?(user)
+
+    if DeviceHelper.isIOS()
+      @fetchAuthData scope, (authData) ->
+        Parse.FacebookUtils.link Parse.User.current(), scope, {success, error:errorCallback, authData}
+      , errorCallback
+    else
+      Parse.FacebookUtils.link Parse.User.current(), scope, {success, error:errorCallback}
+
+  @unlinkPlayer : (error) ->
+    Parse.FacebookUtils.unlink Parse.User.current(),
+      success : (user) ->
+        user.set('fb_id', null).save()
+      error : error
 
   # Post on user feed
   # @params :
