@@ -65,19 +65,20 @@ module.exports = class LoginController extends Controller
   loginWithFacebook: =>
     AnalyticsHelper.trackEvent 'Login', 'Login with facebook'
 
-    success = (user_attributes) =>
-      if user_attributes.bonus
-        @bindPlayer(parse_attributes)
+    success = (user) =>
+      if user.get('bonus')
+        @bindPlayer()
       else
         FacebookHelper.getPersonalInfo (fb_attributes) =>
-          parse_attributes = User.prototype.defaults
+          parse_attributes          = User.prototype.defaults
           parse_attributes.username = fb_attributes.name
-          parse_attributes.fb_id = fb_attributes.id
-
-          @bindPlayer(parse_attributes)
+          parse_attributes.fb_id    = fb_attributes.id
+          user.set(parse_attributes).save()
+          @bindPlayer()
 
     error = (response) =>
-      SpinnerHelper.stop()
+      console.log "facebook error resposnse"
+      console.log response
       PopUpHelper.initialize {message: 'Erreur avec Facebook', title: 400, key: 'api-error'}
 
     FacebookHelper.logIn success, error
@@ -212,24 +213,13 @@ module.exports = class LoginController extends Controller
 
   # Save player in the mediator and uuid in localStorage
   # ----------------------------------------------------
-  bindPlayer: (parse_attributes) =>
+  bindPlayer: =>
     Parse.User.current().fetch
-      success: (user, user_attributes) =>
-        if parse_attributes
-          attr = {}
-          for k, v of user_attributes
-            attr[k] = v
-          for k, v of parse_attributes
-            attr[k] = v
+      success: (user) =>
 
-          user.set(attr).save()
-
-        # Save user to mediator
         mediator.setUser user
-
         # Save or update uuid in LocalStorage
         @initPushNotifications()
-        SpinnerHelper.stop()
         @redirectHome()
 
 

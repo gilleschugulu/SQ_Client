@@ -17,11 +17,6 @@ module.exports = class ProfilesController extends Controller
   index: =>
 
     @user = new User(Parse.User.current().attributes)
-    if fb_id = @user.get('fb_id')
-      # TODO : Size must be dynamic
-      avatar = 'https://graph.facebook.com/' + fb_id + '/picture?width=150&height=170'
-    else
-      avatar = 'images/common/facebook-default.jpg'
 
     @loadView 'profile'
       , =>
@@ -36,24 +31,32 @@ module.exports = class ProfilesController extends Controller
           text: val.name.substring(0, 12)
           name: key
 
-        new ProfileView({ user : @user.attributes, stats: stats_stats, sports: stats_sports, bonus: @user.getBonuses(), avatar, is_linked: Parse.FacebookUtils.isLinked(Parse.User.current()), gamecenter: GameCenter? })
+        new ProfileView({ user : @user.attributes, stats: stats_stats, sports: stats_sports, bonus: @user.getBonuses(), fb_id : @user.get('fb_id'), is_linked: FacebookHelper.isLinked(), gamecenter: GameCenter? })
 
       , (view) =>
-        view.delegate 'click', '.facebook-link', @linkFacebook
+        view.delegate 'click', '.picture', @linkFacebook
         view.delegate 'click', '.game-center', @onClickGameCenter
         view.autoSizeText()
       , {viewTransition: yes}
 
-  linkFacebook: ->
-    return if Parse.FacebookUtils.isLinked(Parse.User.current())
+  linkFacebook: =>
+    return if FacebookHelper.isLinked()
     # Track Event
     AnalyticsHelper.trackEvent 'Profil', 'Click', 'Liaison facebook'
 
+    @view.facebookLink()
     # Call Facebook for linking
-    FacebookHelper.logIn =>
-      @view.activateFbButton()
-    , =>
-      PopUpHelper.initialize {message: 'Erreur avec Facebook', title: 400, key: 'api-error'}
+    FacebookHelper.linkPlayer (user) =>
+      @view.displayFbAvatar user.get('fb_id')
+      # FacebookHelper.unlinkPlayer()
+    , (user, error) =>
+      @view.facebookLink yes
+      console.log "link FB shitted"
+      console.log error
+      if error and error.code is Parse.Error.ACCOUNT_ALREADY_LINKED
+        PopUpHelper.initialize {message: 'Ce compte Facebook est déjà lié à un autre compte du jeu', title: 'Erreur', key: 'api-error'}
+      else
+        PopUpHelper.initialize {message: 'Erreur avec Facebook', title: 'Erreur', key: 'api-error'}
 
   onClickGameCenter: =>
     # Track Event

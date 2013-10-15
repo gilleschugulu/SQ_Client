@@ -5,11 +5,11 @@
     <a href="#home" class="home-btn"></a>
   </div>
   <div class='picture-container'>
-    {{#if is_linked }}
-      <div class='picture' style='background-image: url({{avatar}})'></div>
-    {{else}}
-      <div class='facebook-link'></div>
-    {{/if}}
+      <div class='picture'
+      {{#if is_linked }}
+        style='background-image: url(https://graph.facebook.com/{{fb_id}}/picture?width=159&height=150)'
+      {{/if}}
+      ></div>
     <div class='name resize'>{{user.username}}</div>
   </div>
   <div class='personal-info'>
