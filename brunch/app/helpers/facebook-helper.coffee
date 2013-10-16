@@ -37,7 +37,8 @@ module.exports = class FacebookHelper
       user = Parse.User.current()
       @getOtherFriends (friends) ->
         notInstalledFriends = _.pluck(friends, 'id')
-        FB.ui {method: 'apprequests', message: message, filters: [{name : 'invite friends', user_ids : _.difference(notInstalledFriends, user.get('fb_invited'))}]}, (response) ->
+        user_ids = _.difference(notInstalledFriends, user.get('fb_invited'))
+        FB.ui {method: 'apprequests', message: message, filters: [{name : 'invite friends', user_ids}, exclude_ids : user.get('fb_invited')]}, (response) ->
           return unless response
           # On iOs, response.to doesn't exist, and we receive "to%5B0%5D" (to[0]). Weiiiird.
           if response.to 
@@ -54,10 +55,7 @@ module.exports = class FacebookHelper
           if invited_players.length > 0
             user.set("fb_invited", _.uniq(invited_players.concat(user.get('fb_invited')))).increment('health', invited_players.length).save()
 
-          if response
-            callback?(response)
-          else
-            errorCallback?()
+          callback?(response)
         , ->
           errorCallback?()
 
