@@ -7,9 +7,9 @@ spinner       = require 'helpers/spinner-helper'
 
 module.exports = class FacebookHelper
   self = @
+  @scope = 'email,user_location,user_birthday,publish_stream'
 
   @logIn: (success, error) ->
-    scope = 'email, user_location, user_birthday, publish_stream'
     s = ->
       spinner.stop()
       success?.apply null, arguments
@@ -17,47 +17,14 @@ module.exports = class FacebookHelper
       spinner.stop()
       error?.apply null, arguments
     spinner.start()
-    if DeviceHelper.isIOS()
-      @fetchAuthData scope, (authData) ->
-        Parse.FacebookUtils.logIn scope,
-          authData : authData
-          success: (user) =>
-            console.log 'Parse.FacebookUtils.logIn ios'
-            console.log user
-            s(user)
-          error: e
-      , e
-    else
-      Parse.FacebookUtils.logIn scope,
-        success: (user) ->
-          console.log 'Parse.FacebookUtils.logIn web'
-          console.log user
-          s(user)
-        , error: e
-
-  @fetchAuthData: (scope, success, error) =>
-    console.log "IOS LOGIN"
-    FB.login( (response) =>
-      # console.log "IOS LOGIN reposnse"
-      # console.log response
-      if response.authResponse
-        FB.api '/me', (res) =>
-          # console.log "IOS LOGIN ME response"
-          # console.log res
-          authData =
-            id: res.id
-            access_token: response.authResponse.accessToken
-            expiration_date: new Date(response.authResponse.expirationTime).toISOString()
-          success?(authData)
-      else
-        error?(response)
-    , {scope})
-
+    Parse.FacebookUtils.logIn @scope,
+      success: s
+      , error: e
 
   # Friends invite request
   # ----------------------
   @friendRequest: (message, callback, errorCallback) ->
-    doRequest = ->
+    doRequest = =>
       # if no message is no provided, return
       unless !!message
         return alert "FB.request: pas de message :("
@@ -68,9 +35,9 @@ module.exports = class FacebookHelper
 
       # Checking FB is existant
       user = Parse.User.current()
-      FacebookHelper.getOtherFriends (friends) =>
+      @getOtherFriends (friends) ->
         notInstalledFriends = _.pluck(friends, 'id')
-        FB.ui {method: 'apprequests', message: message, filters: [{name : 'invite friends', user_ids : _.difference(notInstalledFriends, user.get('fb_invited'))}]}, (response) =>
+        FB.ui {method: 'apprequests', message: message, filters: [{name : 'invite friends', user_ids : _.difference(notInstalledFriends, user.get('fb_invited'))}]}, (response) ->
 
           # On iOs, response.to doesn't exist, and we receive "to%5B0%5D" (to[0]). Weiiiird.
           players_invited = if response.to then response.to else response['to%5B0%5D']
@@ -132,18 +99,12 @@ module.exports = class FacebookHelper
   # Link player from profile page
   # -----------------------------
   @linkPlayer: (successCallback, errorCallback) ->
-    scope = 'email, user_location, user_birthday, publish_stream'
     success = (user) ->
       fb_id = user.get('authData').facebook.id
       user.set('fb_id', fb_id).save()
       successCallback?(user)
 
-    if DeviceHelper.isIOS()
-      @fetchAuthData scope, (authData) ->
-        Parse.FacebookUtils.link Parse.User.current(), scope, {success, error:errorCallback, authData}
-      , errorCallback
-    else
-      Parse.FacebookUtils.link Parse.User.current(), scope, {success, error:errorCallback}
+    Parse.FacebookUtils.link Parse.User.current(), @scope, {success, error:errorCallback}
 
   @unlinkPlayer : (error) ->
     Parse.FacebookUtils.unlink Parse.User.current(),
