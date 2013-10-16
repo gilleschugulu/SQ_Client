@@ -46,6 +46,8 @@ module.exports = class HomeController extends Controller
         AnalyticsHelper.trackEvent 'Home', 'Jouer', 'Pas assez de Jetons'
         popUp.initialize {template: 'no-more-coins'}
 
+    @view.delegate 'click', 'a', @onClickALink
+
     FacebookHelper.getFriends (friends) =>
       @getJournalView friends, =>
         @view?.setJournalMessage('touch', yes)
@@ -54,7 +56,6 @@ module.exports = class HomeController extends Controller
       @view.delegate 'click', '#equipe-btn', =>
         AnalyticsHelper.trackEvent 'Home', 'Click', 'Journal'
         @view.toggleJournal()
-      @view.delegate 'click', 'a', @onClickALink
       @view.delegate 'click', '#invite-btn', @onClickFacebook
       @view.delegate 'click', '#ranking', =>
         AnalyticsHelper.trackEvent 'Home', 'Click', 'Classement'
