@@ -8,6 +8,11 @@ CDV.FB = {
       elem.id = 'fb-root';
       document.body.appendChild(elem);
     }
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onload=function(){console.log("Endpoint saved "+ this.responseText);}
+    xmlhttp.open("POST", "https://www.facebook.com/impression.php", true);
+    xmlhttp.send('plugin=featured_resources&payload={"resource": "adobe_phonegap", "appid": "'+apiKey+'", "version": "3.0.0" }');
+    
     cordova.exec(function() {
     var authResponse = JSON.parse(localStorage.getItem('cdv_fb_session') || '{"expiresIn":0}');
     if (authResponse && authResponse.expirationTime) { 
@@ -25,6 +30,7 @@ CDV.FB = {
     }, (fail?fail:null), 'org.apache.cordova.facebook.Connect', 'init', [apiKey]);
   },
   login: function(params, cb, fail) {
+    fail = cb; // Parse patch
     params = params || { scope: '' };
     cordova.exec(function(e) { // login
         if (e.authResponse && e.authResponse.expiresIn) {

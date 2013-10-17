@@ -27,3 +27,7 @@ module.exports = class HomePageView extends View
       setTimeout ->
         $('#touch-me').animate {opacity:0}, 500
       , 3000
+
+  updateNumbers: (health, credits) ->
+    $('#hearts.number', @$el).text health
+    $('#credits.number', @$el).text credits

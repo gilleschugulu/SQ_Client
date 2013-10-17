@@ -72,14 +72,13 @@ module.exports = class LoginController extends Controller
         FacebookHelper.getPersonalInfo (fb_attributes) =>
           parse_attributes          = User.prototype.defaults
           parse_attributes.username = fb_attributes.name
-          parse_attributes.fb_id    = fb_attributes.id
           user.set(parse_attributes).save()
           @bindPlayer()
 
-    error = (response) =>
+    error = (user, response) =>
       console.log "facebook error resposnse"
       console.log response
-      PopUpHelper.initialize {message: 'Erreur avec Facebook', title: 400, key: 'api-error'}
+      PopUpHelper.initialize {message: response, title: "Erreur", key: 'api-error'}
 
     FacebookHelper.logIn success, error
 

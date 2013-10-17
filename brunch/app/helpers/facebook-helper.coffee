@@ -7,57 +7,27 @@ spinner       = require 'helpers/spinner-helper'
 
 module.exports = class FacebookHelper
   self = @
+  @defaultScope = ['email','user_location','user_birthday']
+  @publishScope = ['publish_stream']
 
-  @logIn: (success, error) ->
-    scope = 'email, user_location, user_birthday, publish_stream'
-    s = ->
+  @logIn: (success, error, scope = @defaultScope) ->
+    s = (user) ->
       spinner.stop()
+      user.set('fb_id', user.get('authData').facebook.id).save()
       success?.apply null, arguments
     e = ->
       spinner.stop()
       error?.apply null, arguments
     spinner.start()
-    if DeviceHelper.isIOS()
-      @fetchAuthData scope, (authData) ->
-        Parse.FacebookUtils.logIn scope,
-          authData : authData
-          success: (user) =>
-            console.log 'Parse.FacebookUtils.logIn ios'
-            console.log user
-            s(user)
-          error: e
-      , e
-    else
-      Parse.FacebookUtils.logIn scope,
-        success: (user) ->
-          console.log 'Parse.FacebookUtils.logIn web'
-          console.log user
-          s(user)
-        , error: e
-
-  @fetchAuthData: (scope, success, error) =>
-    console.log "IOS LOGIN"
-    FB.login( (response) =>
-      # console.log "IOS LOGIN reposnse"
-      # console.log response
-      if response.authResponse
-        FB.api '/me', (res) =>
-          # console.log "IOS LOGIN ME response"
-          # console.log res
-          authData =
-            id: res.id
-            access_token: response.authResponse.accessToken
-            expiration_date: new Date(response.authResponse.expirationTime).toISOString()
-          success?(authData)
-      else
-        error?(response)
-    , {scope})
-
+    scope = scope.join ',' if _.isArray scope
+    Parse.FacebookUtils.logIn scope,
+      success: s
+      , error: e
 
   # Friends invite request
   # ----------------------
   @friendRequest: (message, callback, errorCallback) ->
-    doRequest = ->
+    doRequest = =>
       # if no message is no provided, return
       unless !!message
         return alert "FB.request: pas de message :("
@@ -68,32 +38,40 @@ module.exports = class FacebookHelper
 
       # Checking FB is existant
       user = Parse.User.current()
-      FacebookHelper.getOtherFriends (friends) =>
+      @getOtherFriends (friends) ->
         notInstalledFriends = _.pluck(friends, 'id')
-        FB.ui {method: 'apprequests', message: message, filters: [{name : 'invite friends', user_ids : _.difference(notInstalledFriends, user.get('fb_invited'))}]}, (response) =>
-
+        user_ids = _.difference(notInstalledFriends, user.get('fb_invited'))
+        FB.ui {method: 'apprequests', message, filters: [{name : 'invite friends', user_ids}]}, (response) ->
+          return unless response
           # On iOs, response.to doesn't exist, and we receive "to%5B0%5D" (to[0]). Weiiiird.
-          players_invited = if response.to then response.to else response['to%5B0%5D']
-          players_invited = _.uniq(players_invited.concat(user.get('fb_invited')))
+          if response.to 
+            invited_players = response.to
+          else if response['to%5B0%5D']
+            invited_players = (v for k,v of response when /^to%5B[0-9]+%5D$/.test k)
+          else return
+
+          invited_players = _.difference invited_players, user.get('fb_invited')
 
           # If we have a callback for this method, then use it (for exemple avoid rewarding?)
-          user.set("fb_invited", players_invited)
           # Add a life at user per NEW friends added
-          for friend in players_invited
-            user.set("health", user.get("health")+1)
+          if invited_players.length > 0
+            user.set("fb_invited", _.uniq(invited_players.concat(user.get('fb_invited')))).increment('health', invited_players.length).save()
 
-          user.save()
-          if response
-            callback?(response)
-          else
-            errorCallback?()
+          callback?(response)
         , ->
           errorCallback?()
 
     unless @isLinked()
-      @linkPlayer doRequest
+      @linkPlayer doRequest, errorCallback
     else
-      doRequest()
+      FB.getLoginStatus (response) =>
+        console.log "getLoginStatus"
+        console.log response
+        if response and response.status is 'connected'
+          doRequest()
+        else
+          @logIn doRequest, errorCallback
+      , errorCallback
 
   @friendRequestTo: (message, friend, callback = null, giveLife = false) ->
     doRequest = ->
@@ -107,7 +85,7 @@ module.exports = class FacebookHelper
 
       # Checking FB is existant
       user = Parse.User.current()
-      FB.ui {method: 'apprequests', message: message, to: friend}, (response) =>
+      FB.ui {method: 'apprequests', message, to: friend}, (response) =>
         # if we have a callback for this method, then use it (for exemple avoid rewarding?)
         user.set("fb_invited", _.uniq(response.to.concat(user.get('fb_invited'))))
         if giveLife
@@ -118,13 +96,20 @@ module.exports = class FacebookHelper
           error: (msg) =>
             console.log  msg
         else
-          user.set("health", user.get("health")+1).save()
+          user.increment("health", 1).save()
         if response and callback
           callback(response)
+
     unless @isLinked()
       @linkPlayer doRequest
     else
-      doRequest()
+      FB.getLoginStatus (response) =>
+        console.log "getLoginStatus"
+        console.log response
+        if response and response.status is 'connected'
+          doRequest()
+        else
+          @logIn doRequest
 
   @isLinked: ->
     Parse.FacebookUtils.isLinked(Parse.User.current())
@@ -132,18 +117,12 @@ module.exports = class FacebookHelper
   # Link player from profile page
   # -----------------------------
   @linkPlayer: (successCallback, errorCallback) ->
-    scope = 'email, user_location, user_birthday, publish_stream'
     success = (user) ->
       fb_id = user.get('authData').facebook.id
       user.set('fb_id', fb_id).save()
       successCallback?(user)
 
-    if DeviceHelper.isIOS()
-      @fetchAuthData scope, (authData) ->
-        Parse.FacebookUtils.link Parse.User.current(), scope, {success, error:errorCallback, authData}
-      , errorCallback
-    else
-      Parse.FacebookUtils.link Parse.User.current(), scope, {success, error:errorCallback}
+    Parse.FacebookUtils.link Parse.User.current(), @defaultScope.join(','), {success, error:errorCallback}
 
   @unlinkPlayer : (error) ->
     Parse.FacebookUtils.unlink Parse.User.current(),
@@ -172,7 +151,14 @@ module.exports = class FacebookHelper
   # Post score
   # ----------
   @postScore: (score) ->
-    FB.api '/me/scores', 'post', {score: score}, (response) ->
+    # TODO
+    # if logged in or linked
+    #   check has publish_actions permission
+    #     yes => post
+    #     no => login with @publishPermissions => post
+    # else
+    #   login with @publishPermissions => post
+    FB.api '/me/scores', 'post', {score}, (response) ->
       console.log 'Score was posted to facebook', {score}
 
   # Get personal info
@@ -205,6 +191,19 @@ module.exports = class FacebookHelper
           friends
     else
       callback([])
+
+  @getPermissions: (callback, errorCallback) ->
+    FB.api '/me/permissions', (response) ->
+      if response?.data?[0]
+        callback?(permissions)
+      else
+        errorCallback?(response)
+
+  @getLackingPermissions: (neededPermissions, callback, errorCallback) ->
+    @getPermissions (permissions) ->
+      callback?(p for p in neededPermissions when !!!permissions[p])
+    , errorCallback
+
   # # Like the appli
   # # HAHA, like an Open Graph object. Not usable now, maybe later
   # # -------------------------------------------------

@@ -73,6 +73,7 @@ module.exports = class HomeController extends Controller
       else
         FacebookHelper.friendRequest i18n.t('controller.home.facebook_invite_message'), =>
           popUp.initialize {message: i18n.t('controller.home.app_request.success'), title: 'Invitations envoyées', key: 'appRequest-success'}
+          @view.updateNumbers Parse.User.current().get('health')
         , =>
           popUp.initialize {message: i18n.t('controller.home.app_request.error'), title: 'Action impossible', key: 'appRequest-error'}
 
