@@ -57,7 +57,7 @@ module.exports = class FacebookHelper
           if invited_players.length > 0
             user.set("fb_invited", _.uniq(invited_players.concat(user.get('fb_invited')))).increment('health', invited_players.length).save()
 
-          callback?(response)
+          callback?(invited_players.length)
         , ->
           errorCallback?()
 

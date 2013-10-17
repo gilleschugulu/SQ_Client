@@ -6,6 +6,7 @@ module.exports =
         app_request:
           error: 'Désolé vous avez déjà invité tous vos amis'
           success: "Merci d'avoir invité vos amis"
+          success_bonus: "Merci d'avoir invité vos amis ! Vous avez gagné {0} vie(s)."
         touch_me:
           touch: 'Touche pour afficher la Une'
           loading: "Le journal est en cours de livraison !"

@@ -71,9 +71,12 @@ module.exports = class HomeController extends Controller
       if _.difference(_.pluck(friends, 'id'), Parse.User.current().get('fb_invited')).length < 1 and FacebookHelper.isLinked()
          popUp.initialize {message: i18n.t('controller.home.app_request.error'), title: 'Action impossible', key: 'appRequest-error'}
       else
-        FacebookHelper.friendRequest i18n.t('controller.home.facebook_invite_message'), =>
-          popUp.initialize {message: i18n.t('controller.home.app_request.success'), title: 'Invitations envoyées', key: 'appRequest-success'}
-          @view.updateNumbers Parse.User.current().get('health')
+        FacebookHelper.friendRequest i18n.t('controller.home.facebook_invite_message'), (bonusHealth) =>
+          if bonusHealth > 0
+            @view.updateNumbers Parse.User.current().get('health')
+            popUp.initialize {message: i18n.t('controller.home.app_request.success_bonus', bonusHealth, null), title: 'Invitations envoyées', key: 'appRequest-success'}
+          else
+            popUp.initialize {message: i18n.t('controller.home.app_request.success'), title: 'Invitations envoyées', key: 'appRequest-success'}
         , =>
           popUp.initialize {message: i18n.t('controller.home.app_request.error'), title: 'Action impossible', key: 'appRequest-error'}
 
