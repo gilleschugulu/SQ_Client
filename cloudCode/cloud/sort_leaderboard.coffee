@@ -10,8 +10,7 @@ exports.task = (request, response) ->
   query.equalTo('rank', userRank)
 
   query.find
-    error: ->
-      response.error()
+    error: -> response.error.apply null, arguments
     success: (results) ->
       return response.success({players: [], total: 0}) if results.length is 0
 
