@@ -318,9 +318,11 @@
     }
     NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
     [options enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
-        if ([obj isKindOfClass:[NSString class]]) {
+        if ([obj isKindOfClass:[NSString class]])
             params[key] = obj;
-        } else {
+        else if ([obj isKindOfClass:[NSNumber class]])
+            params[key] = [obj stringValue];
+        else {
             NSError *error;
             NSData *jsonData = [NSJSONSerialization dataWithJSONObject:obj
                                                                options:0
