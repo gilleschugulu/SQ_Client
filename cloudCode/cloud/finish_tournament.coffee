@@ -2,7 +2,13 @@ ranks_percentages = require('cloud/ranks_config.js').data
 utils = require('cloud/utilities.js')
 _ = require('underscore')
 
+# job configured on Parse jobs to run every day (currently they dont allow to run jobs on weekly basis)
+# so check first if its monday (just after midnight)
+
 exports.task = (request, response) ->
+  d = (new Date()).getUTCDay()
+  if d isnt 1 # run only on modays after midnight
+    return response.error('not a moday yet :(')
 
   query = new Parse.Query('User')
   query.find
@@ -33,7 +39,7 @@ exports.task = (request, response) ->
             user.increment('rank')
           else if index > downedIndex
             user.increment('rank', -1)
-          user.set('score', 0). set('game_row', 0)
+          user.set('score', 0).set('game_row', 0).set('life_given', [])
           allPlayers.push user
 
       Parse.Object.saveAll allPlayers,
