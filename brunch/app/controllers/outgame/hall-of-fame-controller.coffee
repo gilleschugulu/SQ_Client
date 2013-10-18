@@ -46,7 +46,7 @@ module.exports = class HallOfFameController extends Controller
       @view?.updateRankingList players, @friendsToInvite, options
 
   fetchGlobalPlayers: ->
-    Parse.Cloud.run 'getAllScore', {rank : @user.get('rank'), userId : @user.id},
+    Parse.Cloud.run 'leaderboard', {rank : @user.get('rank'), userId : @user.id},
       success: (results) =>
         @globalPlayers = _.uniq results.players, (player) ->
           player.position
@@ -54,7 +54,7 @@ module.exports = class HallOfFameController extends Controller
   fetchFriends: ->
     FacebookHelper.getFriends (friends) =>
       (friendsId = _.pluck friends, 'id').push @user.get('fb_id')
-      Parse.Cloud.run 'getFriendsScore', {friendsId},
+      Parse.Cloud.run 'leaderboard_friends', {friendsId},
         success: (players) =>
           @friendsPlayers = players
           @displayPlayers yes
@@ -116,7 +116,7 @@ module.exports = class HallOfFameController extends Controller
     name = (f.username for f in @friendsPlayers when f.fb_id == id)[0]
 
     if !$(e.target).hasClass('asked') and $.inArray(id, user.get('life_given')) < 0
-      Parse.Cloud.run 'giveLife' , {friendsId: id},
+      Parse.Cloud.run 'give_life' , {friendsId: id},
         success: (response) =>
           if response.id == id
             user.get('life_given').push response.id

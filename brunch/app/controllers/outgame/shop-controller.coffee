@@ -22,7 +22,7 @@ module.exports = class ShopController extends Controller
       @displayPacks()
     else
       SpinnerHelper.start()
-      Parse.Cloud.run 'getShopConfig', {},
+      Parse.Cloud.run 'shop_config', {},
         success: (packs) =>
           SpinnerHelper.stop()
           mediator.packs = packs

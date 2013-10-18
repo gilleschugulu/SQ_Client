@@ -1,4 +1,4 @@
-ranks_percentages = require('cloud/ranks_percentages.js').data
+ranks_percentages = require('cloud/ranks_config.js').data
 exports.task = (request, response) ->
   rank = request.params.rank
   if rank

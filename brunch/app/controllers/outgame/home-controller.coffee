@@ -116,7 +116,7 @@ module.exports = class HomeController extends Controller
 
   getFriendsScore: (friends, journalView, callback) ->
     (friendsId = _.pluck(friends, 'id')).push Parse.User.current().get('fb_id')
-    Parse.Cloud.run 'getFriendsScore', {friendsId},
+    Parse.Cloud.run 'leaderboard_friends', {friendsId},
       success: (players) =>
         players = players.sort (f1, f2) ->
           f2.score - f1.score
@@ -126,7 +126,7 @@ module.exports = class HomeController extends Controller
         console.log 'ERROR : ', error
 
   getSmallLeaderboard: (journalView, callback) ->
-    Parse.Cloud.run 'smallLeaderboard', {size : 3},
+    Parse.Cloud.run 'leaderboard_journal', {size : 3},
       success: (players) =>
         players = players.sort (f1, f2) ->
           f2.score - f1.score

@@ -1,4 +1,4 @@
-ranks_percentages = require('cloud/ranks_percentages.js').data
+ranks_percentages = require('cloud/ranks_config.js').data
 utils = require('cloud/utilities.js')
 _ = require('underscore')
 
