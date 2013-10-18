@@ -5,6 +5,7 @@ ConfigHelper    = require 'helpers/config-helper'
 AnalyticsHelper = require 'helpers/analytics-helper'
 FacebookHelper  = require 'helpers/facebook-helper'
 i18n            = require 'lib/i18n'
+PopUpHelper     = require 'helpers/pop-up-helper'
 _               = require 'underscore'
 
 module.exports = class HallOfFameController extends Controller
@@ -20,23 +21,23 @@ module.exports = class HallOfFameController extends Controller
 
     playerPosition = 0
     user = Parse.User.current()
+    given = user.get('life_given') || []
     players = _.map ranking, (entry, index) ->
       if entry.username is user.get('username')
         playerPosition = index
       data = 
-        friend      : if entry.fb_id is user.get('fb_id') then false else withFriends
-        rank        : entry.rank
-        username    : entry.username
-        jackpot     : entry.score
-        id          : entry.fb_id
-        position    : entry.position
-        range       : if withFriends is undefined else entry.range_name
-        profilepic  : if !!entry.fb_id then 'https://graph.facebook.com/' + entry.fb_id + '/picture' else null
+        friend   : entry.fb_id isnt user.get('fb_id') and withFriends
+        got_life : $.inArray(entry.fb_id, given) >= 0
+        rank     : entry.rank
+        username : entry.username
+        jackpot  : entry.score
+        fb_id    : entry.fb_id
+        position : entry.position
+        range    : if withFriends is undefined else entry.range_name
 
     options = 
       fbConnected:    FacebookHelper.isLinked()
       playerPosition: playerPosition
-
     if withFriends and !options.fbConnected
       @view?.updateRankingListNotConnected()
     else if withFriends and players.length <= 1
@@ -51,13 +52,12 @@ module.exports = class HallOfFameController extends Controller
           player.position
 
   fetchFriends: ->
-    FacebookHelper.getOtherFriends (friends) =>
-      FacebookHelper.getFriends (friends) =>
-        friendsId = _.pluck(friends, 'id')
-        Parse.Cloud.run 'getFriendsScore' , {friendsId: friendsId, userId: @user.id},
-          success: (players) =>
-            @friendsPlayers = players
-            @displayPlayers yes
+    FacebookHelper.getFriends (friends) =>
+      (friendsId = _.pluck friends, 'id').push @user.get('fb_id')
+      Parse.Cloud.run 'getFriendsScore', {friendsId},
+        success: (players) =>
+          @friendsPlayers = players
+          @displayPlayers yes
 
   index: (params) ->
     @nextRoute = params.nextRoute
@@ -79,7 +79,7 @@ module.exports = class HallOfFameController extends Controller
     , (view) =>
       view.delegate 'click', '#btn-friends', @onClickFriends
       view.delegate 'click', '#btn-global', @onClickGlobal
-      view.delegate 'click', '.ask-friend', @askFriend
+      view.delegate 'click', '.ask-friend', @giveLifeToFriend
       view.delegate 'click', '#no-friends', @addFriends
       view.delegate 'click', '#no-fb-connected', @connectFacebook
       view.delegate 'click', '.invite-btn', @FacebookInvite
@@ -108,11 +108,27 @@ module.exports = class HallOfFameController extends Controller
     targetDate.setDate(targetDate.getDate() - targetDate.getDay() + 7)
     return targetDate
 
-  askFriend: (e) =>
-    if !$(e.target).hasClass('asked')
-      @view.askFriend e.target
-      id = $(e.currentTarget).data 'id'
-      FacebookHelper.friendRequestTo(i18n.t('controller.home.facebook_invite_message'), id, null, true)
+  giveLifeToFriend: (e) =>
+    err = -> PopUpHelper.initialize {message: i18n.t('controller.hof.life_giveaway.error'), title: 'Action impossible', key: 'appRequest-error'}
+
+    id = ($(e.currentTarget).data 'id').toString()
+    user = Parse.User.current()
+    name = (f.username for f in @friendsPlayers when f.fb_id == id)[0]
+
+    if !$(e.target).hasClass('asked') and $.inArray(id, user.get('life_given')) < 0
+      Parse.Cloud.run 'giveLife' , {friendsId: id},
+        success: (response) =>
+          if response.id == id
+            user.get('life_given').push response.id
+            user.save()
+            @view.lifeGiven e.target
+            PopUpHelper.initialize {message: i18n.t('controller.hof.life_giveaway.success', name, null), title: 'Youpi', key: 'appRequest-error'}
+          else
+            err()
+        error: err
+    else
+      @view.lifeGiven e.target
+      PopUpHelper.initialize {message: i18n.t('controller.hof.life_giveaway.already_given', name, null), title: 'Action impossible', key: 'appRequest-error'}
 
   addFriends: =>
     FacebookHelper.friendRequest i18n.t('controller.home.facebook_invite_message')

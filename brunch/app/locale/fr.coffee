@@ -24,6 +24,11 @@ module.exports =
         could_not_pay:
           title: 'Erreur'
           message: 'Pas pu dépenser la vie pour jouer'
+      hof:
+        life_giveaway:
+          success      : 'Vous venez d\'offrir une vie à {0} pour ce tournoi !'
+          error        : 'Une erreur est survénue, veuillez réessayer plus tard.'
+          already_given: 'Vous ne pouvez plus offrir de vie à {0} durant ce tournoi.'
       shop:
         fetch_packs_error:
           title: 'Erreur'

@@ -73,7 +73,7 @@ module.exports = class FacebookHelper
           @logIn doRequest, errorCallback
       , errorCallback
 
-  @friendRequestTo: (message, friend, callback = null, giveLife = false) ->
+  @friendRequestTo: (message, friend, callback) ->
     doRequest = ->
       # if no message is no provided, return
       unless !!message
@@ -87,22 +87,22 @@ module.exports = class FacebookHelper
       user = Parse.User.current()
       FB.ui {method: 'apprequests', message, to: friend}, (response) =>
         # if we have a callback for this method, then use it (for exemple avoid rewarding?)
+        console.log "request to"
+        console.log response
         user.set("fb_invited", _.uniq(response.to.concat(user.get('fb_invited'))))
-        if giveLife
-          Parse.Cloud.run 'giveLife' , {friendsId: friend},
-          success: (results) =>
-            user.set('life_given', user.get('life_given').concat(results.get('fb_id')))
-            console.log  results.get('health')
-          error: (msg) =>
-            console.log  msg
-        else
-          user.increment("health", 1).save()
+        user.increment("health", 1).save()
         if response and callback
           callback(response)
+      , (error) ->
+        console.log "DIALOG FAILED"
+        console.log error
 
+    console.log "REQUEST"
     unless @isLinked()
+      console.log "REQUEST LINKING"
       @linkPlayer doRequest
     else
+      console.log "REQUEST STATUS"
       FB.getLoginStatus (response) =>
         console.log "getLoginStatus"
         console.log response
@@ -110,6 +110,9 @@ module.exports = class FacebookHelper
           doRequest()
         else
           @logIn doRequest
+      , (stuff) ->
+        console.log "REQUEST STATUS FAILED"
+        console.log stuff
 
   @isLinked: ->
     Parse.FacebookUtils.isLinked(Parse.User.current())
@@ -172,10 +175,7 @@ module.exports = class FacebookHelper
     if @isLinked()
       FB.api '/me/friends?fields=installed', (response) =>
         if response.data
-          friends = (friend for friend in response.data when friend.installed)
-          if !friends?
-            friends = []
-          callback(friends)
+          callback?((friend for friend in response.data when friend.installed) || [])
         else
           error()
     else

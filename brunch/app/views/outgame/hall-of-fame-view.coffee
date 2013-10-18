@@ -1,6 +1,7 @@
 template  = require 'views/templates/outgame/hall-of-fame'
 i18n      = require 'lib/i18n'
 View      = require 'views/base/view'
+PreloadHelper = require 'helpers/preload-helper'
 
 module.exports = class HallOfFameView extends View
   autoRender: yes
@@ -12,37 +13,38 @@ module.exports = class HallOfFameView extends View
   picSize: 40
 
   getTemplateData: ->
-    s = super
+    super
     @interval = setInterval =>
       cd = @calculateDateCount()
       @setCountDown cd.days, cd.hours, cd.minutes
     , 1000
-    s
     @options
 
 
-  # TODO : Clean dat' shit
+  preloadFacebookAvatars: =>
+    $('.photo.not-loaded', @$el).each (index, elem) ->
+      elem = $(elem)
+      elem.addClass 'loading'
+      fbid = elem.data('fbid')
+      size = elem.data('size')
+      url  = "https://graph.facebook.com/#{fbid}/picture?width=#{size}&height=#{size}"
+      # console.log url
+      PreloadHelper.preloadAsset url, (result) ->
+        elem.removeClass('loading not-loaded')
+        elem.css {'background-image':"url(#{url})"} if result.loaded
+
   newPlayerHTML: (player, position) ->
-    # TODO : Move this loop out. Only do once.
-    alredySend = ''
-    for friend in (Parse.User.current().get("life_given") | [])
-      if friend is player.id
-        alredySend = 'asked'
+    gotlife = if player.got_life then 'asked' else ''
 
-    friend = if player.friend then "<div data-id='#{player.id}' class='ask-friend " + alredySend + "'></div>" else ''
+    photoClass = if player.fb_id then 'photo not-loaded' else 'photo'
 
-    # TODO : Use css : nth-child(1), 2 or 3
-    # medailles
-    positionDiv = '<span class="rank">' + player.position + '</span>'
-    if player.position is 1
-      positionDiv = '<div class="rank first icon"></div>'
-    else if player.position is 2
-      positionDiv = '<div class="rank second icon"></div>'
-    else if player.position is 3
-      positionDiv = '<div class="rank third icon"></div>'
-
-    pic = if player.profilepic then player.profilepic + '?width=40&height=40' else 'images/common/facebook-default.jpg'
-    '<div class="div-ranking">'+positionDiv+'<img class="profilepic" src="'+pic+'" width="'+@picSize+'" height="'+@picSize+'"/><span class="username resize">'+player.username+'</span><span class="money">'+player.jackpot+'</span>'+friend+'</div>'
+    '<div class="div-ranking">' +
+      (if player.position < 4 then '<div class="rank icon"></div>' else "<div class='rank'>#{player.position}</div>") +
+      "<span class='#{photoClass}' data-fbid='#{player.fb_id || ''}' data-size='81'></span>" +
+      "<span class='username resize'>#{player.username}</span>" +
+      "<span class='money'>#{player.jackpot}</span>" +
+      (if player.friend then "<div data-id='#{player.fb_id}' class='ask-friend #{gotlife}'></div>" else '') +
+    '</div>'
 
   addRangesSeparatorLogic: (player, lastPlayer, rank) ->
     unless lastPlayer
@@ -57,7 +59,7 @@ module.exports = class HallOfFameView extends View
 
   addRangeSeparator: (direction, rank)->
     msg = i18n.t("view.hall_of_fame.players_#{direction}_rank")
-    "<div class='rank_separator #{direction}'>#{msg} #{rank}</div>"
+    "<span class='rank_separator #{direction}'>#{msg} #{rank}</span>"
 
   addSplitRangeSeparator: (range) ->
     text = '... ' + range + ' personne'
@@ -78,7 +80,12 @@ module.exports = class HallOfFameView extends View
     return '' unless friends.length > 0
     moreFriends = "<div class='redSeparator'>"
     for friend in friends
-      moreFriends+="</div><div class='div-ranking moreFriends'><img class='profilepic' src='https://graph.facebook.com/#{friend.id}/picture?width=40&height=40'/><span class='username resize'>#{friend.name}</span><div data-id='#{friend.id}' class='invite-btn'></div></div>"
+      moreFriends += "</div>
+        <div class='div-ranking moreFriends'>
+          <span class='photo not-loaded' data-fbid='#{friend.fb_id}' data-size='81'></span>
+          <span class='username resize'>#{friend.name}</span>
+          <div data-id='#{friend.fb_id}' class='invite-btn'></div>
+      </div>"
     moreFriends
 
   takeOffFriend: (target) =>
@@ -99,6 +106,7 @@ module.exports = class HallOfFameView extends View
     el.append @suggestFriends(friendsToInvite) if friendsToInvite
     @scrollTo(options.playerPosition)
     @autoSizeText()
+    @preloadFacebookAvatars()
 
     $(".spinner").css('display','none')
 
@@ -142,7 +150,7 @@ module.exports = class HallOfFameView extends View
     $('#HoF-hours', @$el).text (if hours < 10 then '0' + hours else hours)
     $('#HoF-min', @$el).text (if minutes < 10 then '0' + minutes else minutes)
 
-  askFriend: (el) ->
+  lifeGiven: (el) ->
     $(el).addClass('asked')
 
   scrollTo: (i) ->
