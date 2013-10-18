@@ -115,8 +115,8 @@ module.exports = class HomeController extends Controller
 
 
   getFriendsScore: (friends, journalView, callback) ->
-    friendsId = _.pluck(friends, 'id')
-    Parse.Cloud.run 'getFriendsScore', { friendsId: friendsId, userId: Parse.User.current().id },
+    (friendsId = _.pluck(friends, 'id')).push Parse.User.current().get('fb_id')
+    Parse.Cloud.run 'getFriendsScore', {friendsId},
       success: (players) =>
         players = players.sort (f1, f2) ->
           f2.score - f1.score
@@ -151,9 +151,9 @@ module.exports = class HomeController extends Controller
     return new TwoFriendsJournalView options
 
   getTwoplusFriendsJournalView: (players) ->
-    userId = Parse.User.current().id
+    userId = Parse.User.current().get('fb_id')
     rank = _.find(players, (player) ->
-      player.object_id == userId
+      player.fb_id is userId
     ).position
 
     name = Parse.User.current().get('username')
