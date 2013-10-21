@@ -67,7 +67,7 @@ module.exports = class DupaView extends View
     , 0
 
   hideCountdownValue: ->
-    $('#countdown').hide()
+    $('#countdown', @$el.parent()).remove()
 
   clearTimer: ->
     $('.chrono-container #time', @$el).empty()
