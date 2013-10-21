@@ -125,3 +125,29 @@ body.box-align
   .fixedSize
     width: 1024px !important
     height: 682px !important
+
+@-webkit-keyframes button_bump {
+  0% { -webkit-transform: scale(1); }
+  50% { -webkit-transform: scale(1.2); }
+  100% { -webkit-transform: scale(1); }
+}
+
+.home-page .item,
+.home-page a,
+.home-btn,
+#close-btn,
+.btn-menu,
+.button,
+.shop-page .pack,
+.shop-page .life-pack,
+.shop-page .bonus-pack,
+.hall-of-fame-page .ask-friend,
+.profile-page .buttons a,
+#popup .btn,
+.dupa-stage .bonus,
+.game-over .replay-btn
+  &:active
+    -webkit-animation-name: 'button_bump'
+    -webkit-animation-duration: 200ms
+    -webkit-transform-origin: 50% 50%
+    -webkit-animation-timing-function: ease
