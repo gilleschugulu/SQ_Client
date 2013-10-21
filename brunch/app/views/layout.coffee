@@ -32,15 +32,10 @@ module.exports = class Layout extends Chaplin.Layout
   # ---------------------------------------
   realShowNewView: (context) =>
     SpinnerHelper.startPartial()
-    assetKey = context.controller.assetKey
     view = context.controller.view
     @newViewEl = view.$el if view
     @newViewEl.css('z-index', '0') if view
-    if assetKey
-      PreloadHelper.preloadAssets assetKey, =>
-        @dimLayout @realHideOldView
-    else
-      @dimLayout @realHideOldView
+    @dimLayout @realHideOldView
 
   # Okey the new view is loaded,
   # we remove the old view then we unDim the layout
