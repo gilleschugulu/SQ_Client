@@ -27,18 +27,18 @@
 
 <div class='bonus-container'>
   {{#each bonus}}
-    <div class='bonus' id='{{name}}' style="background-image: url('images/ingame/{{name}}.png')">
+    <div class='bonus' id='{{name}}'>
       <div class='quantity'>{{quantity}}</div>
     </div>
   {{/each}}
 </div>
 
 <div class='jackpot-container'>
+  <div id="total-jackpot">0</div>
   <div id='threshold-container'>
     {{#each thresholds}}
       <div class='threshold' data-value="{{this}}">{{this}}</div>
     {{/each}}
   </div>
-  <div id='jackpot-marker' class='hidden'></div>
-  <div id="total-jackpot">0</div>
+  <div id='jackpot-marker'></div>
 </div>

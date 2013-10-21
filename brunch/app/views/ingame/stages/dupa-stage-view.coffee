@@ -154,17 +154,16 @@ module.exports = class DupaView extends View
     currentThresholdIndex = @options.thresholds.indexOf(currentThresholdValue)
 
     $('#total-jackpot', el).text jackpot
-    $(".threshold .highlighted", el).addClass('animated fadeOut').one 'webkitAnimationEnd', ->
-      $(@).remove()
+
+    if options?.result
+      $('.threshold.highlighted', el).addClass 'done'
+    else
+      $('.threshold.done', el).removeClass 'done'
 
     if options?.oldJackpot
       $(".threshold[data-value='#{options.oldJackpot}']", el).removeClass('highlighted gold')
 
-    blockEl = $(".threshold[data-value='#{currentThresholdValue}']", el)
-
-    blockEl.addClass('highlighted')
-    blockEl.append("<div class='highlighted'></div>")
-    $('.highlighted', blockEl).addClass('animated fadeIn')
+    blockEl = $(".threshold[data-value='#{currentThresholdValue}']", el).addClass('highlighted')
 
     if (jackpotMarker = $('#jackpot-marker', el)).hasClass('hidden')
       jackpotMarker.removeClass('hidden').addClass('animated bounceIn').one 'webkitAnimationEnd', ->
@@ -177,10 +176,13 @@ module.exports = class DupaView extends View
     el = $('.jackpot-container', @$el)
 
     # Position go for 91 to 10. May need some... adaptation
-    height = (currentThresholdIndex + 1) * 9 + 1
+    # height = (currentThresholdIndex + 1) * 9 + 3
+    hel = $('.threshold.highlighted', el) || $('.threshold:last-child', el)
+    mel = $('#jackpot-marker', el)
+    height = hel.parent().position().top + hel.position().top + (hel.height() - mel.height()) / 2 + 2
 
     klass = if result then 'bounce' else 'inverseBounce'
-    $('#jackpot-marker', el).css('top', height + '%').one 'webkitTransitionEnd', ->
+    mel.css('top', height + 'px').one 'webkitTransitionEnd', ->
       $(@).addClass(klass + ' animated').one 'webkitAnimationEnd', ->
         $(@).removeClass(klass + ' animated')
 
@@ -212,9 +214,8 @@ module.exports = class DupaView extends View
   # Bonus double_score. Arrow and highlighted block now gold
   doubleScoreActivated: ->
     $('.highlighted').addClass('gold')
-    $('.highlighted').parent().addClass('gold')
-    $('#jackpot-marker').addClass('gold')
+    # $('#jackpot-marker').addClass('gold')
 
   # Bonus double_score. Arrow and highlighted block get back to normal color
   doubleScoreDeactivated: ->
-    $('#jackpot-marker').removeClass('gold')
+    # $('#jackpot-marker').removeClass('gold')

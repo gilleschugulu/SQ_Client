@@ -33,8 +33,7 @@
 
 #iphone5bg
   &.dupa-page-568h
-    background-image: url("../images/common/background.png")
-    background-size: 100% 100%
+    background-color: white
 
 #global-container
   &.iphone5
@@ -57,6 +56,7 @@
         width: 64%
       .question-propositions-container
         width: 66.5%
+        left: 1.5%
         .proposition-container
           width: 46%
           margin: 2%
@@ -66,7 +66,7 @@
           .proposition
             width: 94%
             .mid
-              width: 92%
+              width: 96%
 
 #countdown
   absolute: top 0% left 0%
@@ -100,8 +100,7 @@
   position: relative
   width: 100%
   height: 100%
-  background-image: url('../images/common/background.png')
-  background-size: 100% 100%
+  background-color: white
   color: white
   .btn-menu
     absolute: top 1% left 1%
@@ -117,9 +116,6 @@
     absolute: top 17% left 1.5%
     width: 6%
     height: 81%
-    background-image: url("../images/ingame/timer.png")
-    background-repeat: no-repeat
-    background-size: 100% 100%
     font-family: grilled
     .chrono-chrono
       absolute: top -5.5% left 9%
@@ -144,18 +140,17 @@
       width: 75%
       text-align: center
     .chrono-filler-container
-      absolute: bottom 1.4% left 8%
-      width: 83%
+      absolute: bottom 1.4% left 11%
+      width: 77%
       height: 97.4%
       z-index: 2
       overflow: hidden
+      background-color: #bbb
       .chrono-filler
-        position: absolute
-        top: 0%
+        absolute: top 0
         width: 100%
         height: 100%
-        background-image: linear-gradient(red, orange, yellow, green)
-        background-size: contain
+        background-color: #d20b0b
         transition: top linear 1s
 
     @media screen and (min-width: 1024px)
@@ -174,7 +169,7 @@
       float: left
       background-repeat: no-repeat
       background-size: 100% 100%
-      border-radius: 0.5em
+      box-shadow: 0 0 0.5em #777
       transition: all 0.1s linear
       &.hidden-photo
         opacity: 0
@@ -280,34 +275,44 @@
             background-repeat: no-repeat
             height: 100%
             &.left
-              width: 0.45em
+              width: 0.3em
               background-image: url("../images/ingame/propositions/grey_left.png")
             &.right
-              width: 0.7em
+              width: 0.3em
               background-image: url("../images/ingame/propositions/grey_right.png")
             &.mid
               text-align: center
               font-family: ramblabold
-              width: 86%
+              width: 91%
               background-image: url("../images/ingame/propositions/grey_center.png")
 
 
   .bonus-container
     absolute: top 83% left 13%
-    width: 75%
+    width: 71%
     height: 17%
-    background-image: url("../images/ingame/box_bonus.png")
-    background-repeat: no-repeat
-    background-size: contain
+    background-color: white
+    border-radius: 0.5em 0.5em 0 0
+    box-shadow: 0 0 0.5em #bbb
     .bonus
-      relative: top 17% left 6%
+      relative: top 17% left 1%
       float: left
       height: 61%
       width: 13.6%
-      margin: 1% 2%
+      margin: 1% 3%
       cursor: pointer
       background-repeat: no-repeat
       background-size: contain
+      &#mass
+        background-image: url("../images/ingame/bonus/stats.png")
+      &#add_time
+        background-image: url("../images/ingame/bonus/+10s.png")
+      &#double
+        background-image: url("../images/ingame/bonus/x2.png")
+      &#skip
+        background-image: url("../images/ingame/bonus/skip.png")
+      &#fifty_fifty
+        background-image: url("../images/ingame/bonus/5050.png")
       .quantity
         relative: top -10% left 76%
         width: 35%
@@ -324,9 +329,8 @@
     height: 96%
     font-family: grilled
     #total-jackpot
-      background-image: url("../images/ingame/box_score.png")
-      background-repeat: no-repeat
-      background-size: contain
+      background-color: #d20b0b
+      border-radius: 0.2em
       z-index: 50
       margin: 0 auto
       font-size: 1.4em
@@ -334,45 +338,35 @@
       height: 8.5%
       text-align: center
       padding-top: 7%
-      absolute: top 2% left 3%
+      // absolute: top 2% left 3%
 
     // Default
     #threshold-container
       z-index: 1
       width: 56%
       height: 93%
-      absolute: top 10% left 21%
+      absolute: top 8.5% left 21%
       .threshold
         width: 100%
         height: 9.5%
         padding-top: 18%
         z-index: 1
-        color: #75634e
-        border-right: 0.2em solid #b3b3b3
-        border-left: 0.2em solid #b3b3b3
-        border-bottom: 0.1em solid #5f5f5f
-        background-repeat: no-repeat
-        background-size: 100% 100%
-        background-image: url("../images/ingame/threshold_box.png")
+        color: #aaa
+        background-color: #ddd
+        margin-top: 3%
         text-align: center
-        &:nth-child(0)
-          border-top: 0.2em solid #b3b3b3
-        &:nth-last-child(1)
-          border-bottom: 0.2em solid #b3b3b3
         &.highlighted
           z-index: 5
-          color: #f9e4f3
-          background-image: none
-          background-color: red
-          box-shadow: 0 0 0.8em 0.1em #000 inset
+          color: white
+          background-color: #d20b0b
+        &.done
+          color: black
         &.gold
-          box-shadow: 0 0 0.8em 0.1em #000 inset
-          background-image: none
           background-color: rgb(255, 214, 0)
-          color: #744141
+          color: white
 
     #jackpot-marker
-      absolute: top 91% left 56%
+      absolute: top 150% left 56%
       width: 45%
       height: 7%
       z-index: 50
