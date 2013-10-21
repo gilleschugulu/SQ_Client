@@ -14,6 +14,8 @@ module.exports = class HallOfFameController extends Controller
   collection: null
   request : null
   nextRoute: null
+  friendsPlayers : null
+  globalPlayers : null
 
   displayPlayers: (withFriends) =>
     ranking = if withFriends then @friendsPlayers else @globalPlayers
@@ -62,16 +64,13 @@ module.exports = class HallOfFameController extends Controller
   index: (params) ->
     @nextRoute = params.nextRoute
     @user = Parse.User.current()
-    @friendsPlayers = null
-    @globalPlayers = null
     @fetchGlobalPlayers()
     @fetchFriends()
 
-    @targetDate = @getDate()
     @loadView null
     , =>
       params =
-        targetDate : @targetDate
+        targetDate : @getDate()
         rank   : mediator.user.get('rank')
         credits: mediator.user.get('credits')
         health : mediator.user.get('health')
@@ -133,9 +132,9 @@ module.exports = class HallOfFameController extends Controller
   addFriends: =>
     FacebookHelper.friendRequest i18n.t('controller.home.facebook_invite_message')
 
-    #TODO : Think to add callbacks
   connectFacebook: =>
-    FacebookHelper.linkPlayer() unless FacebookHelper.isLinked()
+    unless FacebookHelper.isLinked()
+      FacebookHelper.linkPlayer @fetchFriends
 
   friendsToInvite:(friends) =>
     friends2 = _.pluck(friends, 'id')

@@ -13,13 +13,15 @@ module.exports = class HallOfFameView extends View
   picSize: 40
 
   getTemplateData: ->
-    super
+    @options
+
+  initialize: ->
+    s = super
     @interval = setInterval =>
       cd = @calculateDateCount()
       @setCountDown cd.days, cd.hours, cd.minutes
     , 1000
-    @options
-
+    s
 
   preloadFacebookAvatars: =>
     $('.photo.not-loaded', @$el).each (index, elem) ->
