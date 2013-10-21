@@ -7,14 +7,20 @@
   <div class='picture-container'>
       <div class='picture'
       {{#if is_linked }}
-        style='background-image: url(https://graph.facebook.com/{{fb_id}}/picture?width=159&height=150)'
+        style='background-image: url(https://graph.facebook.com/{{fb_id}}/picture?width=151&height=151)'
       {{/if}}
       ></div>
     <div class='name resize'>{{user.username}}</div>
   </div>
   <div class='personal-info'>
-    <div class='level'>{{user.rank}}</div>
-    <div class='score'>{{niceNumber stats.game_week_score}}</div>
+    <div id='level'>
+      <div class='title'>Niveau</div>
+      <div class='value'>{{user.rank}}</div>
+    </div>
+    <div id='score'>
+      <div class='title'>Score</div>
+      <div class='value'>{{niceNumber stats.game_week_score}}</div>
+    </div>
   </div>
   <div class='buttons'>
     <a href="#hall-of-fame/profile" class='hall-of-fame'></a>
@@ -26,10 +32,14 @@
     <div class='stat1'>
       <table>
         <tbody>
+            <tr>
+              <th>El&eacute;ment</th>
+              <th>Valeur</th>
+            </tr>
           {{#each stats}}
             <tr>
               <td class='left'>{{text}}</td>
-              <td>{{number}}</td>
+              <td class='value'>{{number}}</td>
             </tr>
           {{/each}}
         </tbody>
@@ -38,18 +48,20 @@
     <div class='stat2'>
       <table>
         <tbody>
-
+            <tr>
+              <th>Sport</th>
+              <th>Bonne r&eacute;ponse</th>
+            </tr>
           {{#each sports}}
             <tr>
               <td class='left'>{{text}}</td>
               {{#if number}}
-                <td>{{number}}%</td>
+                <td class='value'>{{number}}%</td>
               {{else}}
-                <td>Joue plus !</td>
+                <td class='value'>Joue plus !</td>
               {{/if}}
             </tr>
           {{/each}}
-
         </tbody>
       </table>
     </div>

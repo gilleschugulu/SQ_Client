@@ -15,7 +15,7 @@ module.exports = class ProfileView extends View
 
   displayFbAvatar: (fbid) ->
     elem = $('.picture', @$el)
-    url  = "https://graph.facebook.com/#{fbid}/picture?width=159&height=150"
+    url  = "https://graph.facebook.com/#{fbid}/picture?width=151&height=151"
     defaultImage = 'images/common/facebook-default.jpg'
     PreloadHelper.preloadAsset url, (result) ->
       elem.removeClass('loading')
