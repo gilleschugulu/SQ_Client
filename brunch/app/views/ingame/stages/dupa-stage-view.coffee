@@ -99,8 +99,11 @@ module.exports = class DupaView extends View
       photoEl = $('.question-photo', @$el)
       if photoEl.data('sport') isnt question.get('sportCode')
         photoEl.data 'sport', question.get('sportCode')
-        photoEl.addClass('hidden-photo').one 'webkitTransitionEnd', ->
-          photoEl.css({'background-image' : "url('images/ingame/sports/#{question.get('sportCode')}.jpg')"}).removeClass('hidden-photo')
+        cb = -> photoEl.css({'background-image' : "url('images/ingame/sports/#{question.get('sportCode')}.jpg')"}).removeClass('hidden-photo')
+        if photoEl.hasClass 'hidden-photo'
+          cb()
+        else
+          photoEl.addClass('hidden-photo').one 'webkitTransitionEnd', cb
 
       $('.question-content', @$el).text question.get('text')
 
