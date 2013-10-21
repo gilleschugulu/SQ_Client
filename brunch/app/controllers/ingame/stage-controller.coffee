@@ -37,19 +37,18 @@ module.exports = class StageController extends Controller
     return if @paused
     AnalyticsHelper.trackEvent 'Jeu', 'Click', 'Pause'
     @paused = yes
-    console.log "paused"
     @subscribeEvent 'popup:pause:ok', @resume
     templateData =
       key: 'pause'
       template: 'pause'
       sound: if SoundHelper.soundMuted then 'off' else '' # sounds helper : music on/off
+      ok : @resume
     PopUpHelper.initialize templateData
 
   resume: =>
     return unless @paused
     AnalyticsHelper.trackEvent 'Jeu', 'Click', 'Reprendre'
     @paused = no
-    console.log "resumed"
     @onResume?()
     @onResume = null
 
