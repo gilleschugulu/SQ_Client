@@ -7,7 +7,10 @@ _ = require('underscore')
 
 exports.task = (request, response) ->
   d = (new Date()).getUTCDay()
-  if d isnt 1 # run only on modays after midnight
+  # run only on modays after midnight..
+  # ATTNETION !  0 = SUNDAY, parse server time is UTC => french time = UTC+2H
+  # so the job is scheduled to run on SUNDAYS @22h01 UTC which is MONDAY 00h01 french time !
+  if d isnt 0
     return response.error('not a moday yet :(')
 
   query = new Parse.Query('User')
