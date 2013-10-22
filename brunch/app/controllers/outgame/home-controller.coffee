@@ -99,10 +99,10 @@ module.exports = class HomeController extends Controller
 
   getNoFriendsJournalView: (people) ->
     targetDate = new Date()
-    targetDate.setHours(0)
-    targetDate.setMinutes(0)
-    targetDate.setSeconds(0)
-    targetDate.setDate(targetDate.getDate() - targetDate.getDay() + 7)
+    targetDate.setUTCHours(22)
+    targetDate.setUTCMinutes(0)
+    targetDate.setUTCSeconds(0)
+    targetDate.setUTCDate(targetDate.getUTCDate() - targetDate.getUTCDay() + 7)
 
     pip.fb_id = Math.round(Math.random()*1000000) for pip in people when not pip.fb_id
 

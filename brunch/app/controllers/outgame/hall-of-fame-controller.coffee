@@ -101,10 +101,10 @@ module.exports = class HallOfFameController extends Controller
 
   getDate: =>
     targetDate = new Date()
-    targetDate.setHours(0)
-    targetDate.setMinutes(0)
-    targetDate.setSeconds(0)
-    targetDate.setDate(targetDate.getDate() - targetDate.getDay() + 7)
+    targetDate.setUTCHours(22)
+    targetDate.setUTCMinutes(0)
+    targetDate.setUTCSeconds(0)
+    targetDate.setUTCDate(targetDate.getUTCDate() - targetDate.getUTCDay() + 7)
     return targetDate
 
   giveLifeToFriend: (e) =>
