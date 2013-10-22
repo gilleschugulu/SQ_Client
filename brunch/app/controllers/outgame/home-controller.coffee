@@ -99,7 +99,7 @@ module.exports = class HomeController extends Controller
 
   getNoFriendsJournalView: (people) ->
     targetDate = new Date()
-    targetDate.setUTCHours(22)
+    targetDate.setUTCHours(23)
     targetDate.setUTCMinutes(0)
     targetDate.setUTCSeconds(0)
     targetDate.setUTCDate(targetDate.getUTCDate() - targetDate.getUTCDay() + 7)
