@@ -47,6 +47,7 @@ module.exports = class GameController extends Controller
 
 
   payGame: (callback) ->
+    user = Parse.User.current()
     if config.pay_game and user.get('health') <= 0
       AnalyticsHelper.trackEvent @title, 'Erreur', 'Pas assez de vies'
       PopUpHelper.initialize
@@ -54,9 +55,9 @@ module.exports = class GameController extends Controller
         message: i18n.t 'controller.game.not_enough_health.message'
         key    : 'game-ko'
         ok     : => @redirectTo 'shop'
-    else
+    else if config.pay_game
       # This will save the new health locally and at distance
-      Parse.User.current().increment('health', -1).save null,
+      user.increment('health', -1).save null,
         success: (user) -> callback?()
         error: (user, error) ->
           PopUpHelper.initialize
@@ -64,6 +65,7 @@ module.exports = class GameController extends Controller
             message: i18n.t 'controller.game.could_not_pay.message'
             key    : 'game-ko'
             ok     : => @redirectTo 'home'
+    else callback?()
 
   loadGame: (callback) =>
     GameStatHelper.reset()
