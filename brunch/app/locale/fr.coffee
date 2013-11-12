@@ -120,7 +120,7 @@ module.exports =
             reward : "Youpi ! tu as des credits en plus...ou pas"
         pack_bought:
           title: 'Achat confirmé'
-          message: "Tout c'est bien passé, bon jeu !"
+          message: "Tout s'est bien passé, bon jeu !"
         unknown_error:
           title: 'Erreur'
           message: 'Une erreur est survenue, veuillez réessayer plus tard.'
@@ -130,7 +130,7 @@ module.exports =
       hall_of_fame:
         players_up_rank: 'Ils vont monter au niveau'
         players_stay_rank: 'Ils vont rester au niveau'
-        players_down_rank: 'Ils vont descendre au niveau' 
+        players_down_rank: 'Ils vont descendre au niveau'
       game:
         dupa:
           welcome: "Bienvenue aux 4 candidats qui vont jouer aujourd'hui à {0}. Tout de suite première question"
