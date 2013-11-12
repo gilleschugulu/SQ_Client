@@ -8,6 +8,9 @@
 
 #import "AppStoreRatingPlugin.h"
 
+NSString* const defaultLink = @"itms-apps://itunes.apple.com/app/id%@";
+static BOOL shouldUseOldLink = NO;
+
 NSString* const kCounterKey     = @"AppStoreRatingPluginCount";
 NSString* const kDidRateKey     = @"AppStoreRatingPluginDidRate";
 NSString* const kNeverAskKey    = @"AppStoreRatingPluginNeverAsk";
@@ -26,9 +29,15 @@ NSString* const kNeverAskKey    = @"AppStoreRatingPluginNeverAsk";
 
 @synthesize showCallbackID;
 
++ (void) initialize {
+    shouldUseOldLink = [[UIDevice currentDevice].systemVersion floatValue] < 7.0f;
+}
 
 + (NSURL*) viewContentsUserReviews:(NSString*)appId {
-    return [NSURL URLWithString:[NSString stringWithFormat:@"itms-apps://ax.itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple+Software&id=%@", appId]];
+    NSString* urlString = defaultLink;
+    if (shouldUseOldLink)
+        urlString = @"itms-apps://ax.itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple+Software&id=%@";
+    return [NSURL URLWithString:[NSString stringWithFormat:urlString, appId]];
 }
 
 - (BOOL) openAppStoreRatingPage {
