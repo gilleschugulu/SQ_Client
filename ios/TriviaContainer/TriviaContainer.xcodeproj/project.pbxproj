@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		230CE42D158736CB00A6CDFD /* MessagePlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 230CE42C158736CB00A6CDFD /* MessagePlugin.m */; };
 		230CE430158736E500A6CDFD /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 230CE42F158736E500A6CDFD /* MessageUI.framework */; };
+		230EF0781822687100D77030 /* sportquiz_splashscreen-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 230EF0771822687100D77030 /* sportquiz_splashscreen-568h@2x.png */; };
 		2319355615F7ABEE00A9F0B9 /* TapjoyConnectPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 2319355515F7ABEE00A9F0B9 /* TapjoyConnectPlugin.m */; };
 		2319355C15F7B0A900A9F0B9 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2319355B15F7B0A900A9F0B9 /* CoreTelephony.framework */; };
 		2319422B180457FA00AB6DE0 /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 23194227180457FA00AB6DE0 /* libTestFlight.a */; };
@@ -97,6 +98,7 @@
 		230CE42B158736CB00A6CDFD /* MessagePlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MessagePlugin.h; path = Plugins/MessagePlugin.h; sourceTree = "<group>"; };
 		230CE42C158736CB00A6CDFD /* MessagePlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MessagePlugin.m; path = Plugins/MessagePlugin.m; sourceTree = "<group>"; };
 		230CE42F158736E500A6CDFD /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+		230EF0771822687100D77030 /* sportquiz_splashscreen-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "sportquiz_splashscreen-568h@2x.png"; path = "Resources/sportquiz_splashscreen-568h@2x.png"; sourceTree = "<group>"; };
 		2319355415F7ABEE00A9F0B9 /* TapjoyConnectPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TapjoyConnectPlugin.h; path = Plugins/TapjoyConnectPlugin.h; sourceTree = "<group>"; };
 		2319355515F7ABEE00A9F0B9 /* TapjoyConnectPlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TapjoyConnectPlugin.m; path = Plugins/TapjoyConnectPlugin.m; sourceTree = "<group>"; };
 		2319355B15F7B0A900A9F0B9 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
@@ -263,6 +265,8 @@
 		23A9F950161337CE0018E46F /* FBUserSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBUserSettingsViewController.h; sourceTree = "<group>"; };
 		23A9F951161337CE0018E46F /* FBViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBViewController.h; sourceTree = "<group>"; };
 		23A9F952161338310018E46F /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
+		23C1FFA918168DC700B98957 /* TestFlight+AsyncLogging.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TestFlight+AsyncLogging.h"; sourceTree = "<group>"; };
+		23C1FFAA18168DC700B98957 /* TestFlight+ManualSessions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TestFlight+ManualSessions.h"; sourceTree = "<group>"; };
 		23C6DDAA16A4523C00D7238A /* EventKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKit.framework; path = System/Library/Frameworks/EventKit.framework; sourceTree = SDKROOT; };
 		23C857DC159C48E100A83247 /* AppStoreRatingPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppStoreRatingPlugin.h; path = Plugins/AppStoreRatingPlugin.h; sourceTree = "<group>"; };
 		23C857DD159C48E100A83247 /* AppStoreRatingPlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppStoreRatingPlugin.m; path = Plugins/AppStoreRatingPlugin.m; sourceTree = "<group>"; };
@@ -397,6 +401,8 @@
 		23194226180457FA00AB6DE0 /* TestFlight */ = {
 			isa = PBXGroup;
 			children = (
+				23C1FFA918168DC700B98957 /* TestFlight+AsyncLogging.h */,
+				23C1FFAA18168DC700B98957 /* TestFlight+ManualSessions.h */,
 				23194227180457FA00AB6DE0 /* libTestFlight.a */,
 				2319422A180457FA00AB6DE0 /* TestFlight.h */,
 			);
@@ -598,6 +604,7 @@
 		23545205156174B700A821D6 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				230EF0771822687100D77030 /* sportquiz_splashscreen-568h@2x.png */,
 				235A3D741807023500608D43 /* Images.xcassets */,
 				23E7705F15B5776D00CEEF2F /* fr.lproj */,
 				23C1B85D15935BDB000E94DA /* icons */,
@@ -957,6 +964,7 @@
 				235A3D6A1806FCFC00608D43 /* iTunesArtwork.png in Resources */,
 				23F98262180EBBEE0063D50F /* FBUserSettingsViewResources.bundle in Resources */,
 				23545211156174B700A821D6 /* Localizable.strings in Resources */,
+				230EF0781822687100D77030 /* sportquiz_splashscreen-568h@2x.png in Resources */,
 				235A3D751807023500608D43 /* Images.xcassets in Resources */,
 				23545215156174B800A821D6 /* Localizable.strings in Resources */,
 				231942391804584700AB6DE0 /* TapjoyResources.bundle in Resources */,
@@ -1152,7 +1160,6 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Pierre LEGRAS (934GZSZF7E)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Pierre LEGRAS (934GZSZF7E)";
@@ -1213,7 +1220,6 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
@@ -1300,10 +1306,9 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: L'Equipe 24/24";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: L'Equipe 24/24";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Stardust (4Y5KACV6RL)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Stardust (4Y5KACV6RL)";
 				COMPRESS_PNG_FILES = NO;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
@@ -1349,8 +1354,8 @@
 					"-ObjC",
 				);
 				PRODUCT_NAME = TriviaContainer;
-				PROVISIONING_PROFILE = "51FAFB98-7353-4F65-BD20-A1885F9E4046";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "51FAFB98-7353-4F65-BD20-A1885F9E4046";
+				PROVISIONING_PROFILE = "66D0B433-4448-46AC-AEAF-CFA83DA0F4E3";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "66D0B433-4448-46AC-AEAF-CFA83DA0F4E3";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 				WRAPPER_EXTENSION = app;
