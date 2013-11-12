@@ -19,8 +19,7 @@ module.exports = class OptionsController extends Controller
     , =>
       # initialize buttons with the correct state
       templateData =
-        music        : if SoundHelper.musicMuted then 'off' else '' # sounds helper : music on/off
-        fx           : if SoundHelper.sfxMuted then 'off' else '' # sounds helper : fx on/off
+        sound        : if SoundHelper.areSoundsMuted() then 'off' else '' # sounds helper : fx on/off
         info_notif   : if @getLocalOption('option-info-notif', 'true') is 'false' then 'off' else ''
         facebook     : if FacebookHelper.isLinked() then 'off' else '' # facebook helper: connected to fb
 
