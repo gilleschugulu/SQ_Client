@@ -28,7 +28,7 @@
   perspective: 1000
   text-align: center
   background-repeat: no-repeat
-  background-image: url("../images/login/bg_login.png")
+  background-image: url("../images/common/background.jpg")
   background-size: 100% 100%
   #flipper
     width: 100%
@@ -41,12 +41,33 @@
     .btn-container, #equipe-forms, #temp-form
       backface-visibility: hidden
       absolute: top 0 left 0
+    #text-container
+      relative: top 3em
+      font-family: open_sansextrabold
+      text-align: center
+      #welcome
+        color: #c5020d
+        font-size: 4em
+      #life-credits
+        color: black
+        font-size: 1.5em
+        font-family: dax
+        #invite-bonus
+          color: #c5020d
+          font-size: 0.7em
     .btn-container
       z-index: 2
       width: 57.189%
       height: 40%
-      relative: top 52% left 0
+      relative: top 7em left 0
       margin: 0 auto
+      .or
+        relative: top 1.2em
+        width: 100%
+        height: 0.65em
+        background-repeat: no-repeat
+        background-size: contain
+        background-image: url(../images/login/or_h.png)
       .facebook-login, .equipe-login, .temp-login
         display: block
         height: 100%
@@ -88,7 +109,7 @@
         border-radius: 0.2em
       .or
         background-repeat: no-repeat
-        background-image: url("../images/login/or.png")
+        background-image: url("../images/login/or_v.png")
         background-size: 100% 100%
         width: 3%
         height: 93%
