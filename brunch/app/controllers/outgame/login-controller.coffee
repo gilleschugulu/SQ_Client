@@ -44,7 +44,7 @@ module.exports = class LoginController extends Controller
       # at this point user exists in SSO, so we can show "try again[ later]"
       console.log "PARSE ERROR"
       console.log error
-    Parse.User.logIn params.username, params.password, {
+    Parse.User.logIn (params.username || user.username), params.password, {
       success: =>
         @bindPlayer()
       error: (child, error, opts) =>
@@ -87,17 +87,22 @@ module.exports = class LoginController extends Controller
       return no
     AnalyticsHelper.trackEvent 'Login', 'Login with SSO', 'Submit'
     form = $('#sso-login-form', @view.$el).serializeArray()
+    method = 'username'
+    filter = 'email'
+    if (f.value for f in form when f.name is 'email')[0].length > 0
+      method = 'email'
+      filter = 'username'
+
     params = {}
-    params[f.name] = f.value for f in form
-    LequipeSSOHelper.login params, (user) =>
-      @loginToParse user, params
-    , (status, error) =>
+    params[f.name] = f.value for f in form when f.name isnt filter
+
+    loginError = (status, error) =>
       console.log "LOGIN ERROR", status, error
       AnalyticsHelper.trackEvent 'Login', 'Login with SSO', 'Error ' + status + ' ' + error.description
       msg = 'unknown'
       switch status
         when LequipeSSOHelper.error.login.INCORRECT_MAIL
-          $("#sso-login-form input[name=username]", @view.$el).addClass 'invalid'
+          $("#sso-login-form input[name=#{method}]", @view.$el).addClass 'invalid'
           msg = 'incorrect_mail'
         when LequipeSSOHelper.error.login.INCORRECT_PASSWORD
           $("#sso-login-form input[name=password]", @view.$el).addClass 'invalid'
@@ -108,6 +113,13 @@ module.exports = class LoginController extends Controller
         title  : i18n.t 'controller.login.sso_equipe.error_title'
         message: i18n.t "controller.login.sso_equipe.#{msg}"
         key    : 'sso_equipe_invalid'
+
+    loginSuccess = (user) => @loginToParse user, params
+
+    if method is 'username'
+      LequipeSSOHelper.loginUsername params, loginSuccess, loginError
+    else
+      LequipeSSOHelper.loginEmail params, loginSuccess, loginError
     no
 
   registerWithSSO: =>
@@ -167,11 +179,15 @@ module.exports = class LoginController extends Controller
     invalidFields = []
     for f in form
       if validationRules[f.name]?
-        if not validationRules[f.name].test f.value
+        fieldElem = $("#{formId} input[name=#{f.name}]", @view.$el)
+        if f.required and f.value.length < 1 # presence check
           invalidFields.push f.name
-          $("#{formId} input[name=#{f.name}]", @view.$el).addClass 'invalid'
+          fieldElem.addClass 'invalid'
+        else if f.value.length and not validationRules[f.name].test f.value # format check
+          invalidFields.push f.name
+          fieldElem.addClass 'invalid'
         else
-          $("#{formId} input[name=#{f.name}]", @view.$el).removeClass 'invalid'
+          fieldElem.removeClass 'invalid'
     console.log "INVALID", invalidFields
     if invalidFields.length > 0
       # console.error invalidFields.join(',') + ' pas bon'

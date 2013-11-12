@@ -1,11 +1,18 @@
 module.exports = class LequipeSSOHelper
   @error = {}
+
+  @loginUsername: (params, success, error) ->
+    @login 'username', 'plac_login', params, success, error
+
+  @loginEmail: (params, success, error) ->
+    @login 'email', 'plac_login_email', params, success, error
+
   # params : hash
-  #   username : string
-  #   password : string
+  #   username|email : string
+  #   password       : string
   # no checsum decode + params encode
-  @login: (params, success, error) ->
-    order = ['username', 'password']
+  @login: (login_field, plac_function, params, success, error) ->
+    order = [login_field, 'password']
     callback = (response) =>
       mapping =
         nom   : 'last_name'
@@ -14,7 +21,7 @@ module.exports = class LequipeSSOHelper
       user = $.parseJSON(response.description)
       user = @remap user, mapping
       success?(user)
-    @request 'plac_login', params, yes, order, callback, error
+    @request plac_function, params, yes, order, callback, error
   @error.login =
     INVALID_PARAMETERS: 400
     INCORRECT_PASSWORD: 403
