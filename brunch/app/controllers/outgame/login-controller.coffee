@@ -231,6 +231,17 @@ module.exports = class LoginController extends Controller
   bindPlayer: =>
     Parse.User.current().fetch
       success: (user) =>
+        # Identify the user and pass traits
+        # To enable, replace sample data with actual user traits and uncomment the line
+        UserVoice.push [
+                'identify'
+                {
+                  email: user.get 'email'
+                  name : user.get 'username'
+                  id   : user.id
+                  type : DeviceHelper.device()
+                }
+              ]
 
         mediator.setUser user
         # Save or update uuid in LocalStorage

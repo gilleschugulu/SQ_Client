@@ -55,15 +55,8 @@ module.exports = class OptionsController extends Controller
     uvData = Parse.User.current().id || "Joueur-non-connecté"
     uvData += ' / ' + DeviceHelper.device()
     uvData += ' / ' + BuildVersion.toString() if BuildVersion
-    uvData = "Votre message ici\n\n\ninformations pour les développeurs. Veuillez ne pas y toucher\n" + uvData
-    if Message?
-      mail =
-        to  : ["lequipe@chugulu.com"]
-        body: uvData
-        html: no
-      Message.composeMail mail
-    else
-      window.open("mailto:lequipe@chugulu.com?body=" + rawurlencode(uvData), 'width=700,height=500') if window
+    UserVoice.setCustomFields {UUID_Version : uvData}
+    UserVoice.showPopover()
 
 
   # link account
