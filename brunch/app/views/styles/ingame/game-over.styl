@@ -54,9 +54,9 @@
       width: 95%
       height: 20%
       text-align: center
-      padding: 0 0.8em 0
+      padding: 0 0.8em 0 0.2em
       margin: 0 auto
-      font: 1.4em dax
+      font: 1.5em dax
       color: black
       .jetons
         display: inline-block
@@ -133,13 +133,26 @@
               &.hide
                 opacity: 0
 
-    .replay-btn
-      width: 33.8%
+    #buttons
       height: 18.7%
-      background-image: url('../images/game-over/replay.png')
-      background-size: contain
-      background-repeat: no-repeat
-      display: block
-      margin: 6% auto 0 auto
-      &:active
-        background-image: url('../images/game-over/replay_a.png')
+      margin: 0 auto
+      relative: bottom -3em
+      text-align: center
+      .shop-btn
+        width: 33.8%
+        height: 100%
+        background-image: url('../images/home/common/shop.png')
+        background-size: contain
+        background-repeat: no-repeat
+        display: inline-block
+        &:active
+          background-image: url('../images/home/common/shop_a.png')
+      .replay-btn
+        width: 33.8%
+        height: 100%
+        background-image: url('../images/game-over/replay.png')
+        background-size: contain
+        background-repeat: no-repeat
+        display: inline-block
+        &:active
+          background-image: url('../images/game-over/replay_a.png')
