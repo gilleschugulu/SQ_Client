@@ -16,6 +16,7 @@ module.exports = class DupaView extends View
     @options
 
   welcome: (callback) ->
+    $('.question-container', @$el).css 'visibility', 'visible'
     @autoSizeText()
     callback?()
 
@@ -62,7 +63,7 @@ module.exports = class DupaView extends View
 
     countdown_container.removeClass('hidden')
     countdown.text(duration).removeClass('hidden big')
-    setTimeout -> 
+    setTimeout ->
       countdown.addClass('big')
     , 0
 
