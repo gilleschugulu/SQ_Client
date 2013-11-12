@@ -19,29 +19,23 @@
 
   <!-- CREDITS CONTENT BLOCK BEGIN -->
   <div class="content-container" id='credits'>
-    <div class="free-offers offers">
-      <div class='title'></div>
-      {{#each packs.free_packs}}
-        {{#unless disabled}}
-          <a class="free-pack pack" id="{{name}}">
-            <span class='value'>+{{value}}</span>
-          </a>
-        {{/unless}}
-      {{/each}}
-    </div>
-    <div class="clearfix"></div>
-    <div class="paid-offers offers">
-      <div class='title'></div>
-      {{#each packs.credit_packs}}
-        <a class="paid-pack first-offer {{../packs.type}} pack" data-id="{{product_id}}">
-          <span class='marker'>+</span>
-          <span class='value'>{{value}}</span>
+    {{#each packs.credit_packs}}
+      <a class="paid-pack first-offer {{../packs.type}} pack" data-id="{{product_id}}">
+        <span class='marker'>+</span>
+        <span class='value'>{{value}}</span>
+        <span class='credit-icon'></span>
+        <span class='price'>{{price}} €</span>
+      </a>
+    {{/each}}
+    {{#each packs.free_packs}}
+      {{#unless disabled}}
+        <a class="free-pack pack" id="{{name}}">
+          <span class='text'>{{text}}</span>
+          <span class='value'>+{{value}}</span>
           <span class='credit-icon'></span>
-          <span class='price'>{{price}} €</span>
         </a>
-      {{/each}}
-    </div>
-    <div class="clearfix"></div>
+      {{/unless}}
+    {{/each}}
   </div>
 
 
@@ -50,8 +44,10 @@
     <div class='life-container'>
       {{#each packs.life_packs}}
         <div class="life-pack" data-position='{{@index}}'>
-          <div class='value'>{{value}}</div>
-          <div class='price'>{{price}}</div>
+          <span class='value'>{{value}}</span>
+          <span class='heart-icon'></span>
+          <span class='price'>{{price}}</span>
+          <span class='credit-icon'></span>
         </div>
       {{/each}}
     </div>
@@ -60,6 +56,7 @@
         <div data-position='{{@index}}' class='bonus-pack'>
           <div class='value'>X {{value}}</div>
           <div class='price'>{{price}}</div>
+          <span class='credit-icon'></span>
         </div>
       {{/each}}
     </div>

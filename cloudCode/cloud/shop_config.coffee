@@ -51,13 +51,16 @@ config =
 
   free_packs:
     web: [
+      text: 'Aime-nous !'
       name: 'facebook_like'
       value: 150
     ]
     ios: [
+      text: 'Aime-nous !'
       name: 'facebook_like'
       value: 150
     ,
+      text: 'Note le jeu'
       name: 'app_store_rating'
       value: 150
     ]
