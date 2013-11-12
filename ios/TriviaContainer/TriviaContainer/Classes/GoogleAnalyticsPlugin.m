@@ -31,7 +31,7 @@
     [GAI sharedInstance].dispatchInterval = 20;
     // Optional: set debug to YES for extra debugging information.
 //    [[GAI sharedInstance].logger setLogLevel:kGAILogLevelVerbose];
-    [GAI sharedInstance].dryRun = YES;
+//    [GAI sharedInstance].dryRun = YES;
     // Create tracker instance.
     NSArray* accountIDs = [options objectForKey:@"accountIds"];
     if ([accountIDs count] < 1)
