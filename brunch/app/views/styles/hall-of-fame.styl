@@ -85,41 +85,45 @@
       text-align: right
     #btn_HoF
       absolute: top 20% left 3%
-      height: 24%
+      height: 50%
       width: 23%
       .category
+        padding-top: 39%
+        font: 2.2em ramblabold
+        text-align: center
         height: 50%
         width: 100%
-        background-size: contain
-        background-repeat: no-repeat
-        background-position: right
+        border-radius: 0.3em 0 0 0.3em
         cursor: pointer
         margin-top: -0.9%
+        background-color: #878787
+        background-position: center 23%
+        background-repeat: no-repeat
+        color: #c2c1c1
+        &.active
+          background-color: #d60000
+          color: white
       .friends
-        background-image: url('../images/hall-of-fame/amis_inactive.png')
-        &.active
-          background-image: url('../images/hall-of-fame/amis.png')
-          cursor: default
+        background-image: url('../images/hall-of-fame/icon_friends.png')
+        background-size: 1.4em
+        margin-bottom: 4%
       .global
-        background-image: url('../images/hall-of-fame/global_inactive.png')
-        &.active
-          background-image: url('../images/hall-of-fame/global.png')
-          cursor: default
+        background-image: url('../images/hall-of-fame/icon_global.png')
+        background-size: 0.8em
 
     .ranking-container-image
+      border: 0.3em solid #d60000
+      border-radius: 0.3em
       overflow-y: hidden
       width: 100%
-      height: 84%
-      absolute: left 25% bottom 0%
-      background-repeat: no-repeat
-      background-size: cover
-      background-image: url('../images/hall-of-fame/box_classements.png')
-      padding-top: 1%
+      height: 90%
+      absolute: left 25% bottom -6%
+      background-color: white
       .ranking-container
         overflow-y: scroll
         -webkit-overflow-scrolling: touch
         width: 100%
-        height: 98%
+        height: 100%
         div:nth-of-type(1)
           .rank.icon
             background-image: url('../images/hall-of-fame/rank_1.png')
@@ -145,18 +149,16 @@
           absolute: left 30% top 40%
         .rank_separator
           display: block
-          width: 98%
+          width: 100%
           height: 6%
-          margin-left: 0.7%
           padding-left: 3%
           background-size: 100%
           font-family: ramblabold
           background-color: #c80000
           color: white
         .range_separator
-          width: 98%
+          width: 100%
           height: 6%
-          margin-left: 0.7%
           background-size: 100%
           font-family: ramblabold
           text-align: center
@@ -166,7 +168,6 @@
         .separator
           width: 99%
           height: 2%
-          margin-left: 1%
           background-image: url('../images/hall-of-fame/line.png')
           background-size: 100%
         .redSeparator
@@ -175,8 +176,7 @@
           margin-left: 0%
           background-color: rgb(226, 23, 23)
         .div-ranking
-          margin-left: 0.7%
-          width: 98%
+          width: 100%
           height: 4em
           color: #4e4e4e
           font-family: ramblabold
