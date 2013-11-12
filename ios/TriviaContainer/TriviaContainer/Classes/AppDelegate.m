@@ -59,7 +59,7 @@ NSString * const NSURLIsExcludedFromBackupKey = @"NSURLIsExcludedFromBackupKey";
 - (id)init
 {
     NSError* err = nil;
-    [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategorySoloAmbient error:&err]; // stop iPod music at launch
+    [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryAmbient error:&err]; // don't stop iPod music at launch
     if (err == nil)
         [[AVAudioSession sharedInstance] setActive:YES error:NULL];
 
