@@ -55,8 +55,12 @@ module.exports = class ProfilesController extends Controller
       console.log error
       if error and error.code is Parse.Error.ACCOUNT_ALREADY_LINKED
         PopUpHelper.initialize {message: 'Ce compte Facebook est déjà lié à un autre compte du jeu', title: 'Erreur', key: 'api-error'}
+      else if error is "The app was removed. Please log in again."
+        @linkFacebook()
+      else if typeof error is "string"
+        PopUpHelper.initialize {message: response, title: "Erreur", key: 'api-error'}
       else
-        PopUpHelper.initialize {message: 'Erreur avec Facebook', title: 'Erreur', key: 'api-error'}
+        PopUpHelper.initialize {message: 'Erreur avec Facebook. Veuillez réessayer.', title: 'Erreur', key: 'api-error'}
 
   onClickGameCenter: =>
     # Track Event

@@ -78,7 +78,12 @@ module.exports = class LoginController extends Controller
     error = (user, response) =>
       console.log "facebook error resposnse"
       console.log response
-      PopUpHelper.initialize {message: response, title: "Erreur", key: 'api-error'}
+      if error is "The app was removed. Please log in again."
+        @loginWithFacebook()
+      else if typeof response is "string"
+        PopUpHelper.initialize {message: response, title: "Erreur", key: 'api-error'}
+      else
+        PopUpHelper.initialize {message: 'Erreur avec Facebook. Veuillez réessayer.', title: 'Erreur', key: 'api-error'}
 
     FacebookHelper.logIn success, error
 
