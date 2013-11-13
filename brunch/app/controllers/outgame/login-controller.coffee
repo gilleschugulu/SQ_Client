@@ -202,7 +202,7 @@ module.exports = class LoginController extends Controller
   # -------------------
   showLoginView: =>
     @loadView 'login', ->
-      new LoginView()
+      new LoginView {lifes: User::defaults.health, credits: User::defaults.credits}
     , (view) =>
       view.animateFacebook()
       navigator.splashscreen.hide() if navigator?.splashscreen?.hide?

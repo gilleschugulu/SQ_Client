@@ -9,6 +9,9 @@ module.exports = class LoginView extends View
   animInterval: {}
   animInterval2: {}
 
+  getTemplateData: ->
+    @options
+
   animateFacebook: ->
     @animInterval = setInterval =>
       $('.facebook-login').addClass('animated tada').one 'webkitAnimationEnd', ->
