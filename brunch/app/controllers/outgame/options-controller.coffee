@@ -48,15 +48,7 @@ module.exports = class OptionsController extends Controller
   onClickHelp: =>
     # Track Event
     AnalyticsHelper.trackEvent 'Options', 'Click', "Demander de l'aide"
-    rawurlencode: (str) ->
-      str = (str + '').toString();
-      encodeURIComponent(str).replace(/!/g, '%21').replace(/'/g, '%27').replace(/\(/g, '%28').replace(/\)/g, '%29').replace(/\*/g, '%2A')
-    uvData = Parse.User.current().id || "Joueur-non-connecté"
-    uvData += ' / ' + DeviceHelper.device()
-    uvData += ' / ' + BuildVersion.toString() if BuildVersion
-    UserVoice.setCustomFields {UUID_Version : uvData}
-    UserVoice.showPopover()
-
+    window.open 'http://sportquiz.uservoice.com/', '_blank'
 
   # link account
   onClickFacebookConnect: =>
