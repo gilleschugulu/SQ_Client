@@ -15,6 +15,7 @@ module.exports = class DupaStageController extends StageController
   row                 : 0
   startTime           : null
   gameDidEnd          : no
+  gameCanEnd          : no
 
   start: ->
     t = @model.getConfigValue('thresholds').slice(0).reverse()
@@ -41,6 +42,7 @@ module.exports = class DupaStageController extends StageController
     delete @countdownTimer
     @timer.schedule @model.getConfigValue('answerTime'), 0, =>
       @gameDidEnd = yes
+      @beforeFinishStage() if @gameCanEnd
     @view.updateJackpot(0, @model.getCurrentThreshold())
     @view.welcome @askNextQuestion
 
@@ -68,6 +70,7 @@ module.exports = class DupaStageController extends StageController
           @playerDidAnswer player, question, propositionId
 
   playerDidAnswer: (player, question, propositionId) =>
+    @gameCanEnd = no
     result = question.isCorrectAnswer propositionId
     correctAnswer = question.getCorrectAnswer()
 
@@ -89,6 +92,7 @@ module.exports = class DupaStageController extends StageController
     @view.playQuestionSound @model.currentThresholdIndex, result
     @view.updateAnswerButton propositionId, correctAnswer, result, =>
       @view.updateJackpot player.get('jackpot'), @model.getCurrentThreshold(), {result, oldJackpot}
+      @gameCanEnd = yes
       if @gameDidEnd
         @beforeFinishStage()
       else
