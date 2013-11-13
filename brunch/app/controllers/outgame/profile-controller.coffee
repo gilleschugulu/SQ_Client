@@ -63,7 +63,6 @@ module.exports = class ProfilesController extends Controller
     AnalyticsHelper.trackEvent 'Profil', 'Click', 'Affichage de Game Center'
 
     lb = ConfigHelper.config.gamecenter.leaderboard
-    console.log GameCenter?.showLeaderboard
     if lb
       GameCenter?.showLeaderboard lb
     else

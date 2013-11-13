@@ -54,6 +54,7 @@
 
 @protocol GameCenterManagerDelegate <NSObject>
 @optional
+- (void) processGameCenterAuth: (UIViewController*)controller error:(NSError*) error;
 - (void) processGameCenterAuth: (NSError*) error;
 - (void) scoreReported: (NSError*) error;
 - (void) reloadScoresComplete: (GKLeaderboard*) leaderBoard error: (NSError*) error;

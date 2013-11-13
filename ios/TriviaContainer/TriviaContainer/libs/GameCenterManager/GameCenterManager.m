@@ -95,10 +95,10 @@
 	{
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
-		if(arg != NULL)
+//		if(arg != NULL)
 			[delegate performSelector: selector withObject: arg withObject: err];
-		else
-			[delegate performSelector: selector withObject: err];
+//		else
+//			[delegate performSelector: selector withObject: err];
 #pragma clang diagnostic pop
 	}
 	else

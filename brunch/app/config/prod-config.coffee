@@ -37,6 +37,6 @@ class ProdConfig
       app_id: 297830
 
   @gamecenter:
-    leaderboard : 'total_jackpot'
+    leaderboard : '2'
 
 module.exports = ProdConfig

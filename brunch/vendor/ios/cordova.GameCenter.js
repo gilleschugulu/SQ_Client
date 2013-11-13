@@ -26,7 +26,8 @@ var GameCenter = {
     var self=this
     var setLocalUserAlias = function(alias) {
       self.localUserAlias = alias;
-      success(alias)
+      if (success)
+        success(alias);
     }
     Cordova.exec(setLocalUserAlias, fail, "GameCenter", "authenticateLocalUser", []);
   },
