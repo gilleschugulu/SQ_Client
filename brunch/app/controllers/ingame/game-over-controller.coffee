@@ -15,7 +15,7 @@ module.exports = class GameOverController extends Controller
       GameStatHelper.setBestScore(params.jackpot)
       GameStatHelper.incrementSumScore(params.jackpot)
       GameStatHelper.saveStats()
-      
+
       jackpot    = parseInt(params.jackpot)
       reward     = @getRewardAmount jackpot
       endMessage = I18n.t "controller.game_over.end_message.#{@getEndMessageKey(jackpot)}"
@@ -24,7 +24,6 @@ module.exports = class GameOverController extends Controller
       params.jackpot =
         value: jackpot
         best: user.get('score')
-        bonus: user.get('game_row')
         bestJackpot: @bestJackpot
 
       stats = GameStatHelper.getEndGameScoreStat()
@@ -42,7 +41,6 @@ module.exports = class GameOverController extends Controller
     , (view) =>
       view.delegate 'click', '#replay', => @redirectTo 'game'
       view.delegate 'click', 'a', @onClickALink
-      setTimeout view.bonusAppear, 200
     , {viewTransition: yes}
 
 

@@ -8,12 +8,13 @@ SoundHelper     = require 'helpers/sound-helper'
 mediator        = require 'mediator'
 
 module.exports = class DupaStageController extends StageController
-  timer: null
-  bonusFiftyFiftyUsed: false
-  bonusMassUsed: false
-  bonusDoubleUsed: false
-  row: 0
-  startTime: null
+  timer               : null
+  bonusFiftyFiftyUsed : false
+  bonusMassUsed       : false
+  bonusDoubleUsed     : false
+  row                 : 0
+  startTime           : null
+  gameDidEnd          : no
 
   start: ->
     t = @model.getConfigValue('thresholds').slice(0).reverse()
@@ -39,9 +40,7 @@ module.exports = class DupaStageController extends StageController
     @countdownTimer.stop()
     delete @countdownTimer
     @timer.schedule @model.getConfigValue('answerTime'), 0, =>
-      setTimeout =>
-        @beforeFinishStage()
-      , 200
+      @gameDidEnd = yes
     @view.updateJackpot(0, @model.getCurrentThreshold())
     @view.welcome @askNextQuestion
 
@@ -90,7 +89,10 @@ module.exports = class DupaStageController extends StageController
     @view.playQuestionSound @model.currentThresholdIndex, result
     @view.updateAnswerButton propositionId, correctAnswer, result, =>
       @view.updateJackpot player.get('jackpot'), @model.getCurrentThreshold(), {result, oldJackpot}
-      @askNextQuestion()
+      if @gameDidEnd
+        @beforeFinishStage()
+      else
+        @askNextQuestion()
 
   beforeFinishStage: (player) =>
     GameStatHelper.setBestRow(@row) if @row > 0

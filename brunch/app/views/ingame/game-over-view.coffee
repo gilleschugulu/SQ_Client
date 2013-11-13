@@ -11,13 +11,6 @@ module.exports = class GameOverView extends View
   getTemplateData: =>
     @options
 
-  bonusAppear: =>
-    bonusDiv = $('.best-jackpot .bonus', @$el)
-    @executeBonusAppear(bonusDiv)
-
-    bonusDiv = $('.jackpot .bonus', @$el)
-    @executeBonusAppear(bonusDiv)
-
   executeBonusAppear: (bonusDiv) ->
     bonusDiv.removeClass('hide').addClass('animated fadeInRight').one 'webkitAnimationEnd', ->
       bonusDiv.removeClass('animated fadeInRight').addClass('animated wiggle').one 'webkitAnimationEnd', ->
