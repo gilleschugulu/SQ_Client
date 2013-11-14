@@ -53,9 +53,9 @@ module.exports = class GameOverController extends Controller
   getRewardAmount: (score) ->
     return 0 if score <= 2000
     return 10 if score <= 5000
-    return 20 if score <= 10000
-    return 40 if score <= 25000
-    75
+    return 25 if score <= 10000
+    return 50 if score <= 25000
+    100
 
   getEndMessageKey: (score) ->
     return 'msg2k' if score <= 2000
