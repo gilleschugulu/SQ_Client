@@ -1284,7 +1284,7 @@
   // Shared empty constructor function to aid in prototype-chain creation.
   var EmptyConstructor = function() {};
 
-  
+
   // Helper function to correctly set up the prototype chain, for subclasses.
   // Similar to `goog.inherits`, but uses a hash of prototype properties and
   // class properties to be extended.
@@ -1484,7 +1484,7 @@
     return promise;
   };
 
-  
+
   Parse._ajax = function(method, url, data, success, error) {
     var options = {
       success: success,
@@ -1565,7 +1565,7 @@
       throw "You must specify a key using Parse.initialize.";
     }
 
-    
+
     if (route !== "batch" &&
         route !== "classes" &&
         route !== "events" &&
@@ -1945,7 +1945,7 @@
 
     /**
      * Error code indicating that something has gone wrong with the server.
-     * If you get this error code, it is Parse's fault. Contact us at 
+     * If you get this error code, it is Parse's fault. Contact us at
      * https://parse.com/help
      * @constant
      */
@@ -2407,7 +2407,7 @@
 
       return this;
     }
-  };  
+  };
 
   /**
    * @function
@@ -2775,12 +2775,12 @@
   Parse.ACL.prototype.getPublicWriteAccess = function() {
     return this.getWriteAccess(PUBLIC_KEY);
   };
-  
+
   /**
    * Get whether users belonging to the given role are allowed
    * to read this object. Even if this returns false, the role may
    * still be able to write it if a parent role has read access.
-   * 
+   *
    * @param role The name of the role, or a Parse.Role object.
    * @return {Boolean} true if the role has read access. false otherwise.
    * @throws {String} If role is neither a Parse.Role nor a String.
@@ -2795,12 +2795,12 @@
     }
     throw "role must be a Parse.Role or a String";
   };
-  
+
   /**
    * Get whether users belonging to the given role are allowed
    * to write this object. Even if this returns false, the role may
    * still be able to write it if a parent role has write access.
-   * 
+   *
    * @param role The name of the role, or a Parse.Role object.
    * @return {Boolean} true if the role has write access. false otherwise.
    * @throws {String} If role is neither a Parse.Role nor a String.
@@ -2815,11 +2815,11 @@
     }
     throw "role must be a Parse.Role or a String";
   };
-  
+
   /**
    * Set whether users belonging to the given role are allowed
    * to read this object.
-   * 
+   *
    * @param role The name of the role, or a Parse.Role object.
    * @param {Boolean} allowed Whether the given role can read this object.
    * @throws {String} If role is neither a Parse.Role nor a String.
@@ -2835,11 +2835,11 @@
     }
     throw "role must be a Parse.Role or a String";
   };
-  
+
   /**
    * Set whether users belonging to the given role are allowed
    * to write this object.
-   * 
+   *
    * @param role The name of the role, or a Parse.Role object.
    * @param {Boolean} allowed Whether the given role can write this object.
    * @throws {String} If role is neither a Parse.Role nor a String.
@@ -3853,7 +3853,7 @@
     return chunks.join("");
   };
 
-  
+
   // A list of file extensions to mime types as found here:
   // http://stackoverflow.com/questions/58510/using-net-how-can-you-find-the-
   //     mime-type-of-a-file-based-on-the-file-signature
@@ -3961,7 +3961,7 @@
     pgn: "application/x-chess-pgn",
     pic: "image/pict",
     pict: "image/pict",
-    png: "image/png", 
+    png: "image/png",
     pnm: "image/x-portable-anymap",
     pnt: "image/x-macpaint",
     pntg: "image/x-macpaint",
@@ -4328,13 +4328,13 @@
    *       array of other Parse.Error objects. Each error object in this array
    *       has an "object" property that references the object that could not be
    *       deleted (for instance, because that object could not be found).</li>
-   *   <li>A non-aggregate Parse.Error. This indicates a serious error that 
-   *       caused the delete operation to be aborted partway through (for 
+   *   <li>A non-aggregate Parse.Error. This indicates a serious error that
+   *       caused the delete operation to be aborted partway through (for
    *       instance, a connection failure in the middle of the delete).</li>
    * </ul>
    *
    * <p>There are two ways you can call this function.
-   * 
+   *
    * The Backbone way:<pre>
    *   Parse.Object.destroyAll([object1, object2, ...], {
    *     success: function() {
@@ -4347,7 +4347,7 @@
    *       // object was not deleted.
    *       if (error.code == Parse.Error.AGGREGATE_ERROR) {
    *         for (var i = 0; i < error.errors.length; i++) {
-   *           console.log("Couldn't delete " + error.errors[i].object.id + 
+   *           console.log("Couldn't delete " + error.errors[i].object.id +
    *             "due to " + error.errors[i].message);
    *         }
    *       } else {
@@ -4367,7 +4367,7 @@
    *       // object was not deleted.
    *       if (error.code == Parse.Error.AGGREGATE_ERROR) {
    *         for (var i = 0; i < error.errors.length; i++) {
-   *           console.log("Couldn't delete " + error.errors[i].object.id + 
+   *           console.log("Couldn't delete " + error.errors[i].object.id +
    *             "due to " + error.errors[i].message);
    *         }
    *       } else {
@@ -4862,7 +4862,7 @@
      *   });
      *
      *   game.set("finished", true);</pre></p>
-     * 
+     *
      * @param {String} key The key to set.
      * @param {} value The value to give it.
      * @param {Object} options A set of Backbone-like options for the set.
@@ -4956,6 +4956,8 @@
           }
         }
 
+        if (self._opSetQueue.length < 1)
+          self._opSetQueue.push({});
         var currentChanges = _.last(self._opSetQueue);
         currentChanges[attr] = val._mergeWithPrevious(currentChanges[attr]);
         self._rebuildEstimatedDataForKey(attr);
@@ -5142,7 +5144,7 @@
      *   }, function(error) {
      *     // The save failed.  Error is an instance of Parse.Error.
      *   });</pre>
-     * 
+     *
      * @param {Object} options A Backbone-style callback object.
      * Valid options are:<ul>
      *   <li>wait: Set to true to wait for the server to confirm a successful
@@ -5211,7 +5213,7 @@
       // If there is any unsaved child, save it first.
       model._refreshCache();
 
-      
+
 
       var unsavedChildren = [];
       var unsavedFiles = [];
@@ -5485,7 +5487,7 @@
      * You should not call this function directly unless you subclass
      * <code>Parse.Object</code>, in which case you can override this method
      * to provide additional validation on <code>set</code> and
-     * <code>save</code>.  Your implementation should return 
+     * <code>save</code>.  Your implementation should return
      *
      * @param {Object} attrs The current data to validate.
      * @param {Object} options A Backbone-like options object.
@@ -5664,7 +5666,7 @@
   };
 
   Parse.Object._canBeSerializedAsValue = function(object) {
-    
+
     if (object instanceof Parse.Object) {
       return !!object.id;
     }
@@ -5759,15 +5761,15 @@
               requests: _.map(batch, function(object) {
                 var json = object._getSaveJSON();
                 var method = "POST";
-  
+
                 var path = "/1/classes/" + object.className;
                 if (object.id) {
                   path = path + "/" + object.id;
                   method = "PUT";
                 }
-  
+
                 object._startSave();
-  
+
                 return {
                   method: method,
                   path: path,
@@ -5827,10 +5829,10 @@
    */
   Parse.Role = Parse.Object.extend("_Role", /** @lends Parse.Role.prototype */ {
     // Instance Methods
-    
+
     /**
      * Constructs a new ParseRole with the given name and ACL.
-     * 
+     *
      * @param {String} name The name of the Role to create.
      * @param {Parse.ACL} acl The ACL for this role. Roles must have an ACL.
      */
@@ -5843,28 +5845,28 @@
         Parse.Object.prototype.constructor.call(this, name, acl);
       }
     },
-    
+
     /**
      * Gets the name of the role.  You can alternatively call role.get("name")
-     * 
+     *
      * @return {String} the name of the role.
      */
     getName: function() {
       return this.get("name");
     },
-    
+
     /**
      * Sets the name for a role. This value must be set before the role has
      * been saved to the server, and cannot be set once the role has been
      * saved.
-     * 
+     *
      * <p>
      *   A role's name can only contain alphanumeric characters, _, -, and
      *   spaces.
      * </p>
      *
      * <p>This is equivalent to calling role.set("name", name)</p>
-     * 
+     *
      * @param {String} name The name of the role.
      * @param {Object} options Standard options object with success and error
      *     callbacks.
@@ -5872,37 +5874,37 @@
     setName: function(name, options) {
       return this.set("name", name, options);
     },
-    
+
     /**
      * Gets the Parse.Relation for the Parse.Users that are direct
      * children of this role. These users are granted any privileges that this
      * role has been granted (e.g. read or write access through ACLs). You can
      * add or remove users from the role through this relation.
-     * 
+     *
      * <p>This is equivalent to calling role.relation("users")</p>
-     * 
+     *
      * @return {Parse.Relation} the relation for the users belonging to this
      *     role.
      */
     getUsers: function() {
       return this.relation("users");
     },
-    
+
     /**
      * Gets the Parse.Relation for the Parse.Roles that are direct
      * children of this role. These roles' users are granted any privileges that
      * this role has been granted (e.g. read or write access through ACLs). You
      * can add or remove child roles from this role through this relation.
-     * 
+     *
      * <p>This is equivalent to calling role.relation("roles")</p>
-     * 
+     *
      * @return {Parse.Relation} the relation for the roles belonging to this
      *     role.
      */
     getRoles: function() {
       return this.relation("roles");
     },
-    
+
     /**
      * @ignore
      */
@@ -5988,7 +5990,7 @@
 
     // The default model for a collection is just a Parse.Object.
     // This should be overridden in most cases.
-    
+
     model: Parse.Object,
 
     /**
@@ -6058,7 +6060,7 @@
       // Insert models into the collection, re-sorting if needed, and triggering
       // `add` events unless silenced.
       this.length += length;
-      index = Parse._isNullOrUndefined(options.at) ? 
+      index = Parse._isNullOrUndefined(options.at) ?
           this.models.length : options.at;
       this.models.splice.apply(this.models, [index, 0].concat(models));
       if (this.comparator) {
@@ -6429,7 +6431,7 @@
   var eventSplitter = /^(\S+)\s*(.*)$/;
 
   // List of view options to be merged as properties.
-  
+
   var viewOptions = ['model', 'collection', 'el', 'id', 'attributes',
                      'className', 'tagName'];
 
@@ -7134,7 +7136,7 @@
       }
 
       if (Parse.User._currentUserMatchesDisk) {
-        
+
         return Parse.User._currentUser;
       }
 
@@ -7144,7 +7146,7 @@
       var userData = Parse.localStorage.getItem(Parse._getParsePath(
           Parse.User._CURRENT_USER_KEY));
       if (!userData) {
-        
+
         return null;
       }
       Parse.User._currentUser = Parse.Object._create("_User");
@@ -7216,7 +7218,7 @@
    * <code>find</code> method. For example, this sample code fetches all objects
    * of class <code>MyClass</code>. It calls a different function depending on
    * whether the fetch succeeded or not.
-   * 
+   *
    * <pre>
    * var query = new Parse.Query(MyClass);
    * query.find({
@@ -7228,12 +7230,12 @@
    *     // error is an instance of Parse.Error.
    *   }
    * });</pre></p>
-   * 
+   *
    * <p>A Parse.Query can also be used to retrieve a single object whose id is
    * known, through the get method. For example, this sample code fetches an
    * object of class <code>MyClass</code> and id <code>myId</code>. It calls a
    * different function depending on whether the fetch succeeded or not.
-   * 
+   *
    * <pre>
    * var query = new Parse.Query(MyClass);
    * query.get(myId, {
@@ -7245,7 +7247,7 @@
    *     // error is an instance of Parse.Error.
    *   }
    * });</pre></p>
-   * 
+   *
    * <p>A Parse.Query can also be used to count the number of objects that match
    * the query without retrieving all of those objects. For example, this
    * sample code counts the number of objects of the class <code>MyClass</code>
@@ -7432,7 +7434,7 @@
       params.count = 1;
       var request = Parse._request({
         route: "classes",
-        className: self.className, 
+        className: self.className,
         method: "GET",
         useMasterKey: options.useMasterKey,
         data: params
@@ -7468,7 +7470,7 @@
       params.limit = 1;
       var request = Parse._request({
         route: "classes",
-        className: this.className, 
+        className: this.className,
         method: "GET",
         useMasterKey: options.useMasterKey,
         data: params
@@ -7536,7 +7538,7 @@
     equalTo: function(key, value) {
       if (_.isUndefined(value)) {
         return this.doesNotExist(key);
-      } 
+      }
 
       this._where[key] = Parse._encode(value);
       return this;
@@ -7682,7 +7684,7 @@
     matches: function(key, regex, modifiers) {
       this._addCondition(key, "$regex", regex);
       if (!modifiers) { modifiers = ""; }
-      // Javascript regex options support mig as inline options but store them 
+      // Javascript regex options support mig as inline options but store them
       // as properties of the object. We support mi & should migrate them to
       // modifiers
       if (regex.ignoreCase) { modifiers += 'i'; }
@@ -7823,7 +7825,7 @@
 
     /**
      * Sorts the results in ascending order by the given key.
-     * 
+     *
      * @param {String} key The key to order by.
      * @return {Parse.Query} Returns the query, so you can chain this call.
      */
@@ -7834,7 +7836,7 @@
 
     /**
      * Sorts the results in descending order by the given key.
-     * 
+     *
      * @param {String} key The key to order by.
      * @return {Parse.Query} Returns the query, so you can chain this call.
      */
@@ -8118,7 +8120,7 @@
     init: function(options) {
       if (typeof(FB) === 'undefined') {
         throw "The Facebook JavaScript SDK must be loaded before calling init.";
-      } 
+      }
       initOptions = _.clone(options) || {};
       if (initOptions.status && typeof(console) !== "undefined") {
         var warn = console.warn || console.log || function() {};
@@ -8135,7 +8137,7 @@
 
     /**
      * Gets whether the user has their account linked to Facebook.
-     * 
+     *
      * @param {Parse.User} user User to check for a facebook link.
      *     The user must be logged in on this device.
      * @return {Boolean} <code>true</code> if the user has their account
@@ -8149,7 +8151,7 @@
      * Logs in a user using Facebook. This method delegates to the Facebook
      * SDK to authenticate the user, and then automatically logs in (or
      * creates, in the case where it is a new user) a Parse.User.
-     * 
+     *
      * @param {String, Object} permissions The permissions required for Facebook
      *    log in.  This is a comma-separated string of permissions.
      *    Alternatively, supply a Facebook authData object as described in our
@@ -8180,7 +8182,7 @@
      * @param {Parse.User} user User to link to Facebook. This must be the
      *     current user.
      * @param {String, Object} permissions The permissions required for Facebook
-     *    log in.  This is a comma-separated string of permissions. 
+     *    log in.  This is a comma-separated string of permissions.
      *    Alternatively, supply a Facebook authData object as described in our
      *    REST API docs if you want to handle getting facebook auth tokens
      *    yourself.
@@ -8202,8 +8204,8 @@
     },
 
     /**
-     * Unlinks the Parse.User from a Facebook account. 
-     * 
+     * Unlinks the Parse.User from a Facebook account.
+     *
      * @param {Parse.User} user User to unlink from Facebook. This must be the
      *     current user.
      * @param {Object} options Standard options object with success and error
@@ -8216,7 +8218,7 @@
       return user._unlinkFrom("facebook", options);
     }
   };
-  
+
 }(this));
 
 /*global _: false, document: false, window: false, navigator: false */
@@ -8230,12 +8232,12 @@
    * events or pushState, match the appropriate route, and trigger
    * callbacks. You shouldn't ever have to create one of these yourself
    * — you should use the reference to <code>Parse.history</code>
-   * that will be created for you automatically if you make use of 
+   * that will be created for you automatically if you make use of
    * Routers with routes.
    * @class
-   *   
-   * <p>A fork of Backbone.History, provided for your convenience.  If you 
-   * use this class, you must also include jQuery, or another library 
+   *
+   * <p>A fork of Backbone.History, provided for your convenience.  If you
+   * use this class, you must also include jQuery, or another library
    * that provides a jQuery-compatible $ function.  For more information,
    * see the <a href="http://documentcloud.github.com/backbone/#History">
    * Backbone documentation</a>.</p>
@@ -8306,7 +8308,7 @@
       this.options = _.extend({}, {root: '/'}, this.options, options);
       this._wantsHashChange = this.options.hashChange !== false;
       this._wantsPushState = !!this.options.pushState;
-      this._hasPushState = !!(this.options.pushState && 
+      this._hasPushState = !!(this.options.pushState &&
                               window.history &&
                               window.history.pushState);
       var fragment = this.getFragment();
@@ -8341,8 +8343,8 @@
 
       // If we've started off with a route from a `pushState`-enabled browser,
       // but we're currently in a browser that doesn't support it...
-      if (this._wantsHashChange && 
-          this._wantsPushState && 
+      if (this._wantsHashChange &&
+          this._wantsPushState &&
           !this._hasPushState &&
           !atRoot) {
         this.fragment = this.getFragment(null, true);
@@ -8353,7 +8355,7 @@
       // Or if we've started out with a hash-based route, but we're currently
       // in a browser where it could be `pushState`-based instead...
       } else if (this._wantsPushState &&
-                 this._hasPushState && 
+                 this._hasPushState &&
                  atRoot &&
                  loc.hash) {
         this.fragment = this.getHash().replace(routeStripper, '');
@@ -8534,7 +8536,7 @@
       Parse.history = Parse.history || new Parse.History();
       if (!_.isRegExp(route)) {
         route = this._routeToRegExp(route);
-      } 
+      }
       if (!callback) {
         callback = this[name];
       }
@@ -8552,7 +8554,7 @@
     /**
      * Whenever you reach a point in your application that you'd
      * like to save as a URL, call navigate in order to update the
-     * URL. If you wish to also call the route function, set the 
+     * URL. If you wish to also call the route function, set the
      * trigger option to true. To update the URL without creating
      * an entry in the browser's history, set the replace option
      * to true.
@@ -8565,7 +8567,7 @@
     // order of the routes here to support behavior where the most general
     // routes can be defined at the bottom of the route map.
     _bindRoutes: function() {
-      if (!this.routes) { 
+      if (!this.routes) {
         return;
       }
       var routes = [];
