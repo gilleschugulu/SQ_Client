@@ -71,7 +71,7 @@
       margin: 0 auto
       width: 95%
       height: 90%
-      margin-top: 4%
+      margin-top: 7%
       .pack
         relative: top 4%
         width: 49%
@@ -81,31 +81,31 @@
         background-size: contain
         display: inline-block
         cursor: pointer
-        &:nth-child(odd)
-          margin-right: 1%
       .paid-pack
         height: 30%
         background-image: url("../images/shop/Jetons/pack_x_fat.png")
         background-repeat: no-repeat
         background-size: 100% 100%
+        &:nth-child(odd)
+          margin-right: 1%
         .marker
-          absolute: left 0
+          absolute: left -2%
           font-size: 2.3em
           color: white
-          padding: 9% 4%
+          padding: 10% 4%
           height: 100%
           font-family: dax
         .value
-          absolute: left 8%
-          font-size: 2em
+          absolute: left 9%
+          font-size: 1.9em
           font-family: dax
           color: white
-          padding: 10.2% 0
+          padding: 11% 0
           width: 30%
           height: 100%
           text-align: right
         .credit-icon
-          absolute: top 33% left 39%
+          absolute: top 33% left 40%
           width: 9.2%
           height: 53.5%
           background-image: url("../images/home/common/credit.png")
@@ -123,8 +123,8 @@
         opacity : 0.6
 
       .free-pack
-        // &:nth-child(3)
-        //   margin-top: 1%
+        &:nth-child(even)
+          margin-right: 1%
         .text
           color: white
           font-size: 1.4em
