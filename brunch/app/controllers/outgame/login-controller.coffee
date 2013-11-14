@@ -70,7 +70,7 @@ module.exports = class LoginController extends Controller
         @bindPlayer()
       else
         FacebookHelper.getPersonalInfo (fb_attributes) =>
-          parse_attributes          = User.prototype.defaults
+          parse_attributes          = User::defaults
           parse_attributes.username = fb_attributes.name
           user.set(parse_attributes).save()
           @bindPlayer()
@@ -82,6 +82,8 @@ module.exports = class LoginController extends Controller
         @loginWithFacebook()
       else if typeof response is "string"
         PopUpHelper.initialize {message: response, title: "Erreur", key: 'api-error'}
+      else if typeof response is "object"
+        PopUpHelper.initialize {message: JSON.stringify(response), title: "Erreur", key: 'api-error'}
       else
         PopUpHelper.initialize {message: 'Erreur avec Facebook. Veuillez réessayer.', title: 'Erreur', key: 'api-error'}
 
