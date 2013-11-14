@@ -66,6 +66,7 @@
 		237AE3D9169F1CF600A94A7E /* ChartBoostPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 237AE3D8169F1CF600A94A7E /* ChartBoostPlugin.m */; };
 		237DC5AF16A9BFC700F6E715 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 237DC5AE16A9BFC700F6E715 /* CoreData.framework */; };
 		23814DB816D3D48F00011C6E /* PermaKeyboardPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 23814DB716D3D48F00011C6E /* PermaKeyboardPlugin.m */; };
+		239008791834E24500C5072C /* FacebookSDK-3.5.2-Release.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 23F98236180EBBED0063D50F /* FacebookSDK-3.5.2-Release.a */; };
 		239284C615B59961000812EC /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 239284C415B59960000812EC /* Accounts.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		239284C715B59961000812EC /* Twitter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 239284C515B59960000812EC /* Twitter.framework */; };
 		239906D4157F5B2D00411D6C /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 239906D3157F5B2D00411D6C /* Security.framework */; };
@@ -88,7 +89,6 @@
 		23F57DF2157E5A8A00F7847A /* MKStoreObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = 23F57DDD157E5A8A00F7847A /* MKStoreObserver.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		23F57DF3157E5A8A00F7847A /* README.mdown in Resources */ = {isa = PBXBuildFile; fileRef = 23F57DDE157E5A8A00F7847A /* README.mdown */; };
 		23F9825E180EBBEE0063D50F /* FacebookConnectPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 23F98233180EBBED0063D50F /* FacebookConnectPlugin.m */; };
-		23F9825F180EBBEE0063D50F /* FacebookSDK-3.5.2-Debug.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 23F98235180EBBED0063D50F /* FacebookSDK-3.5.2-Debug.a */; };
 		23F98261180EBBEE0063D50F /* FacebookSDKResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 23F9825C180EBBEE0063D50F /* FacebookSDKResources.bundle */; };
 		23F98262180EBBEE0063D50F /* FBUserSettingsViewResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 23F9825D180EBBEE0063D50F /* FBUserSettingsViewResources.bundle */; };
 		8F574DD81746761D00BAAACD /* TransitionScreenPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F574DD71746761D00BAAACD /* TransitionScreenPlugin.m */; };
@@ -379,6 +379,7 @@
 				235451E7156174B700A821D6 /* AddressBook.framework in Frameworks */,
 				235451E9156174B700A821D6 /* AddressBookUI.framework in Frameworks */,
 				235451EB156174B700A821D6 /* AudioToolbox.framework in Frameworks */,
+				239008791834E24500C5072C /* FacebookSDK-3.5.2-Release.a in Frameworks */,
 				235451ED156174B700A821D6 /* AVFoundation.framework in Frameworks */,
 				235451F1156174B700A821D6 /* MediaPlayer.framework in Frameworks */,
 				231942381804584700AB6DE0 /* TapjoyPublisherLibrary.a in Frameworks */,
@@ -391,7 +392,6 @@
 				231942721804586900AB6DE0 /* libGoogleAnalyticsServices.a in Frameworks */,
 				2320B8681637E194005CC24C /* ATiOSLib.a in Frameworks */,
 				231942321804582500AB6DE0 /* libChartboost.a in Frameworks */,
-				23F9825F180EBBEE0063D50F /* FacebookSDK-3.5.2-Debug.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -909,7 +909,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 23545235156174B800A821D6 /* Build configuration list for PBXNativeTarget "TriviaContainer" */;
 			buildPhases = (
-				465E8AF315EBDD54001C1B19 /* ShellScript */,
+				465E8AF315EBDD54001C1B19 /* Run Script */,
 				235451D5156174B700A821D6 /* Sources */,
 				235451D6156174B700A821D6 /* Frameworks */,
 				235451D7156174B700A821D6 /* Resources */,
@@ -984,13 +984,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		465E8AF315EBDD54001C1B19 /* ShellScript */ = {
+		465E8AF315EBDD54001C1B19 /* Run Script */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
+			name = "Run Script";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1307,8 +1308,8 @@
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Stardust (4Y5KACV6RL)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Stardust (4Y5KACV6RL)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: L'Equipe 24/24 (2RS852URZ4)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: L'Equipe 24/24 (2RS852URZ4)";
 				COMPRESS_PNG_FILES = NO;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
@@ -1354,8 +1355,8 @@
 					"-ObjC",
 				);
 				PRODUCT_NAME = TriviaContainer;
-				PROVISIONING_PROFILE = "66D0B433-4448-46AC-AEAF-CFA83DA0F4E3";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "66D0B433-4448-46AC-AEAF-CFA83DA0F4E3";
+				PROVISIONING_PROFILE = "51FAFB98-7353-4F65-BD20-A1885F9E4046";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "51FAFB98-7353-4F65-BD20-A1885F9E4046";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 				WRAPPER_EXTENSION = app;
