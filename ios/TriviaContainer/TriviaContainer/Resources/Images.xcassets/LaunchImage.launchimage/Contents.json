@@ -76,6 +76,7 @@
       "orientation" : "landscape",
       "idiom" : "ipad",
       "minimum-system-version" : "7.0",
+      "filename" : "Default-Landscape.png",
       "extent" : "full-screen",
       "scale" : "1x"
     },
@@ -84,6 +85,7 @@
       "idiom" : "ipad",
       "minimum-system-version" : "7.0",
       "extent" : "full-screen",
+      "filename" : "Default-Landscape@2x.png",
       "scale" : "2x"
     }
   ],

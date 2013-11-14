@@ -51,7 +51,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>53</string>
+	<string>62</string>
 	<key>FacebookAppID</key>
 	<string>321070437995692</string>
 	<key>LSApplicationCategoryType</key>
@@ -62,8 +62,6 @@
 	<string></string>
 	<key>UIInterfaceOrientation</key>
 	<string>UIInterfaceOrientationLandscapeLeft</string>
-	<key>UILaunchImageFile</key>
-	<string>sportquiz_splashscreen-568h.png</string>
 	<key>UIPrerenderedIcon</key>
 	<true/>
 	<key>UIRequiresPersistentWiFi</key>
