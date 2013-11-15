@@ -11,7 +11,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>fr_FR</string>
 	<key>CFBundleDisplayName</key>
-	<string>Sport Quiz 2</string>
+	<string>Sport Quiz</string>
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
 	<key>CFBundleIconFile</key>
@@ -51,7 +51,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>62</string>
+	<string>68</string>
 	<key>FacebookAppID</key>
 	<string>321070437995692</string>
 	<key>LSApplicationCategoryType</key>
