@@ -36,6 +36,7 @@ module.exports = class ProfilesController extends Controller
       , (view) =>
         view.delegate 'click', '.picture', @linkFacebook
         view.delegate 'click', '.game-center', @onClickGameCenter
+        view.delegate 'click', '.logout', @onClickLogout
         view.autoSizeText()
       , {viewTransition: yes}
 
@@ -72,3 +73,7 @@ module.exports = class ProfilesController extends Controller
     else
       alert('Pas de leaderboard')
 
+
+  onClickLogout: =>
+    Parse.User.logOut()
+    window.location = ''
