@@ -4,16 +4,16 @@ config =
     price: 500
   ,
     value: 10
-    price: 1000
+    price: 900
   ,
     value: 50
-    price: 5000
+    price: 4000
   ,
     value: 100
-    price: 10000
+    price: 7000
   ,
     value: 300
-    price: 20000
+    price: 15000
   ]
 
   bonus_packs: [
@@ -21,10 +21,10 @@ config =
     price: 150
   ,
     value: 25
-    price: 750
+    price: 700
   ,
     value: 50
-    price: 1500
+    price: 1200
   ]
 
   credit_packs: [
@@ -38,7 +38,7 @@ config =
     price: 3.59
     tax : 0.3
   ,
-    value: 7000
+    value: 7500
     product_id: "9.99SportQuiz"
     price: 8.99
     tax : 0.3
