@@ -5,6 +5,11 @@ module.exports = class JournalView extends View
   className: 'journal-container completely-hiddened'
   container: '.home-page'
 
+  getTemplateFunction: ->
+    Handlebars.registerHelper 'firstName', (username, options) =>
+      username.split(' ')[0]
+    super
+
   getTemplateData: ->
     @options.date = @getDate()
     @options
