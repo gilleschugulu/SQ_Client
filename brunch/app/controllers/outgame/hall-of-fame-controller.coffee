@@ -27,7 +27,7 @@ module.exports = class HallOfFameController extends Controller
     players = _.map ranking, (entry, index) ->
       if entry.username is user.get('username')
         playerPosition = index
-      data = 
+      data =
         friend   : entry.fb_id isnt user.get('fb_id') and withFriends
         got_life : $.inArray(entry.fb_id, given) >= 0
         rank     : entry.rank
@@ -37,7 +37,7 @@ module.exports = class HallOfFameController extends Controller
         position : entry.position
         range    : if withFriends is undefined else entry.range_name
 
-    options = 
+    options =
       fbConnected:    FacebookHelper.isLinked()
       playerPosition: playerPosition
     if withFriends and !options.fbConnected
@@ -91,6 +91,7 @@ module.exports = class HallOfFameController extends Controller
       AnalyticsHelper.trackEvent 'Classement', 'Click', 'Affichage des amis'
       @displayPlayers yes
       @view.chooseList e.target
+      @view.showLevel no
 
   onClickGlobal: (e) =>
     if !$(e.target).hasClass('active')
@@ -98,6 +99,7 @@ module.exports = class HallOfFameController extends Controller
       AnalyticsHelper.trackEvent 'Classement', 'Click', 'Affichage adversaires'
       @displayPlayers no
       @view.chooseList e.target
+      @view.showLevel yes
 
   getDate: =>
     targetDate = new Date()
