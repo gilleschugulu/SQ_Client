@@ -8,6 +8,7 @@ module.exports = class User extends Parse.User
     health:         15
     game_row:       0
     notifications:  true
+    free_packs:     {}
     life_given:     []
     providers:
       facebook: null

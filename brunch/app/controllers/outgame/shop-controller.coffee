@@ -5,7 +5,6 @@ DeviceHelper       = require 'helpers/device-helper'
 ConfigHelper       = require 'helpers/config-helper'
 mediator           = require 'mediator'
 i18n               = require 'lib/i18n'
-LocalStorageHelper = require 'helpers/local-storage-helper'
 PopUpHelper        = require 'helpers/pop-up-helper'
 AnalyticsHelper    = require 'helpers/analytics-helper'
 SoundHelper        = require 'helpers/sound-helper'
@@ -38,13 +37,13 @@ module.exports = class ShopController extends Controller
 
 
   displayPacks: =>
+    user = Parse.User.current()
     @packs = mediator.packs
     @packs.type = (if DeviceHelper.isIOS() then 'ios' else 'web')
-    if fp = @packs.free_packs[@packs.type]
+    if fp = (@packs.free_packs[@packs.type] ? @packs.free_packs)
       @packs.free_packs = fp
       for p,index in @packs.free_packs
-        @packs.free_packs[index].disabled = LocalStorageHelper.exists "store_pack_#{p.name}"
-    user = Parse.User.current()
+        @packs.free_packs[index].disabled = user.get('free_packs') and !!user.get('free_packs')[p.name]
 
     @loadView 'shop'
     , =>
@@ -170,7 +169,10 @@ module.exports = class ShopController extends Controller
 
   disableFreePack: (type) ->
     @view.removeFreePack type
-    LocalStorageHelper.set "store_pack_#{type}", 1
+    user = Parse.User.current()
+    fp = user.get('free_packs') ? {}
+    fp[type] = yes
+    user.set('free_packs', fp).save()
   # / Free packs
 
 
