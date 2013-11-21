@@ -47,11 +47,11 @@ module.exports =
           best_row: 'Plus longue série'
           game_row: 'Nombre de parties cette semaine'
         end_message:
-          msg2k      : 'Voilà une performance digne d\'un relégable ! Il va falloir faire mieux pour se maintenir !'
-          msg5k      : 'Une partie solide. Encore un petit effort pour assurer la montée.'
-          msg10k     : 'Bien joué ! Continue comme ça pour atteindre les premières places !'
-          msg25k     : 'Excellent ! Une performance digne du niveau supérieur !'
-          msg25kplus : 'Fantastique ! Avec ce genre de performance tu peux viser la première place !'
+          msg1k      : 'Voilà une performance digne d\'un relégable ! Il va falloir faire mieux pour se maintenir !'
+          msg2k      : 'Une partie solide. Encore un petit effort pour assurer la montée.'
+          msg5k     : 'Bien joué ! Continue comme ça pour atteindre les premières places !'
+          msg10k     : 'Excellent ! Une performance digne du niveau supérieur !'
+          msg10kplus : 'Fantastique ! Avec ce genre de performance tu peux viser la première place !'
       profile:
         stats:
           best_score: 'Meilleur score'

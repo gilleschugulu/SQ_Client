@@ -51,18 +51,18 @@ module.exports = class GameOverController extends Controller
     @index yes, params
 
   getRewardAmount: (score) ->
-    return 0 if score <= 2000
-    return 10 if score <= 5000
-    return 25 if score <= 10000
-    return 50 if score <= 25000
+    return 0 if score < 1000
+    return 10 if score < 2000
+    return 20 if score < 5000
+    return 50 if score < 10000
     100
 
   getEndMessageKey: (score) ->
-    return 'msg2k' if score <= 2000
-    return 'msg5k' if score <= 5000
-    return 'msg10k' if score <= 10000
-    return 'msg25k' if score <= 25000
-    'msg25kplus'
+    return 'msg1k' if score < 1000
+    return 'msg2k' if score < 2000
+    return 'msg5k' if score < 5000
+    return 'msg10k' if score < 10000
+    'msg10kplus'
 
   updateUser: (user, jackpot, reward) ->
     user.increment('credits', reward).increment('game_row')
