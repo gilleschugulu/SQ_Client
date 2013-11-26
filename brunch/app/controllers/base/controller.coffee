@@ -35,7 +35,6 @@ module.exports = class Controller extends Chaplin.Controller
 
   dispose: ->
     mediator.publish 'apicalls:abort'
-    SoundHelper.stopAll()
     # unload all preloaded assets for the active view if needed
     if @assetKey
       PreloadHelper.removeAssets @assetKey
