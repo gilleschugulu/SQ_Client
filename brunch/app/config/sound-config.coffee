@@ -27,9 +27,9 @@ module.exports =
       # Ingame SFX
       # ----------
       {
-        key: 'acceleration'
-        type: 'music'
-        file: 'course_acceleration.m4a'
+        key: 'heart_beat'
+        type: 'sfx'
+        file: 'heart_beat.m4a'
       }
       # ----------------
       # Ingame Bonus SFX

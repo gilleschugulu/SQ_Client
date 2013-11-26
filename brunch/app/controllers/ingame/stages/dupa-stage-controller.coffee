@@ -21,10 +21,7 @@ module.exports = class DupaStageController extends StageController
     t = @model.getConfigValue('thresholds').slice(0).reverse()
     @view = new DupaStageView {stage : {@name, @type}, thresholds: t, bonus: @model.get('player').getBonuses(), time : @model.getConfigValue('answerTime')}
 
-    @timer = new Timer((duration) =>
-      @view.updateTimer(duration)
-      SoundHelper.play('acceleration') if duration is '8'
-    )
+    @timer = new Timer((duration) => @view.updateTimer(duration))
     @countdownTimer = new Timer((duration) =>
       @view.updateCountdownTimer(duration)
     )
@@ -44,6 +41,11 @@ module.exports = class DupaStageController extends StageController
       @gameDidEnd = yes
       @beforeFinishStage() if @gameCanEnd
     @view.updateJackpot(0, @model.getCurrentThreshold())
+
+    mediator.subscribe 'sound:toggle', @resumeHeartBeat
+    SoundHelper.play 'heart_beat'
+
+
     @view.welcome @askNextQuestion
 
     @view.delegate 'click', '.bonus', (event) =>
@@ -51,6 +53,11 @@ module.exports = class DupaStageController extends StageController
         if @canUseBonus(bonusName) and @model.get('player').consumeBonus(bonusName)
           @view.updateBonus event.currentTarget, @model.get('player').getBonusQuantity(bonusName)
           @executeBonus(bonusName)
+
+  resumeHeartBeat: (event) =>
+    unless SoundHelper.areSoundsMuted()
+      SoundHelper.play 'heart_beat'
+      SoundHelper.setTime('heart_beat', @model.getConfigValue('answerTime') - @timer.duration)
 
   askNextQuestion: =>
     @startTime = new Date().getTime()
@@ -103,6 +110,7 @@ module.exports = class DupaStageController extends StageController
     @finishStage()
 
   dispose: ->
+    mediator.unsubscribe 'sound:toggle', @resumeHeartBeat
     if @countdownTimer
       @countdownTimer.stop()
       delete @countdownTimer
@@ -140,8 +148,8 @@ module.exports = class DupaStageController extends StageController
 
   # Add x time
   executeBonusAddTime: ->
-    SoundHelper.stop('acceleration')
     @timer.adjustDuration(@model.getConfigValue('timeBonus'))
+    SoundHelper.setTime('heart_beat', @model.getConfigValue('answerTime') - @timer.duration)
 
   # Skip question
   executeBonusSkip: ->
