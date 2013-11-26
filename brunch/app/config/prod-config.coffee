@@ -29,7 +29,7 @@ class ProdConfig
       currency : '2948f4c1-5a8d-4090-beb1-725c617477c8'
     facebook:
       app_id : '321070437995692'
-      like_page_url: 'http://www.facebook.com/'
+      like_page_url: 'https://www.facebook.com/pages/SportQuiz/223149367863583'
     adcolony:
       zones:
         SHOP : "vz8cfb94951aa34d79bbf0b2"
