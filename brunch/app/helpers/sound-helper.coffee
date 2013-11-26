@@ -1,5 +1,6 @@
 LocalStorageHelper = require 'helpers/local-storage-helper'
 AnalyticsHelper    = require 'helpers/analytics-helper'
+mediator           = require 'mediator'
 
 module.exports = class SoundHelper
   @sounds           = {}
@@ -45,6 +46,9 @@ module.exports = class SoundHelper
     if isNaN duration then duration = fallbackDuration
     duration
 
+  @setTime = (key, seconds) ->
+    @sounds[key].sound.setTime seconds
+
   @fadeOut: (key, duration, callback) ->
     @sounds[key].sound.fadeOut duration, callback
 
@@ -59,8 +63,9 @@ module.exports = class SoundHelper
 
   # Toggle ALL sounds : music, jingle and sfx
   @toggleSound = ->
-    @toggleMusic()
-    @toggleSFX()
+    r = (@toggleSFX() and @toggleMusic())
+    mediator.publish 'sound:toggle', r
+    r
 
   @toggleMusic = ->
     @musicMuted = !@musicMuted
@@ -69,6 +74,7 @@ module.exports = class SoundHelper
     for key, sound of @sounds when sound.type is 'music' or sound.type is 'jingle'
       @stop(key) if @musicMuted
     @play(@currentMusicKey) if @currentMusicKey and not @musicMuted
+    @musicMuted
 
   @toggleSFX = ->
     @sfxMuted = !@sfxMuted
@@ -76,3 +82,4 @@ module.exports = class SoundHelper
     LocalStorageHelper.set('sfxMuted', @sfxMuted) # @sfxMuted is a boolean, but will be stocked as string : 'true' or 'false'
     for key, sound of @sounds when sound.type is 'sfx'
       @stop(key) if @sfxMuted
+    @sfxMuted
