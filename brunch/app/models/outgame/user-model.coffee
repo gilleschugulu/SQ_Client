@@ -42,4 +42,8 @@ module.exports = class User extends Parse.User
     bonuses
 
   @getFirstName: (name) ->
-    name.split(' ')[0]
+    parts = name.split(' ')
+    newName = parts[0]
+    if parts[1]
+      newName += ' ' + parts[1].toUpperCase().charAt(0) + '.'
+    newName
