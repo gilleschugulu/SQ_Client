@@ -4,6 +4,7 @@ require 'lib/view-helper' # Just load the view helpers, no return value
 
 module.exports = class View extends Chaplin.View
   # Precompiled templates function initializer.
+
   getTemplateFunction: ->
     # Template compilation
     # --------------------
@@ -24,6 +25,10 @@ module.exports = class View extends Chaplin.View
     # Register Handlebars Helper to use i18n in Templates
     Handlebars.registerHelper 'niceNumber', (number, options) =>
       @niceNumber number
+
+    Handlebars.registerHelper 'firstName', (username, options) =>
+      require('models/outgame/user-model').getFirstName(username)
+
     template = @template
 
     if typeof template is 'string'

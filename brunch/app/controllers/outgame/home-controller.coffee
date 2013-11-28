@@ -154,7 +154,7 @@ module.exports = class HomeController extends Controller
       player.fb_id is userId
     ).position
 
-    name = Parse.User.current().get('username').split(' ')[0] # first name
+    name = require('models/outgame/user-model').getFirstName Parse.User.current().get('username')
     if rank < 4
       title = i18n.t "controller.home.journal.twoplus.rank_#{rank}", name
     else

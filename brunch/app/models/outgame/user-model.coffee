@@ -40,3 +40,6 @@ module.exports = class User extends Parse.User
       })
 
     bonuses
+
+  @getFirstName: (name) ->
+    name.split(' ')[0]

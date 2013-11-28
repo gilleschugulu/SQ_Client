@@ -2,6 +2,7 @@ template  = require 'views/templates/outgame/hall-of-fame'
 i18n      = require 'lib/i18n'
 View      = require 'views/base/view'
 PreloadHelper = require 'helpers/preload-helper'
+User      = require 'models/outgame/user-model'
 
 module.exports = class HallOfFameView extends View
   autoRender: yes
@@ -43,7 +44,7 @@ module.exports = class HallOfFameView extends View
     '<div class="div-ranking">' +
       (if player.position < 4 then '<div class="rank icon"></div>' else "<div class='rank'>#{player.position}</div>") +
       "<span class='#{photoClass}' data-fbid='#{player.fb_id || ''}' data-size='81'></span>" +
-      "<span class='username resize'>#{player.username}</span>" +
+      "<span class='username resize'>#{User.getFirstName(player.username)}</span>" +
       "<span class='money'>#{player.jackpot}</span>" +
       (if player.friend then "<div data-id='#{player.fb_id}' class='ask-friend #{gotlife}'></div>" else '') +
     '</div>'
@@ -85,7 +86,7 @@ module.exports = class HallOfFameView extends View
       moreFriends += "</div>
         <div class='div-ranking moreFriends'>
           <span class='photo not-loaded' data-fbid='#{friend.fb_id}' data-size='81'></span>
-          <span class='username resize'>#{friend.name}</span>
+          <span class='username resize'>#{User.getFirstName(friend.name)}</span>
           <div data-id='#{friend.fb_id}' class='invite-btn'></div>
       </div>"
     moreFriends
