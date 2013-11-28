@@ -35,7 +35,9 @@ module.exports = class GameOverController extends Controller
 
       view = new GameOverView {success, params, reward, endMessage, player: {health: user.get('health'), credits: user.get('credits')}}
       user.increment('score', user.get('game_row')).save()
-
+      parseScore = new (Parse.Object.extend("GameScore"))
+      parseScore.relation('player').add(user)
+      parseScore.set('score', jackpot).save()
       view   # Must always return @view
 
     , (view) =>
