@@ -11,6 +11,8 @@ exports.task = (request, response) ->
   # ATTNETION !  0 = SUNDAY, parse server time is UTC => french time = UTC+2H
   # so the job is scheduled to run on SUNDAYS @22h01 UTC which is MONDAY 00h01 french time !
   if d isnt 0
+    if d is 5
+      return response.error('http://www.youtube.com/watch?v=kfVsfOSbJY0')
     return response.error('not a moday yet :(')
 
   query = new Parse.Query('User')
@@ -49,4 +51,6 @@ exports.task = (request, response) ->
         success: ->
           response.success('ok')
         error: ->
-          response.error('no')
+          response.error('could not save users')
+    error: ->
+      response.error('no users')
