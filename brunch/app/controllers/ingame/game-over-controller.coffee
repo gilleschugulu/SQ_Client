@@ -34,7 +34,7 @@ module.exports = class GameOverController extends Controller
         text: I18n.t('controller.game_over.stats.' + key)
 
       view = new GameOverView {success, params, reward, endMessage, player: {health: user.get('health'), credits: user.get('credits')}}
-      user.increment('score', user.get('game_row')).save()
+      user.save()
       parseScore = new (Parse.Object.extend("GameScore"))
       parseScore.relation('player').add(user)
       parseScore.set('score', jackpot).set('player_id', user.id).save()
@@ -54,16 +54,16 @@ module.exports = class GameOverController extends Controller
 
   getRewardAmount: (score) ->
     return 0 if score < 1000
-    return 10 if score < 2000
-    return 20 if score < 5000
-    return 50 if score < 10000
+    return 10 if score < 5000
+    return 30 if score < 10000
+    return 50 if score < 15000
     100
 
   getEndMessageKey: (score) ->
     return 'msg1k' if score < 1000
-    return 'msg2k' if score < 2000
-    return 'msg5k' if score < 5000
-    return 'msg10k' if score < 10000
+    return 'msg2k' if score < 5000
+    return 'msg5k' if score < 10000
+    return 'msg10k' if score < 15000
     'msg10kplus'
 
   updateUser: (user, jackpot, reward) ->
@@ -72,6 +72,8 @@ module.exports = class GameOverController extends Controller
     if jackpot > user.get('score')
       user.set('score', jackpot)
       @bestJackpot = yes
+      if jackpot > (user.get('best_score') | 0)
+        user.set('best_score', jackpot)
 
     user
 
