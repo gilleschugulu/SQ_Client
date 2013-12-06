@@ -117,7 +117,7 @@ module.exports = class HomeController extends Controller
     Parse.Cloud.run 'leaderboard_friends', {friendsId},
       success: (players) =>
         players = players.sort (f1, f2) ->
-          f2.score - f1.score
+          f2.best_score - f1.best_score
         callback()
         @view?.addJournalView journalView(players)
       error: (error) ->
@@ -150,9 +150,9 @@ module.exports = class HomeController extends Controller
 
   getTwoplusFriendsJournalView: (players) ->
     userId = Parse.User.current().get('fb_id')
-    rank = _.find(players, (player) ->
-      player.fb_id is userId
-    ).position
+    rank = 0
+    for p, index in players
+      rank = index + 1 if p.fb_id is userId
 
     name = require('models/outgame/user-model').getFirstName Parse.User.current().get('username')
     if rank < 4
