@@ -36,7 +36,7 @@ module.exports = class HallOfFameView extends View
         elem.removeClass('loading not-loaded')
         elem.css {'background-image':"url(#{url})"} if result.loaded
 
-  newPlayerHTML: (player, position) ->
+  newPlayerHTML: (player, position) =>
     gotlife = if player.got_life then 'asked' else ''
 
     photoClass = if player.fb_id then 'photo not-loaded' else 'photo'
@@ -45,22 +45,26 @@ module.exports = class HallOfFameView extends View
       (if player.position < 4 then '<div class="rank icon"></div>' else "<div class='rank'>#{player.position}</div>") +
       "<span class='#{photoClass}' data-fbid='#{player.fb_id || ''}' data-size='81'></span>" +
       "<span class='username resize'>#{User.getFirstName(player.username)}</span>" +
-      "<span class='money'>#{player.jackpot}</span>" +
+      "<span class='money'>#{@niceNumber(player.jackpot)}</span>" +
       (if player.friend then "<div data-id='#{player.fb_id}' class='ask-friend #{gotlife}'></div>" else '') +
     '</div>'
 
   addRangesSeparatorLogic: (player, lastPlayer, rank) ->
     unless lastPlayer
       new_rank = if player.range is 'stay' then rank else rank + 1
-      @addRangeSeparator(player.range, new_rank)
+      @addRangeSeparator(player.range, rank)
     else
       if player.range isnt lastPlayer.range
         new_rank = if player.range is 'stay' then rank else rank - 1
-        @addRangeSeparator(player.range, new_rank)
+        @addRangeSeparator(player.range, rank)
       else if player.position - lastPlayer.position > 1
         @addSplitRangeSeparator(player.position - lastPlayer.position - 1)
 
-  addRangeSeparator: (direction, rank)->
+  addRangeSeparator: (direction, rank) ->
+    if direction is 'up'
+      rank += 1
+    else if direction is 'down'
+      rank -= 1
     msg = i18n.t("view.hall_of_fame.players_#{direction}_rank")
     "<span class='rank_separator #{direction}'>#{msg} #{rank}</span>"
 

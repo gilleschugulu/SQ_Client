@@ -17,8 +17,16 @@ module.exports = class HallOfFameController extends Controller
   friendsPlayers : null
   globalPlayers : null
 
-  displayPlayers: (withFriends) =>
-    ranking = if withFriends then @friendsPlayers else @globalPlayers
+  displayPlayers: (withFriends, alltime = no) =>
+    if withFriends
+      ranking = @friendsPlayers
+      if alltime
+        ranking.sort (a, b) -> b.best_score - a.best_score
+      else
+        ranking.sort (a, b) -> b.score - a.score
+    else
+      ranking = @globalPlayers
+
     players = []
 
     playerPosition = 0
@@ -32,9 +40,9 @@ module.exports = class HallOfFameController extends Controller
         got_life : $.inArray(entry.fb_id, given) >= 0
         rank     : entry.rank
         username : entry.username
-        jackpot  : entry.score
+        jackpot  : if alltime then entry.best_score else entry.score
         fb_id    : entry.fb_id
-        position : entry.position
+        position : if withFriends then index + 1 else entry.position
         range    : if withFriends is undefined else entry.range_name
 
     options =
@@ -52,14 +60,15 @@ module.exports = class HallOfFameController extends Controller
       success: (results) =>
         @globalPlayers = _.uniq results.players, (player) ->
           player.position
+        @globalPlayers.sort (a, b) -> a.position - b.position
 
-  fetchFriends: ->
+  fetchFriends: =>
     FacebookHelper.getFriends (friends) =>
       (friendsId = _.pluck friends, 'id').push @user.get('fb_id')
       Parse.Cloud.run 'leaderboard_friends', {friendsId},
         success: (players) =>
           @friendsPlayers = players
-          @displayPlayers yes
+          @displayPlayers yes, yes
 
   index: (params) ->
     @nextRoute = params.nextRoute
@@ -76,8 +85,10 @@ module.exports = class HallOfFameController extends Controller
         health : mediator.user.get('health')
       new HallOfFameView params
     , (view) =>
+      view.delegate 'click', '#btn-friends-alltime', (e) => @onClickFriends(e, yes)
       view.delegate 'click', '#btn-friends', @onClickFriends
       view.delegate 'click', '#btn-global', @onClickGlobal
+      view.delegate 'click', '#btn-invite', @onClickFacebook
       view.delegate 'click', '.ask-friend', @giveLifeToFriend
       view.delegate 'click', '#no-friends', @addFriends
       view.delegate 'click', '#no-fb-connected', @connectFacebook
@@ -85,11 +96,14 @@ module.exports = class HallOfFameController extends Controller
       view.delegate 'click', '.home-btn', @onClickHomeBtn
     , {viewTransition: yes}
 
-  onClickFriends: (e) =>
+  onClickFriends: (e, alltime = no) =>
     if !$(e.target).hasClass('active')
       # Track Event
-      AnalyticsHelper.trackEvent 'Classement', 'Click', 'Affichage des amis'
-      @displayPlayers yes
+      if alltime
+        AnalyticsHelper.trackEvent 'Classement', 'Click', 'Affichage des amis All Time'
+      else
+        AnalyticsHelper.trackEvent 'Classement', 'Click', 'Affichage des amis Tournoi'
+      @displayPlayers yes, alltime
       @view.chooseList e.target
       @view.showLevel no
 
@@ -155,3 +169,19 @@ module.exports = class HallOfFameController extends Controller
 
   onClickHomeBtn: =>
     @redirectTo @nextRoute
+
+  onClickFacebook: =>
+    AnalyticsHelper.trackEvent 'Classement', 'Click', 'Inviter amis'
+    FacebookHelper.getOtherFriends (friends) =>
+      # Check if everyone is invited
+      if _.difference(_.pluck(friends, 'id'), Parse.User.current().get('fb_invited')).length < 1 and FacebookHelper.isLinked()
+         popUp.initialize {message: i18n.t('controller.home.app_request.error'), title: 'Action impossible', key: 'appRequest-error'}
+      else
+        FacebookHelper.friendRequest i18n.t('controller.home.facebook_invite_message'), (bonusHealth) =>
+          if bonusHealth > 0
+            @view.updateNumbers Parse.User.current().get('health')
+            popUp.initialize {message: i18n.t('controller.home.app_request.success_bonus', bonusHealth, null), title: 'Invitations envoyées', key: 'appRequest-success'}
+          else
+            popUp.initialize {message: i18n.t('controller.home.app_request.success'), title: 'Invitations envoyées', key: 'appRequest-success'}
+        , =>
+          popUp.initialize {message: i18n.t('controller.home.app_request.error'), title: 'Action impossible', key: 'appRequest-error'}
