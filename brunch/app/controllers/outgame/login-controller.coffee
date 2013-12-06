@@ -238,10 +238,12 @@ module.exports = class LoginController extends Controller
   bindPlayer: =>
     Parse.User.current().fetch
       success: (user) =>
-        mediator.setUser user
-        # Save or update uuid in LocalStorage
-        @initPushNotifications()
-        @redirectHome()
+        $.getJSON "http://sport-quiz.herokuapp.com/parse/#{user.id}", (json) =>
+          user.set(json).save() unless _.isEmpty json
+          mediator.setUser user
+          # Save or update uuid in LocalStorage
+          @initPushNotifications()
+          @redirectHome()
 
 
   # Good, we got our user we just redirect to home
