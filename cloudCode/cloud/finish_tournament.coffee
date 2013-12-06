@@ -6,51 +6,100 @@ _ = require('underscore')
 # so check first if its monday (just after midnight)
 
 exports.task = (request, response) ->
-  d = (new Date()).getUTCDay()
+  date = new Date()
+  d = date.getUTCDay()
   # run only on modays after midnight..
   # ATTNETION !  0 = SUNDAY, parse server time is UTC => french time = UTC+2H
   # so the job is scheduled to run on SUNDAYS @22h01 UTC which is MONDAY 00h01 french time !
-  if d isnt 0
-    if d is 5
-      return response.error('http://www.youtube.com/watch?v=kfVsfOSbJY0')
-    return response.error('not a moday yet :(')
+  # if d isnt 0
+  #   if d is 5
+  #     return response.error('http://www.youtube.com/watch?v=kfVsfOSbJY0')
+  #   return response.error('not a moday yet :(')
 
-  query = new Parse.Query('User')
-  query.find
-    success: (results) ->
-      Parse.Cloud.useMasterKey()
+  RANK_NOT_COUNTED = -2
+  RANK_COUNT_ERROR = -1
+  ranks = {}
+  for r in [1..10]
+    ranks[r + ''] =
+      count : RANK_NOT_COUNTED
+      up    : 0
+      down  : 0
 
-      # We split players in different arrays, to avoid moving twice a player
-      playersPerRank = _.groupBy results, (player) ->
-        player.get('rank')
-      allPlayers = []
+  # count every rank, not reliable with large tables lol
+  # calculate number of people to up/down rank
+  ranksToCount = Object.keys(ranks).length
+  isCountComplete = -> ranksToCount <= 0
+  isCountOK = ->
+    for rank, v of ranks
+      return no if v.count is RANK_NOT_COUNTED or v.count is RANK_COUNT_ERROR
+    yes
 
-      for rank, players of playersPerRank
-        players = utils.sortByScoreAndAlphabetic(players)
 
-        playersNumber = players.length
-        continue unless players.length > 0
+  for rank of ranks
+    do (rank) ->
+      query = new Parse.Query('User')
+      query.equalTo('rank', rank | 0)
+      query.count
+        success: (count) ->
+          ranks[rank].count = count
+          percents          = ranks_percentages[(rank | 0) - 1]
+          ranks[rank].up    = Math.ceil(count * percents.up)
+          ranks[rank].down  = Math.ceil(count * percents.down)
+          ranksToCount--
+          return processPlayers() if isCountComplete()
+        error: (error) ->
+          console.log "FAILED COUNT FOR " + rank
+          ranks[rank].count = RANK_COUNT_ERROR
+          ranksToCount--
+          return processPlayers() if isCountComplete()
 
-        percents = ranks_percentages[rank - 1]
-        continue unless percents
+  # /!\ WARNING /!\ (2 dezember 2013)
+  # the jobs are autokilled after 15 min https://www.parse.com/docs/cloud_code_guide#jobs
+  # current processing rate : 110 players in 1.608s
+  # => 15min * 60s / ~1.608s * 110p => ~62k players / execution
 
-        uppedNumber = Math.ceil(playersNumber * percents.up / 100)
-        downedNumber = Math.ceil(playersNumber * percents.down / 100)
-        uppedIndex = uppedNumber
-        downedIndex = playersNumber - downedNumber
+  processPlayers = ->
+    return response.error("could not count all ranks " + JSON.stringify(ranks)) unless isCountOK()
+    playersProcessed = 0
+    PAGE_SIZE        = 1000 # MAX 1000: parse limitation
+    currentRank      = -1
+    currentPage      = 0
+    countUp          = 0
+    # loop through everybody and reset scores, up/down rank required amount of people
+    Parse.Cloud.useMasterKey()
+    query = new Parse.Query(Parse.User)
+    # query.select('score', 'game_row', 'life_given', 'rank')
+    query.descending('rank,-score') # https://www.parse.com/questions/multiple-sorts-on-query , https://parse.com/questions/multiplesub-sorts-on-query
+    query.limit(PAGE_SIZE)
 
-        for user, index in players
-          if index < uppedIndex
-            user.increment('rank')
-          else if index > downedIndex
-            user.increment('rank', -1)
-          user.set('score', 0).set('game_row', 0).set('life_given', [])
-          allPlayers.push user
+    processNextPage = ->
+      query.skip(PAGE_SIZE * currentPage)
+      query.find
+        success: (players) ->
+          if players.length < 1
+            return response.success("#{playersProcessed} players in #{((new Date).getTime() - date.getTime()) / 1000}s")
+          for player in players
+            playersProcessed++
+            if currentRank isnt player.get('rank')
+              currentRank = player.get('rank')
+              r = ranks[currentRank + '']
+              countUp = 0
 
-      Parse.Object.saveAll allPlayers,
-        success: ->
-          response.success('ok')
-        error: ->
-          response.error('could not save users')
-    error: ->
-      response.error('no users')
+            r.count--
+            countUp++
+
+            # if countUp <= r.up
+            #   player.increment('rank')
+            # else if r.count < r.down
+            #   player.increment('rank', -1)
+
+            player.set('score', Math.floor(Math.random() * 100000)).set('game_row', 1).set('life_given', [])#.save()
+
+          Parse.Object.saveAll players,
+            success: ->
+              currentPage++
+              processNextPage()
+            error: -> response.error.apply null, arguments
+        error: -> response.error.apply null, arguments
+
+    processNextPage()
