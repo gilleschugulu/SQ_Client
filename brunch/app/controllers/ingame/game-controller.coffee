@@ -59,7 +59,7 @@ module.exports = class GameController extends Controller
       # This will save the new health locally and at distance
       user.increment('health', -1).save null,
         success: (user) -> callback?()
-        error: (user, error) ->
+        error: (user, error) =>
           PopUpHelper.initialize
             title  : i18n.t 'controller.game.could_not_pay.title'
             message: i18n.t 'controller.game.could_not_pay.message'
