@@ -43,10 +43,12 @@ module.exports = class DupaStage extends Stage
 
   getNextQuestion: (reset = no) ->
     @questionIndex = -1 if reset
-    ++@questionIndex
 
     questions = @get('questions')[@questionDifficulty]
-    q = questions[@questionIndex % questions.length]
+
+    @questionIndex = Math.floor(questions.length * Math.random())
+
+    q = questions[@questionIndex]
     q.set 'sportCode', @getSportCode(q.get('category'))
     q
 
