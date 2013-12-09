@@ -59,22 +59,28 @@
       background-image: url('../images/spinner/spinner2.gif')
       background-size: contain
       background-repeat:no-repeat
-    .tournament
+    .ranking-header
       width: 76%
       height: 14%
       display:inline-block
-      absolute: left 27% top 5.5%
+      absolute: left 27% top 17.5%
       background-repeat: no-repeat
       background-size: contain
-      background-image: url('../images/hall-of-fame/tournoi.png')
-      letter-spacing: 0.5em
-      font-size: 1.4em
-      #HoF-days
-        absolute: left 45% top 30%
-      #HoF-hours
-        absolute: left 59% top 30%
-      #HoF-min
-        absolute: left 73% top 30%
+      transition: all 0.3s ease
+      &.active
+        top: 5.5%
+      &.friends
+        background-image: url('../images/hall-of-fame/classement_amis.png')
+      &.tournament
+        background-image: url('../images/hall-of-fame/tournoi.png')
+        letter-spacing: 0.5em
+        font-size: 1.4em
+        #HoF-days
+          absolute: left 45% top 30%
+        #HoF-hours
+          absolute: left 59% top 30%
+        #HoF-min
+          absolute: left 73% top 30%
     .level
       width: 10%
       height: 8%

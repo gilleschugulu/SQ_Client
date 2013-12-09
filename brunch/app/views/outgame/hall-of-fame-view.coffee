@@ -131,7 +131,12 @@ module.exports = class HallOfFameView extends View
 
   chooseList: (eventTargetEl) ->
     $('div' ,'#btn_HoF').removeClass('active')
-    $(eventTargetEl).addClass('active')
+    el = $(eventTargetEl).addClass('active')
+    $('div.ranking-header', @$el).removeClass 'active'
+    if el.hasClass 'global'
+      $('div.ranking-header.tournament', @$el).addClass 'active'
+    else
+      $('div.ranking-header.friends', @$el).addClass 'active'
 
   calculateDateCount: ->
     today = new Date()
