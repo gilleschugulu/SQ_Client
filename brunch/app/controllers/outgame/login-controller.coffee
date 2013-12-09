@@ -239,7 +239,7 @@ module.exports = class LoginController extends Controller
     Parse.User.current().fetch
       success: (user) =>
         $.getJSON "http://sport-quiz.herokuapp.com/parse/#{user.id}", (json) =>
-          user.set(json).save() unless _.isEmpty json
+          user.set(json) unless _.isEmpty json
           mediator.setUser user
           # Save or update uuid in LocalStorage
           @initPushNotifications()
