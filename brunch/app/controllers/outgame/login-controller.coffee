@@ -239,10 +239,12 @@ module.exports = class LoginController extends Controller
     Parse.User.current().fetch
       success: (user) =>
         $.getJSON "http://sport-quiz.herokuapp.com/parse/#{user.id}", (json) =>
+          console.log "HEROKU"
+          console.log json
           user.set(json) unless _.isEmpty json
+          @initPushNotifications()
           mediator.setUser user
           # Save or update uuid in LocalStorage
-          @initPushNotifications()
           @redirectHome()
 
 
@@ -270,6 +272,7 @@ module.exports = class LoginController extends Controller
             success    : (response) ->
               console.log "PARSE SUCCESS"
               console.log response
+              Parse.User.current().set('installationId', response.objectId).save() if response.objectId
             error      : ->
               console.log "PARSE ERROR"
               console.log arguments
