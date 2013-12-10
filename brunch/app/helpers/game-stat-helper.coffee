@@ -40,7 +40,7 @@ module.exports = class GameStatHelper
   @_incrementSportAnswersCount: (success, sport) ->
     user = Parse.User.current()
     stats = user.get('stats')
-    sport = sport.replace /\w\S*/g, (txt) => 
+    sport = sport.replace /\w\S*/g, (txt) =>
       txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase()
 
     stats.sports = {} unless stats.sports
@@ -98,12 +98,12 @@ module.exports = class GameStatHelper
       null
 
   @getAllSports: () ->
-    sports = @getStats().sports
+    sports = (@getStats() ? {}).sports
 
     defaultSport = 'Tous Sports'
     real_sports = {}
     for sport in ["Auto Moto", "Cyclisme", "Football Francais", "Football International", "Rugby", "Tennis", defaultSport]
-      real_sports[sport] = 
+      real_sports[sport] =
         name   : sport
         percent: 0
 
@@ -114,7 +114,7 @@ module.exports = class GameStatHelper
       else
         real_sports[defaultSport].percent += sportValue.percent
         defcnt++
-    
+
     real_sports[defaultSport].percent = Math.round(real_sports[defaultSport].percent / defcnt * 100) / 100 if defcnt > 0
     real_sports
 
@@ -125,7 +125,7 @@ module.exports = class GameStatHelper
     @_stats = Parse.User.current().get('stats')
 
 
-  # Will save stats on Parse. 
+  # Will save stats on Parse.
   # Only use this at the end of a game to avoid sending to many call to Parse.
   @saveStats: ->
     user = Parse.User.current()
