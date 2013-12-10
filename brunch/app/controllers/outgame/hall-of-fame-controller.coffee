@@ -131,7 +131,7 @@ module.exports = class HallOfFameController extends Controller
     name = (f.username for f in @friendsPlayers when f.fb_id == id)[0]
 
     if !$(e.target).hasClass('asked') and $.inArray(id, user.get('life_given')) < 0
-      Parse.Cloud.run 'give_life' , {friendsId: id},
+      Parse.Cloud.run 'give_life' , {friendsId: id, giverId: user.id},
         success: (response) =>
           if response.id == id
             user.get('life_given').push response.id
