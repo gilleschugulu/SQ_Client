@@ -29,22 +29,22 @@ config =
 
   credit_packs: [
     value: 500
-    product_id: "1.79SportQuiz"
+    product_id: "0.89SportQuiz"
     price: 0.89
     tax : 0.3 # 30%
   ,
     value: 2500
-    product_id: "2.69SportQuiz"
+    product_id: "3.59SportQuiz"
     price: 3.59
     tax : 0.3
   ,
     value: 7500
-    product_id: "9.99SportQuiz"
+    product_id: "8.99SportQuiz"
     price: 8.99
     tax : 0.3
   ,
     value: 20000
-    product_id: "19.99SportQuiz"
+    product_id: "17.99SportQuiz"
     price: 17.99
     tax : 0.3
   ]
