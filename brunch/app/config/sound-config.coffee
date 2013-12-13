@@ -31,6 +31,11 @@ module.exports =
         type: 'sfx'
         file: 'heart_beat.m4a'
       }
+      {
+        key: 'countdown'
+        type: 'sfx'
+        file: 'countdown.m4a'
+      }
       # ----------------
       # Ingame Bonus SFX
       # ----------------

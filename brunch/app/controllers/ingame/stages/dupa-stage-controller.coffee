@@ -33,6 +33,7 @@ module.exports = class DupaStageController extends StageController
         @view.hideCountdownValue()
         @afterCountdown()
       ).start()
+      SoundHelper.play 'countdown'
 
   afterCountdown: ->
     @countdownTimer.stop()
