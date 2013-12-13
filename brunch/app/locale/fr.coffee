@@ -49,9 +49,9 @@ module.exports =
         end_message:
           msg1k      : 'Voilà une performance digne d\'un relégable ! Il va falloir faire mieux pour se maintenir !'
           msg2k      : 'Une partie solide. Encore un petit effort pour assurer la montée.'
-          msg5k     : 'Bien joué ! Continue comme ça pour atteindre les premières places !'
-          msg10k     : 'Excellent ! Une performance digne du niveau supérieur !'
-          msg10kplus : 'Fantastique ! Avec ce genre de performance tu peux viser la première place !'
+          msg5k     : 'Bien joué ! Continue comme ça pour atteindre le podium !'
+          msg10k     : 'Excellent ! Une performance digne d\'un vrai professionnel !'
+          msg10kplus : 'Fantastique ! Avec ces performances, tu peux finir Champion du Monde !'
       profile:
         stats:
           best_score: 'Meilleur score'
