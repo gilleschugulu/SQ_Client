@@ -72,8 +72,14 @@ module.exports = class LoginController extends Controller
         FacebookHelper.getPersonalInfo (fb_attributes) =>
           parse_attributes          = User::defaults
           parse_attributes.username = fb_attributes.name
-          user.set(parse_attributes).save()
-          @bindPlayer()
+          console.log "DEFAULTS"
+          console.log parse_attributes
+          user.set(parse_attributes).save null,
+            success: @bindPlayer
+            error: (obj, error) =>
+              @bindPlayer(obj)
+              console.log "SAVE DEFAULTS FAIL"
+              console.log error
 
     error = (user, response) =>
       console.log "facebook error resposnse"
@@ -236,12 +242,15 @@ module.exports = class LoginController extends Controller
   # Save player in the mediator and uuid in localStorage
   # ----------------------------------------------------
   bindPlayer: =>
+    console.log "BINDING"
     Parse.User.current().fetch
       success: (user) =>
         $.getJSON "http://sport-quiz.herokuapp.com/parse/#{user.id}", (json) =>
           console.log "HEROKU"
           console.log json
-          user.set(json) unless _.isEmpty json
+          unless _.isEmpty json
+            delete json.username
+            user.set(json)
           @initPushNotifications()
           mediator.setUser user
           # Save or update uuid in LocalStorage
