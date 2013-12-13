@@ -39,6 +39,7 @@ module.exports = class HomeController extends Controller
 
     @view.delegate 'click', '#game-link', =>
       AnalyticsHelper.trackEvent 'Home', 'Click', 'Jouer'
+      window.xt_click?(@, 'C', window.xtn2 ? '1', 'Jouer', 'A')
       user = Parse.User.current()
       if user.get('health') > 0
         @view.dim => @redirectTo 'game'
