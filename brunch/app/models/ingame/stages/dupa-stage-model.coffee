@@ -1,8 +1,9 @@
 Stage = require 'models/ingame/stage-model'
 
 module.exports = class DupaStage extends Stage
-  currentThresholdIndex: 0
-  questionDifficulty: 1
+  currentThresholdIndex : 0
+  questionDifficulty    : 1
+  usedQuestionIds       : null
 
   getHumanPlayer: ->
     @get('player')
@@ -42,13 +43,20 @@ module.exports = class DupaStage extends Stage
 
 
   getNextQuestion: (reset = no) ->
+    @usedQuestionIds ?= []
+
     @questionIndex = -1 if reset
 
     questions = @get('questions')[@questionDifficulty]
 
-    @questionIndex = Math.floor(questions.length * Math.random())
+    while yes
+      @questionIndex = Math.floor(questions.length * Math.random())
 
-    q = questions[@questionIndex]
+      q = questions[@questionIndex]
+      break if $.inArray(q.id, @usedQuestionIds) < 0
+
+    @usedQuestionIds.push q.id
+
     q.set 'sportCode', @getSportCode(q.get('category'))
     q
 
