@@ -76,7 +76,7 @@ module.exports = class ShopController extends Controller
     packId = @view.chooseApplePack(e.currentTarget)
     pack = (p for p in @packs.credit_packs when p.product_id is packId)?[0]
 
-    AnalyticsHelper.trackEvent 'Boutique', 'Click', 'Pack payant ' + pack.name, pack.price
+    AnalyticsHelper.trackEvent 'Boutique', 'Click', 'Pack Jetons ' + pack.value, pack.net_price
 
     if @availableProducts[pack.product_id]?
       PurchaseHelper.purchaseApple pack, @onSuccessfulTransaction
@@ -92,7 +92,7 @@ module.exports = class ShopController extends Controller
     pack = (p for p in @packs.credit_packs when p.product_id is packId)?[0]
     # AnalyticsHelper.trackTransaction AnalyticsHelper.getTransactionHash([pack], Parse.User.current().id)
     return console.log('Yep, you clicked', pack)
-    # dataSend = AllopassHelper.generateData(pack.id, ConnectionHelper.getUUID(), pack.name, pack.price)
+    # dataSend = AllopassHelper.generateData(pack.id, ConnectionHelper.getUUID(), pack.name, pack.net_price)
     # url = 'https://payment.allopass.com/buy/buy.apu?' + AllopassHelper.productUrl(pack.product_id) + '&data=' + dataSend
     # allopassChild = window.open(url, 'Sport Quiz 2 - Allopass', 'width=700,height=500,menubar=no') if window
 
@@ -102,7 +102,7 @@ module.exports = class ShopController extends Controller
     #     current_credit = app.player_data.credit
     #     GameFetchHelper.fetchPlayer ConnectionHelper.getUUID(), (response) =>
     #       if current_credit == response.credits
-    #         AnalyticsHelper.item('Pack de jetons Allopass', 'Annulation', pack.name, pack.price)
+    #         AnalyticsHelper.item('Pack de jetons Allopass', 'Annulation', pack.name, pack.net_price)
     #       else
     #         AnalyticsHelper.trackTransaction AnalyticsHelper.getTransactionHash([pack], ConnectionHelper.getUUID())
     #         XitiHelper.transaction XitiHelper.getTransactionHash([pack], ConnectionHelper.getUUID())
@@ -183,12 +183,12 @@ module.exports = class ShopController extends Controller
   onClickLifePack: (e) =>
     pack = @packs.life_packs[@view.chooseLifePackIndex e.currentTarget]
     return unless pack
-    AnalyticsHelper.trackEvent 'Boutique', 'Click', "Pack de vie #{pack.value}", pack.price
+    AnalyticsHelper.trackEvent 'Boutique', 'Click', "Pack Vies #{pack.value}", pack.price
 
     if Parse.User.current().get('credits') >= pack.price
       PurchaseHelper.purchaseLife pack, @onSuccessfulTransaction
     else
-      AnalyticsHelper.trackEvent 'Boutique', "Pack de vie #{pack.value}", 'Pas assez de jetons', pack.price
+      AnalyticsHelper.trackEvent 'Boutique', "Pack Vies #{pack.value}", 'Pas assez de jetons', pack.price
       PopUpHelper.initialize
         title  : i18n.t 'controller.shop.not_enough_credits.title'
         message: i18n.t 'controller.shop.not_enough_credits.message'
@@ -198,12 +198,12 @@ module.exports = class ShopController extends Controller
     pack = @packs.bonus_packs[@view.chooseBonusPackIndex e.currentTarget]
     return unless pack
 
-    AnalyticsHelper.trackEvent 'Boutique', 'Click', "Pack de bonus #{pack.value}", pack.price
+    AnalyticsHelper.trackEvent 'Boutique', 'Click', "Pack Bonus #{pack.value}", pack.price
 
     if Parse.User.current().get('credits') >= pack.price
       PurchaseHelper.purchaseBonus pack, @onSuccessfulTransaction
     else
-      AnalyticsHelper.trackEvent 'Boutique', "Pack de bonus #{pack.value}", 'Pas assez de jetons', pack.price
+      AnalyticsHelper.trackEvent 'Boutique', "Pack Bonus #{pack.value}", 'Pas assez de jetons', pack.price
       PopUpHelper.initialize
         title  : i18n.t 'controller.shop.not_enough_credits.title'
         message: i18n.t 'controller.shop.not_enough_credits.message'

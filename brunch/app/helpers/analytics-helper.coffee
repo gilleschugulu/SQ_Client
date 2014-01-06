@@ -33,6 +33,8 @@ module.exports = class AnalyticsHelper
   # Price is the full price (send by server)
   @trackTransaction: (transactionHash) ->
     # return unless ENV.prod
+    console.log "TRANSACTION HASH"
+    console.log transactionHash
     if GoogleAnalytics?
       GoogleAnalytics.trackTransaction transactionHash
     else
@@ -46,14 +48,20 @@ module.exports = class AnalyticsHelper
       revenue : 0
       currency: 'EUR'
     items = []
-    for pack in packs
+    for product in packs
+      if product.net_price
+        price = product.net_price
+      else
+        storeTax = 1 - (product.storeTax || 0)
+        VAT      = 1 + (product.vat || 0)
+        price    = product.price Math.round(product.price / VAT * storeTax * 100) / 100
       item =
         id      : transaction.id
-        name    : pack.product_id
-        sku     : pack.product_id
-        category: 'Credits'
-        price   : Math.round(pack.price * (1 - (pack.tax || 0)) * 1000000) / 1000000
+        name    : product.name
+        sku     : product.product_id
+        category: product.category
+        price   : price
         quantity: 1
-      transaction.revenue += item.price
+      transaction.revenue += price
       items.push item
     hash = {transaction, items}
