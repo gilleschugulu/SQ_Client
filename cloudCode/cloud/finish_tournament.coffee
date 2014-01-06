@@ -6,6 +6,7 @@ _ = require('underscore')
 # so check first if its monday (just after midnight)
 
 exports.task = (request, response) ->
+  return response.error('don\'t call me')
   date = new Date()
   d = date.getUTCDay()
   # run only on modays after midnight..
