@@ -5,6 +5,7 @@ PopUpHelper     = require 'helpers/pop-up-helper'
 FacebookHelper  = require 'helpers/facebook-helper'
 i18n            = require 'lib/i18n'
 AnalyticsHelper = require 'helpers/analytics-helper'
+ConfigHelper    = require 'helpers/config-helper'
 
 module.exports = class PurchaseHelper
   @tapPoints : 0
@@ -28,7 +29,7 @@ module.exports = class PurchaseHelper
 
 
   @purchaseFacebookLike: (pack, successCallback) ->
-    window.open('http://facebook.com', '_blank')
+    window.open(ConfigHelper.config.services.facebook.like_page_url, '_system')
     Parse.User.current().increment('credits', pack.value).save null,
       success: (user) -> successCallback?(user.get('credits'))
       error: (user, error) ->
@@ -180,7 +181,7 @@ module.exports = class PurchaseHelper
             PopUpHelper.initialize
               title  : i18n.t 'helper.purchase.apple.error.title'
               message: i18n.t 'helper.purchase.apple.error.message'
-              key    : 'purchase-fail'    
+              key    : 'purchase-fail'
       , (error) =>
         # Track event
         AnalyticsHelper.trackEvent 'Boutique', "Pack payant #{pack.name}", 'Error ' + MKStore.getErrorName(error.code), pack.price
