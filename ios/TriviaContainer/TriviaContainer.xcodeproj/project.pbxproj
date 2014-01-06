@@ -9,15 +9,10 @@
 /* Begin PBXBuildFile section */
 		230CE42D158736CB00A6CDFD /* MessagePlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 230CE42C158736CB00A6CDFD /* MessagePlugin.m */; };
 		230CE430158736E500A6CDFD /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 230CE42F158736E500A6CDFD /* MessageUI.framework */; };
-		2319355615F7ABEE00A9F0B9 /* TapjoyConnectPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 2319355515F7ABEE00A9F0B9 /* TapjoyConnectPlugin.m */; };
 		2319355C15F7B0A900A9F0B9 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2319355B15F7B0A900A9F0B9 /* CoreTelephony.framework */; };
 		2319422B180457FA00AB6DE0 /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 23194227180457FA00AB6DE0 /* libTestFlight.a */; };
-		231942321804582500AB6DE0 /* libChartboost.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 231942311804582500AB6DE0 /* libChartboost.a */; };
-		231942381804584700AB6DE0 /* TapjoyPublisherLibrary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 231942361804584700AB6DE0 /* TapjoyPublisherLibrary.a */; };
-		231942391804584700AB6DE0 /* TapjoyResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 231942371804584700AB6DE0 /* TapjoyResources.bundle */; };
 		231942671804585D00AB6DE0 /* libCordova.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 231942661804585D00AB6DE0 /* libCordova.a */; };
 		231942721804586900AB6DE0 /* libGoogleAnalyticsServices.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 231942701804586900AB6DE0 /* libGoogleAnalyticsServices.a */; };
-		231942761804588800AB6DE0 /* libAdColony.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 231942751804588800AB6DE0 /* libAdColony.a */; };
 		2320B8671637E194005CC24C /* ATInternet.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 2320B8631637E194005CC24C /* ATInternet.sqlite */; };
 		2320B8681637E194005CC24C /* ATiOSLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2320B8641637E194005CC24C /* ATiOSLib.a */; };
 		2320B86C1637E1F2005CC24C /* XitiAnalyticsPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 2320B86B1637E1F2005CC24C /* XitiAnalyticsPlugin.m */; };
@@ -56,15 +51,12 @@
 		23569BBD15862B2200255812 /* GameCenterPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 23569BBC15862B2200255812 /* GameCenterPlugin.m */; };
 		23569BC51586357700255812 /* GameCenterManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 23569BC41586357700255812 /* GameCenterManager.m */; };
 		23569BC81586458B00255812 /* BasePlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 23569BC71586458B00255812 /* BasePlugin.m */; };
-		2359307D16A0357B0009CF9F /* AdColonyPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 2359307C16A0357B0009CF9F /* AdColonyPlugin.m */; };
 		235A3D6A1806FCFC00608D43 /* iTunesArtwork.png in Resources */ = {isa = PBXBuildFile; fileRef = 235A3D5B1806FCFC00608D43 /* iTunesArtwork.png */; };
 		235A3D6B1806FCFC00608D43 /* iTunesArtwork@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 235A3D5C1806FCFC00608D43 /* iTunesArtwork@2x.png */; };
 		235A3D751807023500608D43 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 235A3D741807023500608D43 /* Images.xcassets */; };
 		236001CD15876F8F00E9A1C9 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 236001CC15876F8F00E9A1C9 /* libz.dylib */; };
 		237AE3D2169F1A1B00A94A7E /* config.xml in Resources */ = {isa = PBXBuildFile; fileRef = 237AE3D1169F1A1B00A94A7E /* config.xml */; };
-		237AE3D9169F1CF600A94A7E /* ChartBoostPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 237AE3D8169F1CF600A94A7E /* ChartBoostPlugin.m */; };
 		237DC5AF16A9BFC700F6E715 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 237DC5AE16A9BFC700F6E715 /* CoreData.framework */; };
-		23814DB816D3D48F00011C6E /* PermaKeyboardPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 23814DB716D3D48F00011C6E /* PermaKeyboardPlugin.m */; };
 		239008791834E24500C5072C /* FacebookSDK-3.5.2-Release.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 23F98236180EBBED0063D50F /* FacebookSDK-3.5.2-Release.a */; };
 		239284C615B59961000812EC /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 239284C415B59960000812EC /* Accounts.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		239284C715B59961000812EC /* Twitter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 239284C515B59960000812EC /* Twitter.framework */; };
@@ -97,18 +89,9 @@
 		230CE42B158736CB00A6CDFD /* MessagePlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MessagePlugin.h; path = Plugins/MessagePlugin.h; sourceTree = "<group>"; };
 		230CE42C158736CB00A6CDFD /* MessagePlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MessagePlugin.m; path = Plugins/MessagePlugin.m; sourceTree = "<group>"; };
 		230CE42F158736E500A6CDFD /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
-		2319355415F7ABEE00A9F0B9 /* TapjoyConnectPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TapjoyConnectPlugin.h; path = Plugins/TapjoyConnectPlugin.h; sourceTree = "<group>"; };
-		2319355515F7ABEE00A9F0B9 /* TapjoyConnectPlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TapjoyConnectPlugin.m; path = Plugins/TapjoyConnectPlugin.m; sourceTree = "<group>"; };
 		2319355B15F7B0A900A9F0B9 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		23194227180457FA00AB6DE0 /* libTestFlight.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libTestFlight.a; sourceTree = "<group>"; };
 		2319422A180457FA00AB6DE0 /* TestFlight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestFlight.h; sourceTree = "<group>"; };
-		2319422F1804582500AB6DE0 /* CBAnalytics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBAnalytics.h; sourceTree = "<group>"; };
-		231942301804582500AB6DE0 /* Chartboost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Chartboost.h; sourceTree = "<group>"; };
-		231942311804582500AB6DE0 /* libChartboost.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libChartboost.a; sourceTree = "<group>"; };
-		231942341804584700AB6DE0 /* TapjoyConnect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TapjoyConnect.h; sourceTree = "<group>"; };
-		231942351804584700AB6DE0 /* TapjoyConnectConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TapjoyConnectConstants.h; sourceTree = "<group>"; };
-		231942361804584700AB6DE0 /* TapjoyPublisherLibrary.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = TapjoyPublisherLibrary.a; sourceTree = "<group>"; };
-		231942371804584700AB6DE0 /* TapjoyResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = TapjoyResources.bundle; sourceTree = "<group>"; };
 		2319423C1804585D00AB6DE0 /* CDV.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDV.h; sourceTree = "<group>"; };
 		2319423D1804585D00AB6DE0 /* CDVAccelerometer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDVAccelerometer.h; sourceTree = "<group>"; };
 		2319423E1804585D00AB6DE0 /* CDVAvailability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDVAvailability.h; sourceTree = "<group>"; };
@@ -160,8 +143,6 @@
 		2319426E1804586900AB6DE0 /* GAITracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAITracker.h; sourceTree = "<group>"; };
 		2319426F1804586900AB6DE0 /* libGoogleAnalytics_debug.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libGoogleAnalytics_debug.a; sourceTree = "<group>"; };
 		231942701804586900AB6DE0 /* libGoogleAnalyticsServices.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libGoogleAnalyticsServices.a; sourceTree = "<group>"; };
-		231942741804588800AB6DE0 /* AdColonyPublic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdColonyPublic.h; sourceTree = "<group>"; };
-		231942751804588800AB6DE0 /* libAdColony.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libAdColony.a; sourceTree = "<group>"; };
 		2320B8631637E194005CC24C /* ATInternet.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = ATInternet.sqlite; sourceTree = "<group>"; };
 		2320B8641637E194005CC24C /* ATiOSLib.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = ATiOSLib.a; sourceTree = "<group>"; };
 		2320B8651637E194005CC24C /* ATParams.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATParams.h; sourceTree = "<group>"; };
@@ -215,18 +196,12 @@
 		23569BC41586357700255812 /* GameCenterManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameCenterManager.m; sourceTree = "<group>"; };
 		23569BC61586458B00255812 /* BasePlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BasePlugin.h; path = Plugins/BasePlugin.h; sourceTree = "<group>"; };
 		23569BC71586458B00255812 /* BasePlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BasePlugin.m; path = Plugins/BasePlugin.m; sourceTree = "<group>"; };
-		2359307B16A0357B0009CF9F /* AdColonyPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AdColonyPlugin.h; path = Plugins/AdColonyPlugin.h; sourceTree = "<group>"; };
-		2359307C16A0357B0009CF9F /* AdColonyPlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AdColonyPlugin.m; path = Plugins/AdColonyPlugin.m; sourceTree = "<group>"; };
 		235A3D5B1806FCFC00608D43 /* iTunesArtwork.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iTunesArtwork.png; sourceTree = "<group>"; };
 		235A3D5C1806FCFC00608D43 /* iTunesArtwork@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iTunesArtwork@2x.png"; sourceTree = "<group>"; };
 		235A3D741807023500608D43 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = Resources/Images.xcassets; sourceTree = "<group>"; };
 		236001CC15876F8F00E9A1C9 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		237AE3D1169F1A1B00A94A7E /* config.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = config.xml; sourceTree = "<group>"; };
-		237AE3D7169F1CF600A94A7E /* ChartBoostPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChartBoostPlugin.h; path = Plugins/ChartBoostPlugin.h; sourceTree = "<group>"; };
-		237AE3D8169F1CF600A94A7E /* ChartBoostPlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ChartBoostPlugin.m; path = Plugins/ChartBoostPlugin.m; sourceTree = "<group>"; };
 		237DC5AE16A9BFC700F6E715 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
-		23814DB616D3D48E00011C6E /* PermaKeyboardPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PermaKeyboardPlugin.h; path = Plugins/PermaKeyboardPlugin.h; sourceTree = "<group>"; };
-		23814DB716D3D48F00011C6E /* PermaKeyboardPlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PermaKeyboardPlugin.m; path = Plugins/PermaKeyboardPlugin.m; sourceTree = "<group>"; };
 		239284C415B59960000812EC /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
 		239284C515B59960000812EC /* Twitter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Twitter.framework; path = System/Library/Frameworks/Twitter.framework; sourceTree = SDKROOT; };
 		239906D3157F5B2D00411D6C /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
@@ -380,16 +355,13 @@
 				239008791834E24500C5072C /* FacebookSDK-3.5.2-Release.a in Frameworks */,
 				235451ED156174B700A821D6 /* AVFoundation.framework in Frameworks */,
 				235451F1156174B700A821D6 /* MediaPlayer.framework in Frameworks */,
-				231942381804584700AB6DE0 /* TapjoyPublisherLibrary.a in Frameworks */,
 				235451F3156174B700A821D6 /* QuartzCore.framework in Frameworks */,
-				231942761804588800AB6DE0 /* libAdColony.a in Frameworks */,
 				235451F5156174B700A821D6 /* SystemConfiguration.framework in Frameworks */,
 				2319422B180457FA00AB6DE0 /* libTestFlight.a in Frameworks */,
 				235451F7156174B700A821D6 /* MobileCoreServices.framework in Frameworks */,
 				235451F9156174B700A821D6 /* CoreMedia.framework in Frameworks */,
 				231942721804586900AB6DE0 /* libGoogleAnalyticsServices.a in Frameworks */,
 				2320B8681637E194005CC24C /* ATiOSLib.a in Frameworks */,
-				231942321804582500AB6DE0 /* libChartboost.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -405,27 +377,6 @@
 				2319422A180457FA00AB6DE0 /* TestFlight.h */,
 			);
 			path = TestFlight;
-			sourceTree = "<group>";
-		};
-		2319422E1804582500AB6DE0 /* ChartBoost */ = {
-			isa = PBXGroup;
-			children = (
-				2319422F1804582500AB6DE0 /* CBAnalytics.h */,
-				231942301804582500AB6DE0 /* Chartboost.h */,
-				231942311804582500AB6DE0 /* libChartboost.a */,
-			);
-			path = ChartBoost;
-			sourceTree = "<group>";
-		};
-		231942331804584700AB6DE0 /* TapjoyPublisherLibrary */ = {
-			isa = PBXGroup;
-			children = (
-				231942341804584700AB6DE0 /* TapjoyConnect.h */,
-				231942351804584700AB6DE0 /* TapjoyConnectConstants.h */,
-				231942361804584700AB6DE0 /* TapjoyPublisherLibrary.a */,
-				231942371804584700AB6DE0 /* TapjoyResources.bundle */,
-			);
-			path = TapjoyPublisherLibrary;
 			sourceTree = "<group>";
 		};
 		2319423A1804585D00AB6DE0 /* Cordova */ = {
@@ -499,15 +450,6 @@
 				231942701804586900AB6DE0 /* libGoogleAnalyticsServices.a */,
 			);
 			path = GoogleAnalytics;
-			sourceTree = "<group>";
-		};
-		231942731804588800AB6DE0 /* AdColony */ = {
-			isa = PBXGroup;
-			children = (
-				231942741804588800AB6DE0 /* AdColonyPublic.h */,
-				231942751804588800AB6DE0 /* libAdColony.a */,
-			);
-			path = AdColony;
 			sourceTree = "<group>";
 		};
 		2320B8621637E194005CC24C /* Xiti */ = {
@@ -664,10 +606,6 @@
 			children = (
 				8F574DD61746761D00BAAACD /* TransitionScreenPlugin.h */,
 				8F574DD71746761D00BAAACD /* TransitionScreenPlugin.m */,
-				2359307B16A0357B0009CF9F /* AdColonyPlugin.h */,
-				2359307C16A0357B0009CF9F /* AdColonyPlugin.m */,
-				237AE3D7169F1CF600A94A7E /* ChartBoostPlugin.h */,
-				237AE3D8169F1CF600A94A7E /* ChartBoostPlugin.m */,
 				23F57DB8157E59AD00F7847A /* MKStorePlugin.h */,
 				23F57DB9157E59AD00F7847A /* MKStorePlugin.m */,
 				23545230156174B800A821D6 /* README */,
@@ -681,16 +619,12 @@
 				23C857DD159C48E100A83247 /* AppStoreRatingPlugin.m */,
 				23C8580D159CCBA000A83247 /* PushNotificationsPlugin.h */,
 				23C8580E159CCBA000A83247 /* PushNotificationsPlugin.m */,
-				2319355415F7ABEE00A9F0B9 /* TapjoyConnectPlugin.h */,
-				2319355515F7ABEE00A9F0B9 /* TapjoyConnectPlugin.m */,
 				232C2CFA160CAB12006DF2CD /* SocialPlugin.h */,
 				232C2CFB160CAB12006DF2CD /* SocialPlugin.m */,
 				233309AA1635A23900BD7681 /* GoogleAnalyticsPlugin.h */,
 				233309AB1635A23900BD7681 /* GoogleAnalyticsPlugin.m */,
 				2320B86A1637E1F2005CC24C /* XitiAnalyticsPlugin.h */,
 				2320B86B1637E1F2005CC24C /* XitiAnalyticsPlugin.m */,
-				23814DB616D3D48E00011C6E /* PermaKeyboardPlugin.h */,
-				23814DB716D3D48F00011C6E /* PermaKeyboardPlugin.m */,
 			);
 			name = Plugins;
 			sourceTree = "<group>";
@@ -766,11 +700,8 @@
 			isa = PBXGroup;
 			children = (
 				23F98231180EBBED0063D50F /* FacebookSDK */,
-				231942731804588800AB6DE0 /* AdColony */,
 				231942681804586900AB6DE0 /* GoogleAnalytics */,
 				2319423A1804585D00AB6DE0 /* Cordova */,
-				231942331804584700AB6DE0 /* TapjoyPublisherLibrary */,
-				2319422E1804582500AB6DE0 /* ChartBoost */,
 				23194226180457FA00AB6DE0 /* TestFlight */,
 				2320B8621637E194005CC24C /* Xiti */,
 				23A9F932161337CE0018E46F /* DeprecatedHeaders */,
@@ -963,7 +894,6 @@
 				23545211156174B700A821D6 /* Localizable.strings in Resources */,
 				235A3D751807023500608D43 /* Images.xcassets in Resources */,
 				23545215156174B800A821D6 /* Localizable.strings in Resources */,
-				231942391804584700AB6DE0 /* TapjoyResources.bundle in Resources */,
 				23545223156174B800A821D6 /* Capture.bundle in Resources */,
 				2354522E156174B800A821D6 /* ViewController.xib in Resources */,
 				2354523D1561789C00A821D6 /* www in Resources */,
@@ -1021,14 +951,10 @@
 				230CE42D158736CB00A6CDFD /* MessagePlugin.m in Sources */,
 				23C857DE159C48E100A83247 /* AppStoreRatingPlugin.m in Sources */,
 				23C8580F159CCBA000A83247 /* PushNotificationsPlugin.m in Sources */,
-				2319355615F7ABEE00A9F0B9 /* TapjoyConnectPlugin.m in Sources */,
 				232C2CFC160CAB12006DF2CD /* SocialPlugin.m in Sources */,
 				235235C01619D872000492BE /* JSConsoleViewController.m in Sources */,
 				233309AC1635A23900BD7681 /* GoogleAnalyticsPlugin.m in Sources */,
 				2320B86C1637E1F2005CC24C /* XitiAnalyticsPlugin.m in Sources */,
-				237AE3D9169F1CF600A94A7E /* ChartBoostPlugin.m in Sources */,
-				2359307D16A0357B0009CF9F /* AdColonyPlugin.m in Sources */,
-				23814DB816D3D48F00011C6E /* PermaKeyboardPlugin.m in Sources */,
 				8F574DD81746761D00BAAACD /* TransitionScreenPlugin.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1206,8 +1132,8 @@
 					"-ObjC",
 				);
 				PRODUCT_NAME = TriviaContainer;
-				PROVISIONING_PROFILE = "022D0F29-74AB-48A2-9C9C-39AB5C64D12A";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "022D0F29-74AB-48A2-9C9C-39AB5C64D12A";
+				PROVISIONING_PROFILE = "3EE22E77-70CA-4F62-AE19-BF7CF72DE8C4";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "3EE22E77-70CA-4F62-AE19-BF7CF72DE8C4";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
@@ -1220,8 +1146,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: L'Equipe 24/24 (2RS852URZ4)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: L'Equipe 24/24 (2RS852URZ4)";
 				COMPRESS_PNG_FILES = NO;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
